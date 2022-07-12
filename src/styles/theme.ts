@@ -11,23 +11,11 @@ export const theme: MantineThemeOverride = {
       '#E94335',
       '#0C103E',
       '#030518',
-      '#282C4D',
+      '#66d9e8',
       '#282C4D',
       '#282C4D',
       '#282C4D',
       '#191D40'
-    ],
-    cyan: [
-      '#e3fafc',
-      '#c5f6fa',
-      '#99e9f2',
-      '#66d9e8',
-      '#3bc9db',
-      '#22b8cf',
-      '#15aabf',
-      '#1098ad',
-      '#0c8599',
-      '#0b7285'
     ]
   },
   breakpoints: {

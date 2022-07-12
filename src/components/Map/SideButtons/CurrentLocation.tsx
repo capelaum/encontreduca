@@ -3,7 +3,6 @@ import { useMap } from 'contexts/mapContext'
 import { useState } from 'react'
 import { MdMyLocation } from 'react-icons/md'
 import { BallTriangle } from 'react-loader-spinner'
-import { theme } from 'styles/theme'
 
 export function CurrentLocation() {
   const { moveToCurrentLocation } = useMap()
@@ -30,12 +29,9 @@ export function CurrentLocation() {
       size="xl"
       color="brand"
       title="Centralizar na posição atual"
-      sx={{
-        position: 'absolute',
-        bottom: '4.25rem',
-        right: '1rem',
-        color: theme.colors!.cyan![4]
-      }}
+      sx={(theme) => ({
+        color: theme.colors.cyan[4]
+      })}
     >
       {disabled ? (
         <BallTriangle
