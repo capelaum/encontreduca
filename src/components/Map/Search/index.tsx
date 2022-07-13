@@ -45,16 +45,15 @@ export function Search({ setMenuOpened }: SearchProps) {
         variant="filled"
         size={42}
         color="brand"
-        title="Centralizar na posição atual"
+        title="Abrir Menu Principal"
         sx={(theme) => ({
           position: 'absolute',
           top: theme.spacing.sm,
           left: theme.spacing.sm,
-          color: theme.colors.cyan[4],
+          color: theme.colors.cyan[3],
           zIndex: 1,
           '&:hover': {
-            backgroundColor: theme.colors.brand[7],
-            color: theme.colors.cyan[8]
+            backgroundColor: theme.colors.brand[7]
           }
         })}
       >

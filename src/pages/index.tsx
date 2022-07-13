@@ -1,8 +1,8 @@
-import { Box } from '@mantine/core'
 import { useJsApiLoader } from '@react-google-maps/api'
 import Map from 'components/Map/Map'
 import { MapLoader } from 'components/Map/MapLoader'
 import { Search } from 'components/Map/Search'
+import { Menu } from 'components/Menu'
 import { Sidebar } from 'components/Shared/Sidebar'
 import Head from 'next/head'
 import { useState } from 'react'
@@ -38,7 +38,7 @@ export default function Home() {
       <Map />
 
       <Sidebar menuOpened={menuOpened} setOpened={setMenuOpened}>
-        <Box>HEY</Box>
+        <Menu />
       </Sidebar>
     </>
   )

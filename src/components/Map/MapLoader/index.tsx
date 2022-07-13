@@ -11,7 +11,7 @@ export function MapLoader() {
       <Title
         order={1}
         className={styles.title}
-        sx={(theme) => ({ color: theme.colors.cyan[4] })}
+        sx={(theme) => ({ color: theme.colors.cyan[3] })}
       >
         Carregando...
       </Title>

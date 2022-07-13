@@ -43,5 +43,12 @@ export const theme: MantineThemeOverride = {
     md: 20,
     lg: 40,
     xl: 48
+  },
+  fontSizes: {
+    xs: 12,
+    sm: 14,
+    md: 16,
+    lg: 18,
+    xl: 20
   }
 }

@@ -7,7 +7,7 @@ export function ToggleTheme() {
 
   return (
     <ActionIcon
-      sx={(theme) => ({ color: theme.colors.cyan[4] })}
+      sx={(theme) => ({ color: theme.colors.cyan[3] })}
       variant="filled"
       size="xl"
       color="brand"
