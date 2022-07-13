@@ -12,6 +12,13 @@ export const mapOptions = {
   clickableIcons: false
 }
 
+export const mapOptionsLight = {
+  mapId: process.env.NEXT_PUBLIC_MAP_ID_LIGHT,
+  disableDefaultUI: true,
+  zoomControl: false,
+  clickableIcons: false
+}
+
 export const mapContainerStyle = {
   width: '100%',
   height: '100vh',

@@ -1,6 +1,6 @@
 import { Box } from '@mantine/core'
 import { GoogleMap, Marker } from '@react-google-maps/api'
-import { mapContainerStyle, mapOptions } from 'config/options'
+import { mapContainerStyle, mapOptionsLight } from 'config/options'
 import { useMap } from 'contexts/mapContext'
 import data from 'data/resources.json'
 import { ResourceType } from 'types/resources'
@@ -12,7 +12,7 @@ interface MapProps {
   setResource: (resource: ResourceType) => void
 }
 
-export default function Map({
+export default function MapLight({
   setResourceOpened,
   setResource
 }: MapProps): JSX.Element {
@@ -44,7 +44,7 @@ export default function Map({
       <GoogleMap
         zoom={zoom}
         center={center}
-        options={mapOptions}
+        options={mapOptionsLight}
         onIdle={onIdle}
         onLoad={onMapLoad}
         onUnmount={onUnmount}

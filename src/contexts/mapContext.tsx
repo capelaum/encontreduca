@@ -1,4 +1,4 @@
-import { defaultCenter, mapOptions } from 'config/options'
+import { defaultCenter } from 'config/options'
 import {
   createContext,
   ReactNode,
@@ -13,7 +13,6 @@ import {
   GoogleMapsMap,
   LatLngLiteral,
   MapMouseEvent,
-  MapOptions,
   MarkerType
 } from 'types/googleMaps'
 
@@ -26,7 +25,6 @@ interface MapContextData {
   currentCenter: LatLngLiteral
   zoom: number
   place: string | null
-  options: MapOptions
   currentLocation: LatLngLiteral
   clickedPos: LatLngLiteral | null
   directions: DirectionsResult | null
@@ -61,8 +59,6 @@ export function MapProvider({ children }: MapProviderProps) {
 
   const mapRef = useRef<GoogleMapsMap>()
 
-  const options = useMemo<MapOptions>(() => mapOptions, [])
-
   const handleMapClick = ({ latLng }: MapMouseEvent) => {
     const mapClicklickedPos = { lat: latLng!.lat(), lng: latLng!.lng() }
 
@@ -80,8 +76,6 @@ export function MapProvider({ children }: MapProviderProps) {
   }, [])
 
   const onIdle = useCallback(() => {
-    // console.log('onIdle')
-
     setZoom(mapRef.current!.getZoom()!)
     setCurrentCenter(mapRef.current!.getCenter()!.toJSON())
   }, [])
@@ -113,7 +107,6 @@ export function MapProvider({ children }: MapProviderProps) {
     currentCenter,
     zoom,
     place,
-    options,
     currentLocation,
     clickedPos,
     directions,

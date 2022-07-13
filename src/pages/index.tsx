@@ -1,5 +1,7 @@
+import { useMantineColorScheme } from '@mantine/core'
 import { useJsApiLoader } from '@react-google-maps/api'
 import Map from 'components/Map/Map'
+import MapLight from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
 import { Search } from 'components/Map/Search'
 import { Menu } from 'components/Menu'
@@ -23,6 +25,8 @@ export default function Home() {
   const [profileOpened, setProfileOpened] = useState(false)
   const [resourceOpened, setResourceOpened] = useState(false)
   const [resource, setResource] = useState<ResourceType>({} as ResourceType)
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
@@ -40,7 +44,14 @@ export default function Home() {
 
       <Search setMenuOpened={setMenuOpened} />
 
-      <Map setResourceOpened={setResourceOpened} setResource={setResource} />
+      {dark ? (
+        <Map setResourceOpened={setResourceOpened} setResource={setResource} />
+      ) : (
+        <MapLight
+          setResourceOpened={setResourceOpened}
+          setResource={setResource}
+        />
+      )}
 
       <Sidebar opened={resourceOpened} setOpened={setResourceOpened}>
         <Search setMenuOpened={setMenuOpened} isResourceOpened />
