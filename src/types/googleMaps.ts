@@ -11,6 +11,8 @@ export type MapMouseEvent = google.maps.MapMouseEvent
 export type MarkerOptions = google.maps.MarkerOptions
 export type GoogleMapsMarker = google.maps.Marker
 
+export type MarkerLabel = google.maps.MarkerLabel
+
 export type MarkerType = {
   id: string
   name: string

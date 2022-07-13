@@ -1,10 +1,11 @@
 {
   "resources": [
     {
+      "id": 1,
       "name": "CEUB",
-      "category": "private university",
-      "local": {
-        "latitutde": -15.7670265,
+      "category": "private_university",
+      "position": {
+        "latitude": -15.7670265,
         "longitude": -47.8938074
       },
       "address": "707/907 - Campus Universitário - Asa Norte, Brasília - DF, 70790-075",
@@ -16,10 +17,11 @@
       "updated_at": "2022-02-01T00:00:00.000Z"
     },
     {
+      "id": 2,
       "name": "Universidade de Brasília",
-      "category": "public university",
-      "local": {
-        "latitutde": -15.7631573,
+      "category": "public_university",
+      "position": {
+        "latitude": -15.7631573,
         "longitude": -47.8706311
       },
       "address": "UnB - Brasília, DF, 70910-900",
@@ -31,10 +33,11 @@
       "updated_at": "2022-02-01T00:00:00.000Z"
     },
     {
+      "id": 3,
       "name": "Centro Educacional Leonardo da Vinci",
-      "category": "private school",
-      "local": {
-        "latitutde": -15.7467763,
+      "category": "private_school",
+      "position": {
+        "latitude": -15.7467763,
         "longitude": -47.9008108
       },
       "address": "SGAN 914 Conjunto I Setor de Grandes Áreas Norte, Asa Norte, Brasília - DF, 70790-140",
@@ -46,10 +49,11 @@
       "updated_at": "2022-04-01T00:00:00.000Z"
     },
     {
+      "id": 4,
       "name": "Escola Classe 405 Norte",
-      "category": "private school",
-      "local": {
-        "latitutde": -15.7708927,
+      "category": "private_school",
+      "position": {
+        "latitude": -15.7708927,
         "longitude": -47.8769279
       },
       "address": "SHCN SQN 405 - Asa Norte, Brasília - DF, 70846-000",
@@ -61,10 +65,11 @@
       "updated_at": "2022-04-01T00:00:00.000Z"
     },
     {
+      "id": 5,
       "name": "Biblioteca Central",
-      "category": "public library",
-      "local": {
-        "latitutde": -15.7609124,
+      "category": "library",
+      "position": {
+        "latitude": -15.7609124,
         "longitude": -47.8677803
       },
       "address": "Campus Universitário Darcy Ribeiro, Gleba A - Asa Norte, Brasília - DF, 70910-900",
@@ -76,10 +81,11 @@
       "updated_at": "2022-03-01T00:00:00.000Z"
     },
     {
+      "id": 6,
       "name": "Curso Exatas",
       "category": "course",
-      "local": {
-        "latitutde": -15.7747056,
+      "position": {
+        "latitude": -15.7747056,
         "longitude": -47.8887548
       },
       "address": "SCRN 704/705 Bloco A, 53 - Asa Norte, Brasília - DF, 70730-610",
@@ -91,10 +97,11 @@
       "updated_at": "2022-04-01T00:00:00.000Z"
     },
     {
+      "id": 7,
       "name": "The Brain Coworking - Ulysses Guimarães",
       "category": "coworking",
-      "local": {
-        "latitutde": -15.7880305,
+      "position": {
+        "latitude": -15.7880305,
         "longitude": -47.9005331
       },
       "address": "Ulysses Guimarães SDC, Bloco I, Zona Cívico e Administrativa- Ala Norte Piso 01, Eixo Monumental, Brasília - DF, 70655-775",
