@@ -35,7 +35,7 @@ export function Sidebar({ children, opened, setOpened }: SidebarProps) {
           right: theme.spacing.md
         })}
       >
-        <MdClose size={24} color={myTheme.colors!.brand![5]} />
+        <MdClose size={24} color={myTheme.colors!.brand![0]} />
       </ActionIcon>
 
       {children}

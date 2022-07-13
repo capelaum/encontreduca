@@ -16,7 +16,7 @@ export function MenuButton({ text, icon }: MenuButtonProps) {
         paddingRight: theme.spacing.md,
         paddingLeft: theme.spacing.md,
         '&:hover': {
-          backgroundColor: theme.colors.brand[5],
+          backgroundColor: theme.colors.brand[0],
           color: theme.colors.brand[7]
         }
       })}

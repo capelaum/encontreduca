@@ -16,7 +16,7 @@ export function Search({ setMenuOpened, isResourceOpened }: SearchProps) {
     >
       <MdSearch
         size={28}
-        color={myTheme.colors!.brand![5]}
+        color={myTheme.colors!.brand![0]}
         style={{ display: 'block', position: 'relative' }}
       />
     </Tooltip>
@@ -47,7 +47,7 @@ export function Search({ setMenuOpened, isResourceOpened }: SearchProps) {
         <MdMenu
           title="Abrir Menu Principal"
           size={30}
-          color={myTheme.colors!.brand![5]}
+          color={myTheme.colors!.brand![0]}
         />
       </ActionIcon>
 

@@ -6,13 +6,13 @@ export const theme: MantineThemeOverride = {
   primaryColor: 'brand',
   colors: {
     brand: [
+      '#66d9e8', // cyan 300
+      '#282C4D',
       '#F3AA9F',
       '#F231A5',
       '#E94335',
       '#0C103E',
       '#030518', // darker-blue
-      '#66d9e8', // cyan 300
-      '#282C4D',
       '#282C4D', // primary
       '#282C4D',
       '#191D40'
@@ -41,14 +41,14 @@ export const theme: MantineThemeOverride = {
     xs: 4,
     sm: 16,
     md: 20,
-    lg: 40,
+    lg: 32,
     xl: 48
   },
   fontSizes: {
     xs: 12,
     sm: 14,
     md: 16,
-    lg: 18,
-    xl: 20
+    lg: 20,
+    xl: 24
   }
 }

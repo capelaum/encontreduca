@@ -16,7 +16,7 @@ export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
         <Avatar radius="xl" size={50} src="/avatar.png" />
         <Stack spacing={2}>
           <Text
-            size="xl"
+            size="lg"
             weight={500}
             sx={(theme) => ({ color: theme.colors.cyan[3] })}
           >
