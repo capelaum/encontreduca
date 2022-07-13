@@ -1,0 +1,109 @@
+{
+  "resources": [
+    {
+      "name": "CEUB",
+      "category": "private university",
+      "local": {
+        "latitutde": -15.7670265,
+        "longitude": -47.8938074
+      },
+      "address": "707/907 - Campus Universitário - Asa Norte, Brasília - DF, 70790-075",
+      "website": "https://www.uniceub.br",
+      "phone": "06139661201",
+      "cover": "https://dummyimage.com/600x400/333/fff",
+      "approved": true,
+      "created_at": "2022-02-01T00:00:00.000Z",
+      "updated_at": "2022-02-01T00:00:00.000Z"
+    },
+    {
+      "name": "Universidade de Brasília",
+      "category": "public university",
+      "local": {
+        "latitutde": -15.7631573,
+        "longitude": -47.8706311
+      },
+      "address": "UnB - Brasília, DF, 70910-900",
+      "website": "http://www.unb.br",
+      "phone": "06131073300",
+      "cover": "https://dummyimage.com/600x400/333/fff",
+      "approved": true,
+      "created_at": "2022-02-01T00:00:00.000Z",
+      "updated_at": "2022-02-01T00:00:00.000Z"
+    },
+    {
+      "name": "Centro Educacional Leonardo da Vinci",
+      "category": "private school",
+      "local": {
+        "latitutde": -15.7467763,
+        "longitude": -47.9008108
+      },
+      "address": "SGAN 914 Conjunto I Setor de Grandes Áreas Norte, Asa Norte, Brasília - DF, 70790-140",
+      "website": "https://www.leonardoonline.com.br",
+      "phone": "06133401616",
+      "cover": "https://dummyimage.com/600x400/333/fff",
+      "approved": true,
+      "created_at": "2022-04-01T00:00:00.000Z",
+      "updated_at": "2022-04-01T00:00:00.000Z"
+    },
+    {
+      "name": "Escola Classe 405 Norte",
+      "category": "private school",
+      "local": {
+        "latitutde": -15.7708927,
+        "longitude": -47.8769279
+      },
+      "address": "SHCN SQN 405 - Asa Norte, Brasília - DF, 70846-000",
+      "website": null,
+      "phone": "06132732972",
+      "cover": "https://dummyimage.com/600x400/333/fff",
+      "approved": true,
+      "created_at": "2022-04-01T00:00:00.000Z",
+      "updated_at": "2022-04-01T00:00:00.000Z"
+    },
+    {
+      "name": "Biblioteca Central",
+      "category": "public library",
+      "local": {
+        "latitutde": -15.7609124,
+        "longitude": -47.8677803
+      },
+      "address": "Campus Universitário Darcy Ribeiro, Gleba A - Asa Norte, Brasília - DF, 70910-900",
+      "website": "http://www.bce.unb.br",
+      "phone": "06131072676",
+      "cover": "https://dummyimage.com/600x400/333/fff",
+      "approved": true,
+      "created_at": "2022-03-01T00:00:00.000Z",
+      "updated_at": "2022-03-01T00:00:00.000Z"
+    },
+    {
+      "name": "Curso Exatas",
+      "category": "course",
+      "local": {
+        "latitutde": -15.7747056,
+        "longitude": -47.8887548
+      },
+      "address": "SCRN 704/705 Bloco A, 53 - Asa Norte, Brasília - DF, 70730-610",
+      "website": "https://www.cursoexatas.com.br",
+      "phone": "06132420628",
+      "cover": "https://dummyimage.com/600x400/333/fff",
+      "approved": true,
+      "created_at": "2022-04-01T00:00:00.000Z",
+      "updated_at": "2022-04-01T00:00:00.000Z"
+    },
+    {
+      "name": "The Brain Coworking - Ulysses Guimarães",
+      "category": "coworking",
+      "local": {
+        "latitutde": -15.7880305,
+        "longitude": -47.9005331
+      },
+      "address": "Ulysses Guimarães SDC, Bloco I, Zona Cívico e Administrativa- Ala Norte Piso 01, Eixo Monumental, Brasília - DF, 70655-775",
+      "website": "http://thebraincoworking.com.br",
+      "phone": "06131420106",
+      "cover": "https://dummyimage.com/600x400/333/fff",
+      "approved": true,
+      "created_at": "2022-04-01T00:00:00.000Z",
+      "updated_at": "2022-04-01T00:00:00.000Z"
+    }
+  ]
+}
