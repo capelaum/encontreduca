@@ -3,14 +3,19 @@ import { GoogleMap, Marker } from '@react-google-maps/api'
 import { mapContainerStyle } from 'config/options'
 import { useMap } from 'contexts/mapContext'
 import data from 'data/resources.json'
+import { ResourceType } from 'types/resources'
 import { ResourceMarker } from './ResourceMarker'
 import { SideButtons } from './SideButtons'
 
 interface MapProps {
   setResourceOpened: (opened: boolean) => void
+  setResource: (resource: ResourceType) => void
 }
 
-export default function Map({ setResourceOpened }: MapProps): JSX.Element {
+export default function Map({
+  setResourceOpened,
+  setResource
+}: MapProps): JSX.Element {
   const { resources } = data
 
   const {
@@ -29,6 +34,7 @@ export default function Map({ setResourceOpened }: MapProps): JSX.Element {
       <ResourceMarker
         resource={resource}
         setResourceOpened={setResourceOpened}
+        setResource={setResource}
       />
     ))
   }

@@ -108,53 +108,33 @@ export function MapProvider({ children }: MapProviderProps) {
     mapRef.current.setZoom(17)
   }, [])
 
+  const mapContextProviderValues = {
+    center,
+    currentCenter,
+    zoom,
+    place,
+    options,
+    currentLocation,
+    clickedPos,
+    directions,
+    selectedMarker,
+    onIdle,
+    onMapLoad,
+    onUnmount,
+    moveToCurrentLocation,
+    handleMapClick,
+    clearLocation,
+    setSelectedMarker,
+    setClickedPos,
+    setPlace,
+    setCenter,
+    setZoom,
+    setDirections
+  }
+
   const mapContextProviderValue = useMemo<MapContextData>(
-    () => ({
-      center,
-      currentCenter,
-      zoom,
-      place,
-      options,
-      currentLocation,
-      clickedPos,
-      directions,
-      selectedMarker,
-      onIdle,
-      onMapLoad,
-      onUnmount,
-      moveToCurrentLocation,
-      handleMapClick,
-      clearLocation,
-      setSelectedMarker,
-      setClickedPos,
-      setPlace,
-      setCenter,
-      setZoom,
-      setDirections
-    }),
-    [
-      center,
-      currentCenter,
-      zoom,
-      place,
-      options,
-      currentLocation,
-      clickedPos,
-      directions,
-      selectedMarker,
-      onIdle,
-      onMapLoad,
-      onUnmount,
-      moveToCurrentLocation,
-      handleMapClick,
-      clearLocation,
-      setSelectedMarker,
-      setClickedPos,
-      setPlace,
-      setCenter,
-      setZoom,
-      setDirections
-    ]
+    () => ({ ...mapContextProviderValues }),
+    Object.values(mapContextProviderValues)
   )
 
   return (

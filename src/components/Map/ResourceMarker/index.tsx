@@ -1,18 +1,20 @@
 import { Marker } from '@react-google-maps/api'
 import { useMap } from 'contexts/mapContext'
 import { MarkerLabel } from 'types/googleMaps'
-import { Resource } from 'types/resources'
+import { ResourceType } from 'types/resources'
 import { markerIcons } from 'utils/markerIcons'
 import styles from './styles.module.scss'
 
 interface ResourceMarkerProps {
-  resource: Resource
+  resource: ResourceType
   setResourceOpened: (opened: boolean) => void
+  setResource: (resource: ResourceType) => void
 }
 
 export function ResourceMarker({
   resource,
-  setResourceOpened
+  setResourceOpened,
+  setResource
 }: ResourceMarkerProps) {
   const { zoom } = useMap()
 
@@ -38,14 +40,19 @@ export function ResourceMarker({
     return null
   }
 
+  const handleMarkerClick = () => {
+    setResourceOpened(true)
+    setResource(resource)
+  }
+
   return (
     <Marker
-      onClick={() => setResourceOpened(true)}
+      onClick={handleMarkerClick}
       key={id}
       position={{ lat, lng }}
       icon={{
         url: markerIcons[category],
-        scaledSize: new window.google.maps.Size(30, 30)
+        scaledSize: new window.google.maps.Size(35, 35)
       }}
       title={name}
       label={markerLabel() ?? undefined}
