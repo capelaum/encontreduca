@@ -19,6 +19,7 @@ const libraries: Libraries[] = ['places']
 export default function Home() {
   const [menuOpened, setMenuOpened] = useState(false)
   const [profileOpened, setProfileOpened] = useState(false)
+  const [resourceOpened, setResourceOpened] = useState(false)
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
@@ -36,7 +37,11 @@ export default function Home() {
 
       <Search setMenuOpened={setMenuOpened} />
 
-      <Map />
+      <Map setResourceOpened={setResourceOpened} />
+
+      <Sidebar opened={resourceOpened} setOpened={setResourceOpened}>
+        <Search setMenuOpened={setMenuOpened} isResourceOpened />
+      </Sidebar>
 
       <Sidebar opened={menuOpened} setOpened={setMenuOpened}>
         <Menu setProfileOpened={setProfileOpened} />

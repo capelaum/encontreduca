@@ -7,9 +7,13 @@ import styles from './styles.module.scss'
 
 interface ResourceMarkerProps {
   resource: Resource
+  setResourceOpened: (opened: boolean) => void
 }
 
-export function ResourceMarker({ resource }: ResourceMarkerProps) {
+export function ResourceMarker({
+  resource,
+  setResourceOpened
+}: ResourceMarkerProps) {
   const { zoom } = useMap()
 
   const {
@@ -36,6 +40,7 @@ export function ResourceMarker({ resource }: ResourceMarkerProps) {
 
   return (
     <Marker
+      onClick={() => setResourceOpened(true)}
       key={id}
       position={{ lat, lng }}
       icon={{

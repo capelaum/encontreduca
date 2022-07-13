@@ -6,7 +6,11 @@ import data from 'data/resources.json'
 import { ResourceMarker } from './ResourceMarker'
 import { SideButtons } from './SideButtons'
 
-export default function Map(): JSX.Element {
+interface MapProps {
+  setResourceOpened: (opened: boolean) => void
+}
+
+export default function Map({ setResourceOpened }: MapProps): JSX.Element {
   const { resources } = data
 
   const {
@@ -21,7 +25,12 @@ export default function Map(): JSX.Element {
   } = useMap()
 
   function renderResourcesMarkers() {
-    return resources.map((resource) => <ResourceMarker resource={resource} />)
+    return resources.map((resource) => (
+      <ResourceMarker
+        resource={resource}
+        setResourceOpened={setResourceOpened}
+      />
+    ))
   }
 
   return (
