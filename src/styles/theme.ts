@@ -10,10 +10,10 @@ export const theme: MantineThemeOverride = {
       '#F231A5',
       '#E94335',
       '#0C103E',
-      '#030518',
-      '#66d9e8',
+      '#030518', // darker-blue
+      '#66d9e8', // cyan 300
       '#282C4D',
-      '#282C4D',
+      '#282C4D', // primary
       '#282C4D',
       '#191D40'
     ],
@@ -21,7 +21,7 @@ export const theme: MantineThemeOverride = {
       '#ffffff',
       '#acaebf',
       '#8c8fa3',
-      '#ADB5BD', // gray.500
+      '#ADB5BD', // gray 500
       '#4d4f66',
       '#282C4D', // primary
       '#2b2c3d',

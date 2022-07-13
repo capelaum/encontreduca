@@ -1,9 +1,13 @@
 import { Avatar, Group, Stack, Text, UnstyledButton } from '@mantine/core'
 
-export function MenuProfile() {
+interface MenuProfileProps {
+  setProfileOpened: (opened: boolean) => void
+}
+
+export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
   return (
     <UnstyledButton
-      onClick={() => console.log('try focusing button with tab')}
+      onClick={() => setProfileOpened(true)}
       sx={(theme) => ({
         margin: theme.spacing.md
       })}

@@ -21,7 +21,7 @@ export function MenuButton({ text, icon }: MenuButtonProps) {
         }
       })}
     >
-      <Group spacing="md">
+      <Group spacing="md" align="center">
         {icon}
         <Text size="lg" weight={400}>
           {text}

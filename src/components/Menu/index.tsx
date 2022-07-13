@@ -6,10 +6,14 @@ import { MdHelp, MdLogout } from 'react-icons/md'
 import { MenuButton } from './MenuButton'
 import { MenuProfile } from './MenuProfile'
 
-export function Menu() {
+interface MenuProps {
+  setProfileOpened: (opened: boolean) => void
+}
+
+export function Menu({ setProfileOpened }: MenuProps) {
   return (
     <>
-      <MenuProfile />
+      <MenuProfile setProfileOpened={setProfileOpened} />
 
       <Space h="md" />
 

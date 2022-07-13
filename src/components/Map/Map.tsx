@@ -30,15 +30,11 @@ export default function Map(): JSX.Element {
       >
         <Marker
           position={currentLocation}
-          visible
           icon={{
-            url: '/currentMarker.png',
-            scaledSize: new window.google.maps.Size(20, 20)
+            url: '/markers/marker_coworking.svg',
+            scaledSize: new window.google.maps.Size(30, 30)
           }}
         />
-
-        <Marker position={currentLocation} title="Posição atual" />
-        <Marker position={center} title="Posição atual" />
       </GoogleMap>
 
       <SideButtons />

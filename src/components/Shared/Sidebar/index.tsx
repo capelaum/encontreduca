@@ -5,14 +5,14 @@ import { theme as myTheme } from 'styles/theme'
 
 interface SidebarProps {
   children: ReactNode
-  menuOpened: boolean
+  opened: boolean
   setOpened: (opened: boolean) => void
 }
 
-export function Sidebar({ children, menuOpened, setOpened }: SidebarProps) {
+export function Sidebar({ children, opened, setOpened }: SidebarProps) {
   return (
     <Drawer
-      opened={menuOpened}
+      opened={opened}
       onClose={() => setOpened(false)}
       padding={0}
       size={420}
