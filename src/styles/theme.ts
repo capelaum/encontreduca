@@ -16,6 +16,18 @@ export const theme: MantineThemeOverride = {
       '#282C4D',
       '#282C4D',
       '#191D40'
+    ],
+    dark: [
+      '#ffffff',
+      '#acaebf',
+      '#8c8fa3',
+      '#ADB5BD', // gray.500
+      '#4d4f66',
+      '#282C4D', // primary
+      '#2b2c3d',
+      '#282C4D',
+      '#0c0d21',
+      '#01010a'
     ]
   },
   breakpoints: {
@@ -28,8 +40,8 @@ export const theme: MantineThemeOverride = {
   spacing: {
     xs: 4,
     sm: 16,
-    md: 24,
+    md: 20,
     lg: 40,
-    xl: 60
+    xl: 48
   }
 }

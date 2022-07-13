@@ -1,8 +1,11 @@
+import { Box } from '@mantine/core'
 import { useJsApiLoader } from '@react-google-maps/api'
 import Map from 'components/Map/Map'
-import { SideButtons } from 'components/Map/SideButtons'
-import { Loader } from 'components/Shared/Loader'
+import { MapLoader } from 'components/Map/MapLoader'
+import { Search } from 'components/Map/Search'
+import { Sidebar } from 'components/Shared/Sidebar'
 import Head from 'next/head'
+import { useState } from 'react'
 
 type Libraries =
   | 'places'
@@ -14,22 +17,29 @@ type Libraries =
 const libraries: Libraries[] = ['places']
 
 export default function Home() {
+  const [menuOpened, setMenuOpened] = useState(false)
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     libraries
   })
 
-  if (!isLoaded) return <Loader />
+  if (!isLoaded) return <MapLoader />
 
   return (
     <>
       <Head>
-        <title>React Google Maps</title>
-        <meta name="description" content="React Google Maps" />
+        <title>Mapa | Encontreduca</title>
+        <meta name="description" content="Mapa | Encontreduca" />
       </Head>
 
+      <Search setMenuOpened={setMenuOpened} />
+
       <Map />
-      <SideButtons />
+
+      <Sidebar menuOpened={menuOpened} setOpened={setMenuOpened}>
+        <Box>HEY</Box>
+      </Sidebar>
     </>
   )
 }

@@ -42,6 +42,7 @@ interface MapContextData {
   setSelectedMarker: (marker: MarkerType | null) => void
   setPlace: (place: string | null) => void
   setCenter: (position: LatLngLiteral) => void
+  setZoom: (zoom: number) => void
 }
 
 const MapContext = createContext<MapContextData>({} as MapContextData)
@@ -104,7 +105,7 @@ export function MapProvider({ children }: MapProviderProps) {
     if (!mapRef.current) return
 
     mapRef.current.panTo({ lat: position.lat, lng: position.lng })
-    mapRef.current.setZoom(14)
+    mapRef.current.setZoom(17)
   }, [])
 
   const mapContextProviderValue = useMemo<MapContextData>(
@@ -128,6 +129,7 @@ export function MapProvider({ children }: MapProviderProps) {
       setClickedPos,
       setPlace,
       setCenter,
+      setZoom,
       setDirections
     }),
     [
@@ -150,6 +152,7 @@ export function MapProvider({ children }: MapProviderProps) {
       setClickedPos,
       setPlace,
       setCenter,
+      setZoom,
       setDirections
     ]
   )

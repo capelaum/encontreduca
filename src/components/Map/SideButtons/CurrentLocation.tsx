@@ -1,8 +1,7 @@
-import { ActionIcon } from '@mantine/core'
+import { ActionIcon, Loader } from '@mantine/core'
 import { useMap } from 'contexts/mapContext'
 import { useState } from 'react'
 import { MdMyLocation } from 'react-icons/md'
-import { BallTriangle } from 'react-loader-spinner'
 
 export function CurrentLocation() {
   const { moveToCurrentLocation } = useMap()
@@ -34,12 +33,7 @@ export function CurrentLocation() {
       })}
     >
       {disabled ? (
-        <BallTriangle
-          width={24}
-          height={24}
-          color="white"
-          ariaLabel="loading-indicator"
-        />
+        <Loader size="sm" color="cyan" />
       ) : (
         <MdMyLocation size={22} />
       )}

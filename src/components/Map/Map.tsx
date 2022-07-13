@@ -2,6 +2,7 @@ import { Box } from '@mantine/core'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { mapContainerStyle } from 'config/options'
 import { useMap } from 'contexts/mapContext'
+import { SideButtons } from './SideButtons'
 
 export default function Map(): JSX.Element {
   const {
@@ -16,7 +17,7 @@ export default function Map(): JSX.Element {
   } = useMap()
 
   return (
-    <Box sx={{ width: '100vw', height: '100vh' }}>
+    <Box sx={{ width: '100vw', height: '100vh', display: 'flex' }}>
       <GoogleMap
         zoom={zoom}
         center={center}
@@ -29,13 +30,18 @@ export default function Map(): JSX.Element {
       >
         <Marker
           position={currentLocation}
-          title="Posição atual"
+          visible
           icon={{
             url: '/currentMarker.png',
-            scaledSize: new window.google.maps.Size(30, 30)
+            scaledSize: new window.google.maps.Size(20, 20)
           }}
         />
+
+        <Marker position={currentLocation} title="Posição atual" />
+        <Marker position={center} title="Posição atual" />
       </GoogleMap>
+
+      <SideButtons />
     </Box>
   )
 }
