@@ -1,4 +1,14 @@
-import { Box, Divider, Group, Image, Stack, Text } from '@mantine/core'
+import {
+  Box,
+  Button,
+  Center,
+  Divider,
+  Group,
+  Image,
+  Stack,
+  Text,
+  Title as MantineTitle
+} from '@mantine/core'
 import { Search } from 'components/Map/Search'
 import { MdDirections, MdEdit, MdStarBorder } from 'react-icons/md'
 import { ResourceType } from 'types/resources'
@@ -8,6 +18,7 @@ import { Category } from './Category'
 import { Info } from './Info'
 import { ReviewStats } from './ReviewStats'
 import { Title } from './Title'
+import { UserReview } from './UserReview'
 
 interface ResourceProps {
   resource: ResourceType
@@ -82,6 +93,49 @@ export function Resource({
         color="none"
         sx={(theme) => ({ color: theme.colors.gray[6] })}
       />
+
+      <MantineTitle
+        order={2}
+        px="md"
+        mb={24}
+        sx={(theme) => ({
+          fontSize: theme.fontSizes.lg
+        })}
+      >
+        Sua avaliação
+      </MantineTitle>
+
+      <UserReview isOwnReview />
+
+      <Divider
+        my="md"
+        size="xs"
+        color="none"
+        sx={(theme) => ({ color: theme.colors.gray[6] })}
+      />
+
+      <MantineTitle
+        order={2}
+        px="md"
+        mb={24}
+        sx={(theme) => ({
+          fontSize: theme.fontSizes.lg
+        })}
+      >
+        Avaliações
+      </MantineTitle>
+
+      <Stack spacing={24}>
+        <UserReview />
+        <UserReview />
+        <UserReview />
+      </Stack>
+
+      <Center my={32}>
+        <Button variant="light" compact size="md">
+          Mais avalições (17)
+        </Button>
+      </Center>
     </Box>
   )
 }

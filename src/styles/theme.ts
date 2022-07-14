@@ -8,9 +8,9 @@ export const myTheme: MantineThemeOverride = {
     brand: [
       '#66d9e8', // cyan 300
       '#282C4D',
-      '#F3AA9F',
-      '#F231A5',
-      '#E94335',
+      '#66d9e8',
+      '#66d9e8',
+      '#66d9e8',
       '#0C103E',
       '#030518', // darker-blue
       '#282C4D', // primary
