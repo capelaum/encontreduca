@@ -1,4 +1,11 @@
-import { ActionIcon, Group, TextInput, Tooltip } from '@mantine/core'
+import {
+  ActionIcon,
+  CSSObject,
+  Group,
+  MantineTheme,
+  TextInput,
+  Tooltip
+} from '@mantine/core'
 import { MdMenu, MdSearch } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
 
@@ -8,6 +15,25 @@ interface SearchProps {
 }
 
 export function Search({ setMenuOpened, isResourceOpened }: SearchProps) {
+  const mapStyles = (theme: MantineTheme): CSSObject => ({
+    position: 'absolute',
+    top: theme.spacing.md,
+    left: theme.spacing.md,
+    width: '380px',
+    zIndex: 10,
+    borderRadius: theme.radius.md,
+    backgroundColor: theme.colors.brand[7]
+  })
+
+  const resourceStyles = (theme: MantineTheme): CSSObject => ({
+    borderRadius: theme.radius.md,
+    width: '380px',
+    marginTop: theme.spacing.md,
+    marginRight: theme.spacing.md,
+    marginLeft: theme.spacing.md,
+    border: '1px solid #66d9e8'
+  })
+
   const rightSection = (
     <Tooltip
       label="Busque os recursos educacionais por nome"
@@ -27,16 +53,7 @@ export function Search({ setMenuOpened, isResourceOpened }: SearchProps) {
       spacing={0}
       align="center"
       position="left"
-      sx={(theme) => ({
-        position: 'absolute',
-        top: theme.spacing.md,
-        left: theme.spacing.md,
-        width: '380px',
-        zIndex: 100,
-        borderRadius: theme.radius.md,
-        backgroundColor: theme.colors.brand[7],
-        border: isResourceOpened ? '1px solid #66d9e8' : 'none'
-      })}
+      sx={isResourceOpened ? resourceStyles : mapStyles}
     >
       <ActionIcon
         radius="md"

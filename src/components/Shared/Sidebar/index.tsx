@@ -30,21 +30,23 @@ export function Sidebar({
       overlayOpacity={0.6}
       withOverlay={!isResourceOpened}
     >
-      <ActionIcon
-        variant="hover"
-        size="lg"
-        color="brand"
-        onClick={() => setOpened(false)}
-        title="Fechar Menu"
-        sx={(theme) => ({
-          color: theme.colors.cyan[3],
-          position: 'absolute',
-          top: theme.spacing.md,
-          right: theme.spacing.md
-        })}
-      >
-        <MdClose size={24} color={myTheme.colors!.brand![0]} />
-      </ActionIcon>
+      {!isResourceOpened && (
+        <ActionIcon
+          variant="hover"
+          size="lg"
+          color="brand"
+          onClick={() => setOpened(false)}
+          title="Fechar Menu"
+          sx={(theme) => ({
+            color: theme.colors.cyan[3],
+            position: 'absolute',
+            top: theme.spacing.md,
+            right: theme.spacing.md
+          })}
+        >
+          <MdClose size={24} color={myTheme.colors!.brand![0]} />
+        </ActionIcon>
+      )}
 
       <Box className={styles.container}>{children}</Box>
     </Drawer>

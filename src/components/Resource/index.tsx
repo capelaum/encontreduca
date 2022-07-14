@@ -24,7 +24,7 @@ export function Resource({
     <Box>
       <Search setMenuOpened={setMenuOpened} isResourceOpened />
 
-      <Stack mt={94} px="md" spacing="md">
+      <Stack mt="md" px="md" spacing="md">
         <Stack spacing="sm">
           <Group align="start" position="apart" spacing={0}>
             <Title name={resource.name} />
