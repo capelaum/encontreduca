@@ -2,7 +2,7 @@ import { Group, Stack } from '@mantine/core'
 import { useSidebar } from 'contexts/sidebarContext'
 import { Back } from './Back'
 import { Category } from './Category'
-import { Title } from './Title'
+import { ResourceTitle } from './ResourceTitle'
 
 export function Header() {
   const { resource, setResourceOpened } = useSidebar()
@@ -10,7 +10,7 @@ export function Header() {
   return (
     <Stack spacing="sm">
       <Group align="start" position="apart" spacing={0}>
-        <Title name={resource!.name} />
+        <ResourceTitle name={resource!.name} />
         <Back setResourceOpened={setResourceOpened} />
       </Group>
 
