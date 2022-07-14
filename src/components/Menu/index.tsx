@@ -18,26 +18,26 @@ export function Menu({ setProfileOpened }: MenuProps) {
       <Space h="md" />
 
       <Stack spacing={0}>
-        <MenuButton icon={<AiFillHome size={24} />} text="Home" />
+        <MenuButton icon={<AiFillHome size={20} />} text="Home" />
 
         <MenuButton
-          icon={<BsBookmarksFill size={24} />}
+          icon={<BsBookmarksFill size={20} />}
           text="Recursos salvos"
         />
 
         <MenuButton
-          icon={<BsPlusCircleFill size={24} />}
+          icon={<BsPlusCircleFill size={20} />}
           text="Cadastrar recurso"
         />
 
         <MenuButton
-          icon={<GiStarsStack size={24} />}
+          icon={<GiStarsStack size={20} />}
           text="Painel de votação"
         />
 
-        <MenuButton icon={<MdHelp size={24} />} text="Suporte" />
+        <MenuButton icon={<MdHelp size={20} />} text="Suporte" />
 
-        <MenuButton icon={<MdLogout size={24} />} text="Sair" />
+        <MenuButton icon={<MdLogout size={20} />} text="Sair" />
       </Stack>
     </>
   )

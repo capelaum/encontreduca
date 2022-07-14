@@ -4,8 +4,8 @@ import { myTheme } from 'styles/theme'
 
 export function Reviews() {
   return (
-    <Group align="center" spacing={8}>
-      <Text size="sm" mt={4}>
+    <Group align="center" spacing="sm">
+      <Text size="sm" mt="xs">
         4,2
       </Text>
 
@@ -17,7 +17,7 @@ export function Reviews() {
         <MdStarBorder size={18} />
       </Group>
 
-      <Text size="sm" mt={4} color={myTheme.colors!.brand![0]}>
+      <Text size="sm" mt="xs" color={myTheme.colors!.brand![0]}>
         20 avaliações
       </Text>
     </Group>

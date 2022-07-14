@@ -6,7 +6,7 @@ export function SideButtons() {
   return (
     <Stack
       align="center"
-      spacing={8}
+      spacing="sm"
       sx={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem' }}
     >
       <CurrentLocation />

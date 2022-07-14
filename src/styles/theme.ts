@@ -39,9 +39,9 @@ export const myTheme: MantineThemeOverride = {
   },
   spacing: {
     xs: 4,
-    sm: 16,
+    sm: 8,
     md: 20,
-    lg: 32,
+    lg: 40,
     xl: 48
   },
   fontSizes: {

@@ -9,7 +9,7 @@ export function Category({ category }: CategoryProps) {
   const { name, icon } = resourceCategories[category]
 
   return (
-    <Group align="center" spacing={8}>
+    <Group align="center" spacing="sm">
       {icon}
 
       <Text size="sm" pt={2}>
