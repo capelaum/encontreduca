@@ -1,6 +1,6 @@
 import { ActionIcon, Group, TextInput, Tooltip } from '@mantine/core'
 import { MdMenu, MdSearch } from 'react-icons/md'
-import { theme as myTheme } from 'styles/theme'
+import { myTheme } from 'styles/theme'
 
 interface SearchProps {
   setMenuOpened: (value: boolean) => void
@@ -46,7 +46,7 @@ export function Search({ setMenuOpened, isResourceOpened }: SearchProps) {
       >
         <MdMenu
           title="Abrir Menu Principal"
-          size={30}
+          size={32}
           color={myTheme.colors!.brand![0]}
         />
       </ActionIcon>

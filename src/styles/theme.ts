@@ -1,6 +1,6 @@
 import { MantineThemeOverride } from '@mantine/core'
 
-export const theme: MantineThemeOverride = {
+export const myTheme: MantineThemeOverride = {
   fontFamily: 'Roboto, sans-serif',
   colorScheme: 'dark',
   primaryColor: 'brand',

@@ -1,7 +1,7 @@
 import { ActionIcon, Drawer } from '@mantine/core'
 import { ReactNode } from 'react'
 import { MdClose } from 'react-icons/md'
-import { theme as myTheme } from 'styles/theme'
+import { myTheme } from 'styles/theme'
 
 interface SidebarProps {
   children: ReactNode

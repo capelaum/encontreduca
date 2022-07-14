@@ -6,7 +6,7 @@ import {
 import { useHotkeys, useLocalStorage } from '@mantine/hooks'
 import { MapProvider } from 'contexts/mapContext'
 import type { AppProps } from 'next/app'
-import { theme } from '../styles/theme'
+import { myTheme } from '../styles/theme'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       colorScheme={colorScheme}
       toggleColorScheme={toggleColorScheme}
     >
-      <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
+      <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
         <MapProvider>
           <Component {...pageProps} />
         </MapProvider>

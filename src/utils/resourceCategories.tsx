@@ -3,7 +3,7 @@ import { FaSchool } from 'react-icons/fa'
 import { IoLibraryOutline } from 'react-icons/io5'
 import { MdOutlineSchool } from 'react-icons/md'
 import { VscNotebook } from 'react-icons/vsc'
-import { theme as myTheme } from 'styles/theme'
+import { myTheme } from 'styles/theme'
 
 export const resourceCategories: CategoriesType = {
   private_university: {

@@ -1,6 +1,6 @@
 import { ActionIcon, Group, Title as MantineTitle } from '@mantine/core'
 import { BsBookmark } from 'react-icons/bs'
-import { theme as myTheme } from 'styles/theme'
+import { myTheme } from 'styles/theme'
 
 interface TitleProps {
   name: string
@@ -26,11 +26,7 @@ export function Title({ name }: TitleProps) {
         })}
       >
         {name}
-        <ActionIcon
-          variant="transparent"
-          ml={8}
-          // sx={{ border: '1px solid red' }}
-        >
+        <ActionIcon variant="transparent" ml={8}>
           <BsBookmark size={20} color={myTheme.colors!.brand![0]} />
         </ActionIcon>
       </MantineTitle>

@@ -1,4 +1,4 @@
-import { theme } from 'styles/theme'
+import { myTheme } from 'styles/theme'
 
 export const defaultCenter = {
   lat: -15.7919382,
@@ -22,5 +22,5 @@ export const mapOptionsLight = {
 export const mapContainerStyle = {
   width: '100%',
   height: '100vh',
-  backgroundColor: theme.colors!.brand![7]
+  backgroundColor: myTheme.colors!.brand![7]
 }
