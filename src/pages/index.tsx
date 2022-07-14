@@ -25,6 +25,7 @@ export default function Home() {
   const [profileOpened, setProfileOpened] = useState(false)
   const [resourceOpened, setResourceOpened] = useState(false)
   const [resource, setResource] = useState<ResourceType>({} as ResourceType)
+
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
@@ -53,7 +54,11 @@ export default function Home() {
         />
       )}
 
-      <Sidebar opened={resourceOpened} setOpened={setResourceOpened}>
+      <Sidebar
+        opened={resourceOpened}
+        setOpened={setResourceOpened}
+        isResourceOpened
+      >
         <Search setMenuOpened={setMenuOpened} isResourceOpened />
         <Resource setResourceOpened={setResourceOpened} resource={resource} />
       </Sidebar>

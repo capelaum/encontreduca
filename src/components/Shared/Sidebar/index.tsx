@@ -7,20 +7,27 @@ interface SidebarProps {
   children: ReactNode
   opened: boolean
   setOpened: (opened: boolean) => void
+  isResourceOpened?: boolean
 }
 
-export function Sidebar({ children, opened, setOpened }: SidebarProps) {
+export function Sidebar({
+  children,
+  opened,
+  setOpened,
+  isResourceOpened
+}: SidebarProps) {
   return (
     <Drawer
       opened={opened}
       onClose={() => setOpened(false)}
       padding={0}
       size={420}
-      overlayOpacity={0.6}
-      overlayBlur={2}
       transitionDuration={300}
-      transitionTimingFunction="ease-in"
+      transitionTimingFunction="ease-in-out"
       withCloseButton={false}
+      overlayBlur={1}
+      overlayOpacity={0.6}
+      withOverlay={!isResourceOpened}
     >
       <ActionIcon
         variant="hover"
