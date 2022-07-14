@@ -1,7 +1,8 @@
-import { ActionIcon, Drawer } from '@mantine/core'
+import { ActionIcon, Box, Drawer } from '@mantine/core'
 import { ReactNode } from 'react'
 import { MdClose } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
+import styles from './styles.module.scss'
 
 interface SidebarProps {
   children: ReactNode
@@ -45,7 +46,7 @@ export function Sidebar({
         <MdClose size={24} color={myTheme.colors!.brand![0]} />
       </ActionIcon>
 
-      {children}
+      <Box className={styles.container}>{children}</Box>
     </Drawer>
   )
 }
