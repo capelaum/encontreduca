@@ -5,6 +5,7 @@ import {
 } from '@mantine/core'
 import { useHotkeys, useLocalStorage } from '@mantine/hooks'
 import { MapProvider } from 'contexts/mapContext'
+import { SidebarProvider } from 'contexts/sidebarContext'
 import type { AppProps } from 'next/app'
 import { myTheme } from '../styles/theme'
 
@@ -27,7 +28,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
         <MapProvider>
-          <Component {...pageProps} />
+          <SidebarProvider>
+            <Component {...pageProps} />
+          </SidebarProvider>
         </MapProvider>
       </MantineProvider>
     </ColorSchemeProvider>

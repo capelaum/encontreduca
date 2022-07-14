@@ -1,4 +1,5 @@
 import { Space, Stack } from '@mantine/core'
+import { useSidebar } from 'contexts/sidebarContext'
 import { AiFillHome } from 'react-icons/ai'
 import { BsBookmarksFill, BsPlusCircleFill } from 'react-icons/bs'
 import { GiStarsStack } from 'react-icons/gi'
@@ -6,11 +7,9 @@ import { MdHelp, MdLogout } from 'react-icons/md'
 import { MenuButton } from './MenuButton'
 import { MenuProfile } from './MenuProfile'
 
-interface MenuProps {
-  setProfileOpened: (opened: boolean) => void
-}
+export function Menu() {
+  const { setProfileOpened } = useSidebar()
 
-export function Menu({ setProfileOpened }: MenuProps) {
   return (
     <>
       <MenuProfile setProfileOpened={setProfileOpened} />

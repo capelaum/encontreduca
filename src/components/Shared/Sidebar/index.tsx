@@ -1,4 +1,5 @@
 import { ActionIcon, Box, Drawer } from '@mantine/core'
+import { useSidebar } from 'contexts/sidebarContext'
 import { ReactNode } from 'react'
 import { MdClose } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
@@ -8,15 +9,11 @@ interface SidebarProps {
   children: ReactNode
   opened: boolean
   setOpened: (opened: boolean) => void
-  isResourceOpened?: boolean
 }
 
-export function Sidebar({
-  children,
-  opened,
-  setOpened,
-  isResourceOpened
-}: SidebarProps) {
+export function Sidebar({ children, opened, setOpened }: SidebarProps) {
+  const { resourceOpened } = useSidebar()
+
   return (
     <Drawer
       opened={opened}
@@ -28,9 +25,9 @@ export function Sidebar({
       withCloseButton={false}
       overlayBlur={1}
       overlayOpacity={0.6}
-      withOverlay={!isResourceOpened}
+      withOverlay={!resourceOpened}
     >
-      {!isResourceOpened && (
+      {!resourceOpened && (
         <ActionIcon
           variant="hover"
           size="lg"

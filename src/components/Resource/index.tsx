@@ -10,8 +10,8 @@ import {
   Title as MantineTitle
 } from '@mantine/core'
 import { Search } from 'components/Map/Search'
+import { useSidebar } from 'contexts/sidebarContext'
 import { MdDirections, MdEdit, MdStarBorder } from 'react-icons/md'
-import { ResourceType } from 'types/resources'
 import { ActionButton } from './ActionButton'
 import { Back } from './Back'
 import { Category } from './Category'
@@ -20,29 +20,21 @@ import { ReviewStats } from './ReviewStats'
 import { Title } from './Title'
 import { UserReview } from './UserReview'
 
-interface ResourceProps {
-  resource: ResourceType
-  setResourceOpened: (opened: boolean) => void
-  setMenuOpened: (opened: boolean) => void
-}
+export function Resource() {
+  const { resource, setResourceOpened } = useSidebar()
 
-export function Resource({
-  resource,
-  setResourceOpened,
-  setMenuOpened
-}: ResourceProps) {
   return (
     <Box>
-      <Search setMenuOpened={setMenuOpened} isResourceOpened />
+      <Search />
 
       <Stack mt="md" px="md" spacing="md">
         <Stack spacing="sm">
           <Group align="start" position="apart" spacing={0}>
-            <Title name={resource.name} />
+            <Title name={resource!.name} />
             <Back setResourceOpened={setResourceOpened} />
           </Group>
 
-          <Category category={resource.category} />
+          <Category category={resource!.category} />
         </Stack>
 
         <Stack spacing="sm">
@@ -50,9 +42,9 @@ export function Resource({
             width="100%"
             height={200}
             radius="md"
-            src={resource.cover}
-            alt={`Imagem de capa do recurso ${resource.name}`}
-            title={`Imagem de capa do recurso ${resource.name}`}
+            src={resource!.cover}
+            alt={`Imagem de capa do recurso ${resource!.name}`}
+            title={`Imagem de capa do recurso ${resource!.name}`}
           />
 
           <ReviewStats />
@@ -82,9 +74,9 @@ export function Resource({
       />
 
       <Info
-        address={resource.address}
-        website={resource.website}
-        phone={resource.phone}
+        address={resource!.address}
+        website={resource!.website}
+        phone={resource!.phone}
       />
 
       <Divider

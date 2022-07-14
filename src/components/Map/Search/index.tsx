@@ -1,20 +1,18 @@
 import {
-  ActionIcon,
+  Burger,
   CSSObject,
   Group,
   MantineTheme,
   TextInput,
   Tooltip
 } from '@mantine/core'
-import { MdMenu, MdSearch } from 'react-icons/md'
+import { useSidebar } from 'contexts/sidebarContext'
+import { MdSearch } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
 
-interface SearchProps {
-  setMenuOpened: (value: boolean) => void
-  isResourceOpened?: boolean
-}
+export function Search() {
+  const { menuOpened, setMenuOpened, resourceOpened } = useSidebar()
 
-export function Search({ setMenuOpened, isResourceOpened }: SearchProps) {
   const mapStyles = (theme: MantineTheme): CSSObject => ({
     position: 'absolute',
     top: theme.spacing.md,
@@ -53,20 +51,15 @@ export function Search({ setMenuOpened, isResourceOpened }: SearchProps) {
       spacing={0}
       align="center"
       position="left"
-      sx={isResourceOpened ? resourceStyles : mapStyles}
+      sx={resourceOpened ? resourceStyles : mapStyles}
     >
-      <ActionIcon
-        radius="md"
-        variant="hover"
-        size="xl"
+      <Burger
+        color={myTheme.colors!.brand![0]}
+        ml={12}
+        opened={menuOpened}
         onClick={() => setMenuOpened(true)}
-      >
-        <MdMenu
-          title="Abrir Menu Principal"
-          size={32}
-          color={myTheme.colors!.brand![0]}
-        />
-      </ActionIcon>
+        title="Abrir Menu Principal"
+      />
 
       <TextInput
         size="md"

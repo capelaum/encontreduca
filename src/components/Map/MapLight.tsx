@@ -2,20 +2,15 @@ import { Box } from '@mantine/core'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { mapContainerStyle, mapOptionsLight } from 'config/options'
 import { useMap } from 'contexts/mapContext'
+import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/resources.json'
-import { ResourceType } from 'types/resources'
 import { ResourceMarker } from './ResourceMarker'
+import { Search } from './Search'
 import { SideButtons } from './SideButtons'
 
-interface MapProps {
-  setResourceOpened: (opened: boolean) => void
-  setResource: (resource: ResourceType) => void
-}
+export default function MapLight(): JSX.Element {
+  const { setResourceOpened, setResource, resourceOpened } = useSidebar()
 
-export default function MapLight({
-  setResourceOpened,
-  setResource
-}: MapProps): JSX.Element {
   const { resources } = data
 
   const {
@@ -41,6 +36,8 @@ export default function MapLight({
 
   return (
     <Box sx={{ width: '100vw', height: '100vh' }}>
+      {!resourceOpened && <Search />}
+
       <GoogleMap
         zoom={zoom}
         center={center}
