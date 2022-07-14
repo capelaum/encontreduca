@@ -1,5 +1,4 @@
 import { Box, Drawer } from '@mantine/core'
-import { useSidebar } from 'contexts/sidebarContext'
 import { ReactNode } from 'react'
 import styles from './styles.module.scss'
 
@@ -10,8 +9,6 @@ interface SidebarProps {
 }
 
 export function Sidebar({ children, opened, setOpened }: SidebarProps) {
-  const { resourceOpened } = useSidebar()
-
   return (
     <Drawer
       opened={opened}
@@ -23,7 +20,7 @@ export function Sidebar({ children, opened, setOpened }: SidebarProps) {
       withCloseButton={false}
       overlayBlur={1}
       overlayOpacity={0.6}
-      withOverlay={!resourceOpened}
+      withOverlay={false}
     >
       <Box className={styles.container}>{children}</Box>
     </Drawer>
