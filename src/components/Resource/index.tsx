@@ -1,22 +1,29 @@
 import { Box, Divider, Group, Image, Stack, Text } from '@mantine/core'
+import { Search } from 'components/Map/Search'
 import { MdDirections, MdEdit, MdStarBorder } from 'react-icons/md'
-
 import { ResourceType } from 'types/resources'
 import { ActionButton } from './ActionButton'
 import { Back } from './Back'
 import { Category } from './Category'
 import { Info } from './Info'
-import { Reviews } from './Reviews'
+import { ReviewStats } from './ReviewStats'
 import { Title } from './Title'
 
 interface ResourceProps {
   resource: ResourceType
   setResourceOpened: (opened: boolean) => void
+  setMenuOpened: (opened: boolean) => void
 }
 
-export function Resource({ setResourceOpened, resource }: ResourceProps) {
+export function Resource({
+  resource,
+  setResourceOpened,
+  setMenuOpened
+}: ResourceProps) {
   return (
     <Box>
+      <Search setMenuOpened={setMenuOpened} isResourceOpened />
+
       <Stack mt={94} px="md" spacing="md">
         <Stack spacing="sm">
           <Group align="start" position="apart" spacing={0}>
@@ -37,7 +44,7 @@ export function Resource({ setResourceOpened, resource }: ResourceProps) {
             title={`Imagem de capa do recurso ${resource.name}`}
           />
 
-          <Reviews />
+          <ReviewStats />
 
           <Text
             size="sm"

@@ -2,7 +2,7 @@ import { Group, Text } from '@mantine/core'
 import { MdStar, MdStarBorder } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
 
-export function Reviews() {
+export function ReviewStats() {
   return (
     <Group align="center" spacing="sm">
       <Text size="sm" mt="xs">

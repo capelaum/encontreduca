@@ -59,8 +59,11 @@ export default function Home() {
         setOpened={setResourceOpened}
         isResourceOpened
       >
-        <Search setMenuOpened={setMenuOpened} isResourceOpened />
-        <Resource setResourceOpened={setResourceOpened} resource={resource} />
+        <Resource
+          setMenuOpened={setMenuOpened}
+          setResourceOpened={setResourceOpened}
+          resource={resource}
+        />
       </Sidebar>
 
       <Sidebar opened={menuOpened} setOpened={setMenuOpened}>
