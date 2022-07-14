@@ -8,7 +8,7 @@ export type ResourceType = {
   }
   address: string
   website: string | null
-  phone: string
+  phone: string | null
   cover: string
   approved: boolean
   created_at: string

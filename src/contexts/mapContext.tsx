@@ -12,8 +12,7 @@ import {
   DirectionsResult,
   GoogleMapsMap,
   LatLngLiteral,
-  MapMouseEvent,
-  MarkerType
+  MapMouseEvent
 } from 'types/googleMaps'
 
 interface MapProviderProps {
@@ -28,7 +27,6 @@ interface MapContextData {
   currentLocation: LatLngLiteral
   clickedPos: LatLngLiteral | null
   directions: DirectionsResult | null
-  selectedMarker: MarkerType | null
   onIdle: () => void
   onUnmount: () => void
   clearLocation: () => void
@@ -37,7 +35,6 @@ interface MapContextData {
   moveToCurrentLocation: (position: LatLngLiteral) => void
   setDirections: (directions: DirectionsResult | null) => void
   setClickedPos: (position: LatLngLiteral | null) => void
-  setSelectedMarker: (marker: MarkerType | null) => void
   setPlace: (place: string | null) => void
   setCenter: (position: LatLngLiteral) => void
   setZoom: (zoom: number) => void
@@ -51,7 +48,6 @@ export function MapProvider({ children }: MapProviderProps) {
   const [directions, setDirections] = useState<DirectionsResult | null>(null)
   const [clickedPos, setClickedPos] = useState<LatLngLiteral | null>(null)
   const [place, setPlace] = useState<string | null>(null)
-  const [selectedMarker, setSelectedMarker] = useState<MarkerType | null>(null)
   const [currentLocation, setCurrentLocation] =
     useState<LatLngLiteral>(defaultCenter)
   const [currentCenter, setCurrentCenter] =
@@ -71,7 +67,6 @@ export function MapProvider({ children }: MapProviderProps) {
   const clearLocation = useCallback(() => {
     setClickedPos(null)
     setDirections(null)
-    setSelectedMarker(null)
     setPlace(null)
   }, [])
 
@@ -110,14 +105,12 @@ export function MapProvider({ children }: MapProviderProps) {
     currentLocation,
     clickedPos,
     directions,
-    selectedMarker,
     onIdle,
     onMapLoad,
     onUnmount,
     moveToCurrentLocation,
     handleMapClick,
     clearLocation,
-    setSelectedMarker,
     setClickedPos,
     setPlace,
     setCenter,
