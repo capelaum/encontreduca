@@ -8,20 +8,11 @@ import { Resource } from 'components/Resource'
 import { Sidebar } from 'components/Shared/Sidebar'
 import { useSidebar } from 'contexts/sidebarContext'
 import Head from 'next/head'
-
-type Libraries =
-  | 'places'
-  | 'drawing'
-  | 'geometry'
-  | 'localContext'
-  | 'visualization'
+import { Libraries } from 'types/googleMaps'
 
 const libraries: Libraries[] = ['places']
 
 export default function Home() {
-  const { colorScheme } = useMantineColorScheme()
-  const dark = colorScheme === 'dark'
-
   const {
     resourceOpened,
     setResourceOpened,
@@ -30,6 +21,9 @@ export default function Home() {
     profileOpened,
     setProfileOpened
   } = useSidebar()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,

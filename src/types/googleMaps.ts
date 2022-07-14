@@ -13,13 +13,9 @@ export type GoogleMapsMarker = google.maps.Marker
 
 export type MarkerLabel = google.maps.MarkerLabel
 
-export type MarkerType = {
-  id: string
-  name: string
-  address: string
-  location: LatLngLiteral
-  phone_number: string
-  website: string
-  types: string[]
-  distance: number
-}
+export type Libraries =
+  | 'places'
+  | 'drawing'
+  | 'geometry'
+  | 'localContext'
+  | 'visualization'
