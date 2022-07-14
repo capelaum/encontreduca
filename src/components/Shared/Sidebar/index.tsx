@@ -1,8 +1,6 @@
-import { ActionIcon, Box, Drawer } from '@mantine/core'
+import { Box, Drawer } from '@mantine/core'
 import { useSidebar } from 'contexts/sidebarContext'
 import { ReactNode } from 'react'
-import { MdClose } from 'react-icons/md'
-import { myTheme } from 'styles/theme'
 import styles from './styles.module.scss'
 
 interface SidebarProps {
@@ -27,24 +25,6 @@ export function Sidebar({ children, opened, setOpened }: SidebarProps) {
       overlayOpacity={0.6}
       withOverlay={!resourceOpened}
     >
-      {!resourceOpened && (
-        <ActionIcon
-          variant="hover"
-          size="lg"
-          color="brand"
-          onClick={() => setOpened(false)}
-          title="Fechar Menu"
-          sx={(theme) => ({
-            color: theme.colors.cyan[3],
-            position: 'absolute',
-            top: theme.spacing.md,
-            right: theme.spacing.md
-          })}
-        >
-          <MdClose size={24} color={myTheme.colors!.brand![0]} />
-        </ActionIcon>
-      )}
-
       <Box className={styles.container}>{children}</Box>
     </Drawer>
   )
