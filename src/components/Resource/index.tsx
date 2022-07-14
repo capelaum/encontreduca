@@ -1,7 +1,8 @@
-import { Group, Image, Stack } from '@mantine/core'
+import { Group, Image, Stack, Text } from '@mantine/core'
 import { ResourceType } from 'types/resources'
 import { Back } from './Back'
 import { Category } from './Category'
+import { Reviews } from './Reviews'
 import { Title } from './Title'
 
 interface ResourceProps {
@@ -21,7 +22,7 @@ export function Resource({ setResourceOpened, resource }: ResourceProps) {
         <Category category={resource.category} />
       </Stack>
 
-      <Stack spacing="md">
+      <Stack spacing={8}>
         <Image
           width="100%"
           height={200}
@@ -30,6 +31,10 @@ export function Resource({ setResourceOpened, resource }: ResourceProps) {
           alt={`Imagem de capa do recurso ${resource.name}`}
           title={`Imagem de capa do recurso ${resource.name}`}
         />
+
+        <Reviews />
+
+        <Text size="sm">Criado por Nome Completo</Text>
       </Stack>
     </Stack>
   )
