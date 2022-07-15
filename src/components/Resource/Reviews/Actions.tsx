@@ -14,7 +14,7 @@ export function Actions({ isOwnReview }: ActionsProps) {
   const { resource } = useSidebar()
 
   const openModalReviewEdit = () =>
-    openContextModal('review_create', {
+    openContextModal('review', {
       title: <Title name={resource!.name} />,
       radius: 'md',
       centered: true,
@@ -57,14 +57,18 @@ export function Actions({ isOwnReview }: ActionsProps) {
     })
 
   const openModalReviewComplain = () =>
-    openContextModal('review_create', {
-      title: <Title name={resource!.name} />,
+    openContextModal('select', {
+      title: <Title name="Denunciar avaliação" />,
       radius: 'md',
       centered: true,
       withCloseButton: true,
       padding: 'md',
       innerProps: {
-        text: 'Comentário de avaliação'
+        data: [
+          { label: 'Informação falsa', value: 'info' },
+          { label: 'Informação ofensiva', value: 'offensive' },
+          { label: 'Outro', value: 'other' }
+        ]
       }
     })
 

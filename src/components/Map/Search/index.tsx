@@ -18,7 +18,7 @@ export function Search() {
     top: theme.spacing.md,
     left: theme.spacing.md,
     width: '380px',
-    zIndex: 10,
+    zIndex: 1,
     borderRadius: theme.radius.md,
     backgroundColor: theme.colors.brand[7]
   })

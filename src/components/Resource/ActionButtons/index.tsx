@@ -11,7 +11,7 @@ export function ActionButtons() {
   const { openContextModal } = useModals()
 
   const openModalReviewCreate = () =>
-    openContextModal('review_create', {
+    openContextModal('review', {
       title: <Title name={resource!.name} />,
       radius: 'md',
       centered: true,

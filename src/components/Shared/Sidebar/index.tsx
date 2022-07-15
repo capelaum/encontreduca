@@ -21,6 +21,7 @@ export function Sidebar({ children, opened, setOpened }: SidebarProps) {
       overlayBlur={1}
       overlayOpacity={0.6}
       withOverlay={false}
+      zIndex={1}
     >
       <Box className={styles.container}>{children}</Box>
     </Drawer>
