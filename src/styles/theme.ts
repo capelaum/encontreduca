@@ -24,7 +24,7 @@ export const myTheme: MantineThemeOverride = {
       '#ADB5BD', // gray 500
       '#4d4f66',
       '#282C4D', // primary
-      '#2b2c3d',
+      '#191D40',
       '#282C4D',
       '#0c0d21',
       '#01010a'

@@ -6,9 +6,15 @@ interface SidebarProps {
   children: ReactNode
   opened: boolean
   setOpened: (opened: boolean) => void
+  isMenu?: boolean
 }
 
-export function Sidebar({ children, opened, setOpened }: SidebarProps) {
+export function Sidebar({
+  children,
+  opened,
+  setOpened,
+  isMenu = false
+}: SidebarProps) {
   return (
     <Drawer
       opened={opened}
@@ -20,7 +26,7 @@ export function Sidebar({ children, opened, setOpened }: SidebarProps) {
       withCloseButton={false}
       overlayBlur={1}
       overlayOpacity={0.6}
-      withOverlay={false}
+      withOverlay={isMenu}
       zIndex={1}
     >
       <Box className={styles.container}>{children}</Box>
