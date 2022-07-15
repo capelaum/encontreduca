@@ -4,7 +4,7 @@ import { ActionButtons } from './ActionButtons'
 import { Cover } from './Cover'
 import { Header } from './Header'
 import { Info } from './Info'
-import { UserReviews } from './Reviews'
+import { Reviews } from './Reviews'
 
 export function Resource() {
   return (
@@ -21,7 +21,7 @@ export function Resource() {
 
       <Info />
 
-      <UserReviews />
+      <Reviews />
     </Box>
   )
 }

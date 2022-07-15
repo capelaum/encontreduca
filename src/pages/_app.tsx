@@ -4,6 +4,8 @@ import {
   MantineProvider
 } from '@mantine/core'
 import { useHotkeys, useLocalStorage } from '@mantine/hooks'
+import { ModalsProvider } from '@mantine/modals'
+import { ModalReview } from 'components/Modal/ModalReview'
 import { MapProvider } from 'contexts/mapContext'
 import { SidebarProvider } from 'contexts/sidebarContext'
 import type { AppProps } from 'next/app'
@@ -29,7 +31,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
         <MapProvider>
           <SidebarProvider>
-            <Component {...pageProps} />
+            <ModalsProvider modals={{ review_create: ModalReview }}>
+              <Component {...pageProps} />
+            </ModalsProvider>
           </SidebarProvider>
         </MapProvider>
       </MantineProvider>

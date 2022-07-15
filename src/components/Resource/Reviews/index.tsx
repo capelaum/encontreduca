@@ -1,7 +1,7 @@
 import { Button, Center, Stack, Title } from '@mantine/core'
 import { UserReview } from './UserReview'
 
-export function UserReviews() {
+export function Reviews() {
   return (
     <>
       <Title

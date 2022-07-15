@@ -1,0 +1,21 @@
+.textarea {
+  textarea {
+    border: 1px solid #66d9e8;
+    padding: 10px;
+    border-radius: 7px;
+
+    &:focus {
+      outline: 1px solid #66d9e8;
+    }
+
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #22b8cf;
+      border-radius: 50px;
+    }
+  }
+}
