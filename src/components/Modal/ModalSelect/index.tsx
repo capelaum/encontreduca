@@ -1,9 +1,9 @@
 import { Select, Stack, Text } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
+import { Buttons } from 'components/Shared/Buttons'
 import { useState } from 'react'
-import { FaChevronDown } from 'react-icons/fa'
+import { TbChevronDown } from 'react-icons/tb'
 import { myTheme } from 'styles/theme'
-import { Buttons } from '../Shared/Buttons'
 import { CloseButton } from '../Shared/CloseButton'
 import styles from './styles.module.scss'
 
@@ -13,7 +13,7 @@ export function ModalSelect({
   innerProps
 }: ContextModalProps<{ data: string[]; resourceName: string }>) {
   const { data, resourceName } = innerProps
-  const [motive, setMotive] = useState<string | null>(null)
+  const [motiveId, setMotiveId] = useState<string | null>()
 
   return (
     <Stack spacing="md">
@@ -30,14 +30,14 @@ export function ModalSelect({
         label="Motivo"
         required
         size="sm"
-        placeholder="Selectione um motivo"
-        value={motive}
+        placeholder="Selecione um motivo"
+        value={motiveId}
         variant="filled"
-        onChange={setMotive}
+        onChange={setMotiveId}
         className={styles.select}
         maxDropdownHeight={300}
         rightSection={
-          <FaChevronDown size={16} color={myTheme.colors!.brand![0]} />
+          <TbChevronDown size={14} color={myTheme.colors!.brand![0]} />
         }
         rightSectionWidth={30}
         data={data}

@@ -12,10 +12,7 @@ export function Title({ name, padding }: TitleProps) {
       pt={padding ?? 0}
       sx={(theme) => ({
         fontSize: theme.fontSizes.xl,
-        color: theme.colors.cyan[3],
-        display: 'inline-flex',
-        alignItems: 'end',
-        justifyContent: 'flex-start'
+        color: theme.colors.cyan[3]
       })}
     >
       {name}
