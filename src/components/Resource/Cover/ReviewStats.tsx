@@ -1,5 +1,5 @@
 import { Group, Text } from '@mantine/core'
-import { MdStar, MdStarBorder } from 'react-icons/md'
+import { Stars } from 'components/Shared/Stars'
 import { myTheme } from 'styles/theme'
 
 export function ReviewStats() {
@@ -10,11 +10,7 @@ export function ReviewStats() {
       </Text>
 
       <Group spacing={2}>
-        <MdStar size={18} color="yellow" />
-        <MdStar size={18} color="yellow" />
-        <MdStar size={18} color="yellow" />
-        <MdStar size={18} color="yellow" />
-        <MdStarBorder size={18} />
+        <Stars />
       </Group>
 
       <Text size="sm" mt="xs" color={myTheme.colors!.brand![0]}>

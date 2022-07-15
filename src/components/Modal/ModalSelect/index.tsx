@@ -32,6 +32,7 @@ export function ModalSelect({
         rightSectionWidth={30}
         data={data}
       />
+
       <Buttons
         onCancel={() => context.closeModal(id)}
         onConfirm={() => context.closeModal(id)}

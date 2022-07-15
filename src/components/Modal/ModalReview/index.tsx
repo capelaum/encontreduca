@@ -1,4 +1,4 @@
-import { Group, Stack, Textarea } from '@mantine/core'
+import { Group, Stack, Textarea, UnstyledButton } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
 import { Profile } from 'components/Shared/Profile'
 import { useState } from 'react'
@@ -13,17 +13,33 @@ export function ModalReview({
 }: ContextModalProps<{ text: string }>) {
   const { text } = innerProps
   const [comment, setComment] = useState(text)
+  const [rating, setRating] = useState(0)
+  const [hover, setHover] = useState(0)
 
   return (
     <Stack spacing="md">
       <Profile isModal />
 
       <Group spacing={2} align="center">
-        <MdStar size={24} color="yellow" />
-        <MdStar size={24} color="yellow" />
-        <MdStar size={24} color="yellow" />
-        <MdStar size={24} color="yellow" />
-        <MdStarBorder size={24} />
+        {[...Array(5)].map((star, index) => {
+          const starIndex = index + 1
+
+          return (
+            <UnstyledButton
+              type="button"
+              key={starIndex}
+              onClick={() => setRating(starIndex)}
+              onMouseEnter={() => setHover(starIndex)}
+              onMouseLeave={() => setHover(rating)}
+            >
+              {starIndex <= (hover || rating) ? (
+                <MdStar size={24} color="yellow" />
+              ) : (
+                <MdStarBorder size={24} />
+              )}
+            </UnstyledButton>
+          )
+        })}
       </Group>
 
       <Textarea
