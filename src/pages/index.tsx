@@ -5,9 +5,8 @@ import MapLight from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
 import { Menu } from 'components/Menu'
 import { Resource } from 'components/Resource'
-import { Back } from 'components/Resource/Header/Back'
+import { ResourceForm } from 'components/ResourceForm'
 import { Sidebar } from 'components/Shared/Sidebar'
-import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import Head from 'next/head'
 import { Libraries } from 'types/googleMaps'
@@ -23,7 +22,9 @@ export default function Home() {
     profileOpened,
     setProfileOpened,
     changeResourceOpened,
-    setChangeResourceOpened
+    setChangeResourceOpened,
+    createResourceOpened,
+    setCreateResourceOpened
   } = useSidebar()
 
   const { colorScheme } = useMantineColorScheme()
@@ -53,12 +54,18 @@ export default function Home() {
         opened={changeResourceOpened}
         setOpened={setChangeResourceOpened}
       >
-        <Title name="Sugerir alteração de recurso" />
-        <Back setSidebarOpened={setChangeResourceOpened} />
+        <ResourceForm />
       </Sidebar>
 
       <Sidebar opened={menuOpened} setOpened={setMenuOpened}>
         <Menu />
+      </Sidebar>
+
+      <Sidebar
+        opened={createResourceOpened}
+        setOpened={setCreateResourceOpened}
+      >
+        <ResourceForm isCreateResource />
       </Sidebar>
 
       <Sidebar opened={profileOpened} setOpened={setProfileOpened}>

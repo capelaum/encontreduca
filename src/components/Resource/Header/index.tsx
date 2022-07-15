@@ -1,6 +1,6 @@
 import { Group, Stack } from '@mantine/core'
+import { Back } from 'components/Shared/Back'
 import { useSidebar } from 'contexts/sidebarContext'
-import { Back } from './Back'
 import { Category } from './Category'
 import { ResourceTitle } from './ResourceTitle'
 

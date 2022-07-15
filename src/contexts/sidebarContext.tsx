@@ -14,6 +14,8 @@ interface SidebarContextData {
   setResourceOpened: (resourceOpened: boolean) => void
   changeResourceOpened: boolean
   setChangeResourceOpened: (resourceOpened: boolean) => void
+  createResourceOpened: boolean
+  setCreateResourceOpened: (resourceOpened: boolean) => void
   resource: ResourceType | null
   setResource: (resource: ResourceType | null) => void
 }
@@ -27,6 +29,8 @@ export function SidebarProvider({ children }: SidebarProviderProps) {
   const [profileOpened, setProfileOpened] = useState(false)
   const [resourceOpened, setResourceOpened] = useState(false)
   const [changeResourceOpened, setChangeResourceOpened] = useState(false)
+  const [createResourceOpened, setCreateResourceOpened] = useState(false)
+
   const [resource, setResource] = useState<ResourceType | null>(null)
 
   const sidebarContextProviderValues = {
@@ -36,10 +40,12 @@ export function SidebarProvider({ children }: SidebarProviderProps) {
     setProfileOpened,
     resourceOpened,
     setResourceOpened,
-    resource,
-    setResource,
     changeResourceOpened,
-    setChangeResourceOpened
+    setChangeResourceOpened,
+    createResourceOpened,
+    setCreateResourceOpened,
+    resource,
+    setResource
   }
 
   const sidebarContextProviderValue = useMemo<SidebarContextData>(

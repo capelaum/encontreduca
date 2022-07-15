@@ -9,7 +9,8 @@ import { MenuButton } from './MenuButton'
 import { MenuProfile } from './MenuProfile'
 
 export function Menu() {
-  const { setMenuOpened, setProfileOpened } = useSidebar()
+  const { setMenuOpened, setProfileOpened, setCreateResourceOpened } =
+    useSidebar()
 
   return (
     <>
@@ -44,6 +45,7 @@ export function Menu() {
         <MenuButton
           icon={<BsPlusCircleFill size={20} />}
           text="Cadastrar recurso"
+          onClick={() => setCreateResourceOpened(true)}
         />
 
         <MenuButton
