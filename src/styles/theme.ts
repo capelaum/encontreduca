@@ -7,7 +7,7 @@ export const myTheme: MantineThemeOverride = {
   colors: {
     brand: [
       '#66d9e8', // cyan 300
-      '#282C4D',
+      '#66d9e8',
       '#66d9e8',
       '#66d9e8',
       '#66d9e8',

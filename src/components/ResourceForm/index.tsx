@@ -1,4 +1,11 @@
-import { Group, Select, Stack, Text, TextInput } from '@mantine/core'
+import {
+  Group,
+  InputWrapper,
+  Select,
+  Stack,
+  Text,
+  TextInput
+} from '@mantine/core'
 import { Back } from 'components/Shared/Back'
 import { Buttons } from 'components/Shared/Buttons'
 import { Title } from 'components/Shared/Title'
@@ -8,6 +15,7 @@ import { useState } from 'react'
 import { TbChevronDown } from 'react-icons/tb'
 import { myTheme } from 'styles/theme'
 import { getModalSelectDataCategories } from 'utils/modalSelecDataFormatter'
+import { CoverDropzone } from './CoverDropzone'
 import styles from './styles.module.scss'
 
 interface ResourceFormProps {
@@ -16,8 +24,8 @@ interface ResourceFormProps {
 
 export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const { setCreateResourceOpened, setChangeResourceOpened } = useSidebar()
+
   const [categoryId, setCategoryId] = useState<string | null>(null)
-  console.log('🚀 ~ categoryId', categoryId)
 
   const resourceCategories = getModalSelectDataCategories(data.categories)
 
@@ -26,7 +34,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     : 'Sugerir alteração de recurso'
 
   return (
-    <Stack mt="md" px="md" spacing="md">
+    <Stack my="md" px="md" spacing="md">
       <Group align="start" position="apart" spacing={0}>
         <Title name={title} />
         <Back
@@ -73,7 +81,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         required
       />
 
-      <Text>Contato</Text>
+      <Text mt={8}>Contato</Text>
 
       <TextInput
         variant="filled"
@@ -90,6 +98,14 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         radius="md"
         className={styles.input}
       />
+
+      <InputWrapper
+        label="Imagem de capa do recurso"
+        required
+        className={styles.input}
+      >
+        <CoverDropzone />
+      </InputWrapper>
 
       <Buttons
         onCancel={() =>
