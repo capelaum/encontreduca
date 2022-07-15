@@ -3,8 +3,10 @@ import { useModals } from '@mantine/modals'
 import { CloseButton } from 'components/Modal/Shared/CloseButton'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
+import data from 'data/motives.json'
 import { MdDelete, MdEdit } from 'react-icons/md'
 import { TiCancel } from 'react-icons/ti'
+import { getModalSelectDataMotives } from 'utils/modalSelecDataFormatter'
 
 interface ActionsProps {
   isOwnReview?: boolean
@@ -13,6 +15,7 @@ interface ActionsProps {
 export function Actions({ isOwnReview }: ActionsProps) {
   const { openContextModal, openConfirmModal, closeModal } = useModals()
   const { resource } = useSidebar()
+  const reviewMotives = getModalSelectDataMotives(data.motives, 'review')
 
   const openModalReviewEdit = () =>
     openContextModal('review', {
@@ -29,6 +32,10 @@ export function Actions({ isOwnReview }: ActionsProps) {
 
   const openModalReviewDelete = () => {
     const id = openConfirmModal({
+      radius: 'md',
+      centered: true,
+      withCloseButton: false,
+      padding: 'md',
       title: <Title name="Quer excluir esta avaliação?" />,
       children: (
         <>
@@ -37,10 +44,6 @@ export function Actions({ isOwnReview }: ActionsProps) {
         </>
       ),
       labels: { confirm: 'Confirmar', cancel: 'Cancelar' },
-      radius: 'md',
-      centered: true,
-      withCloseButton: false,
-      padding: 'md',
       cancelProps: {
         size: 'sm',
         radius: 'md',
@@ -71,13 +74,7 @@ export function Actions({ isOwnReview }: ActionsProps) {
       centered: true,
       withCloseButton: false,
       padding: 'md',
-      innerProps: {
-        data: [
-          { label: 'Informação falsa', value: 'info' },
-          { label: 'Informação ofensiva', value: 'offensive' },
-          { label: 'Outro', value: 'other' }
-        ]
-      }
+      innerProps: { data: reviewMotives }
     })
 
   function renderMenuItems() {

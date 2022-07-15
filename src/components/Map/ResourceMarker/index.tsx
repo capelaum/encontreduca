@@ -2,7 +2,8 @@ import { Marker } from '@react-google-maps/api'
 import { useMap } from 'contexts/mapContext'
 import { MarkerLabel } from 'types/googleMaps'
 import { ResourceType } from 'types/resources'
-import { markerIcons } from 'utils/markerIcons'
+import { categorySwitch } from 'utils/categorySwitch'
+
 import styles from './styles.module.scss'
 
 interface ResourceMarkerProps {
@@ -51,7 +52,7 @@ export function ResourceMarker({
       key={id}
       position={{ lat, lng }}
       icon={{
-        url: markerIcons[category],
+        url: categorySwitch[category].markerIcon,
         scaledSize: new window.google.maps.Size(35, 35)
       }}
       title={name}

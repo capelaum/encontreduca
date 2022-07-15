@@ -1,19 +1,19 @@
 import { Group, Text } from '@mantine/core'
-import { resourceCategories } from 'utils/resourceCategories'
+import { categorySwitch } from 'utils/categorySwitch'
 
 interface CategoryProps {
   category: string
 }
 
 export function Category({ category }: CategoryProps) {
-  const { name, icon } = resourceCategories[category]
+  const { icon } = categorySwitch[category]
 
   return (
     <Group align="center" spacing="sm">
       {icon}
 
       <Text size="sm" pt={2}>
-        {name}
+        {category}
       </Text>
     </Group>
   )

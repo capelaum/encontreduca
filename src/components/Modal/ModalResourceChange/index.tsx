@@ -2,8 +2,10 @@ import { Divider, Stack } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
+import data from 'data/motives.json'
 import { MdCancel, MdEdit } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
+import { getModalSelectDataMotives } from 'utils/modalSelecDataFormatter'
 import { CloseButton } from '../Shared/CloseButton'
 import { ModalResourceChangeButton } from './ModalResourceChangeButton'
 
@@ -14,6 +16,10 @@ interface ModalResourceChangeProps {
 export function ModalResourceChange({ onClose }: ModalResourceChangeProps) {
   const { resource, setChangeResourceOpened } = useSidebar()
   const { openContextModal } = useModals()
+  const closeResourceMotives = getModalSelectDataMotives(
+    data.motives,
+    'resource'
+  )
 
   const openModalResourceClose = () =>
     openContextModal('select', {
@@ -23,11 +29,7 @@ export function ModalResourceChange({ onClose }: ModalResourceChangeProps) {
       withCloseButton: false,
       padding: 'md',
       innerProps: {
-        data: [
-          { label: 'Informação falsa', value: 'info' },
-          { label: 'Informação ofensiva', value: 'offensive' },
-          { label: 'Outro', value: 'other' }
-        ],
+        data: closeResourceMotives,
         resourceName: resource!.name
       }
     })
