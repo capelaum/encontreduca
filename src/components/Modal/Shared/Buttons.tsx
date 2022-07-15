@@ -3,9 +3,10 @@ import { Button, Group } from '@mantine/core'
 interface ButtonsProps {
   onCancel: () => void
   onConfirm: () => void
+  onConfirmText: string
 }
 
-export function Buttons({ onCancel, onConfirm }: ButtonsProps) {
+export function Buttons({ onCancel, onConfirm, onConfirmText }: ButtonsProps) {
   return (
     <Group spacing="md" align="center" position="right">
       <Button
@@ -33,7 +34,7 @@ export function Buttons({ onCancel, onConfirm }: ButtonsProps) {
           }
         })}
       >
-        Enviar
+        {onConfirmText}
       </Button>
     </Group>
   )

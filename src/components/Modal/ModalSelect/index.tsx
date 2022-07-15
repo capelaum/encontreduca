@@ -1,21 +1,31 @@
-import { Select, Stack } from '@mantine/core'
+import { Select, Stack, Text } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
 import { useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
 import { myTheme } from 'styles/theme'
 import { Buttons } from '../Shared/Buttons'
+import { CloseButton } from '../Shared/CloseButton'
 import styles from './styles.module.scss'
 
 export function ModalSelect({
   context,
   id,
   innerProps
-}: ContextModalProps<{ data: string[] }>) {
-  const { data } = innerProps
+}: ContextModalProps<{ data: string[]; resourceName: string }>) {
+  const { data, resourceName } = innerProps
   const [motive, setMotive] = useState<string | null>(null)
 
   return (
     <Stack spacing="md">
+      <CloseButton onClick={() => context.closeModal(id)} />
+
+      <Text
+        sx={(theme) => ({
+          color: theme.colors.gray[2]
+        })}
+      >
+        {resourceName}
+      </Text>
       <Select
         label="Motivo"
         required
@@ -36,6 +46,7 @@ export function ModalSelect({
       <Buttons
         onCancel={() => context.closeModal(id)}
         onConfirm={() => context.closeModal(id)}
+        onConfirmText="Enviar"
       />
     </Stack>
   )

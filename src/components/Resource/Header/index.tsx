@@ -11,7 +11,7 @@ export function Header() {
     <Stack spacing="sm">
       <Group align="start" position="apart" spacing={0}>
         <ResourceTitle name={resource!.name} />
-        <Back setResourceOpened={setResourceOpened} />
+        <Back setSidebarOpened={setResourceOpened} />
       </Group>
 
       <Category category={resource!.category} />

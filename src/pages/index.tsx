@@ -5,7 +5,9 @@ import MapLight from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
 import { Menu } from 'components/Menu'
 import { Resource } from 'components/Resource'
+import { Back } from 'components/Resource/Header/Back'
 import { Sidebar } from 'components/Shared/Sidebar'
+import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import Head from 'next/head'
 import { Libraries } from 'types/googleMaps'
@@ -19,7 +21,9 @@ export default function Home() {
     menuOpened,
     setMenuOpened,
     profileOpened,
-    setProfileOpened
+    setProfileOpened,
+    changeResourceOpened,
+    setChangeResourceOpened
   } = useSidebar()
 
   const { colorScheme } = useMantineColorScheme()
@@ -43,6 +47,14 @@ export default function Home() {
 
       <Sidebar opened={resourceOpened} setOpened={setResourceOpened}>
         <Resource />
+      </Sidebar>
+
+      <Sidebar
+        opened={changeResourceOpened}
+        setOpened={setChangeResourceOpened}
+      >
+        <Title name="Sugerir alteração de recurso" />
+        <Back setSidebarOpened={setChangeResourceOpened} />
       </Sidebar>
 
       <Sidebar opened={menuOpened} setOpened={setMenuOpened}>

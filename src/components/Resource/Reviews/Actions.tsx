@@ -1,5 +1,6 @@
 import { Box, Menu, Text } from '@mantine/core'
 import { useModals } from '@mantine/modals'
+import { CloseButton } from 'components/Modal/Shared/CloseButton'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import { MdDelete, MdEdit } from 'react-icons/md'
@@ -10,7 +11,7 @@ interface ActionsProps {
 }
 
 export function Actions({ isOwnReview }: ActionsProps) {
-  const { openContextModal, openConfirmModal } = useModals()
+  const { openContextModal, openConfirmModal, closeModal } = useModals()
   const { resource } = useSidebar()
 
   const openModalReviewEdit = () =>
@@ -18,21 +19,27 @@ export function Actions({ isOwnReview }: ActionsProps) {
       title: <Title name={resource!.name} />,
       radius: 'md',
       centered: true,
-      withCloseButton: true,
+      withCloseButton: false,
       padding: 'md',
       innerProps: {
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis rutrum fames quam tempus vitae sed malesuada. Vulputate purus accumsan neque in vitae. Orci venenatis turpis rutrum vitae diam sed. At placerat elit mattis nam nunc. Nibh donec sagittis, sed enim felis mollis vitae aliquet varius. Blandit donec vestibulum, fermentum et pretium.'
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis rutrum fames quam tempus vitae sed malesuada. Vulputate purus accumsan neque in vitae. Orci venenatis turpis rutrum vitae diam sed. At placerat elit mattis nam nunc. Nibh donec sagittis, sed enim felis mollis vitae aliquet varius. Blandit donec vestibulum, fermentum et pretium.',
+        onConfirmText: 'Atualizar'
       }
     })
 
-  const openModalReviewDelete = () =>
-    openConfirmModal({
+  const openModalReviewDelete = () => {
+    const id = openConfirmModal({
       title: <Title name="Quer excluir esta avaliação?" />,
-      children: <Text>Não é possível recuperar Avaliações excluídas</Text>,
+      children: (
+        <>
+          <CloseButton onClick={() => closeModal(id)} />
+          <Text>Não é possível recuperar Avaliações excluídas</Text>
+        </>
+      ),
       labels: { confirm: 'Confirmar', cancel: 'Cancelar' },
       radius: 'md',
       centered: true,
-      withCloseButton: true,
+      withCloseButton: false,
       padding: 'md',
       cancelProps: {
         size: 'sm',
@@ -55,13 +62,14 @@ export function Actions({ isOwnReview }: ActionsProps) {
       onCancel: () => console.log('Cancel'),
       onConfirm: () => console.log('Confirmed')
     })
+  }
 
   const openModalReviewComplain = () =>
     openContextModal('select', {
       title: <Title name="Denunciar avaliação" />,
       radius: 'md',
       centered: true,
-      withCloseButton: true,
+      withCloseButton: false,
       padding: 'md',
       innerProps: {
         data: [

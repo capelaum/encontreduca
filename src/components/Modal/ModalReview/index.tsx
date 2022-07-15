@@ -4,20 +4,23 @@ import { Profile } from 'components/Shared/Profile'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
 import { Buttons } from '../Shared/Buttons'
+import { CloseButton } from '../Shared/CloseButton'
 import styles from './styles.module.scss'
 
 export function ModalReview({
   context,
   id,
   innerProps
-}: ContextModalProps<{ text: string }>) {
-  const { text } = innerProps
+}: ContextModalProps<{ text: string; onConfirmText: string }>) {
+  const { text, onConfirmText } = innerProps
   const [comment, setComment] = useState(text)
   const [rating, setRating] = useState(0)
   const [hover, setHover] = useState(0)
 
   return (
     <Stack spacing="md">
+      <CloseButton onClick={() => context.closeModal(id)} />
+
       <Profile isModal />
 
       <Group spacing={2} align="center">
@@ -59,6 +62,7 @@ export function ModalReview({
       <Buttons
         onCancel={() => context.closeModal(id)}
         onConfirm={() => context.closeModal(id)}
+        onConfirmText={onConfirmText}
       />
     </Stack>
   )
