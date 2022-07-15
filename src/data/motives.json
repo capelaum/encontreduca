@@ -1,0 +1,69 @@
+{
+  "motives": [
+    {
+      "id": 1,
+      "name": "Fechado",
+      "type": "resource"
+    },
+    {
+      "id": 2,
+      "name": "Não existe aqui",
+      "type": "resource"
+    },
+    {
+      "id": 3,
+      "name": "Lugar duplicado",
+      "type": "resource"
+    },
+    {
+      "id": 4,
+      "name": "Ofensivo, prejudicial ou enganoso",
+      "type": "resource"
+    },
+    {
+      "id": 5,
+      "name": "Não está aberto ao público",
+      "type": "resource"
+    },
+    {
+      "id": 6,
+      "name": "Outro",
+      "type": "resource"
+    },
+    {
+      "id": 7,
+      "name": "Sem relação com o tópico",
+      "type": "review"
+    },
+    {
+      "id": 8,
+      "name": "Spam",
+      "type": "review"
+    },
+    {
+      "id": 9,
+      "name": "Linguagem Obscena",
+      "type": "review"
+    },
+    {
+      "id": 10,
+      "name": "Bullying ou assédio",
+      "type": "review"
+    },
+    {
+      "id": 11,
+      "name": "Discriminação ou discurso de ódio",
+      "type": "review"
+    },
+    {
+      "id": 12,
+      "name": "Informações pessoais",
+      "type": "review"
+    },
+    {
+      "id": 13,
+      "name": "Não foi útil",
+      "type": "review"
+    }
+  ]
+}

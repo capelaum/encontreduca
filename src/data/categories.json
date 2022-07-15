@@ -1,0 +1,32 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Universidade privada"
+    },
+    {
+      "id": 2,
+      "name": "Universidade pública"
+    },
+    {
+      "id": 3,
+      "name": "Escola privada"
+    },
+    {
+      "id": 4,
+      "name": "Escola pública"
+    },
+    {
+      "id": 5,
+      "name": "Biblioteca"
+    },
+    {
+      "id": 6,
+      "name": "Curso"
+    },
+    {
+      "id": 7,
+      "name": "Coworking"
+    }
+  ]
+}

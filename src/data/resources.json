@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "CEUB",
-      "category": "private_university",
+      "category": "Universidade privada",
       "position": {
         "latitude": -15.7670265,
         "longitude": -47.8938074
@@ -19,7 +19,7 @@
     {
       "id": 2,
       "name": "Universidade de Brasília",
-      "category": "public_university",
+      "category": "Universidade pública",
       "position": {
         "latitude": -15.7631573,
         "longitude": -47.8706311
@@ -35,7 +35,7 @@
     {
       "id": 3,
       "name": "Centro Educacional Leonardo da Vinci",
-      "category": "private_school",
+      "category": "Escola privada",
       "position": {
         "latitude": -15.7467763,
         "longitude": -47.9008108
@@ -51,7 +51,7 @@
     {
       "id": 4,
       "name": "Escola Classe 405 Norte",
-      "category": "public_school",
+      "category": "Escola pública",
       "position": {
         "latitude": -15.7708927,
         "longitude": -47.8769279
@@ -67,7 +67,7 @@
     {
       "id": 5,
       "name": "Biblioteca Central",
-      "category": "library",
+      "category": "Biblioteca",
       "position": {
         "latitude": -15.7609124,
         "longitude": -47.8677803
@@ -83,7 +83,7 @@
     {
       "id": 6,
       "name": "Curso Exatas",
-      "category": "course",
+      "category": "Curso",
       "position": {
         "latitude": -15.7747056,
         "longitude": -47.8887548
@@ -99,7 +99,7 @@
     {
       "id": 7,
       "name": "The Brain Coworking - Ulysses Guimarães",
-      "category": "coworking",
+      "category": "Coworking",
       "position": {
         "latitude": -15.7880305,
         "longitude": -47.9005331
