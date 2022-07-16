@@ -8,23 +8,20 @@ import styles from './styles.module.scss'
 
 interface ResourceMarkerProps {
   resource: ResourceType
-  setResourceOpened: (opened: boolean) => void
-  setResource: (resource: ResourceType) => void
+  setResourceOpened?: (opened: boolean) => void
+  setResource?: (resource: ResourceType) => void
+  clickable?: boolean
 }
 
 export function ResourceMarker({
   resource,
   setResourceOpened,
-  setResource
+  setResource,
+  clickable = true
 }: ResourceMarkerProps) {
   const { zoom } = useMap()
 
-  const {
-    id,
-    name,
-    category,
-    position: { latitude: lat, longitude: lng }
-  } = resource
+  const { id, name, category, position } = resource
 
   const markerLabel = (): MarkerLabel | null => {
     if (zoom > 15) {
@@ -42,15 +39,18 @@ export function ResourceMarker({
   }
 
   const handleMarkerClick = () => {
-    setResourceOpened(true)
-    setResource(resource)
+    if (clickable && setResourceOpened && setResource) {
+      setResourceOpened(true)
+      setResource(resource)
+    }
   }
 
   return (
     <Marker
+      clickable={clickable}
       onClick={handleMarkerClick}
       key={id}
-      position={{ lat, lng }}
+      position={position}
       icon={{
         url: categorySwitch[category].markerIcon,
         scaledSize: new window.google.maps.Size(35, 35)

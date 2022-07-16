@@ -1,11 +1,11 @@
+import { LatLngLiteral } from './googleMaps'
+
 export type ResourceType = {
   id: number
   name: string
+  categoryId: string
   category: string
-  position: {
-    latitude: number
-    longitude: number
-  }
+  position: LatLngLiteral
   address: string
   website: string | null
   phone: string | null
