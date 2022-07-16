@@ -32,7 +32,7 @@ interface MapContextData {
   clearLocation: () => void
   onMapLoad: (map: GoogleMapsMap) => void
   handleMapClick: (e: MapMouseEvent) => void
-  moveToCurrentLocation: (position: LatLngLiteral) => void
+  moveToLocation: (position: LatLngLiteral) => void
   setDirections: (directions: DirectionsResult | null) => void
   setClickedPos: (position: LatLngLiteral | null) => void
   setPlace: (place: string | null) => void
@@ -90,7 +90,7 @@ export function MapProvider({ children }: MapProviderProps) {
     mapRef.current = undefined
   }, [])
 
-  const moveToCurrentLocation = useCallback((position: LatLngLiteral) => {
+  const moveToLocation = useCallback((position: LatLngLiteral) => {
     if (!mapRef.current) return
 
     mapRef.current.panTo({ lat: position.lat, lng: position.lng })
@@ -108,7 +108,7 @@ export function MapProvider({ children }: MapProviderProps) {
     onIdle,
     onMapLoad,
     onUnmount,
-    moveToCurrentLocation,
+    moveToLocation,
     handleMapClick,
     clearLocation,
     setClickedPos,

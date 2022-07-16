@@ -1,10 +1,12 @@
 import { Box, Button, Group, Image, Loader, Stack, Text } from '@mantine/core'
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import { Buttons } from 'components/Shared/Buttons'
 import { defaultCenter, mapOptions } from 'config/options'
+import { useSidebar } from 'contexts/sidebarContext'
 import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation } from 'react-icons/md'
 import { GoogleMapsMap, LatLngLiteral } from 'types/googleMaps'
+import { categorySwitch } from 'utils/categorySwitch'
 import { CloseButton } from '../Shared/CloseButton'
 
 interface ModalResourceLocalChangeProps {
@@ -14,15 +16,19 @@ interface ModalResourceLocalChangeProps {
 export function ModalResourceLocalChange({
   onClose
 }: ModalResourceLocalChangeProps) {
+  const [currentCenter, setCurrentCenter] =
+    useState<LatLngLiteral>(defaultCenter)
+
+  console.log('🚀 ~ currentCenter', currentCenter)
+
+  const { resource } = useSidebar()
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     libraries: ['places']
   })
 
   const mapRef = useRef<GoogleMapsMap>()
-
-  const [currentCenter, setCurrentCenter] =
-    useState<LatLngLiteral>(defaultCenter)
 
   const onIdle = useCallback(() => {
     setCurrentCenter(mapRef.current!.getCenter()!.toJSON())
@@ -32,7 +38,7 @@ export function ModalResourceLocalChange({
     mapRef.current = map
   }, [])
 
-  const moveToCurrentLocation = useCallback((position: LatLngLiteral) => {
+  const moveToLocation = useCallback((position: LatLngLiteral) => {
     if (!mapRef.current) return
 
     mapRef.current.panTo({ lat: position.lat, lng: position.lng })
@@ -67,16 +73,18 @@ export function ModalResourceLocalChange({
             onIdle={onIdle}
             clickableIcons={false}
             zoom={16}
-            center={defaultCenter}
+            center={resource ? resource.position : defaultCenter}
             mapContainerStyle={mapContainerStyle}
             options={mapOptions}
-          >
-            <Marker position={currentCenter} clickable={false} />
-          </GoogleMap>
+          />
         )}
 
         <Image
-          src="/markers/marker_university.svg"
+          src={
+            resource
+              ? categorySwitch[resource.category].markerIcon
+              : '/markers/marker.svg'
+          }
           alt="Marcador"
           sx={{
             position: 'absolute',
@@ -93,7 +101,9 @@ export function ModalResourceLocalChange({
           size="sm"
           radius="md"
           leftIcon={<MdMyLocation size={16} />}
-          onClick={() => moveToCurrentLocation(defaultCenter)}
+          onClick={() =>
+            moveToLocation(resource ? resource.position : defaultCenter)
+          }
           sx={(theme) => ({
             backgroundColor: theme.colors.cyan[3],
             color: theme.colors.brand[7],

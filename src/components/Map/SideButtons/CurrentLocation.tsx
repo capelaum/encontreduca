@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { MdMyLocation } from 'react-icons/md'
 
 export function CurrentLocation() {
-  const { moveToCurrentLocation } = useMap()
+  const { moveToLocation } = useMap()
   const [disabled, setDisabled] = useState(false)
 
   const handleOnClick = () => {
@@ -13,7 +13,7 @@ export function CurrentLocation() {
     navigator.geolocation.getCurrentPosition((position) => {
       setDisabled(false)
 
-      moveToCurrentLocation({
+      moveToLocation({
         lat: position.coords.latitude,
         lng: position.coords.longitude
       })
