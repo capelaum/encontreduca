@@ -1,23 +1,23 @@
-import { Button, Text } from '@mantine/core'
+import { Box, Menu, Text } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { CloseButton } from 'components/Modal/Shared/CloseButton'
 import { Title } from 'components/Shared/Title'
-import { BsExclamationCircle } from 'react-icons/bs'
+import { MdDelete } from 'react-icons/md'
 
-export function DeleteUserButton() {
+export function ReviewDelete() {
   const { openConfirmModal, closeModal } = useModals()
 
-  const openModalUserDelete = () => {
+  const openModalReviewDelete = () => {
     const id = openConfirmModal({
       radius: 'md',
       centered: true,
       withCloseButton: false,
       padding: 'md',
-      title: <Title name="Quer mesmo excluir sua conta?" />,
+      title: <Title name="Quer excluir esta avaliação?" />,
       children: (
         <>
           <CloseButton onClick={() => closeModal(id)} />
-          <Text>Não é possível recuperar sua conta após a exclusão!</Text>
+          <Text>Não é possível recuperar Avaliações excluídas</Text>
         </>
       ),
       labels: { confirm: 'Confirmar', cancel: 'Cancelar' },
@@ -44,21 +44,10 @@ export function DeleteUserButton() {
   }
 
   return (
-    <Button
-      size="sm"
-      radius="md"
-      variant="default"
-      leftIcon={<BsExclamationCircle size={18} />}
-      onClick={openModalUserDelete}
-      sx={(theme) => ({
-        backgroundColor: theme.colors.red[8],
-        color: 'white',
-        '&:hover': {
-          backgroundColor: theme.colors.red[9]
-        }
-      })}
-    >
-      Excluir conta
-    </Button>
+    <Menu.Item icon={<MdDelete size={14} color="cyan" />}>
+      <Box ml={8} onClick={openModalReviewDelete}>
+        Excluir avaliação
+      </Box>
+    </Menu.Item>
   )
 }

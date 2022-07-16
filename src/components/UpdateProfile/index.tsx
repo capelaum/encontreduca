@@ -10,9 +10,8 @@ import { useInputState } from '@mantine/hooks'
 import { Back } from 'components/Shared/Back'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
-import { BsExclamationCircle } from 'react-icons/bs'
 import { AvatarDropzone } from './AvatarDropzone'
-import { openModalUserDelete } from './ModalUserDelete'
+import { DeleteUserButton } from './ModalUserDelete'
 
 export function UpdateProfile() {
   const { setProfileOpened } = useSidebar()
@@ -116,22 +115,7 @@ export function UpdateProfile() {
           Atualizar
         </Button>
 
-        <Button
-          size="sm"
-          radius="md"
-          variant="default"
-          leftIcon={<BsExclamationCircle size={18} />}
-          onClick={openModalUserDelete}
-          sx={(theme) => ({
-            backgroundColor: theme.colors.red[8],
-            color: 'white',
-            '&:hover': {
-              backgroundColor: theme.colors.red[9]
-            }
-          })}
-        >
-          Excluir conta
-        </Button>
+        <DeleteUserButton />
       </Stack>
     </Stack>
   )
