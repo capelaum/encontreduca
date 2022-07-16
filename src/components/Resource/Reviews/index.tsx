@@ -35,7 +35,7 @@ export function Reviews() {
       </Stack>
 
       <Center my={32}>
-        <Button variant="light" compact size="md">
+        <Button variant="outline" compact size="sm">
           Mais avalições (17)
         </Button>
       </Center>

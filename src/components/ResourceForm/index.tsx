@@ -16,6 +16,7 @@ import { TbChevronDown } from 'react-icons/tb'
 import { myTheme } from 'styles/theme'
 import { getModalSelectDataCategories } from 'utils/modalSelecDataFormatter'
 import { CoverDropzone } from './CoverDropzone'
+import { Local } from './Local'
 import styles from './styles.module.scss'
 
 interface ResourceFormProps {
@@ -24,9 +25,7 @@ interface ResourceFormProps {
 
 export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const { setCreateResourceOpened, setChangeResourceOpened } = useSidebar()
-
   const [categoryId, setCategoryId] = useState<string | null>(null)
-
   const resourceCategories = getModalSelectDataCategories(data.categories)
 
   const title = isCreateResource
@@ -34,7 +33,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     : 'Sugerir alteração de recurso'
 
   return (
-    <Stack my="md" px="md" spacing="md">
+    <Stack my="md" px="md" spacing="md" role="form">
       <Group align="start" position="apart" spacing={0}>
         <Title name={title} />
         <Back
@@ -81,7 +80,9 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         required
       />
 
-      <Text mt={8}>Contato</Text>
+      <Local />
+
+      <Text>Contato</Text>
 
       <TextInput
         variant="filled"

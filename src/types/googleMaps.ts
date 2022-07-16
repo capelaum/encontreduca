@@ -19,3 +19,5 @@ export type Libraries =
   | 'geometry'
   | 'localContext'
   | 'visualization'
+
+export const libraries: Libraries[] = ['places']

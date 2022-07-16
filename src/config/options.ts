@@ -19,6 +19,17 @@ export const mapOptionsLight = {
   clickableIcons: false
 }
 
+export const mapOptionsForm = {
+  mapId: process.env.NEXT_PUBLIC_MAP_ID,
+  disableDefaultUI: true,
+  zoomControl: false,
+  clickableIcons: false,
+  draggable: false,
+  scrollwheel: false,
+  disableDoubleClickZoom: true,
+  draggableCursor: null
+}
+
 export const mapContainerStyle = {
   width: '100%',
   height: '100vh',

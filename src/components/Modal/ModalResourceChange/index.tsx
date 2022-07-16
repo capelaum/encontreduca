@@ -43,7 +43,7 @@ export function ModalResourceChange({ onClose }: ModalResourceChangeProps) {
       <ModalResourceChangeButton
         icon={<MdEdit size={24} color={myTheme.colors!.brand![0]} />}
         label="Alterar o nome ou outros detalhes"
-        description="Editar nome, local, horário de funcionamento, etc."
+        description="Editar nome, loca, endereço, contato, etc."
         onClick={() => {
           setChangeResourceOpened(true)
           onClose()

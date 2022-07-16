@@ -9,9 +9,6 @@ import { ResourceForm } from 'components/ResourceForm'
 import { Sidebar } from 'components/Shared/Sidebar'
 import { useSidebar } from 'contexts/sidebarContext'
 import Head from 'next/head'
-import { Libraries } from 'types/googleMaps'
-
-const libraries: Libraries[] = ['places']
 
 export default function Home() {
   const {
@@ -32,7 +29,7 @@ export default function Home() {
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-    libraries
+    libraries: ['places']
   })
 
   if (!isLoaded) return <MapLoader />

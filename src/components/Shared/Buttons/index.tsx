@@ -8,19 +8,12 @@ interface ButtonsProps {
 
 export function Buttons({ onCancel, onConfirm, onConfirmText }: ButtonsProps) {
   return (
-    <Group spacing="md" align="center" position="right">
-      <Button
-        mt="md"
-        size="sm"
-        radius="md"
-        variant="outline"
-        onClick={onCancel}
-      >
+    <Group mt="md" spacing="md" align="center" position="right">
+      <Button size="sm" radius="md" variant="outline" onClick={onCancel}>
         Cancelar
       </Button>
 
       <Button
-        mt="md"
         size="sm"
         radius="md"
         variant="default"
@@ -29,8 +22,7 @@ export function Buttons({ onCancel, onConfirm, onConfirmText }: ButtonsProps) {
           backgroundColor: theme.colors.cyan[3],
           color: theme.colors.brand[7],
           '&:hover': {
-            backgroundColor: theme.colors.cyan[4],
-            color: theme.colors.brand[8]
+            backgroundColor: theme.colors.cyan[4]
           }
         })}
       >

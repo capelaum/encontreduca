@@ -28,6 +28,7 @@ export function Sidebar({
       overlayOpacity={0.6}
       withOverlay={isMenu}
       zIndex={1}
+      closeOnClickOutside={!isMenu}
     >
       <Box className={styles.container}>{children}</Box>
     </Drawer>
