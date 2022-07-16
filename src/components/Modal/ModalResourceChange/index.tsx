@@ -45,8 +45,8 @@ export function ModalResourceChange({ onClose }: ModalResourceChangeProps) {
         label="Alterar o nome ou outros detalhes"
         description="Editar nome, loca, endereço, contato, etc."
         onClick={() => {
-          setChangeResourceOpened(true)
           onClose()
+          setChangeResourceOpened(true)
         }}
       />
 

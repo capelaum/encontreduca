@@ -6,12 +6,13 @@ import {
   Text,
   TextInput
 } from '@mantine/core'
+import { useInputState } from '@mantine/hooks'
 import { Back } from 'components/Shared/Back'
 import { Buttons } from 'components/Shared/Buttons'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/categories.json'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { TbChevronDown } from 'react-icons/tb'
 import { myTheme } from 'styles/theme'
 import { getModalSelectDataCategories } from 'utils/modalSelecDataFormatter'
@@ -24,9 +25,25 @@ interface ResourceFormProps {
 }
 
 export function ResourceForm({ isCreateResource }: ResourceFormProps) {
-  const { setCreateResourceOpened, setChangeResourceOpened } = useSidebar()
-  const [categoryId, setCategoryId] = useState<string | null>(null)
   const resourceCategories = getModalSelectDataCategories(data.categories)
+  const { resource, setCreateResourceOpened, setChangeResourceOpened } =
+    useSidebar()
+
+  const [categoryId, setCategoryId] = useInputState<string>('')
+  const [resourceName, setResourceName] = useInputState<string>('')
+  const [resourceAddress, setResourceAddress] = useInputState<string>('')
+  const [resourcePhone, setResourcePhone] = useInputState<string>('')
+  const [resourceWebsite, setResourceWebsite] = useInputState<string>('')
+
+  useEffect(() => {
+    if (resource) {
+      setCategoryId(resource.categoryId.toString())
+      setResourceName(resource.name)
+      setResourceAddress(resource.address)
+      setResourcePhone(resource.phone)
+      setResourceWebsite(resource.website)
+    }
+  }, [])
 
   const title = isCreateResource
     ? 'Cadastro de recurso'
@@ -50,6 +67,8 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         placeholder="Nome do recurso"
         label="Nome"
         radius="md"
+        onChange={setResourceName}
+        value={resourceName}
         className={styles.input}
         required
       />
@@ -59,7 +78,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         required
         size="sm"
         placeholder="Selecione uma categoria"
-        value={categoryId}
+        value={categoryId ?? ''}
         variant="filled"
         onChange={setCategoryId}
         className={styles.select}
@@ -76,6 +95,8 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         placeholder="Endereço do recurso"
         label="Endereço"
         radius="md"
+        onChange={setResourceAddress}
+        value={resourceAddress ?? ''}
         className={styles.input}
         required
       />
@@ -89,6 +110,8 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         placeholder="(00) 00000-0000"
         label="Número de telefone/celular"
         radius="md"
+        onChange={setResourcePhone}
+        value={resourcePhone ?? ''}
         className={styles.input}
       />
 
@@ -97,6 +120,8 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         placeholder="Site do recurso"
         label="Site"
         radius="md"
+        onChange={setResourceWebsite}
+        value={resourceWebsite ?? ''}
         className={styles.input}
       />
 

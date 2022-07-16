@@ -57,8 +57,7 @@ export function Actions({ isOwnReview }: ActionsProps) {
           backgroundColor: theme.colors.cyan[3],
           color: theme.colors.brand[7],
           '&:hover': {
-            backgroundColor: theme.colors.cyan[4],
-            color: theme.colors.brand[8]
+            backgroundColor: theme.colors.cyan[4]
           }
         })
       },

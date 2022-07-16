@@ -1,4 +1,5 @@
 import { Box, Drawer } from '@mantine/core'
+import { useSidebar } from 'contexts/sidebarContext'
 import { ReactNode } from 'react'
 import styles from './styles.module.scss'
 
@@ -6,15 +7,20 @@ interface SidebarProps {
   children: ReactNode
   opened: boolean
   setOpened: (opened: boolean) => void
-  isMenu?: boolean
 }
 
-export function Sidebar({
-  children,
-  opened,
-  setOpened,
-  isMenu = false
-}: SidebarProps) {
+export function Sidebar({ children, opened, setOpened }: SidebarProps) {
+  const { menuOpened, changeResourceOpened } = useSidebar()
+  let closeOnClickOutside = true
+
+  if (!menuOpened) {
+    closeOnClickOutside = false
+  }
+
+  if (!changeResourceOpened) {
+    closeOnClickOutside = false
+  }
+
   return (
     <Drawer
       opened={opened}
@@ -26,9 +32,9 @@ export function Sidebar({
       withCloseButton={false}
       overlayBlur={1}
       overlayOpacity={0.6}
-      withOverlay={isMenu}
+      withOverlay={changeResourceOpened || menuOpened}
       zIndex={1}
-      closeOnClickOutside={!isMenu}
+      closeOnClickOutside={closeOnClickOutside}
     >
       <Box className={styles.container}>{children}</Box>
     </Drawer>

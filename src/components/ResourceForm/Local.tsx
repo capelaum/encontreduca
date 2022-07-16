@@ -1,12 +1,15 @@
 import { Box, Button, Loader } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
+import { ResourceMarker } from 'components/Map/ResourceMarker'
 import { ModalResourceLocalChange } from 'components/Modal/ModalResourceLocalChange'
 import { Title } from 'components/Shared/Title'
 import { defaultCenter, mapOptionsForm } from 'config/options'
+import { useSidebar } from 'contexts/sidebarContext'
 import { MdEditLocationAlt } from 'react-icons/md'
 
 export function Local() {
+  const { resource } = useSidebar()
   const { openModal, closeModal } = useModals()
 
   const { isLoaded } = useJsApiLoader({
@@ -32,6 +35,28 @@ export function Local() {
     })
   }
 
+  function renderMapLocal() {
+    if (!isLoaded) {
+      return <Loader />
+    }
+
+    return (
+      <GoogleMap
+        clickableIcons={false}
+        zoom={14}
+        center={resource ? resource.position : defaultCenter}
+        mapContainerStyle={mapContainerStyle}
+        options={mapOptionsForm}
+      >
+        {resource ? (
+          <ResourceMarker resource={resource} clickable={false} />
+        ) : (
+          <Marker position={defaultCenter} clickable={false} />
+        )}
+      </GoogleMap>
+    )
+  }
+
   return (
     <Box
       my={12}
@@ -46,19 +71,7 @@ export function Local() {
         }
       })}
     >
-      {!isLoaded ? (
-        <Loader />
-      ) : (
-        <GoogleMap
-          clickableIcons={false}
-          zoom={14}
-          center={defaultCenter}
-          mapContainerStyle={mapContainerStyle}
-          options={mapOptionsForm}
-        >
-          <Marker position={defaultCenter} clickable={false} />
-        </GoogleMap>
-      )}
+      {renderMapLocal()}
 
       <Button
         radius="xl"
@@ -67,7 +80,7 @@ export function Local() {
         leftIcon={<MdEditLocationAlt size={18} />}
         sx={(theme) => ({
           position: 'absolute',
-          bottom: theme.spacing.md,
+          bottom: theme.spacing.sm,
           left: theme.spacing.sm,
           color: theme.colors.brand[7],
           '&:hover': {

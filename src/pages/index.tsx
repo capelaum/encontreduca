@@ -54,7 +54,7 @@ export default function Home() {
         <ResourceForm />
       </Sidebar>
 
-      <Sidebar opened={menuOpened} setOpened={setMenuOpened} isMenu>
+      <Sidebar opened={menuOpened} setOpened={setMenuOpened}>
         <Menu />
       </Sidebar>
 

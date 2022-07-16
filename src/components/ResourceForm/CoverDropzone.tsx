@@ -8,8 +8,10 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone'
+import { useSidebar } from 'contexts/sidebarContext'
 import { useState } from 'react'
 import { TbPhoto, TbUpload, TbX } from 'react-icons/tb'
+import { ResourceType } from 'types/resources'
 import styles from './styles.module.scss'
 
 function getIconColor(status: DropzoneStatus, theme: MantineTheme): string {
@@ -43,16 +45,19 @@ function renderImageUploadIcon(status: DropzoneStatus, theme: MantineTheme) {
 export const dropzoneChildren = (
   status: DropzoneStatus,
   theme: MantineTheme,
-  isCoverUploaded: boolean
+  isCoverUploaded: boolean,
+  resource: ResourceType | null
 ) => {
-  if (isCoverUploaded) {
+  if (isCoverUploaded || resource) {
     return (
       <Box className={styles.cover_container}>
         <Image
           width="100%"
           height={200}
           radius="md"
-          src="https://dummyimage.com/380x200/333/fff"
+          src={
+            resource ? resource.cover : 'https://dummyimage.com/380x200/333/fff'
+          }
           alt="Imagem de capa do recurso"
           title="Imagem de capa do recurso"
           className={styles.cover_image}
@@ -86,6 +91,7 @@ export const dropzoneChildren = (
 }
 
 export function CoverDropzone() {
+  const { resource } = useSidebar()
   const theme = useMantineTheme()
   const [isCoverUploaded, setIsCoverUploaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -117,7 +123,7 @@ export function CoverDropzone() {
         }
       }}
     >
-      {(status) => dropzoneChildren(status, theme, isCoverUploaded)}
+      {(status) => dropzoneChildren(status, theme, isCoverUploaded, resource)}
     </Dropzone>
   )
 }
