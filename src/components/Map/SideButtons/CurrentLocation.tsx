@@ -29,7 +29,8 @@ export function CurrentLocation() {
       color="brand"
       title="Centralizar na posição atual"
       sx={(theme) => ({
-        color: theme.colors.cyan[3]
+        color: theme.colors.cyan[3],
+        backgroundColor: theme.colors.brand[7]
       })}
     >
       {disabled ? (

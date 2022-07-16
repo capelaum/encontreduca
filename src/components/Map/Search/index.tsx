@@ -13,23 +13,15 @@ import { myTheme } from 'styles/theme'
 export function Search() {
   const { menuOpened, setMenuOpened, resourceOpened } = useSidebar()
 
-  const mapStyles = (theme: MantineTheme): CSSObject => ({
+  const searchStyles = (theme: MantineTheme): CSSObject => ({
     position: 'absolute',
     top: theme.spacing.md,
     left: theme.spacing.md,
     width: '380px',
     zIndex: 1,
     borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.brand[7]
-  })
-
-  const resourceStyles = (theme: MantineTheme): CSSObject => ({
-    borderRadius: theme.radius.md,
-    width: '380px',
-    marginTop: theme.spacing.md,
-    marginRight: theme.spacing.md,
-    marginLeft: theme.spacing.md,
-    border: '1px solid #66d9e8'
+    backgroundColor: theme.colors.brand[7],
+    border: resourceOpened ? '1px solid #66d9e8' : 'none'
   })
 
   const rightSection = (
@@ -47,12 +39,7 @@ export function Search() {
   )
 
   return (
-    <Group
-      spacing={0}
-      align="center"
-      position="left"
-      sx={resourceOpened ? resourceStyles : mapStyles}
-    >
+    <Group spacing={0} align="center" position="left" sx={searchStyles}>
       <Burger
         color={myTheme.colors!.brand![0]}
         ml={12}
@@ -71,9 +58,12 @@ export function Search() {
         rightSectionWidth={40}
         placeholder="Busque um recurso"
         aria-label="Buscar recursos educacionais"
-        sx={{
-          flex: 1
-        }}
+        sx={(theme) => ({
+          flex: 1,
+          input: {
+            backgroundColor: theme.colors.brand[7]
+          }
+        })}
       />
     </Group>
   )

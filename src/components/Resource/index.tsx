@@ -11,7 +11,7 @@ export function Resource() {
     <Box>
       <Search />
 
-      <Stack mt="md" px="md" spacing="md">
+      <Stack mt={88} px="md" spacing="md">
         <Header />
 
         <Cover />

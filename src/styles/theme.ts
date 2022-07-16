@@ -14,7 +14,7 @@ export const myTheme: MantineThemeOverride = {
       '#0C103E',
       '#030518', // darker-blue
       '#282C4D', // primary
-      '#282C4D',
+      '#66d9e8',
       '#191D40'
     ],
     dark: [

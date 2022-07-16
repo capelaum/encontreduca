@@ -111,6 +111,11 @@ export function CoverDropzone() {
       onReject={(files) => console.log('rejected files', files)}
       maxSize={5 * 1024 ** 2}
       accept={IMAGE_MIME_TYPE}
+      sx={{
+        'input:hover': {
+          backgroundColor: theme.colors.brand[0]
+        }
+      }}
     >
       {(status) => dropzoneChildren(status, theme, isCoverUploaded)}
     </Dropzone>
