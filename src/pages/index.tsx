@@ -7,6 +7,7 @@ import { Menu } from 'components/Menu'
 import { Resource } from 'components/Resource'
 import { ResourceForm } from 'components/ResourceForm'
 import { Sidebar } from 'components/Shared/Sidebar'
+import { UpdateProfile } from 'components/UpdateProfile'
 import { useSidebar } from 'contexts/sidebarContext'
 import Head from 'next/head'
 
@@ -66,7 +67,7 @@ export default function Home() {
       </Sidebar>
 
       <Sidebar opened={profileOpened} setOpened={setProfileOpened}>
-        Profile
+        <UpdateProfile />
       </Sidebar>
     </>
   )
