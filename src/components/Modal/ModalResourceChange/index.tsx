@@ -1,8 +1,8 @@
 import { Divider, Stack } from '@mantine/core'
 import { myTheme } from 'styles/theme'
 import { CloseButton } from '../Shared/CloseButton'
-import { ResourceChange } from './ModalActions/ResourceChange'
-import { ResourceClose } from './ModalActions/ResourceClose'
+import { ResourceChange } from './ModalButtons/ResourceChange'
+import { ResourceClose } from './ModalButtons/ResourceClose'
 
 interface ModalResourceChangeProps {
   onClose: () => void
