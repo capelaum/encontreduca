@@ -7,11 +7,13 @@ import { MdMyLocation } from 'react-icons/md'
 import { GoogleMapsMap, LatLngLiteral } from 'types/googleMaps'
 import { CloseButton } from '../Shared/CloseButton'
 
-interface ModalMapLocalChangeProps {
+interface ModalResourceLocalChangeProps {
   onClose: () => void
 }
 
-export function ModalMapLocalChange({ onClose }: ModalMapLocalChangeProps) {
+export function ModalResourceLocalChange({
+  onClose
+}: ModalResourceLocalChangeProps) {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     libraries: ['places']
