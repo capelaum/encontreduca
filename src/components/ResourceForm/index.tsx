@@ -9,6 +9,7 @@ import {
 import { useInputState } from '@mantine/hooks'
 import { Back } from 'components/Shared/Back'
 import { Buttons } from 'components/Shared/Buttons'
+import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/categories.json'
@@ -18,7 +19,6 @@ import { myTheme } from 'styles/theme'
 import { getModalSelectDataCategories } from 'utils/modalSelecDataFormatter'
 import { CoverDropzone } from './CoverDropzone'
 import { Local } from './Local'
-import styles from './styles.module.scss'
 
 interface ResourceFormProps {
   isCreateResource?: boolean
@@ -69,7 +69,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         radius="md"
         onChange={setResourceName}
         value={resourceName}
-        className={styles.input}
+        sx={inputStyles}
         required
       />
 
@@ -81,7 +81,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         value={categoryId ?? ''}
         variant="filled"
         onChange={setCategoryId}
-        className={styles.select}
+        sx={inputStyles}
         maxDropdownHeight={300}
         rightSectionWidth={30}
         rightSection={
@@ -97,7 +97,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         radius="md"
         onChange={setResourceAddress}
         value={resourceAddress ?? ''}
-        className={styles.input}
+        sx={inputStyles}
         required
       />
 
@@ -112,7 +112,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         radius="md"
         onChange={setResourcePhone}
         value={resourcePhone ?? ''}
-        className={styles.input}
+        sx={inputStyles}
       />
 
       <TextInput
@@ -122,14 +122,10 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         radius="md"
         onChange={setResourceWebsite}
         value={resourceWebsite ?? ''}
-        className={styles.input}
+        sx={inputStyles}
       />
 
-      <InputWrapper
-        label="Imagem de capa do recurso"
-        required
-        className={styles.input}
-      >
+      <InputWrapper label="Imagem de capa do recurso" required sx={inputStyles}>
         <CoverDropzone />
       </InputWrapper>
 

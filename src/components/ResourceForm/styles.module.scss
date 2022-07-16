@@ -1,55 +1,6 @@
 $color-secondary: #66d9e8;
 $color-dark: #030518;
 
-.input {
-  label {
-    color: $color-secondary;
-  }
-
-  input {
-    border: 1px solid $color-secondary;
-
-    &:focus {
-      outline: 1px solid #fff;
-    }
-
-    &::-webkit-scrollbar {
-      background: transparent;
-      width: 5px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #22b8cf;
-      border-radius: 50px;
-    }
-  }
-}
-
-.select {
-  label {
-    color: $color-secondary;
-  }
-
-  input {
-    border: 1px solid $color-secondary;
-    border-radius: 7px;
-
-    &:focus {
-      outline: 1px solid white;
-    }
-
-    &::-webkit-scrollbar {
-      background: transparent;
-      width: 5px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #22b8cf;
-      border-radius: 50px;
-    }
-  }
-}
-
 .cover_container {
   position: relative;
   overflow: hidden;

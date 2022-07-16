@@ -1,11 +1,11 @@
 import { Select, Stack, Text } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
 import { Buttons } from 'components/Shared/Buttons'
+import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { useState } from 'react'
 import { TbChevronDown } from 'react-icons/tb'
 import { myTheme } from 'styles/theme'
 import { CloseButton } from '../Shared/CloseButton'
-import styles from './styles.module.scss'
 
 export function ModalSelect({
   context,
@@ -34,7 +34,7 @@ export function ModalSelect({
         value={motiveId}
         variant="filled"
         onChange={setMotiveId}
-        className={styles.select}
+        sx={inputStyles}
         maxDropdownHeight={300}
         rightSection={
           <TbChevronDown size={14} color={myTheme.colors!.brand![0]} />

@@ -3,7 +3,6 @@ import { useMap } from 'contexts/mapContext'
 import { MarkerLabel } from 'types/googleMaps'
 import { ResourceType } from 'types/resources'
 import { categorySwitch } from 'utils/categorySwitch'
-
 import styles from './styles.module.scss'
 
 interface ResourceMarkerProps {
@@ -29,8 +28,8 @@ export function ResourceMarker({
         text: name,
         fontFamily: 'Roboto',
         color: '#66d9e8',
-        fontSize: '16px',
-        fontWeight: 'bold',
+        fontSize: '14px',
+        fontWeight: '400',
         className: styles.markerLabel
       }
     }

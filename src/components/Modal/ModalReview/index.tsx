@@ -2,10 +2,10 @@ import { Group, Stack, Textarea, UnstyledButton } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
 import { Buttons } from 'components/Shared/Buttons'
 import { Profile } from 'components/Shared/Profile'
+import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
 import { CloseButton } from '../Shared/CloseButton'
-import styles from './styles.module.scss'
 
 export function ModalReview({
   context,
@@ -55,7 +55,7 @@ export function ModalReview({
         variant="filled"
         onChange={(e) => setComment(e.target.value)}
         value={comment ?? ''}
-        className={styles.textarea}
+        sx={textareaStyles}
         placeholder="Descreva sua experiência neste local"
       />
 

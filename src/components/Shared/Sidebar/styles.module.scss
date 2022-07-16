@@ -1,26 +1,26 @@
 .container {
   height: 100vh;
   overflow-y: scroll;
-  scrollbar-color: #22b8cf transparent;
+  scrollbar-color: #66d9e8 transparent;
   scrollbar-width: thin;
-}
 
-.container::-webkit-scrollbar {
-  background: transparent;
-  width: 1px;
-}
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 3px;
 
-.container::-webkit-scrollbar:hover {
-  background: transparent;
-  width: 3px;
-}
+    &:hover {
+      background: transparent;
+      width: 1.5px;
+    }
+  }
 
-.container::-webkit-scrollbar-thumb {
-  background: #22b8cf;
-  border-radius: 50px;
-  width: 1px;
-}
+  &::-webkit-scrollbar-thumb {
+    background: #66d9e8;
+    border-radius: 50px;
+    width: 1px;
 
-.container::-webkit-scrollbar-thumb:hover {
-  width: 5px;
+    &:hover {
+      width: 5px;
+    }
+  }
 }

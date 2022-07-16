@@ -1,13 +1,7 @@
-import {
-  Button,
-  CSSObject,
-  Group,
-  MantineTheme,
-  Stack,
-  TextInput
-} from '@mantine/core'
+import { Button, Group, Stack, TextInput } from '@mantine/core'
 import { useInputState } from '@mantine/hooks'
 import { Back } from 'components/Shared/Back'
+import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import { AvatarDropzone } from './AvatarDropzone'
@@ -21,18 +15,6 @@ export function UpdateProfile() {
   const [userCpf, setUserCpf] = useInputState('')
   const [userPassword, setUserPassword] = useInputState('')
   const [userPasswordRepeat, setUserPasswordRepeat] = useInputState('')
-
-  const inputStyles = (theme: MantineTheme): CSSObject => ({
-    input: {
-      border: `1px solid ${theme.colors.cyan[4]}`
-    },
-    label: {
-      color: theme.colors.cyan[4]
-    },
-    'input:focus': {
-      outline: `1px solid white`
-    }
-  })
 
   return (
     <Stack spacing="md" p="md">
