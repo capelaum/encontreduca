@@ -62,6 +62,10 @@ export function Search() {
           flex: 1,
           input: {
             backgroundColor: theme.colors.brand[7]
+          },
+          'input:focus': {
+            outline: 'none',
+            border: 'none'
           }
         })}
       />
