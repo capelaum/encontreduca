@@ -13,9 +13,11 @@ interface SidebarContextData {
   resourceOpened: boolean
   setResourceOpened: (resourceOpened: boolean) => void
   changeResourceOpened: boolean
-  setChangeResourceOpened: (resourceOpened: boolean) => void
+  setChangeResourceOpened: (changeResourceOpened: boolean) => void
   createResourceOpened: boolean
-  setCreateResourceOpened: (resourceOpened: boolean) => void
+  setCreateResourceOpened: (createResourceOpened: boolean) => void
+  savedResourcesOpened: boolean
+  setSavedResourcesOpened: (savedResourcesOpened: boolean) => void
   resource: ResourceType | null
   setResource: (resource: ResourceType | null) => void
 }
@@ -30,6 +32,7 @@ export function SidebarProvider({ children }: SidebarProviderProps) {
   const [resourceOpened, setResourceOpened] = useState(false)
   const [changeResourceOpened, setChangeResourceOpened] = useState(false)
   const [createResourceOpened, setCreateResourceOpened] = useState(false)
+  const [savedResourcesOpened, setSavedResourcesOpened] = useState(false)
 
   const [resource, setResource] = useState<ResourceType | null>(null)
 
@@ -44,6 +47,8 @@ export function SidebarProvider({ children }: SidebarProviderProps) {
     setChangeResourceOpened,
     createResourceOpened,
     setCreateResourceOpened,
+    savedResourcesOpened,
+    setSavedResourcesOpened,
     resource,
     setResource
   }

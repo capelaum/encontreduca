@@ -12,6 +12,7 @@ export function Cover() {
         width="100%"
         height={200}
         radius="md"
+        withPlaceholder
         src={resource!.cover}
         alt={`Imagem de capa do recurso ${resource!.name}`}
         title={`Imagem de capa do recurso ${resource!.name}`}

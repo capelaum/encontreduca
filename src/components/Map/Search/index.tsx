@@ -11,7 +11,8 @@ import { MdSearch } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
 
 export function Search() {
-  const { menuOpened, setMenuOpened, resourceOpened } = useSidebar()
+  const { menuOpened, setMenuOpened, resourceOpened, setSavedResourcesOpened } =
+    useSidebar()
 
   const searchStyles = (theme: MantineTheme): CSSObject => ({
     position: 'absolute',
@@ -44,7 +45,10 @@ export function Search() {
         color={myTheme.colors!.brand![0]}
         ml={12}
         opened={menuOpened}
-        onClick={() => setMenuOpened(true)}
+        onClick={() => {
+          setMenuOpened(true)
+          setSavedResourcesOpened(false)
+        }}
         title="Abrir Menu Principal"
       />
 

@@ -86,6 +86,8 @@ export function ModalResourceLocalChange({
               : '/markers/marker.svg'
           }
           alt="Marcador"
+          withPlaceholder
+          placeholder={<Image src="/markers/marker.svg" />}
           sx={{
             position: 'absolute',
             left: '50%',

@@ -6,6 +6,7 @@ import { MapLoader } from 'components/Map/MapLoader'
 import { Menu } from 'components/Menu'
 import { Resource } from 'components/Resource'
 import { ResourceForm } from 'components/ResourceForm'
+import { ResourceList } from 'components/ResourceList'
 import { Sidebar } from 'components/Shared/Sidebar'
 import { UpdateProfile } from 'components/UpdateProfile'
 import { useSidebar } from 'contexts/sidebarContext'
@@ -22,7 +23,9 @@ export default function Home() {
     changeResourceOpened,
     setChangeResourceOpened,
     createResourceOpened,
-    setCreateResourceOpened
+    setCreateResourceOpened,
+    savedResourcesOpened,
+    setSavedResourcesOpened
   } = useSidebar()
 
   const { colorScheme } = useMantineColorScheme()
@@ -44,29 +47,43 @@ export default function Home() {
 
       {dark ? <Map /> : <MapLight />}
 
-      <Sidebar opened={resourceOpened} setOpened={setResourceOpened}>
+      <Sidebar
+        opened={resourceOpened}
+        setOpened={setResourceOpened}
+        zIndex={savedResourcesOpened && !menuOpened ? 4 : 1}
+      >
         <Resource />
+      </Sidebar>
+
+      <Sidebar opened={menuOpened} setOpened={setMenuOpened} zIndex={3}>
+        <Menu />
+      </Sidebar>
+
+      <Sidebar
+        opened={savedResourcesOpened}
+        setOpened={setSavedResourcesOpened}
+        zIndex={3}
+      >
+        <ResourceList />
       </Sidebar>
 
       <Sidebar
         opened={changeResourceOpened}
         setOpened={setChangeResourceOpened}
+        zIndex={4}
       >
         <ResourceForm />
-      </Sidebar>
-
-      <Sidebar opened={menuOpened} setOpened={setMenuOpened}>
-        <Menu />
       </Sidebar>
 
       <Sidebar
         opened={createResourceOpened}
         setOpened={setCreateResourceOpened}
+        zIndex={10}
       >
         <ResourceForm isCreateResource />
       </Sidebar>
 
-      <Sidebar opened={profileOpened} setOpened={setProfileOpened}>
+      <Sidebar opened={profileOpened} setOpened={setProfileOpened} zIndex={10}>
         <UpdateProfile />
       </Sidebar>
     </>

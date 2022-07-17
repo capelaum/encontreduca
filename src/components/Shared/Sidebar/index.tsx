@@ -7,33 +7,37 @@ interface SidebarProps {
   children: ReactNode
   opened: boolean
   setOpened: (opened: boolean) => void
+  zIndex?: number
 }
 
-export function Sidebar({ children, opened, setOpened }: SidebarProps) {
-  const { menuOpened, changeResourceOpened } = useSidebar()
+export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
+  const { createResourceOpened, menuOpened } = useSidebar()
   let closeOnClickOutside = true
+  let withOverlay = false
 
-  if (!menuOpened) {
+  if (createResourceOpened) {
     closeOnClickOutside = false
+    withOverlay = true
   }
 
-  if (!changeResourceOpened) {
+  if (menuOpened) {
     closeOnClickOutside = false
+    withOverlay = true
   }
 
   return (
     <Drawer
-      opened={opened}
-      onClose={() => setOpened(false)}
-      padding={0}
+      zIndex={zIndex ?? 1}
       size={420}
-      transitionDuration={300}
-      transitionTimingFunction="ease-in-out"
-      withCloseButton={false}
+      padding={0}
+      opened={opened}
       overlayBlur={1}
       overlayOpacity={0.6}
-      withOverlay={changeResourceOpened || menuOpened}
-      zIndex={1}
+      withCloseButton={false}
+      transitionDuration={300}
+      onClose={() => setOpened(false)}
+      withOverlay={withOverlay}
+      transitionTimingFunction="ease-in-out"
       closeOnClickOutside={closeOnClickOutside}
     >
       <Box className={styles.container}>{children}</Box>

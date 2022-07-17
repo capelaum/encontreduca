@@ -13,6 +13,7 @@ export function Menu() {
     setMenuOpened,
     setProfileOpened,
     setCreateResourceOpened,
+    setSavedResourcesOpened,
     setResource,
     setResourceOpened
   } = useSidebar()
@@ -45,6 +46,7 @@ export function Menu() {
         <MenuButton
           icon={<BsBookmarksFill size={20} />}
           text="Recursos salvos"
+          onClick={() => setSavedResourcesOpened(true)}
         />
 
         <MenuButton
