@@ -13,7 +13,7 @@ import { myTheme } from 'styles/theme'
 import { ResourceType } from 'types/resources'
 
 interface ResourceItemProps {
-  resource: ResourceType | any
+  resource: ResourceType
 }
 
 export function ResourceItem({ resource }: ResourceItemProps) {

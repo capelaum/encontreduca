@@ -7,7 +7,7 @@ import { categorySwitch } from 'utils/categorySwitch'
 import styles from './styles.module.scss'
 
 interface ResourceMarkerProps {
-  resource: ResourceType | any
+  resource: ResourceType
   clickable?: boolean
 }
 
