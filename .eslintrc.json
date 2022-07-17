@@ -24,6 +24,7 @@
     "prettier/prettier": "error",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
+    "max-params": ["error", { "max": 2 }],
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
     "react/function-component-definition": "off",
