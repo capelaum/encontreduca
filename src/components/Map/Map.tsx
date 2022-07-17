@@ -9,7 +9,7 @@ import { Search } from './Search'
 import { SideButtons } from './SideButtons'
 
 export default function Map(): JSX.Element {
-  const { setResourceOpened, setResource, resourceOpened } = useSidebar()
+  const { resourceOpened } = useSidebar()
   const { resources } = data
 
   const {
@@ -24,12 +24,7 @@ export default function Map(): JSX.Element {
 
   function renderResourcesMarkers() {
     return resources.map((resource) => (
-      <ResourceMarker
-        key={resource.id}
-        resource={resource}
-        setResourceOpened={setResourceOpened}
-        setResource={setResource}
-      />
+      <ResourceMarker key={resource.id} resource={resource} />
     ))
   }
 

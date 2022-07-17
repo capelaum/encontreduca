@@ -1,9 +1,9 @@
 import { LatLngLiteral } from './googleMaps'
 
 export type ResourceType = {
-  id: number
+  id: string | number
   name: string
-  categoryId: string
+  categoryId: string | number
   category: string
   position: LatLngLiteral
   address: string

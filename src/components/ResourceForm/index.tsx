@@ -43,7 +43,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
       setResourcePhone(resource.phone)
       setResourceWebsite(resource.website)
     }
-  }, [])
+  }, [resource])
 
   const title = isCreateResource
     ? 'Cadastro de recurso'

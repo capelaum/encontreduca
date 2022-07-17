@@ -6,16 +6,16 @@ export const myTheme: MantineThemeOverride = {
   primaryColor: 'brand',
   colors: {
     brand: [
-      '#66d9e8', // cyan 300
       '#66d9e8',
       '#66d9e8',
       '#66d9e8',
       '#66d9e8',
-      '#0C103E',
-      '#030518', // darker-blue
+      '#66d9e8',
+      '#66d9e8',
+      '#1A1E3D',
       '#282C4D', // primary
-      '#66d9e8',
-      '#191D40'
+      '#12173E',
+      '#030518' // darker-blue
     ],
     dark: [
       '#ffffff',

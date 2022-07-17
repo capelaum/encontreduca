@@ -8,6 +8,7 @@ interface TitleProps {
 export function Title({ name, padding }: TitleProps) {
   return (
     <MantineTitle
+      order={1}
       px={padding ?? 0}
       pt={padding ?? 0}
       sx={(theme) => ({

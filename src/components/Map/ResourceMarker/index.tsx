@@ -1,24 +1,22 @@
 import { Marker } from '@react-google-maps/api'
 import { useMap } from 'contexts/mapContext'
+import { useSidebar } from 'contexts/sidebarContext'
 import { MarkerLabel } from 'types/googleMaps'
 import { ResourceType } from 'types/resources'
 import { categorySwitch } from 'utils/categorySwitch'
 import styles from './styles.module.scss'
 
 interface ResourceMarkerProps {
-  resource: ResourceType
-  setResourceOpened?: (opened: boolean) => void
-  setResource?: (resource: ResourceType) => void
+  resource: ResourceType | any
   clickable?: boolean
 }
 
 export function ResourceMarker({
   resource,
-  setResourceOpened,
-  setResource,
   clickable = true
 }: ResourceMarkerProps) {
   const { zoom } = useMap()
+  const { setResourceOpened, setResource } = useSidebar()
 
   const { id, name, category, position } = resource
 
