@@ -7,6 +7,7 @@ import { Title } from 'components/Shared/Title'
 import { defaultCenter, mapOptionsForm } from 'config/options'
 import { useSidebar } from 'contexts/sidebarContext'
 import { MdEditLocationAlt } from 'react-icons/md'
+import { libraries } from 'types/googleMaps'
 
 export function Local() {
   const { resource } = useSidebar()
@@ -14,7 +15,7 @@ export function Local() {
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-    libraries: ['places']
+    libraries
   })
 
   const mapContainerStyle = {

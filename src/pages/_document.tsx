@@ -53,7 +53,11 @@ export default class MyDocument extends Document {
             content="/favicon/browserconfig.xml"
           />
 
-          <meta name="theme-color" content="#282C4D" />
+          <meta name="theme-color" content="#66d9e8" />
+          <meta
+            name="description"
+            content="Use o mapa interativos e encontre os recursos educacionas mais próximos!"
+          />
         </Head>
         <body>
           <Main />

@@ -5,7 +5,7 @@ import { defaultCenter, mapOptions } from 'config/options'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation } from 'react-icons/md'
-import { GoogleMapsMap, LatLngLiteral } from 'types/googleMaps'
+import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
 import { categorySwitch } from 'utils/categorySwitch'
 import { CloseButton } from '../Shared/CloseButton'
 
@@ -25,7 +25,7 @@ export function ModalResourceLocalChange({
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-    libraries: ['places']
+    libraries
   })
 
   const mapRef = useRef<GoogleMapsMap>()

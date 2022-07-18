@@ -42,12 +42,17 @@ function renderImageUploadIcon(status: DropzoneStatus, theme: MantineTheme) {
   return <TbPhoto size={80} style={{ color: getIconColor(status, theme) }} />
 }
 
-export const dropzoneChildren = (
-  status: DropzoneStatus,
-  theme: MantineTheme,
-  isCoverUploaded: boolean,
+export const dropzoneChildren = ({
+  status,
+  theme,
+  isCoverUploaded,
+  resource
+}: {
+  status: DropzoneStatus
+  theme: MantineTheme
+  isCoverUploaded: boolean
   resource: ResourceType | null
-) => {
+}) => {
   if (isCoverUploaded || resource) {
     return (
       <Box className={styles.cover_container}>
@@ -123,7 +128,9 @@ export function CoverDropzone() {
         }
       }}
     >
-      {(status) => dropzoneChildren(status, theme, isCoverUploaded, resource)}
+      {(status) =>
+        dropzoneChildren({ status, theme, isCoverUploaded, resource })
+      }
     </Dropzone>
   )
 }
