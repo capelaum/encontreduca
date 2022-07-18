@@ -13,9 +13,7 @@ export function Category({ category, isSmall }: CategoryProps) {
     <Group align="center" spacing="sm">
       {icon}
 
-      <Text size={isSmall ? 'sm' : 'md'} pt={2}>
-        {category}
-      </Text>
+      <Text size={isSmall ? 'sm' : 'md'}>{category}</Text>
     </Group>
   )
 }

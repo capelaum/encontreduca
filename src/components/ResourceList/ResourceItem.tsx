@@ -1,7 +1,9 @@
 import {
+  Box,
   Group,
   Image,
   Stack,
+  Text,
   Title as MantineTitle,
   UnstyledButton
 } from '@mantine/core'
@@ -17,7 +19,8 @@ interface ResourceItemProps {
 }
 
 export function ResourceItem({ resource }: ResourceItemProps) {
-  const { setResource, setResourceOpened, setMenuOpened } = useSidebar()
+  const { setResource, setResourceOpened, setMenuOpened, votingPanelOpened } =
+    useSidebar()
   const { moveToLocation } = useMap()
 
   return (
@@ -42,10 +45,13 @@ export function ResourceItem({ resource }: ResourceItemProps) {
         spacing={0}
         py="md"
         px="md"
+        position="apart"
+        align="center"
         noWrap
         sx={(theme) => ({
-          borderBottom: `1px solid ${theme.colors.cyan[3]}`,
-          overflow: 'hidden'
+          maxWidth: '100%',
+          position: 'relative',
+          borderBottom: `1px solid ${theme.colors.cyan[3]}`
         })}
       >
         <Image
@@ -65,12 +71,12 @@ export function ResourceItem({ resource }: ResourceItemProps) {
             order={2}
             sx={(theme) =>
               ({
-                maxWidth: 'calc(100% - 100px)',
-                fontWeight: 500,
+                maxWidth: 'calc(100% - 80px)',
+                fontWeight: 600,
                 fontSize: theme.fontSizes.md,
                 color: theme.colors.cyan[3],
                 overflow: 'hidden',
-                whiteSpace: 'wrap',
+                whiteSpace: 'nowrap',
                 textOverflow: 'ellipsis'
               } as any)
             }
@@ -78,10 +84,32 @@ export function ResourceItem({ resource }: ResourceItemProps) {
             {resource.name}
           </MantineTitle>
 
+          {votingPanelOpened && (
+            <Text
+              sx={(theme) => ({
+                color: theme.colors.gray[4],
+                fontSize: theme.fontSizes.xs
+              })}
+            >
+              Criado em{' '}
+              {new Intl.DateTimeFormat('pt-BR').format(
+                new Date(resource.created_at)
+              )}
+            </Text>
+          )}
+
           <Category category={resource.category} isSmall />
         </Stack>
 
-        <TbChevronRight size={30} color={myTheme.colors!.brand![0]} />
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 'calc(50% - 15px)',
+            right: '20px'
+          }}
+        >
+          <TbChevronRight size={30} color={myTheme.colors!.brand![0]} />
+        </Box>
       </Group>
     </UnstyledButton>
   )

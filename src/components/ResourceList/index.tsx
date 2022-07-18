@@ -1,4 +1,4 @@
-import { Box, Group, Stack, TextInput, Tooltip } from '@mantine/core'
+import { Box, Group, Stack, Text, TextInput, Tooltip } from '@mantine/core'
 import { Back } from 'components/Shared/Back'
 import { searchInputStyles } from 'components/Shared/styles/inputStyles'
 import { Title } from 'components/Shared/Title'
@@ -8,9 +8,28 @@ import { MdSearch } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
 import { ResourceItem } from './ResourceItem'
 
-export function ResourceList() {
-  const { setSavedResourcesOpened } = useSidebar()
+interface ResourceListProps {
+  isVotingPainel?: boolean
+}
+
+export function ResourceList({ isVotingPainel }: ResourceListProps) {
+  const { setSavedResourcesOpened, setVotingPanelOpened } = useSidebar()
   const { resources } = data
+
+  // filter resources by approved status
+  const approvedResources = resources.filter(({ approved }) => approved)
+
+  function renderResourceItems() {
+    if (isVotingPainel) {
+      return approvedResources.map((resource) => (
+        <ResourceItem key={resource.id} resource={resource} />
+      ))
+    }
+
+    return resources.map((resource) => (
+      <ResourceItem key={resource.id} resource={resource} />
+    ))
+  }
 
   const rightSection = (
     <Tooltip
@@ -27,11 +46,32 @@ export function ResourceList() {
   )
 
   return (
-    <Stack my="md" spacing="md" role="form">
+    <Stack my="md" spacing="md">
       <Group px="md" align="start" position="apart" spacing={0}>
-        <Title name="Recursos salvos" />
-        <Back setSidebarOpened={setSavedResourcesOpened} />
+        <Title
+          name={isVotingPainel ? 'Painel de votação' : 'Recursos salvos'}
+        />
+        <Back
+          setSidebarOpened={
+            isVotingPainel ? setVotingPanelOpened : setSavedResourcesOpened
+          }
+        />
       </Group>
+
+      {isVotingPainel && (
+        <Text px="md">
+          <Text
+            component="strong"
+            sx={(theme) => ({
+              color: theme.colors.cyan[3],
+              fontWeight: 400
+            })}
+          >
+            Vote contra ou a favor{' '}
+          </Text>
+          da inserção dos recursos recém cadastrados.
+        </Text>
+      )}
 
       <Box px="md">
         <TextInput
@@ -49,9 +89,7 @@ export function ResourceList() {
       </Box>
 
       <Stack spacing={0} pt={8}>
-        {resources.map((resource) => (
-          <ResourceItem key={resource.id} resource={resource} />
-        ))}
+        {renderResourceItems()}
       </Stack>
     </Stack>
   )

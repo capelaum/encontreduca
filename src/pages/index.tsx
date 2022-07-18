@@ -11,6 +11,7 @@ import { Sidebar } from 'components/Shared/Sidebar'
 import { UpdateProfile } from 'components/UpdateProfile'
 import { useSidebar } from 'contexts/sidebarContext'
 import Head from 'next/head'
+import { libraries } from 'types/googleMaps'
 
 export default function Home() {
   const {
@@ -25,7 +26,9 @@ export default function Home() {
     createResourceOpened,
     setCreateResourceOpened,
     savedResourcesOpened,
-    setSavedResourcesOpened
+    setSavedResourcesOpened,
+    votingPanelOpened,
+    setVotingPanelOpened
   } = useSidebar()
 
   const { colorScheme } = useMantineColorScheme()
@@ -33,7 +36,7 @@ export default function Home() {
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-    libraries: ['places']
+    libraries
   })
 
   if (!isLoaded) return <MapLoader />
@@ -50,12 +53,12 @@ export default function Home() {
       <Sidebar
         opened={resourceOpened}
         setOpened={setResourceOpened}
-        zIndex={savedResourcesOpened && !menuOpened ? 4 : 1}
+        zIndex={savedResourcesOpened || votingPanelOpened ? 4 : 1}
       >
         <Resource />
       </Sidebar>
 
-      <Sidebar opened={menuOpened} setOpened={setMenuOpened} zIndex={3}>
+      <Sidebar opened={menuOpened} setOpened={setMenuOpened} zIndex={2}>
         <Menu />
       </Sidebar>
 
@@ -65,6 +68,14 @@ export default function Home() {
         zIndex={3}
       >
         <ResourceList />
+      </Sidebar>
+
+      <Sidebar
+        opened={votingPanelOpened}
+        setOpened={setVotingPanelOpened}
+        zIndex={3}
+      >
+        <ResourceList isVotingPainel />
       </Sidebar>
 
       <Sidebar
@@ -78,12 +89,12 @@ export default function Home() {
       <Sidebar
         opened={createResourceOpened}
         setOpened={setCreateResourceOpened}
-        zIndex={10}
+        zIndex={4}
       >
         <ResourceForm isCreateResource />
       </Sidebar>
 
-      <Sidebar opened={profileOpened} setOpened={setProfileOpened} zIndex={10}>
+      <Sidebar opened={profileOpened} setOpened={setProfileOpened} zIndex={4}>
         <UpdateProfile />
       </Sidebar>
     </>

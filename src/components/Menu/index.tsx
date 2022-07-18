@@ -14,6 +14,7 @@ export function Menu() {
     setProfileOpened,
     setCreateResourceOpened,
     setSavedResourcesOpened,
+    setVotingPanelOpened,
     setResource,
     setResourceOpened
   } = useSidebar()
@@ -46,7 +47,10 @@ export function Menu() {
         <MenuButton
           icon={<BsBookmarksFill size={20} />}
           text="Recursos salvos"
-          onClick={() => setSavedResourcesOpened(true)}
+          onClick={() => {
+            setSavedResourcesOpened(true)
+            setResourceOpened(false)
+          }}
         />
 
         <MenuButton
@@ -62,6 +66,10 @@ export function Menu() {
         <MenuButton
           icon={<GiStarsStack size={20} />}
           text="Painel de votação"
+          onClick={() => {
+            setVotingPanelOpened(true)
+            setResourceOpened(false)
+          }}
         />
 
         <MenuButton icon={<MdHelp size={20} />} text="Suporte" />

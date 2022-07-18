@@ -11,16 +11,11 @@ interface SidebarProps {
 }
 
 export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
-  const { createResourceOpened, menuOpened } = useSidebar()
+  const { createResourceOpened } = useSidebar()
   let closeOnClickOutside = true
   let withOverlay = false
 
   if (createResourceOpened) {
-    closeOnClickOutside = false
-    withOverlay = true
-  }
-
-  if (menuOpened) {
     closeOnClickOutside = false
     withOverlay = true
   }

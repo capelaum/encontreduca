@@ -118,6 +118,40 @@
       "approved": true,
       "created_at": "2022-04-01T00:00:00.000Z",
       "updated_at": "2022-04-01T00:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "name": "Curso Exatas",
+      "categoryId": 6,
+      "category": "Curso",
+      "position": {
+        "lat": -15.7747056,
+        "lng": -47.8887548
+      },
+      "address": "SCRN 704/705 Bloco A, 53 - Asa Norte, Brasília - DF, 70730-610",
+      "website": "https://www.cursoexatas.com.br",
+      "phone": "06132420628",
+      "cover": "https://dummyimage.com/380x200/333/fff",
+      "approved": false,
+      "created_at": "2022-04-01T00:00:00.000Z",
+      "updated_at": "2022-04-01T00:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "name": "The Brain Coworking - Ulysses Guimarães",
+      "categoryId": 7,
+      "category": "Coworking",
+      "position": {
+        "lat": -15.7880305,
+        "lng": -47.9005331
+      },
+      "address": "Ulysses Guimarães SDC, Bloco I, Zona Cívico e Administrativa- Ala Norte Piso 01, Eixo Monumental, Brasília - DF, 70655-775",
+      "website": "http://thebraincoworking.com.br",
+      "phone": "06131420106",
+      "cover": "https://dummyimage.com/380x200/333/fff",
+      "approved": false,
+      "created_at": "2022-04-01T00:00:00.000Z",
+      "updated_at": "2022-04-01T00:00:00.000Z"
     }
   ]
 }
