@@ -1,10 +1,10 @@
 import { Box, Group, Stack, Text, TextInput, Tooltip } from '@mantine/core'
 import { Back } from 'components/Shared/Back'
-import { searchInputStyles } from 'components/Shared/styles/inputStyles'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/resources.json'
 import { MdSearch } from 'react-icons/md'
+import { searchInputStyles } from 'styles/inputStyles'
 import { myTheme } from 'styles/theme'
 import { ResourceItem } from './ResourceItem'
 

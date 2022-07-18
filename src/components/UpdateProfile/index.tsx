@@ -1,9 +1,9 @@
 import { Button, Group, Stack, TextInput } from '@mantine/core'
 import { useInputState } from '@mantine/hooks'
 import { Back } from 'components/Shared/Back'
-import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
+import { inputStyles } from 'styles/inputStyles'
 import { AvatarDropzone } from './AvatarDropzone'
 import { DeleteUserButton } from './ModalUserDelete'
 

@@ -2,9 +2,9 @@ import { Group, Stack, Textarea } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
 import { ActionButton } from 'components/Resource/ActionButtons/ActionButton'
 import { Buttons } from 'components/Shared/Buttons'
-import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { useState } from 'react'
 import { FaRegThumbsDown, FaRegThumbsUp } from 'react-icons/fa'
+import { textareaStyles } from 'styles/inputStyles'
 import { CloseButton } from '../Shared/CloseButton'
 
 export function ModalVote({
