@@ -1,7 +1,7 @@
 import { Group, Stack } from '@mantine/core'
 import { Back } from 'components/Shared/Back'
 import { useSidebar } from 'contexts/sidebarContext'
-import { Category } from './Category'
+import { Category } from '../../Shared/Category'
 import { ResourceTitle } from './ResourceTitle'
 
 export function Header() {

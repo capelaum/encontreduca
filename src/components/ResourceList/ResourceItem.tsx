@@ -7,7 +7,7 @@ import {
   Title as MantineTitle,
   UnstyledButton
 } from '@mantine/core'
-import { Category } from 'components/Resource/Header/Category'
+import { Category } from 'components/Shared/Category'
 import { useMap } from 'contexts/mapContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { TbChevronRight } from 'react-icons/tb'
