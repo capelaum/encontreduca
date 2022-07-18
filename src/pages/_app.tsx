@@ -7,6 +7,7 @@ import { useHotkeys, useLocalStorage } from '@mantine/hooks'
 import { ModalsProvider } from '@mantine/modals'
 import { ModalReview } from 'components/Modal/ModalReview'
 import { ModalSelect } from 'components/Modal/ModalSelect'
+import { ModalVote } from 'components/Modal/ModalVote'
 import { MapProvider } from 'contexts/mapContext'
 import { SidebarProvider } from 'contexts/sidebarContext'
 import type { AppProps } from 'next/app'
@@ -33,7 +34,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <MapProvider>
           <SidebarProvider>
             <ModalsProvider
-              modals={{ review: ModalReview, select: ModalSelect }}
+              modals={{
+                review: ModalReview,
+                select: ModalSelect,
+                vote: ModalVote
+              }}
             >
               <Component {...pageProps} />
             </ModalsProvider>

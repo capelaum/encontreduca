@@ -1,7 +1,7 @@
 import { useModals } from '@mantine/modals'
 import { ModalResourceChange } from 'components/Modal/ModalResourceChange'
 import { Title } from 'components/Shared/Title'
-import { MdEdit } from 'react-icons/md'
+import { MdOutlineEdit } from 'react-icons/md'
 import { ActionButton } from '../ActionButton'
 
 export function ResourceChange() {
@@ -21,7 +21,7 @@ export function ResourceChange() {
   return (
     <ActionButton
       text="Sugerir Mudança"
-      icon={<MdEdit size={28} />}
+      icon={<MdOutlineEdit size={28} />}
       onClick={openResourceChangeModal}
     />
   )

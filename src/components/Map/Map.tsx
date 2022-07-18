@@ -22,8 +22,10 @@ export default function Map(): JSX.Element {
     handleMapClick
   } = useMap()
 
+  const approvedResources = resources.filter(({ approved }) => approved)
+
   function renderResourcesMarkers() {
-    return resources.map((resource) => (
+    return approvedResources.map((resource) => (
       <ResourceMarker key={resource.id} resource={resource} />
     ))
   }

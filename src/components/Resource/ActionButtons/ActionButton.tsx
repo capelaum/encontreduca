@@ -8,7 +8,12 @@ interface ActionButtonProps {
 
 export function ActionButton({ text, icon, onClick }: ActionButtonProps) {
   return (
-    <Stack spacing="sm" align="center" justify="start">
+    <Stack
+      spacing="sm"
+      align="center"
+      justify="start"
+      sx={{ maxWidth: '72px' }}
+    >
       <ActionIcon
         onClick={onClick}
         variant="outline"
@@ -22,7 +27,7 @@ export function ActionButton({ text, icon, onClick }: ActionButtonProps) {
       >
         {icon}
       </ActionIcon>
-      <Text size="sm" align="center" sx={{ maxWidth: '60px' }}>
+      <Text size="sm" align="center">
         {text}
       </Text>
     </Stack>

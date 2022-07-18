@@ -11,15 +11,15 @@ export function Resource() {
   const { resource, setResourceOpened } = useSidebar()
 
   if (!resource) {
-    return null
     setResourceOpened(false)
+    return null
   }
 
   return (
     <Box>
-      <Search />
+      {resource.approved && <Search />}
 
-      <Stack mt={88} px="md" spacing="md">
+      <Stack mt={resource.approved ? 88 : 'md'} px="md" spacing="md">
         <Header />
 
         <Cover />

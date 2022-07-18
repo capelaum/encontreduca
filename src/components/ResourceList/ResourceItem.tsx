@@ -92,9 +92,14 @@ export function ResourceItem({ resource }: ResourceItemProps) {
               })}
             >
               Criado em{' '}
-              {new Intl.DateTimeFormat('pt-BR').format(
-                new Date(resource.created_at)
-              )}
+              {new Intl.DateTimeFormat('pt-BR', {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                timeZone: 'America/Sao_Paulo'
+              }).format(new Date(resource.created_at))}
             </Text>
           )}
 

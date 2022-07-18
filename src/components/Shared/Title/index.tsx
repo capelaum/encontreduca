@@ -13,6 +13,7 @@ export function Title({ name, padding }: TitleProps) {
       pt={padding ?? 0}
       sx={(theme) => ({
         fontSize: theme.fontSizes.xl,
+        fontWeight: 600,
         color: theme.colors.cyan[3]
       })}
     >

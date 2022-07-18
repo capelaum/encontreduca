@@ -9,11 +9,11 @@ import { myTheme } from 'styles/theme'
 export const categorySwitch: CategorySwitch = {
   'Universidade privada': {
     markerIcon: '/markers/marker_university.svg',
-    icon: <MdOutlineSchool size={18} color={myTheme.colors!.brand![0]} />
+    icon: <MdOutlineSchool size={16} color={myTheme.colors!.brand![0]} />
   },
   'Universidade pública': {
     markerIcon: '/markers/marker_university.svg',
-    icon: <MdOutlineSchool size={18} color={myTheme.colors!.brand![0]} />
+    icon: <MdOutlineSchool size={16} color={myTheme.colors!.brand![0]} />
   },
   'Escola privada': {
     markerIcon: '/markers/marker_school.svg',
@@ -25,15 +25,15 @@ export const categorySwitch: CategorySwitch = {
   },
   Biblioteca: {
     markerIcon: '/markers/marker_library.svg',
-    icon: <IoLibraryOutline size={18} color={myTheme.colors!.brand![0]} />
+    icon: <IoLibraryOutline size={16} color={myTheme.colors!.brand![0]} />
   },
   Curso: {
     markerIcon: '/markers/marker_course.svg',
-    icon: <VscNotebook size={18} color={myTheme.colors!.brand![0]} />
+    icon: <VscNotebook size={16} color={myTheme.colors!.brand![0]} />
   },
   Coworking: {
     markerIcon: '/markers/marker_coworking.svg',
-    icon: <BsBriefcase size={18} color={myTheme.colors!.brand![0]} />
+    icon: <BsBriefcase size={16} color={myTheme.colors!.brand![0]} />
   }
 }
 

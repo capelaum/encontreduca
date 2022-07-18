@@ -16,12 +16,11 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
   const { setSavedResourcesOpened, setVotingPanelOpened } = useSidebar()
   const { resources } = data
 
-  // filter resources by approved status
-  const approvedResources = resources.filter(({ approved }) => approved)
+  const notApprovedResources = resources.filter(({ approved }) => !approved)
 
   function renderResourceItems() {
     if (isVotingPainel) {
-      return approvedResources.map((resource) => (
+      return notApprovedResources.map((resource) => (
         <ResourceItem key={resource.id} resource={resource} />
       ))
     }
