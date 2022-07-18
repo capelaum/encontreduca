@@ -10,12 +10,12 @@ export function ActionButtons() {
   const { resource } = useSidebar()
 
   return (
-    <Group spacing="lg" align="start" position="center" mt="md">
+    <Group spacing={32} align="start" position="center" mt="md">
       <ActionButton text="Rotas" icon={<MdDirections size={28} />} />
 
-      <ReviewCreate />
-
       <ResourceChange />
+
+      <ReviewCreate />
 
       {!resource?.approved && <ResourceVote />}
     </Group>

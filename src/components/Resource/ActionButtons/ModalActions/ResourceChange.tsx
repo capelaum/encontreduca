@@ -20,7 +20,7 @@ export function ResourceChange() {
 
   return (
     <ActionButton
-      text="Sugerir Mudança"
+      text="Editar"
       icon={<MdOutlineEdit size={28} />}
       onClick={openResourceChangeModal}
     />
