@@ -21,12 +21,12 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
   function renderResourceItems() {
     if (isVotingPainel) {
       return notApprovedResources.map((resource) => (
-        <ResourceItem key={resource.id} resource={resource} />
+        <ResourceItem key={`resource-${resource.id}`} resource={resource} />
       ))
     }
 
     return resources.map((resource) => (
-      <ResourceItem key={resource.id} resource={resource} />
+      <ResourceItem key={`resource-${resource.id}`} resource={resource} />
     ))
   }
 

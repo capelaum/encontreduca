@@ -120,7 +120,7 @@
       "updated_at": "2022-04-01T00:00:00.000Z"
     },
     {
-      "id": 6,
+      "id": 8,
       "name": "Curso Exatas",
       "categoryId": 6,
       "category": "Curso",
@@ -137,7 +137,7 @@
       "updated_at": "2022-04-01T00:00:00.000Z"
     },
     {
-      "id": 7,
+      "id": 9,
       "name": "The Brain Coworking - Ulysses Guimarães",
       "categoryId": 7,
       "category": "Coworking",

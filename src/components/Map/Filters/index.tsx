@@ -28,14 +28,13 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 export function Filters() {
   const { classes } = useStyles()
   const { categories } = data
+  const categoryFilters = getCategoryFilters(categories)
 
   const [activeFilter, setActiveFilter] = useState('')
 
-  const categoryFilters = getCategoryFilters(categories)
-
   const chipsStyles = (): CSSObject => ({
     position: 'absolute',
-    top: `30px`,
+    top: '28px',
     left: '420px',
     zIndex: 1,
     width: 'calc(100vw - 420px)',
@@ -52,7 +51,7 @@ export function Filters() {
       value={activeFilter}
       multiple={false}
       onChange={setActiveFilter}
-      size="xs"
+      size="sm"
       spacing="xs"
       radius="xl"
       variant="filled"

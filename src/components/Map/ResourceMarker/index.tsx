@@ -18,7 +18,7 @@ export function ResourceMarker({
   const { zoom } = useMap()
   const { setResourceOpened, setResource, setMenuOpened } = useSidebar()
 
-  const { id, name, category, position } = resource
+  const { name, category, position } = resource
 
   const markerLabel = (): MarkerLabel | null => {
     if (zoom > 15) {
@@ -47,7 +47,6 @@ export function ResourceMarker({
     <Marker
       clickable={clickable}
       onClick={handleMarkerClick}
-      key={id}
       position={position}
       icon={{
         url: categorySwitch[category].markerIcon,

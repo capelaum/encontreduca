@@ -41,7 +41,6 @@ export function ResourceItem({ resource }: ResourceItemProps) {
       }}
     >
       <Group
-        key={resource.id}
         spacing={0}
         py="md"
         px="md"
