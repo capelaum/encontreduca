@@ -4,6 +4,7 @@ import { mapContainerStyle, mapOptions } from 'config/options'
 import { useMap } from 'contexts/mapContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/resources.json'
+import { Filters } from './Filters'
 import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
 import { SideButtons } from './SideButtons'
@@ -33,6 +34,8 @@ export default function Map(): JSX.Element {
   return (
     <Box sx={{ width: '100vw', height: '100vh' }}>
       {!resourceOpened && <Search />}
+
+      <Filters />
 
       <GoogleMap
         zoom={zoom}
