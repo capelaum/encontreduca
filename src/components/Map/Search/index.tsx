@@ -16,7 +16,8 @@ export function Search() {
     setMenuOpened,
     resourceOpened,
     setSavedResourcesOpened,
-    setVotingPanelOpened
+    setVotingPanelOpened,
+    resource
   } = useSidebar()
 
   const searchStyles = (theme: MantineTheme): CSSObject => ({
@@ -24,7 +25,7 @@ export function Search() {
     top: theme.spacing.md,
     left: theme.spacing.md,
     width: '380px',
-    zIndex: 1,
+    zIndex: resourceOpened && resource?.approved && !menuOpened ? 100 : 1,
     borderRadius: theme.radius.md,
     backgroundColor: theme.colors.brand[7],
     border: resourceOpened ? '1px solid #66d9e8' : 'none'

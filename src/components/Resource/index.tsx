@@ -1,5 +1,4 @@
 import { Box, Stack } from '@mantine/core'
-import { Search } from 'components/Map/Search'
 import { useSidebar } from 'contexts/sidebarContext'
 import { ActionButtons } from './ActionButtons'
 import { Cover } from './Cover'
@@ -17,8 +16,6 @@ export function Resource() {
 
   return (
     <Box>
-      {resource.approved && <Search />}
-
       <Stack mt={resource.approved ? 88 : 'md'} px="md" spacing="md">
         <Header />
 
