@@ -1,4 +1,5 @@
-import { Box } from '@mantine/core'
+import { Box, Group } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { mapContainerStyle, mapOptionsLight } from 'config/options'
 import { useMap } from 'contexts/mapContext'
@@ -8,7 +9,9 @@ import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
 import { SideButtons } from './SideButtons'
 
-export default function MapLight(): JSX.Element {
+export default function Map(): JSX.Element {
+  const largeScreen = useMediaQuery('(min-width: 768px)', false)
+
   const { resources } = data
 
   const {
@@ -34,9 +37,22 @@ export default function MapLight(): JSX.Element {
 
   return (
     <Box sx={{ width: '100vw', height: '100vh' }}>
-      <Search />
+      <Group
+        direction={largeScreen ? 'row' : 'column'}
+        spacing={largeScreen ? 'sm' : 'md'}
+        align="center"
+        noWrap
+        sx={(theme) => ({
+          position: 'absolute',
+          top: theme.spacing.md,
+          left: theme.spacing.md,
+          right: theme.spacing.md
+        })}
+      >
+        <Search />
 
-      <Filters />
+        <Filters />
+      </Group>
 
       <GoogleMap
         zoom={zoom}
