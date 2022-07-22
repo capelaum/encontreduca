@@ -22,7 +22,7 @@ export function ModalResourceChangeButton({
         }
       }}
     >
-      <Group align="center" spacing={32} px={20} py={12}>
+      <Group align="center" spacing={32} px={20} py={12} noWrap>
         {icon}
 
         <Stack spacing={2}>

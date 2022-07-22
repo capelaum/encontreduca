@@ -14,26 +14,14 @@ export function Title({ name, padding }: TitleProps) {
       sx={(theme) => ({
         fontSize: theme.fontSizes.xl,
         fontWeight: 600,
-        color: theme.colors.cyan[3],
+        color: theme.colors.cyan[3]
         // maxWidth: '100%',
         // overflow: 'hidden',
         // whiteSpace: 'nowrap',
         // textOverflow: 'ellipsis',
-        border: '1px solid red'
       })}
     >
       {name}
     </MantineTitle>
   )
 }
-
-/*
-sx={{
-        maxWidth: 'calc(100% - 60px)',
-        border: '1px solid red',
-        overflow: 'hidden',
-        whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis'
-      }}
-
-*/

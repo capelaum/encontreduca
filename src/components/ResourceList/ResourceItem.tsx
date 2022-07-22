@@ -32,10 +32,7 @@ export function ResourceItem({ resource }: ResourceItemProps) {
         moveToLocation(resource.position)
       }}
       sx={{
-        '&:hover': {
-          backgroundColor: 'rgba(0, 0, 0, 0.2)'
-        },
-        '&:focus': {
+        '&:hover, &:focus': {
           backgroundColor: 'rgba(0, 0, 0, 0.2)'
         }
       }}
