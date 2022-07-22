@@ -15,11 +15,9 @@ export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
 
   const { createResourceOpened, menuOpened } = useSidebar()
-  let closeOnClickOutside = true
   let withOverlay = false
 
   if (createResourceOpened || menuOpened || !largeScreen) {
-    closeOnClickOutside = false
     withOverlay = true
   }
 
@@ -36,7 +34,6 @@ export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
       onClose={() => setOpened(false)}
       withOverlay={withOverlay}
       transitionTimingFunction="ease-in-out"
-      closeOnClickOutside={closeOnClickOutside}
     >
       <Box className={styles.container}>{children}</Box>
     </Drawer>

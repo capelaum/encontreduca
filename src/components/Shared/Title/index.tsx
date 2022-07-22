@@ -17,10 +17,6 @@ export function Title({ name, padding, isModal }: TitleProps) {
         fontSize: isModal ? theme.fontSizes.lg : theme.fontSizes.xl,
         fontWeight: 600,
         color: theme.colors.cyan[3]
-        // maxWidth: '100%',
-        // overflow: 'hidden',
-        // whiteSpace: 'nowrap',
-        // textOverflow: 'ellipsis',
       })}
     >
       {name}

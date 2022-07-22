@@ -12,15 +12,19 @@ export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
         margin: theme.spacing.md
       })}
     >
-      <Group spacing={12}>
+      <Group spacing={12} noWrap>
         <Avatar radius="xl" size={50} src="/avatar.png" />
+
         <Stack spacing={2}>
           <Text
-            size="lg"
+            size="md"
             weight={500}
-            sx={(theme) => ({ color: theme.colors.cyan[3] })}
+            sx={(theme) => ({
+              color: theme.colors.cyan[3],
+              paddingRight: '32px'
+            })}
           >
-            Nome Completo
+            Nome Completo Gigante e Comprido
           </Text>
           <Text size="md" sx={(theme) => ({ color: theme.colors.gray[3] })}>
             user@gmail.com

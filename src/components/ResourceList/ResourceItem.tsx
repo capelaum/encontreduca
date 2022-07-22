@@ -68,13 +68,10 @@ export function ResourceItem({ resource }: ResourceItemProps) {
             order={2}
             sx={(theme) =>
               ({
-                maxWidth: 'calc(100% - 80px)',
                 fontWeight: 600,
                 fontSize: theme.fontSizes.md,
                 color: theme.colors.cyan[3],
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis'
+                paddingRight: '24px'
               } as any)
             }
           >

@@ -46,8 +46,7 @@ export default function Map(): JSX.Element {
           position: 'absolute',
           top: theme.spacing.md,
           left: theme.spacing.md,
-          right: theme.spacing.md,
-          border: '1px solid red'
+          right: theme.spacing.md
         })}
       >
         <Search />

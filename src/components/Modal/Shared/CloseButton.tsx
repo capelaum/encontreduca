@@ -8,7 +8,7 @@ interface CloseButtonProps {
 }
 
 export function CloseButton({ onClick }: CloseButtonProps) {
-  const largeScreen = useMediaQuery('(min-width: 768px)')
+  const largeScreen = useMediaQuery('(min-width: 768px)', false)
 
   return (
     <ActionIcon
