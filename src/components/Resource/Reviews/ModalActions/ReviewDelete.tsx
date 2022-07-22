@@ -13,7 +13,7 @@ export function ReviewDelete() {
       centered: true,
       withCloseButton: false,
       padding: 'md',
-      title: <Title name="Quer excluir esta avaliação?" />,
+      title: <Title name="Quer excluir esta avaliação?" isModal />,
       children: (
         <>
           <CloseButton onClick={() => closeModal(id)} />

@@ -10,7 +10,7 @@ export function ReviewCreate() {
 
   const openModalReviewCreate = () =>
     openContextModal('review', {
-      title: <Title name={resource!.name} />,
+      title: <Title name={resource!.name} isModal />,
       radius: 'md',
       centered: true,
       withCloseButton: false,

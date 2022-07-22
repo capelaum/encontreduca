@@ -9,7 +9,7 @@ export function ResourceChange() {
 
   const openResourceChangeModal = () => {
     const id = openModal({
-      title: <Title name="Sugerir uma alteração" padding={20} />,
+      title: <Title name="Sugerir uma alteração" padding={20} isModal />,
       radius: 'md',
       centered: true,
       withCloseButton: false,

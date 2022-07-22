@@ -8,7 +8,7 @@ export function ResourceVote() {
 
   const openModalResourceVote = () =>
     openContextModal('vote', {
-      title: <Title name="Faça seu voto" />,
+      title: <Title name="Faça seu voto" isModal />,
       radius: 'md',
       centered: true,
       withCloseButton: false,

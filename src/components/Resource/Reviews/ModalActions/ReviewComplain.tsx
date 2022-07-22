@@ -11,7 +11,7 @@ export function ReviewComplain() {
 
   const openModalReviewComplain = () => {
     openContextModal('select', {
-      title: <Title name="Denunciar avaliação" />,
+      title: <Title name="Denunciar avaliação" isModal />,
       radius: 'md',
       centered: true,
       withCloseButton: false,
