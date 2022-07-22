@@ -17,7 +17,7 @@ export function Info() {
         sx={(theme) => ({ color: theme.colors.gray[6] })}
       />
       <Stack px="md" spacing="md">
-        <Group spacing={16} align="center">
+        <Group spacing={16} align="center" noWrap>
           <MdPlace size={24} color={myTheme.colors!.brand![0]} />
           <Text size="sm" sx={{ maxWidth: '320px' }}>
             {address}

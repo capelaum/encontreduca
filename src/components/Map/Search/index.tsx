@@ -6,11 +6,14 @@ import {
   TextInput,
   Tooltip
 } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { useSidebar } from 'contexts/sidebarContext'
 import { MdSearch } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
 
 export function Search() {
+  const largeScreen = useMediaQuery('(min-width: 768px)', false)
+
   const {
     menuOpened,
     setMenuOpened,
@@ -21,14 +24,14 @@ export function Search() {
   } = useSidebar()
 
   const searchStyles = (theme: MantineTheme): CSSObject => ({
-    position: 'absolute',
-    top: theme.spacing.md,
-    left: theme.spacing.md,
-    width: '380px',
-    zIndex: resourceOpened && resource?.approved && !menuOpened ? 100 : 1,
+    width: largeScreen ? '380px' : '100%',
+    zIndex:
+      resourceOpened && resource?.approved && !menuOpened && largeScreen
+        ? 100
+        : 1,
     borderRadius: theme.radius.md,
     backgroundColor: theme.colors.brand[7],
-    border: resourceOpened ? '1px solid #66d9e8' : 'none'
+    border: resourceOpened ? `1px solid ${theme.colors.cyan[4]}` : 'none'
   })
 
   const rightSection = (

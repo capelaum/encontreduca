@@ -1,4 +1,5 @@
 import { Box, Drawer } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { useSidebar } from 'contexts/sidebarContext'
 import { ReactNode } from 'react'
 import styles from './styles.module.scss'
@@ -11,11 +12,13 @@ interface SidebarProps {
 }
 
 export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
-  const { createResourceOpened } = useSidebar()
+  const largeScreen = useMediaQuery('(min-width: 768px)', false)
+
+  const { createResourceOpened, menuOpened } = useSidebar()
   let closeOnClickOutside = true
   let withOverlay = false
 
-  if (createResourceOpened) {
+  if (createResourceOpened || menuOpened || !largeScreen) {
     closeOnClickOutside = false
     withOverlay = true
   }
@@ -23,7 +26,7 @@ export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
   return (
     <Drawer
       zIndex={zIndex ?? 1}
-      size={420}
+      size={largeScreen ? '420px' : '100%'}
       padding={0}
       opened={opened}
       overlayBlur={1}

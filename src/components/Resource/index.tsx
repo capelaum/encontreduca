@@ -1,4 +1,5 @@
 import { Box, Stack } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { useSidebar } from 'contexts/sidebarContext'
 import { ActionButtons } from './ActionButtons'
 import { Cover } from './Cover'
@@ -7,6 +8,8 @@ import { Info } from './Info'
 import { Reviews } from './Reviews'
 
 export function Resource() {
+  const largeScreen = useMediaQuery('(min-width: 768px)', false)
+
   const { resource, setResourceOpened } = useSidebar()
 
   if (!resource) {
@@ -16,7 +19,11 @@ export function Resource() {
 
   return (
     <Box>
-      <Stack mt={resource.approved ? 88 : 'md'} px="md" spacing="md">
+      <Stack
+        mt={resource.approved && largeScreen ? 88 : 'md'}
+        px="md"
+        spacing="md"
+      >
         <Header />
 
         <Cover />

@@ -18,7 +18,7 @@ export function ModalReview({
   const [hover, setHover] = useState(0)
 
   return (
-    <Stack spacing="md">
+    <Stack spacing="md" sx={{ overflow: 'hidden', border: '1px solid red' }}>
       <CloseButton onClick={() => context.closeModal(id)} />
 
       <Profile isModal />

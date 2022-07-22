@@ -1,4 +1,4 @@
-import { Image, Stack } from '@mantine/core'
+import { AspectRatio, Image, Stack } from '@mantine/core'
 import { useSidebar } from 'contexts/sidebarContext'
 import { Author } from './Author'
 import { ReviewStats } from './ReviewStats'
@@ -8,15 +8,18 @@ export function Cover() {
 
   return (
     <Stack spacing="sm">
-      <Image
-        width="100%"
-        height={200}
-        radius="md"
-        withPlaceholder
-        src={resource!.cover}
-        alt={`Imagem de capa do recurso ${resource!.name}`}
-        title={`Imagem de capa do recurso ${resource!.name}`}
-      />
+      <AspectRatio
+        ratio={16 / 9}
+        sx={{ maxWidth: '380px', maxHeight: '200px' }}
+      >
+        <Image
+          radius="md"
+          withPlaceholder
+          src={resource!.cover}
+          alt={`Imagem de capa do recurso ${resource!.name}`}
+          title={`Imagem de capa do recurso ${resource!.name}`}
+        />
+      </AspectRatio>
 
       <ReviewStats />
       <Author />

@@ -50,6 +50,7 @@ export function ResourceItem({ resource }: ResourceItemProps) {
         sx={(theme) => ({
           maxWidth: '100%',
           position: 'relative',
+          overflow: 'hidden',
           borderBottom: `1px solid ${theme.colors.cyan[3]}`
         })}
       >

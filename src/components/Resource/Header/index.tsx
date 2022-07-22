@@ -1,16 +1,16 @@
 import { Group, Stack } from '@mantine/core'
 import { Back } from 'components/Shared/Back'
+import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import { Category } from '../../Shared/Category'
-import { ResourceTitle } from './ResourceTitle'
 
 export function Header() {
   const { resource, setResourceOpened } = useSidebar()
 
   return (
     <Stack spacing="sm">
-      <Group align="start" position="apart" spacing={0}>
-        <ResourceTitle name={resource!.name} />
+      <Group noWrap align="start" position="apart" spacing={4}>
+        <Title name={resource!.name} />
         <Back setSidebarOpened={setResourceOpened} />
       </Group>
 

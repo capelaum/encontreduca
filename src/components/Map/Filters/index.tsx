@@ -6,6 +6,7 @@ import {
   Group,
   Text
 } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import data from 'data/categories.json'
 import { useState } from 'react'
 import { getCategoryFilters } from 'utils/categoryFormatters'
@@ -26,6 +27,8 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 }))
 
 export function Filters() {
+  const largeScreen = useMediaQuery('(min-width: 768px)', false)
+
   const { classes } = useStyles()
   const { categories } = data
   const categoryFilters = getCategoryFilters(categories)
@@ -33,13 +36,13 @@ export function Filters() {
   const [activeFilter, setActiveFilter] = useState('')
 
   const chipsStyles = (): CSSObject => ({
-    position: 'absolute',
-    top: '28px',
-    left: '420px',
     zIndex: 1,
-    width: 'calc(100vw - 420px)',
+    width: largeScreen ? 'calc(100vw - 440px)' : '100%',
     overflow: 'hidden',
     overflowX: 'scroll',
+    overflowY: 'hidden',
+    whiteSpace: 'nowrap',
+    scrollbarWidth: 'none',
     '&::-webkit-scrollbar': {
       display: 'none'
     }
@@ -51,7 +54,7 @@ export function Filters() {
       value={activeFilter}
       multiple={false}
       onChange={setActiveFilter}
-      size="sm"
+      size={largeScreen ? 'sm' : 'xs'}
       spacing="xs"
       radius="xl"
       variant="filled"
