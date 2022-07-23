@@ -1,4 +1,10 @@
-import { Group, Text, UnstyledButton } from '@mantine/core'
+import {
+  Group,
+  Text,
+  UnstyledButton,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 
 interface MenuButtonProps {
   text: string
@@ -7,21 +13,26 @@ interface MenuButtonProps {
 }
 
 export function MenuButton({ text, icon, onClick }: MenuButtonProps) {
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   return (
     <UnstyledButton
       onClick={onClick}
-      sx={(theme) => ({
-        color: theme.colors.cyan[3],
+      sx={{
+        color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
         textAlign: 'left',
         paddingTop: 14,
         paddingBottom: 14,
         paddingRight: theme.spacing.md,
         paddingLeft: theme.spacing.md,
         '&:hover': {
-          backgroundColor: theme.colors.brand[0],
-          color: theme.colors.brand[7]
+          color: dark ? theme.colors.brand[7] : theme.white,
+          backgroundColor: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
         }
-      })}
+      }}
     >
       <Group spacing="md" align="center">
         {icon}

@@ -20,7 +20,7 @@ export function ReviewStats() {
         mt="xs"
         sx={(theme) => ({
           fontWeight: 500,
-          color: dark ? theme.colors.cyan[3] : theme.colors.brand[9]
+          color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
         })}
       >
         20 avaliações

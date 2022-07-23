@@ -52,7 +52,7 @@ export function Reviews() {
           compact
           size="sm"
           sx={{
-            color: dark ? theme.colors.cyan[3] : theme.colors.brand[9],
+            color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
             '&:hover': {
               backgroundColor: dark
                 ? theme.colors.brand[8]

@@ -34,10 +34,10 @@ export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
     height: '100vh',
     overflowY: 'scroll',
     scrollbarWidth: 'thin',
-    color: dark ? theme.colors.cyan[3] : theme.colors.brand[9],
+    color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
     backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
     scrollbarColor: `${
-      dark ? theme.colors.cyan[3] : theme.colors.brand[9]
+      dark ? theme.colors.cyan[3] : theme.colors.brand[7]
     } transparent`,
 
     '&::-webkit-scrollbar': {
@@ -50,7 +50,7 @@ export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
     },
 
     '&::-webkit-scrollbar-thumb': {
-      background: dark ? theme.colors.cyan[3] : theme.colors.brand[9],
+      background: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
       borderRadius: '50px',
       width: '1px',
       '&:hover': {

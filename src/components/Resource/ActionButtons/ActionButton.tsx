@@ -24,9 +24,9 @@ export function ActionButton({ text, icon, onClick }: ActionButtonProps) {
         title={text}
         radius="md"
         sx={(theme) => ({
-          color: dark ? theme.colors.cyan[3] : theme.colors.brand[9],
+          color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
           border: `1px solid${
-            dark ? theme.colors.cyan[3] : theme.colors.brand[9]
+            dark ? theme.colors.cyan[3] : theme.colors.brand[7]
           }`
         })}
       >

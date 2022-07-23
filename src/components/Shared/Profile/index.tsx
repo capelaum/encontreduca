@@ -29,7 +29,7 @@ export function Profile({ isModal }: ProfileProps) {
           size="sm"
           weight={500}
           sx={{
-            color: dark ? theme.colors.cyan[3] : theme.colors.brand[9]
+            color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
           }}
         >
           Nome Completo
@@ -40,7 +40,7 @@ export function Profile({ isModal }: ProfileProps) {
             <Text
               size="xs"
               sx={{
-                color: dark ? theme.colors.cyan[3] : theme.colors.brand[9],
+                color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
                 lineHeight: 1.5
               }}
             >
@@ -68,7 +68,7 @@ export function Profile({ isModal }: ProfileProps) {
           <Text
             size="xs"
             sx={{
-              color: dark ? theme.colors.cyan[3] : theme.colors.brand[9],
+              color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
               lineHeight: 1.5
             }}
           >

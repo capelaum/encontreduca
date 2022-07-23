@@ -31,7 +31,7 @@ export function Info() {
         <Group spacing={16} align="center" noWrap>
           <MdPlace
             size={24}
-            color={dark ? theme.colors.cyan[3] : theme.colors.brand[9]}
+            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
           />
           <Text size="sm" sx={{ maxWidth: '320px', fontWeight: 600 }}>
             {address}
@@ -41,7 +41,7 @@ export function Info() {
         <Group spacing={16} align="center">
           <TbWorld
             size={24}
-            color={dark ? theme.colors.cyan[3] : theme.colors.brand[9]}
+            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
           />
           <Text size="sm" sx={{ maxWidth: '320px', fontWeight: 600 }}>
             {website}
@@ -51,7 +51,7 @@ export function Info() {
         <Group spacing={16} align="center">
           <MdLocalPhone
             size={24}
-            color={dark ? theme.colors.cyan[3] : theme.colors.brand[9]}
+            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
           />
           <Text size="sm" sx={{ maxWidth: '320px', fontWeight: 600 }}>
             {phone}

@@ -19,7 +19,7 @@ export function Title({ name, padding, isModal }: TitleProps) {
       sx={(theme) => ({
         fontSize: isModal ? theme.fontSizes.lg : theme.fontSizes.xl,
         fontWeight: 700,
-        color: dark ? theme.colors.cyan[3] : theme.colors.brand[9]
+        color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
       })}
     >
       {name}
