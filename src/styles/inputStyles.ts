@@ -31,14 +31,3 @@ export const textareaStyles = (theme: MantineTheme): CSSObject => ({
     borderRadius: '5px'
   }
 })
-
-export const searchInputStyles = (theme: MantineTheme): CSSObject => ({
-  width: '100%',
-  zIndex: 1,
-  borderRadius: theme.radius.md,
-  backgroundColor: theme.colors.brand[7],
-  border: `1px solid ${theme.colors.brand[0]}`,
-  'input:focus': {
-    outline: '1px solid white'
-  }
-})

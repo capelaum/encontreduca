@@ -1,10 +1,18 @@
-import { Box, Group, Stack, Text, TextInput, Tooltip } from '@mantine/core'
+import {
+  Box,
+  CSSObject,
+  Group,
+  MantineTheme,
+  Stack,
+  Text,
+  TextInput,
+  Tooltip
+} from '@mantine/core'
 import { Back } from 'components/Shared/Back'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/resources.json'
 import { MdSearch } from 'react-icons/md'
-import { searchInputStyles } from 'styles/inputStyles'
 import { myTheme } from 'styles/theme'
 import { ResourceItem } from './ResourceItem'
 
@@ -29,6 +37,17 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
       <ResourceItem key={`resource-${resource.id}`} resource={resource} />
     ))
   }
+
+  const searchInputStyles = (theme: MantineTheme): CSSObject => ({
+    width: '100%',
+    zIndex: 1,
+    borderRadius: theme.radius.md,
+    backgroundColor: theme.colors.brand[7],
+    border: `1px solid ${theme.colors.brand[0]}`,
+    'input:focus': {
+      outline: '1px solid white'
+    }
+  })
 
   const rightSection = (
     <Tooltip
