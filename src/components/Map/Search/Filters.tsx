@@ -64,7 +64,7 @@ export function Filters() {
     return {
       color: theme.colors.brand[9],
       backgroundColor: theme.white,
-      '&:hover': { backgroundColor: theme.colors.brandLight[0] }
+      '&:hover': { backgroundColor: theme.colors.gray[0] }
     }
   }
 

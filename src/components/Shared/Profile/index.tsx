@@ -1,4 +1,12 @@
-import { Avatar, Group, Stack, Text, Tooltip } from '@mantine/core'
+import {
+  Avatar,
+  Group,
+  Stack,
+  Text,
+  Tooltip,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { MdInfoOutline } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
 
@@ -7,6 +15,11 @@ interface ProfileProps {
 }
 
 export function Profile({ isModal }: ProfileProps) {
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   return (
     <Group spacing="sm" align="center">
       <Avatar radius="xl" size={35} src="/avatar.png" />
@@ -15,9 +28,9 @@ export function Profile({ isModal }: ProfileProps) {
         <Text
           size="sm"
           weight={500}
-          sx={(theme) => ({
-            color: theme.colors.cyan[3]
-          })}
+          sx={{
+            color: dark ? theme.colors.cyan[3] : theme.colors.brand[9]
+          }}
         >
           Nome Completo
         </Text>
@@ -26,10 +39,10 @@ export function Profile({ isModal }: ProfileProps) {
           <Group spacing={4}>
             <Text
               size="xs"
-              sx={(theme) => ({
-                color: theme.colors.gray[3],
+              sx={{
+                color: dark ? theme.colors.cyan[3] : theme.colors.brand[9],
                 lineHeight: 1.5
-              })}
+              }}
             >
               Postar publicamente
             </Text>
@@ -54,10 +67,10 @@ export function Profile({ isModal }: ProfileProps) {
         ) : (
           <Text
             size="xs"
-            sx={(theme) => ({
-              color: theme.colors.gray[3],
+            sx={{
+              color: dark ? theme.colors.cyan[3] : theme.colors.brand[9],
               lineHeight: 1.5
-            })}
+            }}
           >
             10 avaliações
           </Text>

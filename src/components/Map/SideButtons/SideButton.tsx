@@ -15,13 +15,9 @@ export function SideButton({ onClick, text, children }: SideButtonProps) {
     <ActionIcon
       sx={(theme) => ({
         color: dark ? theme.colors.cyan[3] : theme.colors.brand[9],
-        backgroundColor: dark
-          ? theme.colors.brand[7]
-          : theme.colors.brandLight[0],
+        backgroundColor: dark ? theme.colors.brand[7] : theme.white,
         '&:hover': {
-          backgroundColor: dark
-            ? theme.colors.brand[8]
-            : theme.colors.brandLight[2]
+          backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[0]
         },
         boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)'
       })}
