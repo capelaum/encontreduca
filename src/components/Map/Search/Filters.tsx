@@ -27,6 +27,7 @@ const useStyles = createStyles((theme, _params, getRef) => ({
 }))
 
 export function Filters() {
+  // const theme = useMantineTheme()
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
 
   const { classes } = useStyles()
