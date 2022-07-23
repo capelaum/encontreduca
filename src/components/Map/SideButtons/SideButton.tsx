@@ -21,8 +21,9 @@ export function SideButton({ onClick, text, children }: SideButtonProps) {
         '&:hover': {
           backgroundColor: dark
             ? theme.colors.brand[8]
-            : theme.colors.brandLight[1]
-        }
+            : theme.colors.brandLight[2]
+        },
+        boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)'
       })}
       variant="filled"
       size="xl"

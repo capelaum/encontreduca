@@ -46,7 +46,7 @@ export default function Map(): JSX.Element {
           position: 'absolute',
           top: theme.spacing.md,
           left: theme.spacing.md,
-          right: theme.spacing.md
+          right: largeScreen ? theme.spacing.xs : theme.spacing.md
         })}
       >
         <Search />

@@ -37,7 +37,7 @@ export function Filters() {
 
   const chipsStyles = (): CSSObject => ({
     zIndex: 1,
-    width: largeScreen ? 'calc(100vw - 440px)' : '100%',
+    width: largeScreen ? 'calc(100vw - 420px)' : '100%',
     overflow: 'hidden',
     overflowX: 'scroll',
     overflowY: 'hidden',
