@@ -14,7 +14,7 @@ export function Search() {
   return (
     <Group
       direction={largeScreen ? 'row' : 'column'}
-      spacing={largeScreen ? 'sm' : 'md'}
+      spacing="md"
       align="left"
       noWrap
       sx={{

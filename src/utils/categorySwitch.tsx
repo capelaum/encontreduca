@@ -10,52 +10,74 @@ export const categorySwitch: CategorySwitch = {
   'Universidade privada': {
     filter: 'Ensino Superior',
     markerIcon: '/markers/marker_university.svg',
-    icon: <MdOutlineSchool size={16} color={myTheme.colors!.brand![0]} />,
-    iconDark: <MdOutlineSchool size={16} color={myTheme.colors!.brand![7]} />
+    iconCyan: <MdOutlineSchool size={16} color={myTheme.colors!.brand![0]} />,
+    iconWhite: <MdOutlineSchool size={16} color={myTheme.white} />,
+    iconBlue: <MdOutlineSchool size={16} color={myTheme.colors!.brand![7]} />,
+    iconBlueDark: (
+      <MdOutlineSchool size={16} color={myTheme.colors!.brand![9]} />
+    )
   },
   'Universidade pública': {
     filter: 'Ensino Superior',
     markerIcon: '/markers/marker_university.svg',
-    icon: <MdOutlineSchool size={16} color={myTheme.colors!.brand![0]} />,
-    iconDark: <MdOutlineSchool size={16} color={myTheme.colors!.brand![7]} />
+    iconCyan: <MdOutlineSchool size={16} color={myTheme.colors!.brand![0]} />,
+    iconWhite: <MdOutlineSchool size={16} color={myTheme.white} />,
+    iconBlue: <MdOutlineSchool size={16} color={myTheme.colors!.brand![7]} />,
+    iconBlueDark: (
+      <MdOutlineSchool size={16} color={myTheme.colors!.brand![9]} />
+    )
   },
   'Escola privada': {
     filter: 'Ensino Básico',
     markerIcon: '/markers/marker_school.svg',
-    icon: <FaSchool size={16} color={myTheme.colors!.brand![0]} />,
-    iconDark: <FaSchool size={16} color={myTheme.colors!.brand![7]} />
+    iconCyan: <FaSchool size={16} color={myTheme.colors!.brand![0]} />,
+    iconWhite: <FaSchool size={16} color={myTheme.white} />,
+    iconBlue: <FaSchool size={16} color={myTheme.colors!.brand![7]} />,
+    iconBlueDark: <FaSchool size={16} color={myTheme.colors!.brand![9]} />
   },
   'Escola pública': {
     filter: 'Ensino Básico',
     markerIcon: '/markers/marker_school.svg',
-    icon: <FaSchool size={16} color={myTheme.colors!.brand![0]} />,
-    iconDark: <FaSchool size={16} color={myTheme.colors!.brand![7]} />
+    iconCyan: <FaSchool size={16} color={myTheme.colors!.brand![0]} />,
+    iconWhite: <FaSchool size={16} color={myTheme.white} />,
+    iconBlue: <FaSchool size={16} color={myTheme.colors!.brand![7]} />,
+    iconBlueDark: <FaSchool size={16} color={myTheme.colors!.brand![9]} />
   },
   Biblioteca: {
     filter: 'Biblioteca',
     markerIcon: '/markers/marker_library.svg',
-    icon: <IoLibraryOutline size={16} color={myTheme.colors!.brand![0]} />,
-    iconDark: <IoLibraryOutline size={16} color={myTheme.colors!.brand![7]} />
+    iconCyan: <IoLibraryOutline size={16} color={myTheme.colors!.brand![0]} />,
+    iconWhite: <IoLibraryOutline size={16} color={myTheme.white} />,
+    iconBlue: <IoLibraryOutline size={16} color={myTheme.colors!.brand![7]} />,
+    iconBlueDark: (
+      <IoLibraryOutline size={16} color={myTheme.colors!.brand![9]} />
+    )
   },
   Curso: {
     filter: 'Curso',
     markerIcon: '/markers/marker_course.svg',
-    icon: <VscNotebook size={16} color={myTheme.colors!.brand![0]} />,
-    iconDark: <VscNotebook size={16} color={myTheme.colors!.brand![7]} />
+    iconCyan: <VscNotebook size={16} color={myTheme.colors!.brand![0]} />,
+    iconWhite: <VscNotebook size={16} color={myTheme.white} />,
+    iconBlue: <VscNotebook size={16} color={myTheme.colors!.brand![7]} />,
+    iconBlueDark: <VscNotebook size={16} color={myTheme.colors!.brand![9]} />
   },
   Coworking: {
     filter: 'Coworking',
     markerIcon: '/markers/marker_coworking.svg',
-    icon: <BsBriefcase size={16} color={myTheme.colors!.brand![0]} />,
-    iconDark: <BsBriefcase size={16} color={myTheme.colors!.brand![7]} />
+    iconCyan: <BsBriefcase size={16} color={myTheme.colors!.brand![0]} />,
+    iconWhite: <BsBriefcase size={16} color={myTheme.white} />,
+    iconBlue: <BsBriefcase size={16} color={myTheme.colors!.brand![7]} />,
+    iconBlueDark: <BsBriefcase size={16} color={myTheme.colors!.brand![9]} />
   }
 }
 
 type CategorySwitch = {
   [key: string]: {
     markerIcon: string
-    icon: ReactElement
-    iconDark: ReactElement
+    iconCyan: ReactElement
+    iconWhite: ReactElement
+    iconBlue: ReactElement
+    iconBlueDark: ReactElement
     filter: string
   }
 }

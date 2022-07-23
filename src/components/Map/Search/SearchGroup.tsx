@@ -29,13 +29,13 @@ export function SearchGroup() {
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
 
   const searchGroupStyles = (): CSSObject => ({
-    width: largeScreen ? '420px' : 'calc(100vw - 40px)',
+    width: largeScreen ? '380px' : 'calc(100vw - 40px)',
     zIndex:
       resourceOpened && resource?.approved && !menuOpened && largeScreen
         ? 100
         : 1,
     borderRadius: theme.radius.md,
-    backgroundColor: dark ? theme.colors.brand[7] : theme.colors.brandLight[0],
+    backgroundColor: dark ? theme.colors.brand[7] : theme.white,
     border: resourceOpened ? `1px solid ${theme.colors.cyan[4]}` : 'none',
     boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)'
   })
@@ -52,9 +52,7 @@ export function SearchGroup() {
           setVotingPanelOpened(false)
         }}
         sx={{
-          backgroundColor: dark
-            ? theme.colors.brand[7]
-            : theme.colors.brandLight[0]
+          backgroundColor: dark ? theme.colors.brand[7] : theme.white
         }}
         color={dark ? theme.colors.cyan[3] : theme.colors.brand[9]}
       />
@@ -86,9 +84,7 @@ export function SearchGroup() {
           flex: 1,
           input: {
             color: dark ? theme.colors.dark[0] : theme.colors.brand[9],
-            backgroundColor: dark
-              ? theme.colors.brand[7]
-              : theme.colors.brandLight[0]
+            backgroundColor: dark ? theme.colors.brand[7] : theme.white
           },
           'input:focus': {
             outline: 'none',

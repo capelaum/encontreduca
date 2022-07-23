@@ -1,42 +1,29 @@
 import {
-  Chip,
-  Chips,
-  createStyles,
+  Button,
   CSSObject,
   Group,
-  Text
+  Text,
+  useMantineColorScheme,
+  useMantineTheme
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import data from 'data/categories.json'
 import { useState } from 'react'
-import { getCategoryFilters } from 'utils/categoryFormatters'
-
-const useStyles = createStyles((theme, _params, getRef) => ({
-  iconWrapper: {
-    ref: getRef('iconWrapper')
-  },
-
-  checked: {
-    backgroundColor: `${theme.colors.cyan[3]} !important`,
-    color: theme.colors.brand[7],
-
-    [`& .${getRef('iconWrapper')}`]: {
-      display: 'none'
-    }
-  }
-}))
+import { CategoryFilter, getCategoryFilters } from 'utils/categoryFormatters'
 
 export function Filters() {
-  // const theme = useMantineTheme()
-  const largeScreen = useMediaQuery('(min-width: 768px)', false)
-
-  const { classes } = useStyles()
   const { categories } = data
   const categoryFilters = getCategoryFilters(categories)
 
+  const largeScreen = useMediaQuery('(min-width: 768px)', false)
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   const [activeFilter, setActiveFilter] = useState('')
 
-  const chipsStyles = (): CSSObject => ({
+  const filterGroupStyles = (): CSSObject => ({
     zIndex: 1,
     width: largeScreen ? 'calc(100vw - 420px)' : '100%',
     overflow: 'hidden',
@@ -49,41 +36,81 @@ export function Filters() {
     }
   })
 
+  const setFilterColors = (isActive: boolean) => {
+    if (dark && isActive) {
+      return {
+        color: theme.colors.brand[7],
+        backgroundColor: theme.colors.cyan[3],
+        '&:hover': { backgroundColor: theme.colors.cyan[4] }
+      }
+    }
+
+    if (dark && !isActive) {
+      return {
+        color: theme.colors.cyan[3],
+        backgroundColor: theme.colors.brand[7],
+        '&:hover': { backgroundColor: theme.colors.brand[8] }
+      }
+    }
+
+    if (!dark && isActive) {
+      return {
+        color: theme.white,
+        backgroundColor: theme.colors.brand[7],
+        '&:hover': { backgroundColor: theme.colors.brand[8] }
+      }
+    }
+
+    return {
+      color: theme.colors.brand[9],
+      backgroundColor: theme.white,
+      '&:hover': { backgroundColor: theme.colors.brandLight[0] }
+    }
+  }
+
+  const setFilterIcon = (categoryFilter: CategoryFilter, isActive: boolean) => {
+    if (dark && isActive) {
+      return categoryFilter.iconBlue
+    }
+
+    if (dark && !isActive) {
+      return categoryFilter.iconCyan
+    }
+
+    if (!dark && isActive) {
+      return categoryFilter.iconWhite
+    }
+
+    return categoryFilter.iconBlueDark
+  }
+
   return (
-    <Chips
+    <Group
       noWrap
-      value={activeFilter}
-      multiple={false}
-      onChange={setActiveFilter}
-      size={largeScreen ? 'sm' : 'xs'}
+      align="center"
+      position="left"
+      sx={filterGroupStyles}
       spacing="xs"
-      radius="xl"
-      variant="filled"
-      classNames={classes}
-      sx={chipsStyles}
     >
       {categoryFilters.map((category) => (
-        <Chip key={category.filter} value={category.filter}>
-          <Group
-            noWrap
-            align="center"
-            position="center"
-            spacing="sm"
-            sx={{
-              height: '100%',
-              '&:focus': { outline: 'white', border: 'white' }
-            }}
-          >
-            {activeFilter === category.filter
-              ? category.iconDark
-              : category.icon}
-
-            <Text size="sm" sx={{ lineHeight: 1 }}>
-              {category.filter}
-            </Text>
-          </Group>
-        </Chip>
+        <Button
+          key={category.filter}
+          value={category.filter}
+          size="xs"
+          radius={theme.radius.xl}
+          onClick={() => setActiveFilter(category.filter)}
+          leftIcon={setFilterIcon(category, activeFilter === category.filter)}
+          sx={{
+            ...setFilterColors(activeFilter === category.filter),
+            '&:focus': { outline: 'white', border: 'white' },
+            boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)'
+          }}
+        >
+          <Text size="sm" sx={{ lineHeight: 1 }}>
+            {category.filter}
+          </Text>
+        </Button>
       ))}
-    </Chips>
+    </Group>
   )
 }
