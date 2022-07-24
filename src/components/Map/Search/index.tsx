@@ -18,7 +18,7 @@ export function Search() {
       align="left"
       noWrap
       sx={{
-        width: largeScreen ? '100%' : '100vw',
+        width: 'calc(100vw - 20px)',
         position: 'absolute',
         top: theme.spacing.md,
         left: theme.spacing.md
