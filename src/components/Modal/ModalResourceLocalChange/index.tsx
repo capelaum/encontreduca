@@ -1,6 +1,6 @@
 import { Box, Button, Group, Image, Loader, Stack, Text } from '@mantine/core'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
-import { Buttons } from 'components/Shared/Buttons'
+import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { defaultCenter, mapOptions } from 'config/options'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useCallback, useRef, useState } from 'react'
@@ -116,7 +116,7 @@ export function ModalResourceLocalChange({
         >
           Redefinir mapa
         </Button>
-        <Buttons
+        <ConfirmButtons
           onCancel={onClose}
           onConfirm={onClose}
           onConfirmText="Salvar"

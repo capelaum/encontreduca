@@ -1,6 +1,12 @@
-import { Select, Stack, Text } from '@mantine/core'
+import {
+  Select,
+  Stack,
+  Text,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
-import { Buttons } from 'components/Shared/Buttons'
+import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { useState } from 'react'
 import { TbChevronDown } from 'react-icons/tb'
 import { inputStyles } from 'styles/inputStyles'
@@ -13,6 +19,12 @@ export function ModalSelect({
   innerProps
 }: ContextModalProps<{ data: string[]; resourceName: string }>) {
   const { data, resourceName } = innerProps
+
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   const [motiveId, setMotiveId] = useState<string | null>()
 
   return (
@@ -20,9 +32,9 @@ export function ModalSelect({
       <CloseButton onClick={() => context.closeModal(id)} />
 
       <Text
-        sx={(theme) => ({
+        sx={{
           color: theme.colors.gray[2]
-        })}
+        }}
       >
         {resourceName}
       </Text>
@@ -34,7 +46,7 @@ export function ModalSelect({
         value={motiveId}
         variant="filled"
         onChange={setMotiveId}
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
         maxDropdownHeight={300}
         rightSection={
           <TbChevronDown size={14} color={myTheme.colors!.brand![0]} />
@@ -43,7 +55,7 @@ export function ModalSelect({
         data={data}
       />
 
-      <Buttons
+      <ConfirmButtons
         onCancel={() => context.closeModal(id)}
         onConfirm={() => context.closeModal(id)}
         onConfirmText="Enviar"

@@ -1,6 +1,13 @@
-import { Group, Stack, Textarea, UnstyledButton } from '@mantine/core'
+import {
+  Group,
+  Stack,
+  Textarea,
+  UnstyledButton,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
-import { Buttons } from 'components/Shared/Buttons'
+import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { Profile } from 'components/Shared/Profile'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
@@ -13,12 +20,18 @@ export function ModalReview({
   innerProps
 }: ContextModalProps<{ text: string; onConfirmText: string }>) {
   const { text, onConfirmText } = innerProps
+
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   const [comment, setComment] = useState(text)
   const [rating, setRating] = useState(0)
   const [hover, setHover] = useState(0)
 
   return (
-    <Stack spacing="md" sx={{ overflow: 'hidden' }}>
+    <Stack spacing="md">
       <CloseButton onClick={() => context.closeModal(id)} />
 
       <Profile isModal />
@@ -36,9 +49,12 @@ export function ModalReview({
               onMouseLeave={() => setHover(rating)}
             >
               {starIndex <= (hover || rating) ? (
-                <MdStar size={24} color="yellow" />
+                <MdStar size={24} color={theme.colors.yellow[6]} />
               ) : (
-                <MdStarBorder size={24} />
+                <MdStarBorder
+                  size={24}
+                  color={dark ? theme.colors.gray[0] : theme.colors.gray[7]}
+                />
               )}
             </UnstyledButton>
           )
@@ -55,11 +71,11 @@ export function ModalReview({
         variant="filled"
         onChange={(e) => setComment(e.target.value)}
         value={comment ?? ''}
-        sx={textareaStyles}
+        sx={textareaStyles(theme, dark)}
         placeholder="Descreva sua experiência neste local"
       />
 
-      <Buttons
+      <ConfirmButtons
         onCancel={() => context.closeModal(id)}
         onConfirm={() => context.closeModal(id)}
         onConfirmText={onConfirmText}
