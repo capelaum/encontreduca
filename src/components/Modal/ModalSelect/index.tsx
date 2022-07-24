@@ -10,7 +10,6 @@ import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { useState } from 'react'
 import { TbChevronDown } from 'react-icons/tb'
 import { inputStyles } from 'styles/inputStyles'
-import { myTheme } from 'styles/theme'
 import { CloseButton } from '../Shared/CloseButton'
 
 export function ModalSelect({
@@ -33,11 +32,13 @@ export function ModalSelect({
 
       <Text
         sx={{
-          color: theme.colors.gray[2]
+          fontWeight: 500,
+          color: dark ? theme.colors.gray[2] : theme.colors.gray[6]
         }}
       >
         {resourceName}
       </Text>
+
       <Select
         label="Motivo"
         required
@@ -49,7 +50,10 @@ export function ModalSelect({
         sx={inputStyles(theme, dark)}
         maxDropdownHeight={300}
         rightSection={
-          <TbChevronDown size={14} color={myTheme.colors!.brand![0]} />
+          <TbChevronDown
+            size={14}
+            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+          />
         }
         rightSectionWidth={30}
         data={data}

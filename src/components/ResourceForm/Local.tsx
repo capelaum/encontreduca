@@ -1,8 +1,12 @@
-import { Box, Button, Loader } from '@mantine/core'
+import { Box, Button, Loader, useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import { ResourceMarker } from 'components/Map/ResourceMarker'
 import { ModalResourceLocalChange } from 'components/Modal/ModalResourceLocalChange'
+import {
+  modalStyles,
+  useModalStyles
+} from 'components/Modal/Shared/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { defaultCenter, mapOptionsForm } from 'config/options'
 import { useSidebar } from 'contexts/sidebarContext'
@@ -24,14 +28,17 @@ export function Local() {
     borderRadius: '7px'
   }
 
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
+  const { classes } = useModalStyles(dark)
+
   const openModalResourceLocalChange = () => {
     const id = openModal({
-      title: <Title name="Editar local" />,
-      radius: 'md',
-      centered: true,
-      withCloseButton: false,
-      padding: 'md',
+      classNames: classes,
+      ...modalStyles,
       overflow: 'outside',
+      title: <Title name="Editar local" />,
       children: <ModalResourceLocalChange onClose={() => closeModal(id)} />
     })
   }

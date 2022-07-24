@@ -17,7 +17,6 @@ import data from 'data/categories.json'
 import { useEffect } from 'react'
 import { TbChevronDown } from 'react-icons/tb'
 import { inputStyles } from 'styles/inputStyles'
-import { myTheme } from 'styles/theme'
 import { getModalSelectDataCategories } from 'utils/modalSelecDataFormatter'
 import { CoverDropzone } from './CoverDropzone'
 import { Local } from './Local'
@@ -92,7 +91,10 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         maxDropdownHeight={300}
         rightSectionWidth={30}
         rightSection={
-          <TbChevronDown size={14} color={myTheme.colors!.brand![0]} />
+          <TbChevronDown
+            size={14}
+            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+          />
         }
         data={resourceCategories}
       />

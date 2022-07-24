@@ -1,4 +1,9 @@
+import { useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
+import {
+  modalStyles,
+  useModalStyles
+} from 'components/Modal/Shared/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { FaRegThumbsUp } from 'react-icons/fa'
 import { ActionButton } from '../ActionButton'
@@ -6,13 +11,16 @@ import { ActionButton } from '../ActionButton'
 export function ResourceVote() {
   const { openContextModal } = useModals()
 
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
+  const { classes } = useModalStyles(dark)
+
   const openModalResourceVote = () =>
     openContextModal('vote', {
       title: <Title name="Faça seu voto" isModal />,
-      radius: 'md',
-      centered: true,
-      withCloseButton: false,
-      padding: 'md',
+      classNames: classes,
+      ...modalStyles,
       innerProps: {
         onConfirmText: 'Enviar'
       }

@@ -1,5 +1,9 @@
-import { Menu } from '@mantine/core'
+import { Menu, useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
+import {
+  modalStyles,
+  useModalStyles
+} from 'components/Modal/Shared/modalStyles'
 import { Title } from 'components/Shared/Title'
 import data from 'data/motives.json'
 import { TiCancel } from 'react-icons/ti'
@@ -9,13 +13,16 @@ export function ReviewComplain() {
   const reviewMotives = getModalSelectDataMotives(data.motives, 'review')
   const { openContextModal } = useModals()
 
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
+  const { classes } = useModalStyles(dark)
+
   const openModalReviewComplain = () => {
     openContextModal('select', {
       title: <Title name="Denunciar avaliação" isModal />,
-      radius: 'md',
-      centered: true,
-      withCloseButton: false,
-      padding: 'md',
+      classNames: classes,
+      ...modalStyles,
       innerProps: { data: reviewMotives }
     })
   }
