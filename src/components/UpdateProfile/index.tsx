@@ -1,14 +1,26 @@
-import { Button, Group, Stack, TextInput } from '@mantine/core'
+import {
+  Button,
+  Group,
+  Stack,
+  TextInput,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { useInputState } from '@mantine/hooks'
 import { Back } from 'components/Shared/Back'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
-import { inputStyles } from 'styles/inputStyles'
+import { buttonStyles, inputStyles } from 'styles/inputStyles'
 import { AvatarDropzone } from './AvatarDropzone'
-import { DeleteUserButton } from './ModalUserDelete'
+import { DeleteUserButton } from './DeleteUserButton'
 
 export function UpdateProfile() {
   const { setProfileOpened } = useSidebar()
+
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
 
   const [userName, setUserName] = useInputState('')
   const [userEmail, setUserEmail] = useInputState('')
@@ -33,7 +45,7 @@ export function UpdateProfile() {
         onChange={setUserName}
         value={userName}
         required
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
       />
 
       <TextInput
@@ -45,7 +57,7 @@ export function UpdateProfile() {
         onChange={setUserEmail}
         value={userEmail}
         required
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
       />
 
       <TextInput
@@ -56,7 +68,7 @@ export function UpdateProfile() {
         label="CPF"
         onChange={setUserCpf}
         value={userCpf}
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
       />
 
       <TextInput
@@ -67,7 +79,7 @@ export function UpdateProfile() {
         label="Senha"
         onChange={setUserPassword}
         value={userPassword}
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
       />
 
       <TextInput
@@ -78,7 +90,7 @@ export function UpdateProfile() {
         label="Repetir senha"
         onChange={setUserPasswordRepeat}
         value={userPasswordRepeat}
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
       />
 
       <Stack mt="sm" spacing="md">
@@ -86,13 +98,7 @@ export function UpdateProfile() {
           size="sm"
           radius="md"
           variant="default"
-          sx={(theme) => ({
-            backgroundColor: theme.colors.cyan[3],
-            color: theme.colors.brand[7],
-            '&:hover': {
-              backgroundColor: theme.colors.cyan[4]
-            }
-          })}
+          sx={buttonStyles(theme, dark)}
         >
           Atualizar
         </Button>

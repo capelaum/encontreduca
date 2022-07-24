@@ -1,7 +1,16 @@
-import { Avatar, Box, Button, Image, Stack } from '@mantine/core'
+import {
+  Avatar,
+  Box,
+  Button,
+  Image,
+  Stack,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import { useRef, useState } from 'react'
 import { MdPhotoCamera } from 'react-icons/md'
+import { buttonStyles } from 'styles/inputStyles'
 
 export const dropzoneChildren = (
   status: DropzoneStatus,
@@ -22,10 +31,15 @@ export const dropzoneChildren = (
     )
   }
 
-  return <Avatar size={120} radius="xl" src="/avatar.png" />
+  return <Avatar size={120} radius="xl" />
 }
 
 export function AvatarDropzone() {
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   const [isLoading, setIsLoading] = useState(false)
   const [isAvatarUploaded, setIsAvatarUploaded] = useState(false)
 
@@ -45,7 +59,7 @@ export function AvatarDropzone() {
   return (
     <Stack my="md" spacing="md" align="center">
       <Dropzone
-        radius={99}
+        radius="xl"
         padding={0}
         name="userAvatar"
         openRef={openRef as any}
@@ -63,16 +77,10 @@ export function AvatarDropzone() {
       <Button
         size="sm"
         radius="md"
-        variant="default"
+        variant="filled"
         onClick={() => openRef.current!()}
         leftIcon={<MdPhotoCamera size={20} />}
-        sx={(theme) => ({
-          backgroundColor: theme.colors.cyan[3],
-          color: theme.colors.brand[7],
-          '&:hover': {
-            backgroundColor: theme.colors.cyan[4]
-          }
-        })}
+        sx={buttonStyles(theme, dark)}
       >
         Alterar foto de perfil
       </Button>

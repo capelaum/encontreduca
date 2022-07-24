@@ -53,6 +53,7 @@ export function DeleteUserButton() {
       sx={(theme) => ({
         backgroundColor: theme.colors.red[8],
         color: 'white',
+        border: 'none',
         '&:hover': {
           backgroundColor: theme.colors.red[9]
         }

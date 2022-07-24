@@ -8,7 +8,6 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { MdInfoOutline } from 'react-icons/md'
-import { myTheme } from 'styles/theme'
 
 interface ProfileProps {
   isModal?: boolean
@@ -53,14 +52,13 @@ export function Profile({ isModal }: ProfileProps) {
               position="top"
               placement="start"
               transition="pop"
+              color={dark ? 'cyan' : 'gray'}
               transitionDuration={200}
-              color={myTheme.colors!.brand![0]}
               label="Suas postagens vão aparecer publicamente com seu nome e foto do perfil."
             >
               <MdInfoOutline
                 size={14}
-                color={myTheme.colors!.brand![0]}
-                style={{ display: 'block', position: 'relative' }}
+                color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
               />
             </Tooltip>
           </Group>
