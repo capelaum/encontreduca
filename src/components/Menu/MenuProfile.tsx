@@ -26,7 +26,7 @@ export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
       }}
     >
       <Group spacing={12} noWrap>
-        <Avatar radius="xl" size={50} />
+        <Avatar radius="xl" size={50} src="/avatar.svg" />
 
         <Stack spacing={2}>
           <Text
