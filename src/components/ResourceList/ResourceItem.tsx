@@ -39,7 +39,7 @@ export function ResourceItem({ resource }: ResourceItemProps) {
       }}
       sx={{
         '&:hover, &:focus': {
-          backgroundColor: 'rgba(0, 0, 0, 0.2)'
+          backgroundColor: dark ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.05)'
         }
       }}
     >

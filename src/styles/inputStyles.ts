@@ -10,7 +10,7 @@ export const inputStyles = (theme: MantineTheme, dark: boolean): CSSObject => ({
       outline: `1px solid ${theme.colors.cyan[3]}`
     },
     '&::placeholder': {
-      color: dark ? theme.colors.gray[7] : theme.colors.gray[6]
+      color: dark ? theme.colors.gray[6] : theme.colors.gray[6]
     }
   },
   label: {
