@@ -1,10 +1,21 @@
-import { Box, Button, Group, Image, Loader, Stack, Text } from '@mantine/core'
+import {
+  Box,
+  Button,
+  Group,
+  Image,
+  Loader,
+  Stack,
+  Text,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
-import { Buttons } from 'components/Shared/Buttons'
-import { defaultCenter, mapOptions } from 'config/options'
+import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { defaultCenter, mapOptions, mapOptionsLight } from 'config/options'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation } from 'react-icons/md'
+import { buttonStyles } from 'styles/inputStyles'
 import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
 import { categorySwitch } from 'utils/categorySwitch'
 import { CloseButton } from '../Shared/CloseButton'
@@ -16,6 +27,11 @@ interface ModalResourceLocalChangeProps {
 export function ModalResourceLocalChange({
   onClose
 }: ModalResourceLocalChangeProps) {
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   const [currentCenter, setCurrentCenter] =
     useState<LatLngLiteral>(defaultCenter)
 
@@ -55,15 +71,17 @@ export function ModalResourceLocalChange({
     <Stack spacing="xs">
       <CloseButton onClick={onClose} />
 
-      <Text mb={8}>Nome do recurso</Text>
+      <Text mb={8} color={dark ? theme.colors.gray[0] : theme.colors.gray[8]}>
+        Nome do recurso
+      </Text>
 
       <Box
-        sx={(theme) => ({
+        sx={{
           position: 'relative',
           width: '100%',
           height: '380px',
           borderRadius: theme.radius.md
-        })}
+        }}
       >
         {!isLoaded ? (
           <Loader />
@@ -75,7 +93,7 @@ export function ModalResourceLocalChange({
             zoom={16}
             center={resource ? resource.position : defaultCenter}
             mapContainerStyle={mapContainerStyle}
-            options={mapOptions}
+            options={dark ? mapOptions : mapOptionsLight}
           />
         )}
 
@@ -106,17 +124,11 @@ export function ModalResourceLocalChange({
           onClick={() =>
             moveToLocation(resource ? resource.position : defaultCenter)
           }
-          sx={(theme) => ({
-            backgroundColor: theme.colors.cyan[3],
-            color: theme.colors.brand[7],
-            '&:hover': {
-              backgroundColor: theme.colors.cyan[4]
-            }
-          })}
+          sx={buttonStyles(theme, dark)}
         >
           Redefinir mapa
         </Button>
-        <Buttons
+        <ConfirmButtons
           onCancel={onClose}
           onConfirm={onClose}
           onConfirmText="Salvar"

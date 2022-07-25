@@ -1,4 +1,11 @@
-import { Group, Stack, Text, UnstyledButton } from '@mantine/core'
+import {
+  Group,
+  Stack,
+  Text,
+  UnstyledButton,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 
 interface ModalResourceChangeButtonProps {
   label: string
@@ -13,12 +20,17 @@ export function ModalResourceChangeButton({
   onClick,
   icon
 }: ModalResourceChangeButtonProps) {
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   return (
     <UnstyledButton
       onClick={onClick}
       sx={{
         '&:hover': {
-          backgroundColor: 'rgba(0, 0, 0, 0.1)'
+          backgroundColor: dark ? 'rgba(0, 0, 0, 0.1)' : theme.colors.gray[1]
         }
       }}
     >
@@ -28,17 +40,17 @@ export function ModalResourceChangeButton({
         <Stack spacing={2}>
           <Text
             size="sm"
-            sx={(theme) => ({
-              color: theme.colors.brand[0]
-            })}
+            sx={{
+              color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
+            }}
           >
             {label}
           </Text>
           <Text
             size="xs"
-            sx={(theme) => ({
-              color: theme.colors.gray[4]
-            })}
+            sx={{
+              color: dark ? theme.colors.gray[4] : theme.colors.gray[6]
+            }}
           >
             {description}
           </Text>

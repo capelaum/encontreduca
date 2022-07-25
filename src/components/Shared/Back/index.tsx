@@ -1,4 +1,4 @@
-import { ActionIcon } from '@mantine/core'
+import { ActionIcon, useMantineColorScheme } from '@mantine/core'
 import { HiArrowLeft } from 'react-icons/hi'
 
 interface BackProps {
@@ -6,15 +6,20 @@ interface BackProps {
 }
 
 export function Back({ setSidebarOpened }: BackProps) {
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   return (
     <ActionIcon
       variant="hover"
       size="lg"
-      color="brand"
       onClick={() => setSidebarOpened(false)}
       title="Fechar recurso"
       sx={(theme) => ({
-        color: theme.colors.cyan[3]
+        color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
+        '&:hover': {
+          backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[1]
+        }
       })}
     >
       <HiArrowLeft size={24} />

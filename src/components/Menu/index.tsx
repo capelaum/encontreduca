@@ -1,10 +1,10 @@
-import { ActionIcon, Space, Stack } from '@mantine/core'
+import { Space, Stack } from '@mantine/core'
+import { CloseButton } from 'components/Modal/Shared/CloseButton'
 import { useSidebar } from 'contexts/sidebarContext'
 import { AiFillHome } from 'react-icons/ai'
 import { BsBookmarksFill, BsPlusCircleFill } from 'react-icons/bs'
 import { GiStarsStack } from 'react-icons/gi'
-import { MdClose, MdHelp, MdLogout } from 'react-icons/md'
-import { myTheme } from 'styles/theme'
+import { MdHelp, MdLogout } from 'react-icons/md'
 import { MenuButton } from './MenuButton'
 import { MenuProfile } from './MenuProfile'
 
@@ -21,21 +21,7 @@ export function Menu() {
 
   return (
     <>
-      <ActionIcon
-        variant="hover"
-        size="lg"
-        color="brand"
-        onClick={() => setMenuOpened(false)}
-        title="Fechar Menu"
-        sx={(theme) => ({
-          color: theme.colors.cyan[3],
-          position: 'absolute',
-          top: theme.spacing.md,
-          right: theme.spacing.md
-        })}
-      >
-        <MdClose size={24} color={myTheme.colors!.brand![0]} />
-      </ActionIcon>
+      <CloseButton onClick={() => setMenuOpened(false)} />
 
       <MenuProfile setProfileOpened={setProfileOpened} />
 

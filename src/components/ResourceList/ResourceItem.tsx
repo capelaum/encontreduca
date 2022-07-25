@@ -5,13 +5,14 @@ import {
   Stack,
   Text,
   Title as MantineTitle,
-  UnstyledButton
+  UnstyledButton,
+  useMantineColorScheme,
+  useMantineTheme
 } from '@mantine/core'
 import { Category } from 'components/Shared/Category'
 import { useMap } from 'contexts/mapContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { TbChevronRight } from 'react-icons/tb'
-import { myTheme } from 'styles/theme'
 import { ResourceType } from 'types/resources'
 
 interface ResourceItemProps {
@@ -19,9 +20,14 @@ interface ResourceItemProps {
 }
 
 export function ResourceItem({ resource }: ResourceItemProps) {
+  const { moveToLocation } = useMap()
   const { setResource, setResourceOpened, setMenuOpened, votingPanelOpened } =
     useSidebar()
-  const { moveToLocation } = useMap()
+
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
 
   return (
     <UnstyledButton
@@ -33,7 +39,7 @@ export function ResourceItem({ resource }: ResourceItemProps) {
       }}
       sx={{
         '&:hover, &:focus': {
-          backgroundColor: 'rgba(0, 0, 0, 0.2)'
+          backgroundColor: dark ? 'rgba(0, 0, 0, 0.2)' : 'rgba(0, 0, 0, 0.05)'
         }
       }}
     >
@@ -44,12 +50,14 @@ export function ResourceItem({ resource }: ResourceItemProps) {
         position="apart"
         align="center"
         noWrap
-        sx={(theme) => ({
+        sx={{
           maxWidth: '100%',
           position: 'relative',
           overflow: 'hidden',
-          borderBottom: `1px solid ${theme.colors.cyan[3]}`
-        })}
+          borderBottom: `1px solid ${
+            dark ? theme.colors.cyan[3] : theme.colors.brand[7]
+          }`
+        }}
       >
         <Image
           radius="md"
@@ -66,24 +74,22 @@ export function ResourceItem({ resource }: ResourceItemProps) {
         <Stack spacing={4} sx={{ width: '100%' }}>
           <MantineTitle
             order={2}
-            sx={(theme) =>
-              ({
-                fontWeight: 600,
-                fontSize: theme.fontSizes.md,
-                color: theme.colors.cyan[3],
-                paddingRight: '24px'
-              } as any)
-            }
+            sx={{
+              fontWeight: 600,
+              fontSize: theme.fontSizes.md,
+              color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
+              paddingRight: '24px'
+            }}
           >
             {resource.name}
           </MantineTitle>
 
           {votingPanelOpened && (
             <Text
-              sx={(theme) => ({
-                color: theme.colors.gray[4],
+              sx={{
+                color: dark ? theme.colors.gray[4] : theme.colors.gray[7],
                 fontSize: theme.fontSizes.xs
-              })}
+              }}
             >
               Criado em{' '}
               {new Intl.DateTimeFormat('pt-BR', {
@@ -107,7 +113,10 @@ export function ResourceItem({ resource }: ResourceItemProps) {
             right: '20px'
           }}
         >
-          <TbChevronRight size={30} color={myTheme.colors!.brand![0]} />
+          <TbChevronRight
+            size={30}
+            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+          />
         </Box>
       </Group>
     </UnstyledButton>

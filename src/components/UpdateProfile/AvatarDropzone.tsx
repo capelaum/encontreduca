@@ -1,81 +1,53 @@
-import { Avatar, Box, Button, Image, Stack } from '@mantine/core'
-import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone'
-import { useRef, useState } from 'react'
-import { MdPhotoCamera } from 'react-icons/md'
-
-export const dropzoneChildren = (
-  status: DropzoneStatus,
-  isAvatarUploaded: boolean
-) => {
-  if (isAvatarUploaded) {
-    return (
-      <Box>
-        <Image
-          radius={99}
-          width="120px"
-          height="120px"
-          src="https://dummyimage.com/380x200/333/fff"
-          alt="Imagem do usuário"
-          title="Imagem do usuário"
-        />
-      </Box>
-    )
-  }
-
-  return <Avatar size={120} radius="xl" src="/avatar.png" />
-}
+import {
+  Avatar,
+  Stack,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
+import { useState } from 'react'
+import { afterElementStyles, afterStyles } from 'styles/dropzoneStyles'
 
 export function AvatarDropzone() {
-  const [isLoading, setIsLoading] = useState(false)
-  const [isAvatarUploaded, setIsAvatarUploaded] = useState(false)
+  const theme = useMantineTheme()
 
-  const openRef = useRef<() => void>()
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [avatarSrc, setAvatarSrc] = useState<string | null>(null)
 
   const uploadAvatarImage = async (files: File[]) => {
     setIsLoading(true)
 
-    console.log('🚀 ~ files', files)
+    const preview = URL.createObjectURL(files[0])
 
-    setTimeout(() => {
-      setIsLoading(false)
-      setIsAvatarUploaded(true)
-    }, 3000)
+    setAvatarSrc(preview)
+    setIsLoading(false)
   }
 
   return (
     <Stack my="md" spacing="md" align="center">
       <Dropzone
-        radius={99}
-        padding={0}
         name="userAvatar"
-        openRef={openRef as any}
+        radius={999}
+        padding={0}
+        multiple={false}
         loading={isLoading}
         accept={IMAGE_MIME_TYPE}
-        onDrop={(files) => uploadAvatarImage(files)}
+        onDrop={(file) => uploadAvatarImage(file)}
         onReject={(files) => console.log('rejected files', files)}
-        sx={{
-          border: 'none'
-        }}
+        sx={afterStyles(theme, dark)}
       >
-        {(status) => dropzoneChildren(status, isAvatarUploaded)}
+        {(status) => (
+          <Avatar
+            src={avatarSrc ?? 'avatar.svg'}
+            size={180}
+            radius={999}
+            sx={afterElementStyles(theme, status)}
+          />
+        )}
       </Dropzone>
-
-      <Button
-        size="sm"
-        radius="md"
-        variant="default"
-        onClick={() => openRef.current!()}
-        leftIcon={<MdPhotoCamera size={20} />}
-        sx={(theme) => ({
-          backgroundColor: theme.colors.cyan[3],
-          color: theme.colors.brand[7],
-          '&:hover': {
-            backgroundColor: theme.colors.cyan[4]
-          }
-        })}
-      >
-        Alterar foto de perfil
-      </Button>
     </Stack>
   )
 }

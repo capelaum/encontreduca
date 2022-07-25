@@ -4,8 +4,10 @@ import { categorySwitch } from './categorySwitch'
 
 export type CategoryFilter = {
   filter: string
-  icon: ReactNode
-  iconDark: ReactNode
+  iconCyan: ReactNode
+  iconWhite: ReactNode
+  iconBlue: ReactNode
+  iconBlueDark: ReactNode
 }
 
 export const getCategoryFilters = (categories: Category[]) => {
@@ -17,8 +19,10 @@ export const getCategoryFilters = (categories: Category[]) => {
     if (!foundValue) {
       acc.push({
         filter: categorySwitch[category.name].filter,
-        icon: categorySwitch[category.name].icon,
-        iconDark: categorySwitch[category.name].iconDark
+        iconCyan: categorySwitch[category.name].iconCyan,
+        iconWhite: categorySwitch[category.name].iconWhite,
+        iconBlue: categorySwitch[category.name].iconBlue,
+        iconBlueDark: categorySwitch[category.name].iconBlueDark
       })
     }
 

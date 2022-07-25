@@ -1,42 +1,65 @@
-import { Box, Menu, Text } from '@mantine/core'
+import {
+  Box,
+  Menu,
+  Text,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { CloseButton } from 'components/Modal/Shared/CloseButton'
+import {
+  modalStyles,
+  useModalStyles
+} from 'components/Modal/Shared/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { MdDelete } from 'react-icons/md'
 
 export function ReviewDelete() {
   const { openConfirmModal, closeModal } = useModals()
 
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
+  const { classes } = useModalStyles(dark)
+
   const openModalReviewDelete = () => {
     const id = openConfirmModal({
-      radius: 'md',
-      centered: true,
-      withCloseButton: false,
-      padding: 'md',
+      classNames: classes,
+      ...modalStyles,
       title: <Title name="Quer excluir esta avaliação?" isModal />,
       children: (
         <>
           <CloseButton onClick={() => closeModal(id)} />
-          <Text>Não é possível recuperar Avaliações excluídas</Text>
+          <Text color={dark ? theme.colors.gray[0] : theme.colors.gray[8]}>
+            Não é possível recuperar Avaliações excluídas
+          </Text>
         </>
       ),
       labels: { confirm: 'Confirmar', cancel: 'Cancelar' },
       cancelProps: {
         size: 'sm',
         radius: 'md',
-        variant: 'outline'
+        variant: 'outline',
+        sx: {
+          color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
+          border: `1px solid ${
+            dark ? theme.colors.cyan[3] : theme.colors.brand[7]
+          }`
+        }
       },
       confirmProps: {
         size: 'sm',
         radius: 'md',
-        variant: 'default',
-        sx: (theme) => ({
-          backgroundColor: theme.colors.cyan[3],
-          color: theme.colors.brand[7],
+        variant: 'filled',
+        sx: {
+          backgroundColor: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
+          color: dark ? theme.colors.brand[7] : theme.white,
           '&:hover': {
-            backgroundColor: theme.colors.cyan[4]
+            backgroundColor: dark ? theme.colors.cyan[4] : theme.colors.brand[8]
           }
-        })
+        }
       },
       onCancel: () => console.log('Cancel'),
       onConfirm: () => console.log('Confirmed')

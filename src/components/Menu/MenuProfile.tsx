@@ -1,32 +1,48 @@
-import { Avatar, Group, Stack, Text, UnstyledButton } from '@mantine/core'
+import {
+  Avatar,
+  Group,
+  Stack,
+  Text,
+  UnstyledButton,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 
 interface MenuProfileProps {
   setProfileOpened: (opened: boolean) => void
 }
 
 export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   return (
     <UnstyledButton
       onClick={() => setProfileOpened(true)}
-      sx={(theme) => ({
+      sx={{
         margin: theme.spacing.md
-      })}
+      }}
     >
       <Group spacing={12} noWrap>
-        <Avatar radius="xl" size={50} src="/avatar.png" />
+        <Avatar radius="xl" size={50} src="/avatar.svg" />
 
         <Stack spacing={2}>
           <Text
             size="md"
             weight={500}
-            sx={(theme) => ({
-              color: theme.colors.cyan[3],
+            sx={{
+              color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
               paddingRight: '32px'
-            })}
+            }}
           >
-            Nome Completo Gigante e Comprido
+            Luís Vinicius Capelletto
           </Text>
-          <Text size="md" sx={(theme) => ({ color: theme.colors.gray[3] })}>
+          <Text
+            size="md"
+            sx={{ color: dark ? theme.colors.gray[3] : theme.colors.gray[6] }}
+          >
             user@gmail.com
           </Text>
         </Stack>

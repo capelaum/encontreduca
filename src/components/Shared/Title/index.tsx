@@ -1,4 +1,4 @@
-import { Title as MantineTitle } from '@mantine/core'
+import { Title as MantineTitle, useMantineColorScheme } from '@mantine/core'
 
 interface TitleProps {
   name: string
@@ -7,6 +7,9 @@ interface TitleProps {
 }
 
 export function Title({ name, padding, isModal }: TitleProps) {
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   return (
     <MantineTitle
       order={1}
@@ -15,8 +18,8 @@ export function Title({ name, padding, isModal }: TitleProps) {
       pr={isModal ? 20 : 0}
       sx={(theme) => ({
         fontSize: isModal ? theme.fontSizes.lg : theme.fontSizes.xl,
-        fontWeight: 600,
-        color: theme.colors.cyan[3]
+        fontWeight: 700,
+        color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
       })}
     >
       {name}

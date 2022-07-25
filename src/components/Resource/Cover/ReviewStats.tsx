@@ -1,8 +1,10 @@
-import { Group, Text } from '@mantine/core'
+import { Group, Text, useMantineColorScheme } from '@mantine/core'
 import { Stars } from 'components/Shared/Stars'
-import { myTheme } from 'styles/theme'
 
 export function ReviewStats() {
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   return (
     <Group align="center" spacing="sm">
       <Text size="sm" mt="xs">
@@ -13,7 +15,14 @@ export function ReviewStats() {
         <Stars />
       </Group>
 
-      <Text size="sm" mt="xs" color={myTheme.colors!.brand![0]}>
+      <Text
+        size="sm"
+        mt="xs"
+        sx={(theme) => ({
+          fontWeight: 500,
+          color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
+        })}
+      >
         20 avaliações
       </Text>
     </Group>

@@ -45,7 +45,10 @@ export default function Home() {
     <>
       <Head>
         <title>Mapa | Encontreduca</title>
-        <meta name="description" content="Mapa | Encontreduca" />
+        <meta
+          name="description"
+          content="Mapa | Encontreduca os recursos educacionais mais próximos de você!"
+        />
       </Head>
 
       {dark ? <Map /> : <MapLight />}

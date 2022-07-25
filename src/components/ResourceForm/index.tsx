@@ -4,18 +4,19 @@ import {
   Select,
   Stack,
   Text,
-  TextInput
+  TextInput,
+  useMantineColorScheme,
+  useMantineTheme
 } from '@mantine/core'
 import { useInputState } from '@mantine/hooks'
 import { Back } from 'components/Shared/Back'
-import { Buttons } from 'components/Shared/Buttons'
+import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/categories.json'
 import { useEffect } from 'react'
 import { TbChevronDown } from 'react-icons/tb'
 import { inputStyles } from 'styles/inputStyles'
-import { myTheme } from 'styles/theme'
 import { getModalSelectDataCategories } from 'utils/modalSelecDataFormatter'
 import { CoverDropzone } from './CoverDropzone'
 import { Local } from './Local'
@@ -28,6 +29,11 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const resourceCategories = getModalSelectDataCategories(data.categories)
   const { resource, setCreateResourceOpened, setChangeResourceOpened } =
     useSidebar()
+
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
 
   const [categoryId, setCategoryId] = useInputState<string>('')
   const [resourceName, setResourceName] = useInputState<string>('')
@@ -69,7 +75,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         radius="md"
         onChange={setResourceName}
         value={resourceName}
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
         required
       />
 
@@ -81,11 +87,14 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         value={categoryId ?? ''}
         variant="filled"
         onChange={setCategoryId}
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
         maxDropdownHeight={300}
         rightSectionWidth={30}
         rightSection={
-          <TbChevronDown size={14} color={myTheme.colors!.brand![0]} />
+          <TbChevronDown
+            size={14}
+            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+          />
         }
         data={resourceCategories}
       />
@@ -97,7 +106,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         radius="md"
         onChange={setResourceAddress}
         value={resourceAddress ?? ''}
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
         required
       />
 
@@ -112,7 +121,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         radius="md"
         onChange={setResourcePhone}
         value={resourcePhone ?? ''}
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
       />
 
       <TextInput
@@ -122,14 +131,18 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         radius="md"
         onChange={setResourceWebsite}
         value={resourceWebsite ?? ''}
-        sx={inputStyles}
+        sx={inputStyles(theme, dark)}
       />
 
-      <InputWrapper label="Imagem de capa do recurso" required sx={inputStyles}>
+      <InputWrapper
+        label="Imagem de capa do recurso"
+        required
+        sx={inputStyles(theme, dark)}
+      >
         <CoverDropzone />
       </InputWrapper>
 
-      <Buttons
+      <ConfirmButtons
         onCancel={() =>
           isCreateResource
             ? setCreateResourceOpened(false)

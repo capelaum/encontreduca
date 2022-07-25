@@ -1,7 +1,13 @@
-import { Group, Stack, Textarea } from '@mantine/core'
+import {
+  Group,
+  Stack,
+  Textarea,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
 import { ActionButton } from 'components/Resource/ActionButtons/ActionButton'
-import { Buttons } from 'components/Shared/Buttons'
+import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { useState } from 'react'
 import { FaRegThumbsDown, FaRegThumbsUp } from 'react-icons/fa'
 import { textareaStyles } from 'styles/inputStyles'
@@ -13,6 +19,11 @@ export function ModalVote({
   innerProps
 }: ContextModalProps<{ onConfirmText: string }>) {
   const { onConfirmText } = innerProps
+
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
 
   const [justification, setJustification] = useState('')
 
@@ -44,11 +55,11 @@ export function ModalVote({
         variant="filled"
         onChange={(e) => setJustification(e.target.value)}
         value={justification}
-        sx={textareaStyles}
+        sx={textareaStyles(theme, dark)}
         placeholder="Por favor forneça uma justificativa"
       />
 
-      <Buttons
+      <ConfirmButtons
         onCancel={() => context.closeModal(id)}
         onConfirm={() => context.closeModal(id)}
         onConfirmText={onConfirmText}
