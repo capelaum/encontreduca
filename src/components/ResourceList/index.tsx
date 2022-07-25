@@ -2,18 +2,18 @@ import {
   Box,
   CSSObject,
   Group,
-  MantineTheme,
   Stack,
   Text,
   TextInput,
-  Tooltip
+  Tooltip,
+  useMantineColorScheme,
+  useMantineTheme
 } from '@mantine/core'
 import { Back } from 'components/Shared/Back'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/resources.json'
 import { MdSearch } from 'react-icons/md'
-import { myTheme } from 'styles/theme'
 import { ResourceItem } from './ResourceItem'
 
 interface ResourceListProps {
@@ -25,6 +25,11 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
   const { resources } = data
 
   const notApprovedResources = resources.filter(({ approved }) => !approved)
+
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
 
   function renderResourceItems() {
     if (isVotingPainel) {
@@ -38,14 +43,21 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
     ))
   }
 
-  const searchInputStyles = (theme: MantineTheme): CSSObject => ({
+  const searchInputStyles = (): CSSObject => ({
     width: '100%',
     zIndex: 1,
     borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.brand[7],
-    border: `1px solid ${theme.colors.brand[0]}`,
-    'input:focus': {
-      outline: '1px solid white'
+    input: {
+      color: dark ? theme.white : theme.colors.brand[7],
+      backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[2],
+      border: 'none',
+      '&:focus': {
+        backgroundColor: dark ? theme.colors.brand[8] : theme.white,
+        outline: `1px solid ${theme.colors.cyan[3]}`
+      },
+      '&::placeholder': {
+        color: dark ? theme.colors.gray[7] : theme.colors.gray[6]
+      }
     }
   })
 
@@ -57,7 +69,7 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
     >
       <MdSearch
         size={28}
-        color={myTheme.colors!.brand![0]}
+        color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
         style={{ display: 'block', position: 'relative' }}
       />
     </Tooltip>
@@ -80,10 +92,10 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
         <Text px="md">
           <Text
             component="strong"
-            sx={(theme) => ({
-              color: theme.colors.cyan[3],
-              fontWeight: 400
-            })}
+            sx={{
+              color: dark ? theme.colors.cyan[3] : theme.colors.cyan[8],
+              fontWeight: 500
+            }}
           >
             Vote contra ou a favor{' '}
           </Text>

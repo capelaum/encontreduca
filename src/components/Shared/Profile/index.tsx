@@ -21,7 +21,7 @@ export function Profile({ isModal }: ProfileProps) {
 
   return (
     <Group spacing="sm" align="center">
-      <Avatar radius="xl" size={35} src="/avatar.png" />
+      <Avatar radius="xl" size={35} src="/avatar.svg" />
 
       <Stack spacing={0}>
         <Text

@@ -5,6 +5,7 @@ import {
   MantineTheme,
   Stack,
   Text,
+  useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
 import { Dropzone, DropzoneStatus, IMAGE_MIME_TYPE } from '@mantine/dropzone'
@@ -14,44 +15,63 @@ import { TbPhoto, TbUpload, TbX } from 'react-icons/tb'
 import { ResourceType } from 'types/resources'
 import styles from './styles.module.scss'
 
-function getIconColor(status: DropzoneStatus, theme: MantineTheme): string {
+function getIconColor(
+  status: DropzoneStatus,
+  theme: MantineTheme,
+  dark: boolean
+): string {
   if (status.accepted) {
-    return theme.colors.brand[0]
+    return dark ? theme.colors.cyan[3] : theme.colors.gray[7]
   }
 
   if (status.rejected) {
-    return theme.colors.red[theme.colorScheme === 'dark' ? 4 : 6]
+    return theme.colors.red[dark ? 4 : 6]
   }
 
-  if (theme.colorScheme === 'dark') {
-    return theme.colors.dark[0]
+  if (dark) {
+    return theme.colors.gray[0]
   }
 
   return theme.colors.gray[7]
 }
 
-function renderImageUploadIcon(status: DropzoneStatus, theme: MantineTheme) {
+function renderImageUploadIcon(
+  status: DropzoneStatus,
+  theme: MantineTheme,
+  dark: boolean
+) {
   if (status.accepted) {
-    return <TbUpload size={80} style={{ color: getIconColor(status, theme) }} />
+    return (
+      <TbUpload
+        size={80}
+        style={{ color: getIconColor(status, theme, dark) }}
+      />
+    )
   }
 
   if (status.rejected) {
-    return <TbX size={80} style={{ color: getIconColor(status, theme) }} />
+    return (
+      <TbX size={80} style={{ color: getIconColor(status, theme, dark) }} />
+    )
   }
 
-  return <TbPhoto size={80} style={{ color: getIconColor(status, theme) }} />
+  return (
+    <TbPhoto size={80} style={{ color: getIconColor(status, theme, dark) }} />
+  )
 }
 
 export const dropzoneChildren = ({
   status,
   theme,
   isCoverUploaded,
-  resource
+  resource,
+  dark
 }: {
   status: DropzoneStatus
   theme: MantineTheme
   isCoverUploaded: boolean
   resource: ResourceType | null
+  dark: boolean
 }) => {
   if (isCoverUploaded || resource) {
     return (
@@ -80,10 +100,22 @@ export const dropzoneChildren = ({
     <Group
       position="center"
       spacing="xl"
-      style={{ minHeight: 200, pointerEvents: 'none' }}
+      sx={{
+        minHeight: 200,
+        pointerEvents: 'none'
+        // backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
+        // '&:hover': {
+        //   backgroundColor: 'transparent',
+        //   opacity: 0.8
+        // }
+      }}
     >
-      <Stack align="center" spacing="sm">
-        {renderImageUploadIcon(status, theme)}
+      <Stack
+        align="center"
+        spacing="sm"
+        sx={{ color: dark ? theme.colors.gray[4] : theme.colors.gray[7] }}
+      >
+        {renderImageUploadIcon(status, theme, dark)}
 
         <Text size="md">Formatos: png, jpg ou jpeg</Text>
 
@@ -98,6 +130,10 @@ export const dropzoneChildren = ({
 export function CoverDropzone() {
   const { resource } = useSidebar()
   const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   const [isCoverUploaded, setIsCoverUploaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -123,13 +159,14 @@ export function CoverDropzone() {
       maxSize={5 * 1024 ** 2}
       accept={IMAGE_MIME_TYPE}
       sx={{
-        'input:hover': {
-          backgroundColor: theme.colors.brand[0]
+        backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
+        '&:hover': {
+          backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[3]
         }
       }}
     >
       {(status) =>
-        dropzoneChildren({ status, theme, isCoverUploaded, resource })
+        dropzoneChildren({ status, theme, isCoverUploaded, resource, dark })
       }
     </Dropzone>
   )

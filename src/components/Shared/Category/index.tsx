@@ -1,4 +1,9 @@
-import { Group, Text, useMantineColorScheme } from '@mantine/core'
+import {
+  Group,
+  Text,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { categorySwitch } from 'utils/categorySwitch'
 
 interface CategoryProps {
@@ -7,6 +12,8 @@ interface CategoryProps {
 }
 
 export function Category({ category, isSmall }: CategoryProps) {
+  const theme = useMantineTheme()
+
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
@@ -16,7 +23,12 @@ export function Category({ category, isSmall }: CategoryProps) {
     <Group align="center" spacing="sm">
       {dark ? iconCyan : iconBlueDark}
 
-      <Text size={isSmall ? 'sm' : 'md'}>{category}</Text>
+      <Text
+        color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+        size={isSmall ? 'sm' : 'md'}
+      >
+        {category}
+      </Text>
     </Group>
   )
 }

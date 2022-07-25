@@ -11,7 +11,7 @@ import {
 } from '@mantine/core'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
-import { defaultCenter, mapOptions } from 'config/options'
+import { defaultCenter, mapOptions, mapOptionsLight } from 'config/options'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation } from 'react-icons/md'
@@ -93,7 +93,7 @@ export function ModalResourceLocalChange({
             zoom={16}
             center={resource ? resource.position : defaultCenter}
             mapContainerStyle={mapContainerStyle}
-            options={mapOptions}
+            options={dark ? mapOptions : mapOptionsLight}
           />
         )}
 

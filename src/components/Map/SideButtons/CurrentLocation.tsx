@@ -1,11 +1,12 @@
-import { Loader, useMantineColorScheme } from '@mantine/core'
+import { Loader, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useMap } from 'contexts/mapContext'
 import { useState } from 'react'
 import { MdMyLocation } from 'react-icons/md'
-import { myTheme } from 'styles/theme'
 import { SideButton } from './SideButton'
 
 export function CurrentLocation() {
+  const theme = useMantineTheme()
+
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
@@ -31,7 +32,10 @@ export function CurrentLocation() {
       text="Alternar tema light/dark"
     >
       {disabled ? (
-        <Loader size="sm" color={dark ? 'cyan' : myTheme.colors!.brand![7]} />
+        <Loader
+          size="sm"
+          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+        />
       ) : (
         <MdMyLocation size={22} />
       )}

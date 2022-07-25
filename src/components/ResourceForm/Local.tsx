@@ -1,4 +1,10 @@
-import { Box, Button, Loader, useMantineColorScheme } from '@mantine/core'
+import {
+  Box,
+  Button,
+  Loader,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import { ResourceMarker } from 'components/Map/ResourceMarker'
@@ -8,7 +14,11 @@ import {
   useModalStyles
 } from 'components/Modal/Shared/modalStyles'
 import { Title } from 'components/Shared/Title'
-import { defaultCenter, mapOptionsForm } from 'config/options'
+import {
+  defaultCenter,
+  mapOptionsForm,
+  mapOptionsFormLight
+} from 'config/options'
 import { useSidebar } from 'contexts/sidebarContext'
 import { MdEditLocationAlt } from 'react-icons/md'
 import { libraries } from 'types/googleMaps'
@@ -27,6 +37,8 @@ export function Local() {
     height: '100%',
     borderRadius: '7px'
   }
+
+  const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
@@ -54,7 +66,7 @@ export function Local() {
         zoom={14}
         center={resource ? resource.position : defaultCenter}
         mapContainerStyle={mapContainerStyle}
-        options={mapOptionsForm}
+        options={dark ? mapOptionsForm : mapOptionsFormLight}
       >
         {resource ? (
           <ResourceMarker resource={resource} clickable={false} />
@@ -69,7 +81,7 @@ export function Local() {
     <Box
       my={12}
       onClick={openModalResourceLocalChange}
-      sx={(theme) => ({
+      sx={{
         width: '100%',
         height: '200px',
         borderRadius: theme.radius.md,
@@ -77,7 +89,7 @@ export function Local() {
         '&:hover div': {
           cursor: 'pointer'
         }
-      })}
+      }}
     >
       {renderMapLocal()}
 
@@ -86,15 +98,16 @@ export function Local() {
         variant="white"
         size="sm"
         leftIcon={<MdEditLocationAlt size={18} />}
-        sx={(theme) => ({
+        sx={{
           position: 'absolute',
           bottom: theme.spacing.sm,
           left: theme.spacing.sm,
           color: theme.colors.brand[7],
           '&:hover': {
             backgroundColor: theme.colors.brand[0]
-          }
-        })}
+          },
+          boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)'
+        }}
       >
         Editar local do mapa
       </Button>
