@@ -7,10 +7,13 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useInputState } from '@mantine/hooks'
+import { showNotification } from '@mantine/notifications'
 import { Back } from 'components/Shared/Back'
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
+import { FaUserEdit } from 'react-icons/fa'
 import { buttonStyles, inputStyles } from 'styles/inputStyles'
+import { notificationStyles } from 'styles/notificationStyles'
 import { AvatarDropzone } from './AvatarDropzone'
 import { DeleteUserButton } from './DeleteUserButton'
 
@@ -99,6 +102,14 @@ export function UpdateProfile() {
           radius="md"
           variant="default"
           sx={buttonStyles(theme, dark)}
+          onClick={() => {
+            showNotification({
+              title: 'Usuário atualizado com sucesso!',
+              message: 'Mantenha sempre seu perfil atualizado!',
+              icon: <FaUserEdit size={24} color={theme.colors.brand[8]} />,
+              styles: notificationStyles(theme, dark)
+            })
+          }}
         >
           Atualizar
         </Button>
