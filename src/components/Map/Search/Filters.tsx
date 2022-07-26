@@ -49,7 +49,7 @@ export function Filters() {
       return {
         color: theme.colors.cyan[3],
         backgroundColor: theme.colors.brand[7],
-        '&:hover': { backgroundColor: theme.colors.brand[8] }
+        '&:hover': { backgroundColor: theme.colors.brand[7] }
       }
     }
 
@@ -57,7 +57,7 @@ export function Filters() {
       return {
         color: theme.white,
         backgroundColor: theme.colors.brand[7],
-        '&:hover': { backgroundColor: theme.colors.brand[8] }
+        '&:hover': { backgroundColor: theme.colors.brand[7] }
       }
     }
 

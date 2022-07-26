@@ -37,7 +37,7 @@ export function Actions({ isOwnReview }: ActionsProps) {
         button: {
           color: dark ? theme.colors.cyan[3] : theme.colors.gray[9],
           '&:hover': {
-            backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[1]
+            backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[1]
           }
         }
       }}

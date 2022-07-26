@@ -9,15 +9,14 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { showNotification } from '@mantine/notifications'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { showToast } from 'components/ToastMessage'
 import { defaultCenter, mapOptions, mapOptionsLight } from 'config/options'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation, MdPlace } from 'react-icons/md'
 import { buttonStyles } from 'styles/inputStyles'
-import { notificationStyles } from 'styles/notificationStyles'
 import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
 import { categorySwitch } from 'utils/categorySwitch'
 import { CloseButton } from '../Shared/CloseButton'
@@ -135,11 +134,11 @@ export function ModalResourceLocalChange({
           onCancel={onClose}
           onConfirm={() => {
             onClose()
-            showNotification({
+            showToast({
               title: 'Novo local salvo com sucesso!',
-              message: 'Agradecemos sua participação!',
-              icon: <MdPlace size={24} color={theme.colors.brand[8]} />,
-              styles: notificationStyles(theme, dark)
+              description: 'Agradecemos sua participação!',
+              icon: <MdPlace size={24} color={theme.colors.brand[7]} />,
+              dark
             })
           }}
           onConfirmText="Salvar"

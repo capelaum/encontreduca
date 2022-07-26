@@ -6,13 +6,12 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
-import { showNotification } from '@mantine/notifications'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { showToast } from 'components/ToastMessage'
 import { useState } from 'react'
 import { IoIosSend } from 'react-icons/io'
 import { TbChevronDown } from 'react-icons/tb'
 import { inputStyles } from 'styles/inputStyles'
-import { notificationStyles } from 'styles/notificationStyles'
 import { CloseButton } from '../Shared/CloseButton'
 
 export function ModalSelect({
@@ -71,15 +70,15 @@ export function ModalSelect({
         onCancel={() => closeModal(id)}
         onConfirm={() => {
           closeModal(id)
-          showNotification({
+          showToast({
             title: isReviewComplaint
               ? 'Denúncia de avaliação enviada!'
               : 'Sugestão de alteração enviada!',
-            message: isReviewComplaint
+            description: isReviewComplaint
               ? 'Agradecemos sua colaboração!'
               : 'Agradecemos sua participação!',
-            icon: <IoIosSend size={24} color={theme.colors.brand[8]} />,
-            styles: notificationStyles(theme, dark)
+            icon: <IoIosSend size={24} color={theme.colors.brand[7]} />,
+            dark
           })
         }}
         onConfirmText="Enviar"

@@ -7,13 +7,12 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
-import { showNotification } from '@mantine/notifications'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { Profile } from 'components/Shared/Profile'
+import { showToast } from 'components/ToastMessage'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
 import { textareaStyles } from 'styles/inputStyles'
-import { notificationStyles } from 'styles/notificationStyles'
 import { CloseButton } from '../Shared/CloseButton'
 
 export function ModalReview({
@@ -86,13 +85,13 @@ export function ModalReview({
         onCancel={() => closeModal(id)}
         onConfirm={() => {
           closeModal(id)
-          showNotification({
+          showToast({
             title: isEdit ? 'Avaliação atualizada!' : 'Avaliação enviada!',
-            message: isEdit
+            description: isEdit
               ? 'Mudar de ideia faz parte 😉'
               : 'Agradecemos sua avaliação ✌️',
-            icon: <MdStar size={24} color={theme.colors.brand[8]} />,
-            styles: notificationStyles(theme, dark)
+            icon: <MdStar size={24} color={theme.colors.brand[7]} />,
+            dark
           })
         }}
         onConfirmText={onConfirmText}

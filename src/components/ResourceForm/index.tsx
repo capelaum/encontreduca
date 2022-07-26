@@ -9,10 +9,10 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useInputState } from '@mantine/hooks'
-import { showNotification } from '@mantine/notifications'
 import { Back } from 'components/Shared/Back'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { Title } from 'components/Shared/Title'
+import { showToast } from 'components/ToastMessage'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/categories.json'
 import { useEffect } from 'react'
@@ -20,7 +20,6 @@ import { GiStarsStack } from 'react-icons/gi'
 import { IoIosSend } from 'react-icons/io'
 import { TbChevronDown } from 'react-icons/tb'
 import { inputStyles } from 'styles/inputStyles'
-import { notificationStyles } from 'styles/notificationStyles'
 import { getModalSelectDataCategories } from 'utils/modalSelecDataFormatter'
 import { CoverDropzone } from './CoverDropzone'
 import { Local } from './Local'
@@ -154,19 +153,19 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         onConfirm={() => {
           setCreateResourceOpened(false)
           setChangeResourceOpened(false)
-          showNotification({
+          showToast({
             title: isCreateResource
-              ? 'Seu recurso foi cadastrado com sucesso!'
-              : 'Sua sugestão de alateração de recurso foi enviada!',
-            message: isCreateResource
-              ? 'Aprove ou reprove este recurso no Painel de Avaliação.'
-              : 'Ela será avaliada pelos administradores.',
+              ? 'Recurso cadastrado com sucesso!'
+              : 'Sugestão de alteração de recurso enviada!',
+            description: isCreateResource
+              ? 'Confira este recurso no Painel de Avaliação.'
+              : 'Será analisada pelos administradores.',
             icon: isCreateResource ? (
               <GiStarsStack size={24} color={theme.colors.brand[8]} />
             ) : (
               <IoIosSend size={24} color={theme.colors.brand[8]} />
             ),
-            styles: notificationStyles(theme, dark)
+            dark
           })
         }}
         onConfirmText="Enviar"

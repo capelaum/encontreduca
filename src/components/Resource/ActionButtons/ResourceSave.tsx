@@ -1,8 +1,7 @@
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
-import { showNotification } from '@mantine/notifications'
+import { showToast } from 'components/ToastMessage'
 import { useState } from 'react'
 import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs'
-import { notificationStyles } from 'styles/notificationStyles'
 import { ActionButton } from './ActionButton'
 
 const iconTypes = {
@@ -35,17 +34,17 @@ export function ResourceSave() {
       setSaveIcon(iconTypes.unsaved)
     }
 
-    showNotification({
-      title: wasUnsaved ? 'Recurso Salvo.' : 'Recurso removido dos salvos.',
-      message: wasUnsaved
-        ? 'Agora este recurso estará na lista de salvos.'
+    showToast({
+      title: wasUnsaved ? 'Recurso salvo' : 'Recurso removido dos salvos',
+      description: wasUnsaved
+        ? 'Agora disponível na lista de salvos.'
         : 'Você pode sempre salvar novamente.',
       icon: wasUnsaved ? (
         <BsBookmarkStarFill size={20} color={theme.colors.brand[8]} />
       ) : (
         <BsBookmarkStar size={20} color={theme.colors.brand[8]} />
       ),
-      styles: notificationStyles(theme, dark)
+      dark
     })
   }
 

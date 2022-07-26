@@ -6,9 +6,9 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
-import { showNotification } from '@mantine/notifications'
 import { ActionButton } from 'components/Resource/ActionButtons/ActionButton'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { showToast } from 'components/ToastMessage'
 import { useState } from 'react'
 import {
   FaRegThumbsDown,
@@ -17,7 +17,6 @@ import {
   FaThumbsUp
 } from 'react-icons/fa'
 import { textareaStyles } from 'styles/inputStyles'
-import { notificationStyles } from 'styles/notificationStyles'
 import { CloseButton } from '../Shared/CloseButton'
 
 type Vote = 'Aprovado' | 'Reprovado' | null
@@ -101,11 +100,11 @@ export function ModalVote({
         onCancel={() => closeModal(id)}
         onConfirm={() => {
           closeModal(id)
-          showNotification({
+          showToast({
             title: 'Seu voto foi enviado!',
-            message: 'Agradecemos sua participação!',
-            icon: <FaRegThumbsUp size={24} color={theme.colors.brand[8]} />,
-            styles: notificationStyles(theme, dark)
+            description: 'Agradecemos sua participação!',
+            icon: <FaThumbsUp size={24} color={theme.colors.brand[7]} />,
+            dark
           })
         }}
         onConfirmText={onConfirmText}

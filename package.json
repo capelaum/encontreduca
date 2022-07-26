@@ -14,12 +14,12 @@
     "@mantine/hooks": "^4.2.12",
     "@mantine/modals": "^4.2.12",
     "@mantine/next": "^4.2.12",
-    "@mantine/notifications": "^5.0.0",
     "@react-google-maps/api": "^2.12.0",
     "next": "12.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "react-toastify": "^9.0.7"
   },
   "devDependencies": {
     "@googlemaps/typescript-guards": "^2.0.1",
