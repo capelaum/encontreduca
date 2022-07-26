@@ -33,24 +33,24 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
         <MapProvider>
-          <SidebarProvider>
-            <ModalsProvider
-              modals={{
-                review: ModalReview,
-                select: ModalSelect,
-                vote: ModalVote
-              }}
-            >
-              <NotificationsProvider
-                limit={5}
-                position="top-right"
-                zIndex={999}
-                autoClose={5000}
+          <NotificationsProvider
+            limit={5}
+            position="top-right"
+            autoClose={false}
+            zIndex={999}
+          >
+            <SidebarProvider>
+              <ModalsProvider
+                modals={{
+                  review: ModalReview,
+                  select: ModalSelect,
+                  vote: ModalVote
+                }}
               >
                 <Component {...pageProps} />
-              </NotificationsProvider>
-            </ModalsProvider>
-          </SidebarProvider>
+              </ModalsProvider>
+            </SidebarProvider>
+          </NotificationsProvider>
         </MapProvider>
       </MantineProvider>
     </ColorSchemeProvider>

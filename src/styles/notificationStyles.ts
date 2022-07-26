@@ -8,7 +8,8 @@ export const notificationStyles = (theme: MantineTheme, dark: boolean) => ({
       backgroundColor: 'transparent',
       marginRight: '16px',
       marginLeft: '8px'
-    }
+    },
+    zIndex: 999
   },
 
   title: { color: theme.colors.brand[7] },
