@@ -6,12 +6,21 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
+import { showNotification } from '@mantine/notifications'
 import { ActionButton } from 'components/Resource/ActionButtons/ActionButton'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { useState } from 'react'
-import { FaRegThumbsDown, FaRegThumbsUp } from 'react-icons/fa'
+import {
+  FaRegThumbsDown,
+  FaRegThumbsUp,
+  FaThumbsDown,
+  FaThumbsUp
+} from 'react-icons/fa'
 import { textareaStyles } from 'styles/inputStyles'
+import { notificationStyles } from 'styles/notificationStyles'
 import { CloseButton } from '../Shared/CloseButton'
+
+type Vote = 'Aprovado' | 'Reprovado' | null
 
 export function ModalVote({
   context,
@@ -19,6 +28,7 @@ export function ModalVote({
   innerProps
 }: ContextModalProps<{ onConfirmText: string }>) {
   const { onConfirmText } = innerProps
+  const { closeModal } = context
 
   const theme = useMantineTheme()
 
@@ -26,22 +36,50 @@ export function ModalVote({
   const dark = colorScheme === 'dark'
 
   const [justification, setJustification] = useState('')
+  const [vote, setVote] = useState<Vote>(null)
+
+  const setVoteIcon = (isThumbsUp: boolean) => {
+    switch (vote) {
+      case 'Aprovado':
+        return isThumbsUp ? (
+          <FaThumbsUp size={28} />
+        ) : (
+          <FaRegThumbsDown size={28} />
+        )
+      case 'Reprovado':
+        return isThumbsUp ? (
+          <FaRegThumbsUp size={28} />
+        ) : (
+          <FaThumbsDown size={28} />
+        )
+      default:
+        return isThumbsUp ? (
+          <FaRegThumbsUp size={28} />
+        ) : (
+          <FaRegThumbsDown size={28} />
+        )
+    }
+  }
 
   return (
-    <Stack spacing="md">
-      <CloseButton onClick={() => context.closeModal(id)} />
+    <Stack spacing="sm">
+      <CloseButton onClick={() => closeModal(id)} />
 
       <Group spacing={32} align="start" position="center" py="md">
         <ActionButton
           text="Aprovar"
-          icon={<FaRegThumbsUp size={28} />}
-          onClick={() => console.log('Aprovar')}
+          icon={setVoteIcon(true)}
+          onClick={() => {
+            setVote('Aprovado')
+          }}
         />
 
         <ActionButton
           text="Desaprovar"
-          icon={<FaRegThumbsDown size={28} />}
-          onClick={() => console.log('Desaprovar')}
+          icon={setVoteIcon(false)}
+          onClick={() => {
+            setVote('Reprovado')
+          }}
         />
       </Group>
 
@@ -60,8 +98,16 @@ export function ModalVote({
       />
 
       <ConfirmButtons
-        onCancel={() => context.closeModal(id)}
-        onConfirm={() => context.closeModal(id)}
+        onCancel={() => closeModal(id)}
+        onConfirm={() => {
+          closeModal(id)
+          showNotification({
+            title: 'Seu voto foi enviado!',
+            message: 'Agradecemos sua participação!',
+            icon: <FaRegThumbsUp size={24} color={theme.colors.brand[8]} />,
+            styles: notificationStyles(theme, dark)
+          })
+        }}
         onConfirmText={onConfirmText}
       />
     </Stack>
