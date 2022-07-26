@@ -6,13 +6,15 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useModals } from '@mantine/modals'
+import { showNotification } from '@mantine/notifications'
 import { CloseButton } from 'components/Modal/Shared/CloseButton'
 import {
   modalStyles,
   useModalStyles
 } from 'components/Modal/Shared/modalStyles'
 import { Title } from 'components/Shared/Title'
-import { MdDelete } from 'react-icons/md'
+import { MdCancel, MdDelete } from 'react-icons/md'
+import { notificationStyles } from 'styles/notificationStyles'
 
 export function ReviewDelete() {
   const { openConfirmModal, closeModal } = useModals()
@@ -61,8 +63,16 @@ export function ReviewDelete() {
           }
         }
       },
-      onCancel: () => console.log('Cancel'),
-      onConfirm: () => console.log('Confirmed')
+      onCancel: () => closeModal(id),
+      onConfirm: () => {
+        closeModal(id)
+        showNotification({
+          title: 'Avaliação excluída!',
+          message: 'Você pode avaliar novamente sempre que quiser 🙃',
+          icon: <MdCancel size={24} color={theme.colors.brand[8]} />,
+          styles: notificationStyles(theme, dark)
+        })
+      }
     })
   }
 

@@ -87,10 +87,10 @@ export function ModalReview({
         onConfirm={() => {
           closeModal(id)
           showNotification({
-            title: isEdit ? 'Avaliação atualizada' : 'Avaliação enviada',
+            title: isEdit ? 'Avaliação atualizada!' : 'Avaliação enviada!',
             message: isEdit
               ? 'Mudar de ideia faz parte 😉'
-              : 'Agradecemos sua avaliação',
+              : 'Agradecemos sua avaliação ✌️',
             icon: <MdStar size={24} color={theme.colors.brand[8]} />,
             styles: notificationStyles(theme, dark)
           })

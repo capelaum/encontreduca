@@ -23,7 +23,7 @@ export function ReviewComplain() {
       title: <Title name="Denunciar avaliação" isModal />,
       classNames: classes,
       ...modalStyles,
-      innerProps: { data: reviewMotives }
+      innerProps: { data: reviewMotives, isReviewComplaint: true }
     })
   }
 

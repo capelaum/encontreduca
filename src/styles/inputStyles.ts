@@ -37,7 +37,7 @@ export const textareaStyles = (
       width: '3px'
     },
     '&::-webkit-scrollbar-thumb': {
-      background: theme.colors.cyan[3],
+      background: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
       borderRadius: '5px'
     }
   },
