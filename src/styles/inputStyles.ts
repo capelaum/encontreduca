@@ -24,14 +24,13 @@ export const textareaStyles = (
 ): CSSObject => ({
   textarea: {
     color: dark ? theme.white : theme.colors.brand[7],
-    backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[2],
-    border: 'none',
+    backgroundColor: dark ? theme.colors.brand[8] : theme.white,
+    border: `1px solid ${dark ? theme.colors.cyan[3] : theme.colors.brand[8]}`,
     '&:focus': {
-      backgroundColor: dark ? theme.colors.brand[8] : theme.white,
-      outline: `1px solid ${theme.colors.cyan[3]}`
+      outline: `1px solid ${dark ? theme.white : theme.colors.cyan[3]}`
     },
     '&::placeholder': {
-      color: dark ? theme.colors.gray[7] : theme.colors.gray[6]
+      color: dark ? theme.colors.gray[6] : theme.colors.gray[6]
     },
     '&::-webkit-scrollbar': {
       background: 'transparent',

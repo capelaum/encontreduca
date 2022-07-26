@@ -7,19 +7,26 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
+import { showNotification } from '@mantine/notifications'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { Profile } from 'components/Shared/Profile'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
 import { textareaStyles } from 'styles/inputStyles'
+import { notificationStyles } from 'styles/notificationStyles'
 import { CloseButton } from '../Shared/CloseButton'
 
 export function ModalReview({
   context,
   id,
   innerProps
-}: ContextModalProps<{ text: string; onConfirmText: string }>) {
-  const { text, onConfirmText } = innerProps
+}: ContextModalProps<{
+  text?: string
+  onConfirmText: string
+  isEdit?: boolean
+}>) {
+  const { text, onConfirmText, isEdit } = innerProps
+  const { closeModal } = context
 
   const theme = useMantineTheme()
 
@@ -32,7 +39,7 @@ export function ModalReview({
 
   return (
     <Stack spacing="md">
-      <CloseButton onClick={() => context.closeModal(id)} />
+      <CloseButton onClick={() => closeModal(id)} />
 
       <Profile isModal />
 
@@ -76,8 +83,18 @@ export function ModalReview({
       />
 
       <ConfirmButtons
-        onCancel={() => context.closeModal(id)}
-        onConfirm={() => context.closeModal(id)}
+        onCancel={() => closeModal(id)}
+        onConfirm={() => {
+          closeModal(id)
+          showNotification({
+            title: isEdit ? 'Avaliação atualizada' : 'Avaliação enviada',
+            message: isEdit
+              ? 'Mudar de ideia faz parte 😉'
+              : 'Agradecemos sua avaliação',
+            icon: <MdStar size={24} color={theme.colors.brand[8]} />,
+            styles: notificationStyles(theme, dark)
+          })
+        }}
         onConfirmText={onConfirmText}
       />
     </Stack>

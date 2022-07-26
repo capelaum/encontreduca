@@ -5,6 +5,7 @@ import {
 } from '@mantine/core'
 import { useHotkeys, useLocalStorage } from '@mantine/hooks'
 import { ModalsProvider } from '@mantine/modals'
+import { NotificationsProvider } from '@mantine/notifications'
 import { ModalReview } from 'components/Modal/ModalReview'
 import { ModalSelect } from 'components/Modal/ModalSelect'
 import { ModalVote } from 'components/Modal/ModalVote'
@@ -40,7 +41,14 @@ function MyApp({ Component, pageProps }: AppProps) {
                 vote: ModalVote
               }}
             >
-              <Component {...pageProps} />
+              <NotificationsProvider
+                limit={5}
+                position="top-right"
+                zIndex={999}
+                autoClose={5000}
+              >
+                <Component {...pageProps} />
+              </NotificationsProvider>
             </ModalsProvider>
           </SidebarProvider>
         </MapProvider>
