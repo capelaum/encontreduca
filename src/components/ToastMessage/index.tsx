@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { toast } from 'react-toastify'
 import { Message } from './Message'
 
-interface ShowToastProps {
+export interface ShowToastProps {
   title: string
   description: string
   icon: ReactNode

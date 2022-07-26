@@ -1,13 +1,7 @@
-import {
-  Button,
-  Text,
-  useMantineColorScheme,
-  useMantineTheme
-} from '@mantine/core'
+import { Button, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
-import { CloseButton } from 'components/Modal/Shared/CloseButton'
-import { Title } from 'components/Shared/Title'
-import { showToast } from 'components/ToastMessage'
+import { openModalConfirm } from 'components/Modal/ModalConfirrm'
+import { useModalStyles } from 'components/Modal/Shared/modalStyles'
 import { BsExclamationCircle } from 'react-icons/bs'
 import { FaUserTimes } from 'react-icons/fa'
 
@@ -19,48 +13,7 @@ export function DeleteUserButton() {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const openModalUserDelete = () => {
-    const id = openConfirmModal({
-      radius: 'md',
-      centered: true,
-      withCloseButton: false,
-      padding: 'md',
-      title: <Title name="Quer mesmo excluir sua conta?" />,
-      children: (
-        <>
-          <CloseButton onClick={() => closeModal(id)} />
-          <Text>Não é possível recuperar sua conta após a exclusão!</Text>
-        </>
-      ),
-      labels: { confirm: 'Confirmar', cancel: 'Cancelar' },
-      cancelProps: {
-        size: 'sm',
-        radius: 'md',
-        variant: 'outline'
-      },
-      confirmProps: {
-        size: 'sm',
-        radius: 'md',
-        variant: 'default',
-        sx: () => ({
-          backgroundColor: theme.colors.cyan[3],
-          color: theme.colors.brand[7],
-          '&:hover': {
-            backgroundColor: theme.colors.cyan[4]
-          }
-        })
-      },
-      onCancel: () => closeModal(id),
-      onConfirm: () => {
-        showToast({
-          title: 'Sua conta foi excluída com sucesso!',
-          description: 'É uma pena vermos você ir 😕',
-          icon: <FaUserTimes size={24} color={theme.colors.brand[7]} />,
-          dark
-        })
-      }
-    })
-  }
+  const { classes } = useModalStyles(dark)
 
   return (
     <Button
@@ -68,7 +21,23 @@ export function DeleteUserButton() {
       radius="md"
       variant="default"
       leftIcon={<BsExclamationCircle size={18} />}
-      onClick={openModalUserDelete}
+      onClick={() =>
+        openModalConfirm({
+          title: 'Quer mesmo excluir sua conta?',
+          description: 'Não é possível recuperar sua conta após a exclusão!',
+          toast: {
+            title: 'Sua conta foi excluída!',
+            description: 'É uma pena vermos você ir 😕',
+            icon: <FaUserTimes size={24} color={theme.colors.brand[7]} />,
+            dark
+          },
+          openConfirmModal,
+          closeModal,
+          classes,
+          theme,
+          dark
+        })
+      }
       sx={{
         backgroundColor: theme.colors.red[8],
         color: 'white',
