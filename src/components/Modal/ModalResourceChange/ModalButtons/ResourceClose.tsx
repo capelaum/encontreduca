@@ -8,7 +8,11 @@ import { MdCancel } from 'react-icons/md'
 import { getModalSelectDataMotives } from 'utils/modalSelecDataFormatter'
 import { ModalResourceChangeButton } from '../ModalResourceChangeButton'
 
-export function ResourceClose() {
+interface ResourceCloseProps {
+  onClose: () => void
+}
+
+export function ResourceClose({ onClose }: ResourceCloseProps) {
   const { openContextModal } = useModals()
   const { resource } = useSidebar()
 
@@ -48,7 +52,10 @@ export function ResourceClose() {
       }
       label="Fechar ou remover"
       description="Marcar como fechado, inexistente ou duplicado"
-      onClick={openModalResourceClose}
+      onClick={() => {
+        onClose()
+        openModalResourceClose()
+      }}
     />
   )
 }

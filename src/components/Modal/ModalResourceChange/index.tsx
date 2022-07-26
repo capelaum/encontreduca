@@ -43,7 +43,7 @@ export function ModalResourceChange({ onClose }: ModalResourceChangeProps) {
         variant="dotted"
       />
 
-      <ResourceClose />
+      <ResourceClose onClose={onClose} />
 
       <Divider
         size="xs"
