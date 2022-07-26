@@ -22,7 +22,7 @@ export function UserReview({ isOwnReview }: UserReviewProps) {
   const dark = colorScheme === 'dark'
 
   const textStyles = (): CSSObject => ({
-    color: dark ? theme.colors.gray[3] : theme.colors.gray[6],
+    color: dark ? theme.colors.gray[3] : theme.colors.gray[7],
     fontWeight: 400,
     lineHeight: 1.5
   })
