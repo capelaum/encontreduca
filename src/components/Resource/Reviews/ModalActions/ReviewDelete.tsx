@@ -7,6 +7,7 @@ import {
 import { useModals } from '@mantine/modals'
 import { openModalConfirm } from 'components/Modal/ModalConfirrm'
 import { useModalStyles } from 'components/Modal/Shared/modalStyles'
+import { showToast } from 'components/ToastMessage'
 import { MdCancel, MdDelete } from 'react-icons/md'
 
 export function ReviewDelete() {
@@ -27,12 +28,13 @@ export function ReviewDelete() {
           openModalConfirm({
             title: 'Quer excluir esta avaliação?',
             description: 'Não é possível recuperar Avaliações excluídas.',
-            toast: {
-              title: 'Avaliação excluída!',
-              description: 'Pode avaliar novamente quando quiser.',
-              icon: <MdCancel size={24} color={theme.colors.brand[7]} />,
-              dark
-            },
+            onConfirm: () =>
+              showToast({
+                title: 'Avaliação excluída!',
+                description: 'Pode avaliar novamente quando quiser.',
+                icon: <MdCancel size={24} color={theme.colors.brand[7]} />,
+                dark
+              }),
             openConfirmModal,
             closeModal,
             classes,

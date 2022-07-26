@@ -35,21 +35,21 @@ function MyApp({ Component, pageProps }: AppProps) {
       toggleColorScheme={toggleColorScheme}
     >
       <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
-        <MapProvider>
-          <SidebarProvider>
-            <ModalsProvider
-              modals={{
-                review: ModalReview,
-                select: ModalSelect,
-                vote: ModalVote
-              }}
-            >
+        <ModalsProvider
+          modals={{
+            review: ModalReview,
+            select: ModalSelect,
+            vote: ModalVote
+          }}
+        >
+          <MapProvider>
+            <SidebarProvider>
               <GlobalStyles />
               <ToastContainer autoClose={5000} limit={5} position="top-right" />
               <Component {...pageProps} />
-            </ModalsProvider>
-          </SidebarProvider>
-        </MapProvider>
+            </SidebarProvider>
+          </MapProvider>
+        </ModalsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   )

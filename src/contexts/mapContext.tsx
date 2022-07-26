@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import { useModals } from '@mantine/modals'
+import { useModalStyles } from 'components/Modal/Shared/modalStyles'
 import { defaultCenter } from 'config/options'
 import {
   createContext,
@@ -53,6 +57,15 @@ export function MapProvider({ children }: MapProviderProps) {
   const [currentCenter, setCurrentCenter] =
     useState<LatLngLiteral>(defaultCenter)
 
+  const { openConfirmModal, closeModal } = useModals()
+
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
+  const { classes } = useModalStyles(dark)
+
   const mapRef = useRef<GoogleMapsMap>()
 
   const handleMapClick = ({ latLng }: MapMouseEvent) => {
@@ -75,15 +88,30 @@ export function MapProvider({ children }: MapProviderProps) {
     setCurrentCenter(mapRef.current!.getCenter()!.toJSON())
   }, [])
 
-  const onMapLoad = useCallback((map: GoogleMapsMap) => {
-    mapRef.current = map
-
+  const getUserLocation = useCallback(() => {
     navigator?.geolocation.getCurrentPosition(
       ({ coords: { latitude: lat, longitude: lng } }) => {
         setCurrentLocation({ lat, lng })
         setCenter({ lat, lng })
       }
     )
+  }, [])
+
+  const onMapLoad = useCallback((map: GoogleMapsMap) => {
+    mapRef.current = map
+
+    getUserLocation()
+
+    // openModalConfirm({
+    //   title: 'Permite acessar sua localização?',
+    //   description: 'Para saber o seu local atual, precisamos de sua permissão.',
+    //   onConfirm: getUserLocation,
+    //   openConfirmModal,
+    //   closeModal,
+    //   classes,
+    //   theme,
+    //   dark
+    // })
   }, [])
 
   const onUnmount = useCallback(() => {

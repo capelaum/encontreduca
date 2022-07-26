@@ -1,14 +1,13 @@
 import { MantineTheme, Text } from '@mantine/core'
 import { OpenConfirmModal } from '@mantine/modals/lib/context'
 import { Title } from 'components/Shared/Title'
-import { showToast, ShowToastProps } from 'components/ToastMessage'
 import { CloseButton } from '../Shared/CloseButton'
 import { modalStyles } from '../Shared/modalStyles'
 
 interface OpenModalReviewDeleteProps {
   title: string
   description: string
-  toast: ShowToastProps
+  onConfirm: () => void
   openConfirmModal: (props: OpenConfirmModal) => string
   closeModal: (id: string, canceled?: boolean | undefined) => void
   classes: Record<'modal', string>
@@ -19,7 +18,7 @@ interface OpenModalReviewDeleteProps {
 export const openModalConfirm = ({
   title,
   description,
-  toast,
+  onConfirm,
   openConfirmModal,
   closeModal,
   classes,
@@ -65,7 +64,7 @@ export const openModalConfirm = ({
     onCancel: () => closeModal(id),
     onConfirm: () => {
       closeModal(id)
-      showToast(toast)
+      onConfirm()
     }
   })
 }

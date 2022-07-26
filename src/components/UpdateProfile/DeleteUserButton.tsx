@@ -2,6 +2,7 @@ import { Button, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { openModalConfirm } from 'components/Modal/ModalConfirrm'
 import { useModalStyles } from 'components/Modal/Shared/modalStyles'
+import { showToast } from 'components/ToastMessage'
 import { BsExclamationCircle } from 'react-icons/bs'
 import { FaUserTimes } from 'react-icons/fa'
 
@@ -25,12 +26,13 @@ export function DeleteUserButton() {
         openModalConfirm({
           title: 'Quer mesmo excluir sua conta?',
           description: 'Não é possível recuperar sua conta após a exclusão!',
-          toast: {
-            title: 'Sua conta foi excluída!',
-            description: 'É uma pena vermos você ir 😕',
-            icon: <FaUserTimes size={24} color={theme.colors.brand[7]} />,
-            dark
-          },
+          onConfirm: () =>
+            showToast({
+              title: 'Sua conta foi excluída!',
+              description: 'É uma pena vermos você ir 😕',
+              icon: <FaUserTimes size={24} color={theme.colors.brand[7]} />,
+              dark
+            }),
           openConfirmModal,
           closeModal,
           classes,
