@@ -23,12 +23,7 @@ export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { createResourceOpened, menuOpened } = useSidebar()
-  let withOverlay = false
-
-  if (createResourceOpened || menuOpened || !largeScreen) {
-    withOverlay = true
-  }
+  const { createResourceOpened } = useSidebar()
 
   const BoxStyles = (): CSSObject => ({
     height: '100vh',
@@ -65,13 +60,13 @@ export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
       size={largeScreen ? '420px' : '100%'}
       padding={0}
       opened={opened}
-      overlayBlur={1}
-      overlayOpacity={0.6}
+      overlayBlur={0.8}
+      overlayOpacity={0.2}
+      overlayColor={theme.colors.brand[7]}
       withCloseButton={false}
       transitionDuration={300}
       onClose={() => setOpened(false)}
-      withOverlay={withOverlay}
-      transitionTimingFunction="ease-in-out"
+      withOverlay={createResourceOpened}
     >
       <Box sx={BoxStyles}>{children}</Box>
     </Drawer>
