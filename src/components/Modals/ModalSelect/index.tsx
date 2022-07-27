@@ -7,12 +7,12 @@ import {
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useState } from 'react'
 import { IoIosSend } from 'react-icons/io'
 import { TbChevronDown } from 'react-icons/tb'
-import { inputStyles } from 'styles/inputStyles'
-import { CloseButton } from '../Shared/CloseButton'
+import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 export function ModalSelect({
   context,
@@ -35,7 +35,7 @@ export function ModalSelect({
 
   return (
     <Stack spacing="md">
-      <CloseButton onClick={() => closeModal(id)} />
+      <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar modal" />
 
       <Text
         sx={{

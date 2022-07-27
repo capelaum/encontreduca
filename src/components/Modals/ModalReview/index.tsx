@@ -9,11 +9,11 @@ import {
 import { ContextModalProps } from '@mantine/modals'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { Profile } from 'components/Shared/Profile'
+import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
-import { textareaStyles } from 'styles/inputStyles'
-import { CloseButton } from '../Shared/CloseButton'
+import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 export function ModalReview({
   context,
@@ -38,7 +38,7 @@ export function ModalReview({
 
   return (
     <Stack spacing="md">
-      <CloseButton onClick={() => closeModal(id)} />
+      <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar Modal" />
 
       <Profile isModal />
 

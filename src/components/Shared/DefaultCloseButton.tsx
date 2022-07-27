@@ -1,16 +1,16 @@
 import {
-  ActionIcon,
+  CloseButton,
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { MdClose } from 'react-icons/md'
 
 interface CloseButtonProps {
   onClick: () => void
+  title: string
 }
 
-export function CloseButton({ onClick }: CloseButtonProps) {
+export function DefaultCloseButton({ onClick, title }: CloseButtonProps) {
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
 
   const theme = useMantineTheme()
@@ -19,11 +19,13 @@ export function CloseButton({ onClick }: CloseButtonProps) {
   const dark = colorScheme === 'dark'
 
   return (
-    <ActionIcon
-      variant="hover"
-      size={largeScreen ? 'lg' : 'md'}
+    <CloseButton
       onClick={onClick}
-      title="Fechar Menu"
+      size="lg"
+      title={title}
+      aria-label={title}
+      iconSize={24}
+      color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
       sx={{
         position: 'absolute',
         top: largeScreen ? theme.spacing.md : theme.spacing.sm,
@@ -33,11 +35,6 @@ export function CloseButton({ onClick }: CloseButtonProps) {
           backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[1]
         }
       }}
-    >
-      <MdClose
-        size={24}
-        color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-      />
-    </ActionIcon>
+    />
   )
 }

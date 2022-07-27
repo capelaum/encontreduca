@@ -9,8 +9,8 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { Title } from 'components/Shared'
 import { Back } from 'components/Shared/Back'
-import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/resources.json'
 import { MdSearch } from 'react-icons/md'

@@ -7,12 +7,12 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useInputState } from '@mantine/hooks'
+import { Title } from 'components/Shared'
 import { Back } from 'components/Shared/Back'
-import { Title } from 'components/Shared/Title'
+import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useSidebar } from 'contexts/sidebarContext'
 import { FaUserEdit } from 'react-icons/fa'
-import { buttonStyles, inputStyles } from 'styles/inputStyles'
 import { AvatarDropzone } from './AvatarDropzone'
 import { DeleteUserButton } from './DeleteUserButton'
 

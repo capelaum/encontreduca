@@ -4,7 +4,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { CloseButton } from '../Shared/CloseButton'
+import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 import { ResourceChange } from './ModalButtons/ResourceChange'
 import { ResourceClose } from './ModalButtons/ResourceClose'
 
@@ -28,7 +28,7 @@ export function ModalResourceChange({ onClose }: ModalResourceChangeProps) {
         backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0]
       }}
     >
-      <CloseButton onClick={onClose} />
+      <DefaultCloseButton onClick={onClose} title="Fechar modal" />
 
       <Divider
         size="xs"

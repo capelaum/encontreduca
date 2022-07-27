@@ -4,7 +4,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { buttonStyles } from 'styles/inputStyles'
+import { buttonStyles } from 'components/Shared/styles/inputStyles'
 
 interface ButtonsProps {
   onCancel: () => void

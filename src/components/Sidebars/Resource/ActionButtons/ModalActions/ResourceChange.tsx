@@ -1,11 +1,11 @@
 import { useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { ModalResourceChange } from 'components/Modals/ModalResourceChange'
+import { Title } from 'components/Shared'
 import {
   modalStyles,
   useModalStyles
-} from 'components/Modals/Shared/modalStyles'
-import { Title } from 'components/Shared/Title'
+} from 'components/Shared/styles/modalStyles'
 import { MdOutlineEdit } from 'react-icons/md'
 import { ActionButton } from '../ActionButton'
 

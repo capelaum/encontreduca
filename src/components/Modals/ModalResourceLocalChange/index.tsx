@@ -11,15 +11,15 @@ import {
 } from '@mantine/core'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { buttonStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { defaultCenter, mapOptions, mapOptionsLight } from 'config/options'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation, MdPlace } from 'react-icons/md'
-import { buttonStyles } from 'styles/inputStyles'
 import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
 import { categorySwitch } from 'utils/categorySwitch'
-import { CloseButton } from '../Shared/CloseButton'
+import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 interface ModalResourceLocalChangeProps {
   onClose: () => void
@@ -70,7 +70,7 @@ export function ModalResourceLocalChange({
 
   return (
     <Stack spacing="xs">
-      <CloseButton onClick={onClose} />
+      <DefaultCloseButton onClick={onClose} title="Fechar Modal" />
 
       <Text mb={8} color={dark ? theme.colors.gray[0] : theme.colors.gray[8]}>
         Nome do recurso

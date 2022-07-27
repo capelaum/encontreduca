@@ -7,10 +7,10 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
+import { afterStyles } from 'components/Shared/styles/dropzoneStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useState } from 'react'
 import { MdCancel, MdClose, MdOutlineFileUpload } from 'react-icons/md'
-import { afterStyles } from 'styles/dropzoneStyles'
 
 export function AvatarDropzone() {
   const theme = useMantineTheme()

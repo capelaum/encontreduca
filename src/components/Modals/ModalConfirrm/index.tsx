@@ -1,8 +1,8 @@
 import { MantineTheme, Text } from '@mantine/core'
 import { OpenConfirmModal } from '@mantine/modals/lib/context'
-import { Title } from 'components/Shared/Title'
-import { CloseButton } from '../Shared/CloseButton'
-import { modalStyles } from '../Shared/modalStyles'
+import { Title } from 'components/Shared'
+import { DefaultCloseButton } from 'components/Shared/DefaultCloseButton'
+import { modalStyles } from '../../Shared/styles/modalStyles'
 
 interface OpenModalReviewDeleteProps {
   title: string
@@ -31,7 +31,11 @@ export const openModalConfirm = ({
     title: <Title name={title} isModal />,
     children: (
       <>
-        <CloseButton onClick={() => closeModal(id)} />
+        <DefaultCloseButton
+          onClick={() => closeModal(id)}
+          title="Fechar modal"
+        />
+
         <Text color={dark ? theme.colors.gray[0] : theme.colors.gray[8]}>
           {description}
         </Text>

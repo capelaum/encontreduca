@@ -7,12 +7,12 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
+import { afterStyles } from 'components/Shared/styles/dropzoneStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useState } from 'react'
 import { MdCancel, MdClose, MdOutlineFileUpload } from 'react-icons/md'
 import { TbPhoto } from 'react-icons/tb'
-import { afterStyles } from 'styles/dropzoneStyles'
 
 export function CoverDropzone() {
   const { resource } = useSidebar()
@@ -112,38 +112,3 @@ export function CoverDropzone() {
     </Dropzone>
   )
 }
-
-/*
-{coverSrc || resource ? (
-        <Image
-          width="100%"
-          radius="md"
-          src={coverSrc ?? resource?.cover}
-          alt="Imagem de capa do recurso"
-          title="Imagem de capa do recurso"
-          sx={{
-            borderRadius: 'md',
-            objectFit: 'cover',
-            objectPosition: 'center'
-          }}
-        />
-      ) : (
-        <Center
-          sx={{
-            minHeight: 200
-          }}
-        >
-          <Stack align="center" spacing="sm">
-            <Text size="md" color="dimmed">
-              Formatos: png, jpg ou jpeg
-            </Text>
-
-            <Text size="sm" color="dimmed">
-              Tamanho máximo de 5MB
-            </Text>
-          </Stack>
-        </Center>
-      )}
-
-
-*/

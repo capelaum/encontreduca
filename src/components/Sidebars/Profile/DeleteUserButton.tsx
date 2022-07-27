@@ -1,7 +1,7 @@
 import { Button, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { openModalConfirm } from 'components/Modals/ModalConfirrm'
-import { useModalStyles } from 'components/Modals/Shared/modalStyles'
+import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { BsExclamationCircle } from 'react-icons/bs'
 import { FaUserTimes } from 'react-icons/fa'

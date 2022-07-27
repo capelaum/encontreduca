@@ -1,5 +1,5 @@
 import { Space, Stack } from '@mantine/core'
-import { CloseButton } from 'components/Modals/Shared/CloseButton'
+import { DefaultCloseButton } from 'components/Shared/DefaultCloseButton'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useRouter } from 'next/router'
 import { AiFillHome } from 'react-icons/ai'
@@ -24,7 +24,10 @@ export function Menu() {
 
   return (
     <>
-      <CloseButton onClick={() => setMenuOpened(false)} />
+      <DefaultCloseButton
+        onClick={() => setMenuOpened(false)}
+        title="Fechar modal"
+      />
 
       <MenuProfile setProfileOpened={setProfileOpened} />
 

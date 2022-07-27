@@ -9,11 +9,11 @@ import { useModals } from '@mantine/modals'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import { ResourceMarker } from 'components/Map/ResourceMarker'
 import { ModalResourceLocalChange } from 'components/Modals/ModalResourceLocalChange'
+import { Title } from 'components/Shared'
 import {
   modalStyles,
   useModalStyles
-} from 'components/Modals/Shared/modalStyles'
-import { Title } from 'components/Shared/Title'
+} from 'components/Shared/styles/modalStyles'
 import {
   defaultCenter,
   mapOptionsForm,

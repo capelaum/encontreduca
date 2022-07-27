@@ -7,6 +7,7 @@ import {
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { ActionButton } from 'components/Sidebars/Resource/ActionButtons/ActionButton'
 import { useState } from 'react'
@@ -16,8 +17,7 @@ import {
   FaThumbsDown,
   FaThumbsUp
 } from 'react-icons/fa'
-import { textareaStyles } from 'styles/inputStyles'
-import { CloseButton } from '../Shared/CloseButton'
+import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 type Vote = 'Aprovado' | 'Reprovado' | null
 
@@ -62,7 +62,7 @@ export function ModalVote({
 
   return (
     <Stack spacing="sm">
-      <CloseButton onClick={() => closeModal(id)} />
+      <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar modal" />
 
       <Group spacing={32} align="start" position="center" py="md">
         <ActionButton
