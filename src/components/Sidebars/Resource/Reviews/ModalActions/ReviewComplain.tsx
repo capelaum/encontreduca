@@ -1,4 +1,4 @@
-import { Menu, useMantineColorScheme } from '@mantine/core'
+import { Box, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import {
   modalStyles,
@@ -6,12 +6,15 @@ import {
 } from 'components/Modals/Shared/modalStyles'
 import { Title } from 'components/Shared/Title'
 import data from 'data/motives.json'
-import { TiCancel } from 'react-icons/ti'
+import { MdWarning } from 'react-icons/md'
 import { getModalSelectDataMotives } from 'utils/modalSelecDataFormatter'
+import { ActionItem } from '../ActionItem'
 
 export function ReviewComplain() {
   const reviewMotives = getModalSelectDataMotives(data.motives, 'review')
   const { openContextModal } = useModals()
+
+  const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
@@ -28,11 +31,18 @@ export function ReviewComplain() {
   }
 
   return (
-    <Menu.Item
-      icon={<TiCancel size={18} color="cyan" />}
+    <ActionItem
       onClick={openModalReviewComplain}
+      icon={
+        <MdWarning
+          size={14}
+          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+        />
+      }
     >
-      Sinalizar como inadequado
-    </Menu.Item>
+      <Box ml={8} sx={{ width: '200px' }}>
+        Sinalizar como inadequado
+      </Box>
+    </ActionItem>
   )
 }

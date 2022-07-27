@@ -1,4 +1,5 @@
 import {
+  Box,
   Burger,
   CSSObject,
   Group,
@@ -69,22 +70,39 @@ export function SearchGroup() {
         type="search"
         variant="filled"
         id="search-resource"
-        rightSection={
-          <Tooltip
-            label="Busque os recursos educacionais por nome"
-            position="bottom"
-            placement="center"
-          >
-            <MdSearch
-              size={28}
-              color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-              style={{ display: 'block', position: 'relative' }}
-            />
-          </Tooltip>
-        }
-        rightSectionWidth={40}
         placeholder="Busque um recurso"
         aria-label="Buscar recursos educacionais"
+        rightSectionWidth={40}
+        rightSection={
+          <Tooltip
+            multiline
+            label="Busque os recursos educacionais por nome"
+            position="bottom-end"
+            transition="pop-bottom-right"
+            radius={theme.radius.md}
+            width={170}
+            withArrow
+            arrowSize={6}
+            px={8}
+            offset={-2}
+            sx={{
+              color: theme.colors.brand[7],
+              backgroundColor: theme.colors.cyan[3],
+              borderRadius: theme.radius.md
+            }}
+          >
+            <Box>
+              <MdSearch
+                size={28}
+                color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+                style={{
+                  display: 'block',
+                  position: 'relative'
+                }}
+              />
+            </Box>
+          </Tooltip>
+        }
         sx={{
           width: '420px',
           flex: 1,

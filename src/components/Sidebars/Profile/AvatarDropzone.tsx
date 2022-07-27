@@ -1,12 +1,16 @@
 import {
   Avatar,
+  Center,
   Stack,
+  Text,
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
+import { showToast } from 'components/Shared/ToastMessage'
 import { useState } from 'react'
-import { afterElementStyles, afterStyles } from 'styles/dropzoneStyles'
+import { MdCancel, MdClose, MdOutlineFileUpload } from 'react-icons/md'
+import { afterStyles } from 'styles/dropzoneStyles'
 
 export function AvatarDropzone() {
   const theme = useMantineTheme()
@@ -36,17 +40,47 @@ export function AvatarDropzone() {
         loading={isLoading}
         accept={IMAGE_MIME_TYPE}
         onDrop={(file) => uploadAvatarImage(file)}
-        onReject={(files) => console.log('rejected files', files)}
+        color="cyan"
+        onReject={() =>
+          showToast({
+            title: 'Oops! Formato não suportado.',
+            description: 'Por favor, tente novamente com uma imagem válida.',
+            icon: <MdCancel size={24} color={theme.colors.brand[7]} />,
+            dark
+          })
+        }
         sx={afterStyles(theme, dark)}
       >
-        {(status) => (
-          <Avatar
-            src={avatarSrc ?? 'avatar.svg'}
-            size={180}
-            radius={999}
-            sx={afterElementStyles(theme, status)}
-          />
-        )}
+        <Center
+          sx={{
+            borderRadius: 999,
+            minWidth: 180,
+            minHeight: 180
+          }}
+        >
+          <Dropzone.Accept>
+            <Stack align="center" spacing="sm">
+              <MdOutlineFileUpload
+                size={50}
+                color={dark ? theme.colors.cyan[3] : theme.colors.gray[7]}
+              />
+              <Text color={dark ? theme.colors.cyan[3] : theme.colors.gray[7]}>
+                Solte sua imagem aqui
+              </Text>
+            </Stack>
+          </Dropzone.Accept>
+
+          <Dropzone.Reject>
+            <Stack align="center" spacing="sm">
+              <MdClose size={50} color={theme.colors.red[6]} />
+              <Text color={theme.colors.red[6]}>Tipo não suportado</Text>
+            </Stack>
+          </Dropzone.Reject>
+
+          <Dropzone.Idle>
+            <Avatar src={avatarSrc ?? 'avatar.svg'} size={180} radius={999} />
+          </Dropzone.Idle>
+        </Center>
       </Dropzone>
     </Stack>
   )

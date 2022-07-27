@@ -28,6 +28,7 @@ export function CloseButton({ onClick }: CloseButtonProps) {
         position: 'absolute',
         top: largeScreen ? theme.spacing.md : theme.spacing.sm,
         right: largeScreen ? theme.spacing.md : theme.spacing.sm,
+        backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
         '&:hover': {
           backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[1]
         }

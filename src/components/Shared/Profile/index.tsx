@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Group,
   Stack,
   Text,
@@ -35,7 +36,7 @@ export function Profile({ isModal }: ProfileProps) {
         </Text>
 
         {isModal ? (
-          <Group spacing={4}>
+          <Group spacing={4} align="center">
             <Text
               size="xs"
               sx={{
@@ -46,20 +47,28 @@ export function Profile({ isModal }: ProfileProps) {
               Postar publicamente
             </Text>
             <Tooltip
-              wrapLines
-              withArrow
-              width={200}
-              position="top"
-              placement="start"
-              transition="pop"
-              color={dark ? 'cyan' : 'gray'}
-              transitionDuration={200}
+              multiline
               label="Suas postagens vão aparecer publicamente com seu nome e foto do perfil."
+              position="bottom-start"
+              transition="pop-bottom-left"
+              radius={theme.radius.md}
+              width={200}
+              withArrow
+              arrowSize={6}
+              p={8}
+              offset={-2}
+              sx={{
+                color: theme.colors.brand[7],
+                backgroundColor: theme.colors.cyan[3],
+                borderRadius: theme.radius.md
+              }}
             >
-              <MdInfoOutline
-                size={14}
-                color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-              />
+              <Box>
+                <MdInfoOutline
+                  size={14}
+                  color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+                />
+              </Box>
             </Tooltip>
           </Group>
         ) : (

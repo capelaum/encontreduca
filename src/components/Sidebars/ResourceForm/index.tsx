@@ -1,6 +1,6 @@
 import {
+  Box,
   Group,
-  InputWrapper,
   Select,
   Stack,
   Text,
@@ -137,13 +137,18 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         sx={inputStyles(theme, dark)}
       />
 
-      <InputWrapper
-        label="Imagem de capa do recurso"
-        required
-        sx={inputStyles(theme, dark)}
-      >
+      <Box>
+        <Text
+          pb={8}
+          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+        >
+          Imagem de capa do recurso{' '}
+          <Text component="span" color={theme.colors.red[6]}>
+            *
+          </Text>
+        </Text>
         <CoverDropzone />
-      </InputWrapper>
+      </Box>
 
       <ConfirmButtons
         onCancel={() => {

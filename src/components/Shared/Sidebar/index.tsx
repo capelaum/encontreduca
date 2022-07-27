@@ -49,6 +49,7 @@ export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
       borderRadius: '50px',
       width: '1px',
       '&:hover': {
+        background: dark ? theme.colors.cyan[4] : theme.colors.brand[8],
         width: '5px'
       }
     }
@@ -62,11 +63,12 @@ export function Sidebar({ children, opened, setOpened, zIndex }: SidebarProps) {
       opened={opened}
       overlayBlur={0.8}
       overlayOpacity={0.2}
-      overlayColor={theme.colors.brand[7]}
+      overlayColor={theme.black}
       withCloseButton={false}
       transitionDuration={300}
       onClose={() => setOpened(false)}
       withOverlay={createResourceOpened}
+      sx={{ position: createResourceOpened ? 'fixed' : 'relative' }}
     >
       <Box sx={BoxStyles}>{children}</Box>
     </Drawer>

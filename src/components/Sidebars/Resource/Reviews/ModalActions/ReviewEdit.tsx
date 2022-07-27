@@ -1,4 +1,4 @@
-import { Box, Menu, useMantineColorScheme } from '@mantine/core'
+import { Box, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import {
   modalStyles,
@@ -7,10 +7,13 @@ import {
 import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import { MdEdit } from 'react-icons/md'
+import { ActionItem } from '../ActionItem'
 
 export function ReviewEdit() {
   const { openContextModal } = useModals()
   const { resource } = useSidebar()
+
+  const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
@@ -30,10 +33,18 @@ export function ReviewEdit() {
     })
 
   return (
-    <Menu.Item icon={<MdEdit size={14} color="cyan" />}>
-      <Box ml={8} onClick={openModalReviewEdit}>
+    <ActionItem
+      onClick={openModalReviewEdit}
+      icon={
+        <MdEdit
+          size={14}
+          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+        />
+      }
+    >
+      <Box ml={8} sx={{ width: '120px' }}>
         Editar avaliação
       </Box>
-    </Menu.Item>
+    </ActionItem>
   )
 }

@@ -17,6 +17,7 @@ export function Back({ setSidebarOpened }: BackProps) {
       title="Fechar recurso"
       sx={(theme) => ({
         color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
+        backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
         '&:hover': {
           backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[1]
         }

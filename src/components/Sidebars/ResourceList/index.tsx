@@ -56,22 +56,39 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
         outline: `1px solid ${theme.colors.cyan[3]}`
       },
       '&::placeholder': {
-        color: dark ? theme.colors.gray[7] : theme.colors.gray[6]
+        color: theme.colors.gray[6]
       }
     }
   })
 
   const rightSection = (
     <Tooltip
+      multiline
       label="Busque os recursos educacionais por nome"
-      position="bottom"
-      placement="center"
+      position="bottom-end"
+      transition="pop-bottom-right"
+      radius={theme.radius.md}
+      width={170}
+      withArrow
+      arrowSize={6}
+      px={8}
+      offset={-2}
+      sx={{
+        color: theme.colors.brand[7],
+        backgroundColor: theme.colors.cyan[3],
+        borderRadius: theme.radius.md
+      }}
     >
-      <MdSearch
-        size={28}
-        color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-        style={{ display: 'block', position: 'relative' }}
-      />
+      <Box>
+        <MdSearch
+          size={28}
+          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+          style={{
+            display: 'block',
+            position: 'relative'
+          }}
+        />
+      </Box>
     </Tooltip>
   )
 
