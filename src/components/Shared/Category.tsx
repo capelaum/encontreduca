@@ -24,7 +24,7 @@ export function Category({ category, isSmall }: CategoryProps) {
       {dark ? iconCyan : iconBlueDark}
 
       <Text
-        color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+        color={dark ? theme.colors.gray[3] : theme.colors.gray[7]}
         size={isSmall ? 'sm' : 'md'}
       >
         {category}

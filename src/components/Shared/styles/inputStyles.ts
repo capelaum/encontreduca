@@ -23,6 +23,8 @@ export const textareaStyles = (
   dark: boolean
 ): CSSObject => ({
   textarea: {
+    padding: theme.spacing.sm,
+    fontSize: theme.fontSizes.sm,
     color: dark ? theme.white : theme.colors.brand[7],
     backgroundColor: dark ? theme.colors.brand[8] : theme.white,
     border: `1px solid ${dark ? theme.colors.cyan[3] : theme.colors.brand[8]}`,

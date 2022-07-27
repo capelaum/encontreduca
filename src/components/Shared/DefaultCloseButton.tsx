@@ -25,9 +25,9 @@ export function DefaultCloseButton({ onClick, title }: CloseButtonProps) {
       title={title}
       aria-label={title}
       iconSize={24}
-      color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
       sx={{
         position: 'absolute',
+        color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
         top: largeScreen ? theme.spacing.md : theme.spacing.sm,
         right: largeScreen ? theme.spacing.md : theme.spacing.sm,
         backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],

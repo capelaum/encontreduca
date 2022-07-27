@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Group,
   Stack,
   Text,
@@ -7,6 +6,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { DefaultAvatar } from 'components/Shared/DefaultAvatar'
 
 interface MenuProfileProps {
   setProfileOpened: (opened: boolean) => void
@@ -26,7 +26,7 @@ export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
       }}
     >
       <Group spacing={12} noWrap>
-        <Avatar radius="xl" size={50} src="/avatar.svg" />
+        <DefaultAvatar size={50} />
 
         <Stack spacing={2}>
           <Text

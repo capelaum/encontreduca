@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Center,
   Stack,
   Text,
@@ -7,6 +6,7 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
+import { DefaultAvatar } from 'components/Shared/DefaultAvatar'
 import { afterStyles } from 'components/Shared/styles/dropzoneStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useState } from 'react'
@@ -78,7 +78,7 @@ export function AvatarDropzone() {
           </Dropzone.Reject>
 
           <Dropzone.Idle>
-            <Avatar src={avatarSrc ?? 'avatar.svg'} size={180} radius={999} />
+            <DefaultAvatar avatarSrc={avatarSrc} size={180} />
           </Dropzone.Idle>
         </Center>
       </Dropzone>
