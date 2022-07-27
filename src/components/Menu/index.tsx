@@ -1,6 +1,7 @@
 import { Space, Stack } from '@mantine/core'
 import { CloseButton } from 'components/Modal/Shared/CloseButton'
 import { useSidebar } from 'contexts/sidebarContext'
+import { useRouter } from 'next/router'
 import { AiFillHome } from 'react-icons/ai'
 import { BsBookmarksFill, BsPlusCircleFill } from 'react-icons/bs'
 import { GiStarsStack } from 'react-icons/gi'
@@ -9,6 +10,8 @@ import { MenuButton } from './MenuButton'
 import { MenuProfile } from './MenuProfile'
 
 export function Menu() {
+  const router = useRouter()
+
   const {
     setMenuOpened,
     setProfileOpened,
@@ -28,7 +31,13 @@ export function Menu() {
       <Space h="md" />
 
       <Stack spacing={0}>
-        <MenuButton icon={<AiFillHome size={20} />} text="Home" />
+        <MenuButton
+          icon={<AiFillHome size={20} />}
+          text="Home"
+          onClick={() => {
+            router.push('/home')
+          }}
+        />
 
         <MenuButton
           icon={<BsBookmarksFill size={20} />}

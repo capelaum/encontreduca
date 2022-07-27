@@ -13,7 +13,7 @@ import { useSidebar } from 'contexts/sidebarContext'
 import Head from 'next/head'
 import { libraries } from 'types/googleMaps'
 
-export default function Home() {
+export default function MapHome() {
   const {
     resourceOpened,
     setResourceOpened,
