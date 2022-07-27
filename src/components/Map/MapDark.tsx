@@ -7,7 +7,7 @@ import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
 import { SideButtons } from './SideButtons'
 
-export default function Map(): JSX.Element {
+export default function MapDark(): JSX.Element {
   const { resources } = data
 
   const {
