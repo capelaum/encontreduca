@@ -1,5 +1,12 @@
-import { Space, Stack } from '@mantine/core'
+import { Space, Stack, useMantineColorScheme } from '@mantine/core'
+import { useModals } from '@mantine/modals'
+import { ModalSupport } from 'components/Modals/ModalSupport'
 import { DefaultCloseButton } from 'components/Shared/DefaultCloseButton'
+import {
+  modalStyles,
+  useModalStyles
+} from 'components/Shared/styles/modalStyles'
+import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useRouter } from 'next/router'
 import { AiFillHome } from 'react-icons/ai'
@@ -21,6 +28,22 @@ export function Menu() {
     setResource,
     setResourceOpened
   } = useSidebar()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
+  const { classes } = useModalStyles(dark)
+
+  const { openModal, closeModal } = useModals()
+  const openModalSupport = () => {
+    const id = openModal({
+      classNames: classes,
+      ...modalStyles,
+      overflow: 'outside',
+      title: <Title name="Suporte" />,
+      children: <ModalSupport onClose={() => closeModal(id)} />
+    })
+  }
 
   return (
     <>
@@ -70,7 +93,11 @@ export function Menu() {
           }}
         />
 
-        <MenuButton icon={<MdHelp size={20} />} text="Suporte" />
+        <MenuButton
+          icon={<MdHelp size={20} />}
+          text="Suporte"
+          onClick={openModalSupport}
+        />
 
         <MenuButton icon={<MdLogout size={20} />} text="Sair" />
       </Stack>

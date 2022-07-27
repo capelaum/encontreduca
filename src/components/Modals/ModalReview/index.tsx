@@ -57,10 +57,7 @@ export function ModalReview({
               {starIndex <= (hover || rating) ? (
                 <MdStar size={24} color={theme.colors.yellow[6]} />
               ) : (
-                <MdStarBorder
-                  size={24}
-                  color={dark ? theme.colors.gray[0] : theme.colors.gray[7]}
-                />
+                <MdStarBorder size={24} color={theme.colors.gray[6]} />
               )}
             </UnstyledButton>
           )
@@ -72,7 +69,7 @@ export function ModalReview({
         radius="md"
         size="md"
         autosize
-        minRows={4}
+        minRows={5}
         maxRows={5}
         variant="filled"
         onChange={(e) => setComment(e.target.value)}
