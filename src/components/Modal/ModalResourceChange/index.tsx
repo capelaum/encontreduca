@@ -23,6 +23,7 @@ export function ModalResourceChange({ onClose }: ModalResourceChangeProps) {
       spacing={0}
       pb={20}
       sx={{
+        borderRadius: theme.radius.md,
         color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
         backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0]
       }}

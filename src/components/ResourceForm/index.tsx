@@ -158,8 +158,8 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
               ? 'Recurso cadastrado com sucesso!'
               : 'Sugestão de alteração de recurso enviada!',
             description: isCreateResource
-              ? 'Confira este recurso no Painel de Avaliação.'
-              : 'Será analisada pelos administradores.',
+              ? 'Confira este recurso no Painel de votação.'
+              : 'Agradecemos sua sugestão!',
             icon: isCreateResource ? (
               <GiStarsStack size={24} color={theme.colors.brand[8]} />
             ) : (
