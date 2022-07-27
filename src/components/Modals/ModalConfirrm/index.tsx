@@ -1,7 +1,7 @@
 import { MantineTheme, Text } from '@mantine/core'
 import { OpenConfirmModal } from '@mantine/modals/lib/context'
-import { Title } from 'components/Shared'
 import { DefaultCloseButton } from 'components/Shared/DefaultCloseButton'
+import { Title } from 'components/Shared/Title'
 import { modalStyles } from '../../Shared/styles/modalStyles'
 
 interface OpenModalReviewDeleteProps {

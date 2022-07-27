@@ -1,10 +1,10 @@
 import { useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
-import { Title } from 'components/Shared'
 import {
   modalStyles,
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
+import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import { MdStarBorder } from 'react-icons/md'
 import { ActionButton } from '../ActionButton'

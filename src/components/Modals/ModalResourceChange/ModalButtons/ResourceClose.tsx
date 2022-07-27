@@ -1,7 +1,7 @@
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
-import { Title } from 'components/Shared'
 import { useModalStyles } from 'components/Shared/styles/modalStyles'
+import { Title } from 'components/Shared/Title'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/motives.json'
 import { MdCancel } from 'react-icons/md'

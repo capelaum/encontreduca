@@ -1,6 +1,5 @@
 import {
   Box,
-  Group,
   Select,
   Stack,
   Text,
@@ -9,9 +8,8 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useInputState } from '@mantine/hooks'
-import { Title } from 'components/Shared'
-import { Back } from 'components/Shared/Back'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useSidebar } from 'contexts/sidebarContext'
@@ -60,14 +58,14 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
 
   return (
     <Stack my="md" px="md" spacing="md" role="form">
-      <Group align="start" position="apart" spacing={0}>
-        <Title name={title} />
-        <Back
-          setSidebarOpened={
-            isCreateResource ? setCreateResourceOpened : setChangeResourceOpened
-          }
-        />
-      </Group>
+      <SidebarHeader
+        title={title}
+        closeSidebar={
+          isCreateResource
+            ? () => setCreateResourceOpened(false)
+            : () => setChangeResourceOpened(false)
+        }
+      />
 
       <Text>Informações do local</Text>
 

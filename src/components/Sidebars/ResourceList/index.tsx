@@ -1,7 +1,6 @@
 import {
   Box,
   CSSObject,
-  Group,
   Stack,
   Text,
   TextInput,
@@ -9,8 +8,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { Title } from 'components/Shared'
-import { Back } from 'components/Shared/Back'
+import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/resources.json'
 import { MdSearch } from 'react-icons/md'
@@ -94,16 +92,16 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
 
   return (
     <Stack my="md" spacing="md">
-      <Group px="md" align="start" position="apart" spacing={0}>
-        <Title
-          name={isVotingPainel ? 'Painel de votação' : 'Recursos salvos'}
-        />
-        <Back
-          setSidebarOpened={
-            isVotingPainel ? setVotingPanelOpened : setSavedResourcesOpened
+      <Box px="md">
+        <SidebarHeader
+          title={isVotingPainel ? 'Painel de votação' : 'Recursos salvos'}
+          closeSidebar={
+            isVotingPainel
+              ? () => setVotingPanelOpened(false)
+              : () => setSavedResourcesOpened(false)
           }
         />
-      </Group>
+      </Box>
 
       {isVotingPainel && (
         <Text px="md">

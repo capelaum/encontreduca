@@ -1,14 +1,12 @@
 import {
   Button,
-  Group,
   Stack,
   TextInput,
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
 import { useInputState } from '@mantine/hooks'
-import { Title } from 'components/Shared'
-import { Back } from 'components/Shared/Back'
+import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useSidebar } from 'contexts/sidebarContext'
@@ -32,10 +30,10 @@ export function UpdateProfile() {
 
   return (
     <Stack spacing="md" p="md">
-      <Group align="start" position="apart" spacing={0}>
-        <Title name="Perfil" />
-        <Back setSidebarOpened={setProfileOpened} />
-      </Group>
+      <SidebarHeader
+        title="Perfil"
+        closeSidebar={() => setProfileOpened(false)}
+      />
 
       <AvatarDropzone />
 
