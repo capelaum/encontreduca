@@ -1,6 +1,6 @@
 import { Group } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import hero from '@public/images/hero.png'
+import hero from '@public/images/hero.svg'
 import Image from 'next/image'
 import { LeftSide } from './LeftSide'
 
@@ -10,6 +10,7 @@ export function Hero() {
   return (
     <Group
       my={100}
+      mx={24}
       position={largeScreen ? 'apart' : 'center'}
       align="center"
       spacing={0}
@@ -18,7 +19,7 @@ export function Hero() {
 
       <Image
         src={hero}
-        alt="Home em pé com camisa azul claro e um background de um mockup de celular com um mapa em branco e azul claro na tela"
+        alt="Homem em pé olhando o celular e um mockup de celular com um mapa atrás."
       />
     </Group>
   )

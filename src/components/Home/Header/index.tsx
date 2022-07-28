@@ -39,7 +39,7 @@ export function Header() {
           width: '100%'
         }}
       >
-        <Link href="#top" passHref>
+        <Link href="#hero" passHref>
           <Anchor component="a" variant="text">
             <Group align="center" spacing={12} noWrap>
               <Image
