@@ -17,7 +17,7 @@ export const GlobalStyles = () => {
         },
         html: {
           scrollBehavior: 'smooth',
-          scrollPaddingTop: largeScreen ? 90 : 120
+          scrollPaddingTop: largeScreen ? 90 : 150
         },
         '.Toastify__toast-theme--dark': {
           color: theme.colors.brand[7],

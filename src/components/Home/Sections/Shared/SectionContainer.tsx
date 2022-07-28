@@ -8,7 +8,7 @@ interface SectionContainerProps {
 
 export function SectionContainer({ children, id }: SectionContainerProps) {
   return (
-    <Container size={1248} px={24} py={100} id={id}>
+    <Container size={1248} px={24} my={100} id={id}>
       {children}
     </Container>
   )
