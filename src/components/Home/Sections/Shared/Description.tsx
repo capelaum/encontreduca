@@ -1,10 +1,15 @@
 import { Stack, Text, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { SectionTitle } from '../Shared/SectionTitle'
+import { SectionTitle } from './SectionTitle'
+
+type Paragraph = {
+  id: number
+  text: string
+}
 
 interface DescriptionProps {
   title: string
-  paragraphs: string[]
+  paragraphs: Paragraph[]
   isDark?: boolean
 }
 
@@ -31,7 +36,10 @@ export function Description({ title, paragraphs, isDark }: DescriptionProps) {
         }}
       >
         {paragraphs.map((paragraph) => (
-          <Text dangerouslySetInnerHTML={{ __html: paragraph }} />
+          <Text
+            key={paragraph.id}
+            dangerouslySetInnerHTML={{ __html: paragraph.text }}
+          />
         ))}
       </Stack>
     </Stack>
