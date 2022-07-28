@@ -22,11 +22,26 @@ export function Resources() {
         spacing={largeScreen ? 20 : 88}
         mt={80}
       >
-        <Image src={school} />
-        <Image src={university} />
-        <Image src={course} />
-        <Image src={library} />
-        <Image src={coworking} />
+        <Image
+          src={school}
+          alt="Marcador de mapa amarelo com icone de escola no centro."
+        />
+        <Image
+          src={university}
+          alt="Marcador de mapa roxo com icone de universidae no centro."
+        />
+        <Image
+          src={course}
+          alt="Marcador de mapa azul com icone de curso no centro."
+        />
+        <Image
+          src={library}
+          alt="Marcador de mapa verde com icone de biblioteca no centro."
+        />
+        <Image
+          src={coworking}
+          alt="Marcador de mapa vermelhor com icone de coworking no centro."
+        />
       </Group>
     </SectionContainer>
   )
