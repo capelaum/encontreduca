@@ -93,7 +93,7 @@ export function FAQ() {
   })
 
   return (
-    <Box py={24} sx={{ backgroundColor: theme.white }} id="faq">
+    <Box py={20} sx={{ backgroundColor: theme.white }} id="faq">
       <SectionContainer>
         <SectionTitle title="FAQ" />
 

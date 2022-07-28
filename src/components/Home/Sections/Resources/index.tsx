@@ -14,7 +14,7 @@ export function Resources() {
 
   return (
     <SectionContainer id="hero">
-      <SectionTitle title="Plataforma" isDark />
+      <SectionTitle title="Recursos educacionais" isDark />
 
       <Group
         align="center"

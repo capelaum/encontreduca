@@ -20,14 +20,22 @@ export function Header() {
     <Box
       component="header"
       px={24}
+      py={20}
       sx={{
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: 'rgba(18, 23, 62, 0.7)'
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        zIndex: 1,
+        backgroundColor: 'hsl(233 55% 8% / 0.9)',
+        '@supports (backdrop-filter: blur(0.25rem))': {
+          backgroundColor: 'hsl(233 55% 16% / 0.8)',
+          backdropFilter: 'blur(0.25rem)'
+        }
       }}
     >
       <Container
-        py={24}
         px={0}
         size={1200}
         sx={{
