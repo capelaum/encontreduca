@@ -1,7 +1,8 @@
-import { Box, Container } from '@mantine/core'
+import { Box } from '@mantine/core'
 import { Header } from 'components/Home/Header'
 import { Hero } from 'components/Home/Sections/Hero'
 import { Platform } from 'components/Home/Sections/Platform'
+import { Resources } from 'components/Home/Sections/Resources'
 import Head from 'next/head'
 
 export default function Home() {
@@ -14,10 +15,9 @@ export default function Home() {
       <Header />
 
       <Box component="main">
-        <Container size={1200} px={0} id="hero">
-          <Hero />
-        </Container>
+        <Hero />
         <Platform />
+        <Resources />
       </Box>
 
       <footer />

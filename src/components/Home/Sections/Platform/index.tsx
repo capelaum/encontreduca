@@ -1,6 +1,6 @@
 import { Box, Center, Group, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import platform from '@public/images/platform.svg'
+import platform from '@public/images/Home/platform.svg'
 import Image from 'next/image'
 import { Description } from './Description'
 

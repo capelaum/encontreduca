@@ -1,5 +1,6 @@
-import { Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Stack, Text, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
+import { SectinTitle } from '../Shared/SectionTitle'
 
 export function Description() {
   const largeScreen = useMediaQuery('(min-width: 992px)', false)
@@ -13,18 +14,7 @@ export function Description() {
         width: largeScreen ? '45%' : 'auto'
       }}
     >
-      <Title
-        sx={{
-          color: theme.colors.brand[7],
-          paddingLeft: '12px',
-          paddingBottom: '4px',
-          fontWeight: 500,
-          fontSize: '32px',
-          borderLeft: `7px solid ${theme.colors.cyan[4]}`
-        }}
-      >
-        Platorma
-      </Title>
+      <SectinTitle title="Plataforma" />
       <Stack sx={{ color: theme.colors.brand[7], fontSize: '18px' }}>
         <Text>
           O <strong>mapa interativo</strong> é o foco principal de nossa
