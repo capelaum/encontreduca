@@ -5,7 +5,7 @@ interface SectinTitleProps {
   isDark?: boolean
 }
 
-export function SectinTitle({ title, isDark }: SectinTitleProps) {
+export function SectionTitle({ title, isDark }: SectinTitleProps) {
   const theme = useMantineTheme()
 
   return (
