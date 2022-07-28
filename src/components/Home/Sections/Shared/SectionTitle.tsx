@@ -17,7 +17,7 @@ export function SectionTitle({ title, isDark }: SectinTitleProps) {
         fontWeight: 500,
         fontSize: '32px',
         borderLeft: `7px solid ${
-          isDark ? theme.colors.gray[4] : theme.colors.cyan[4]
+          isDark ? theme.colors.gray[4] : theme.colors.cyan[3]
         }`
       }}
     >
