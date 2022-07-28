@@ -1,87 +1,27 @@
-import {
-  Center,
-  Stack,
-  Text,
-  useMantineColorScheme,
-  useMantineTheme
-} from '@mantine/core'
-import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
+import { Center, CSSObject } from '@mantine/core'
 import { DefaultAvatar } from 'components/Shared/DefaultAvatar'
-import { afterStyles } from 'components/Shared/styles/dropzoneStyles'
-import { showToast } from 'components/Shared/ToastMessage'
+import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
 import { useState } from 'react'
-import { MdCancel, MdClose, MdOutlineFileUpload } from 'react-icons/md'
 
 export function AvatarDropzone() {
-  const theme = useMantineTheme()
-
-  const { colorScheme } = useMantineColorScheme()
-  const dark = colorScheme === 'dark'
-
-  const [isLoading, setIsLoading] = useState(false)
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null)
 
-  const uploadAvatarImage = async (files: File[]) => {
-    setIsLoading(true)
-
-    const preview = URL.createObjectURL(files[0])
-
-    setAvatarSrc(preview)
-    setIsLoading(false)
-  }
+  const containerStyles = (): CSSObject => ({
+    borderRadius: 999,
+    width: 180,
+    height: 180
+  })
 
   return (
-    <Stack my="md" spacing="md" align="center">
-      <Dropzone
-        name="userAvatar"
+    <Center>
+      <DefaultDropzone
+        name="avatar"
         radius={999}
-        padding={0}
-        multiple={false}
-        loading={isLoading}
-        accept={IMAGE_MIME_TYPE}
-        onDrop={(file) => uploadAvatarImage(file)}
-        color="cyan"
-        onReject={() =>
-          showToast({
-            title: 'Oops! Formato não suportado.',
-            description: 'Por favor, tente novamente com uma imagem válida.',
-            icon: <MdCancel size={24} color={theme.colors.brand[7]} />,
-            dark
-          })
-        }
-        sx={afterStyles(theme, dark)}
+        containerStyles={containerStyles}
+        setImage={setAvatarSrc}
       >
-        <Center
-          sx={{
-            borderRadius: 999,
-            minWidth: 180,
-            minHeight: 180
-          }}
-        >
-          <Dropzone.Accept>
-            <Stack align="center" spacing="sm">
-              <MdOutlineFileUpload
-                size={50}
-                color={dark ? theme.colors.cyan[3] : theme.colors.gray[7]}
-              />
-              <Text color={dark ? theme.colors.cyan[3] : theme.colors.gray[7]}>
-                Solte sua imagem aqui
-              </Text>
-            </Stack>
-          </Dropzone.Accept>
-
-          <Dropzone.Reject>
-            <Stack align="center" spacing="sm">
-              <MdClose size={50} color={theme.colors.red[6]} />
-              <Text color={theme.colors.red[6]}>Tipo não suportado</Text>
-            </Stack>
-          </Dropzone.Reject>
-
-          <Dropzone.Idle>
-            <DefaultAvatar avatarSrc={avatarSrc} size={180} />
-          </Dropzone.Idle>
-        </Center>
-      </Dropzone>
-    </Stack>
+        <DefaultAvatar avatarSrc={avatarSrc} size={180} />
+      </DefaultDropzone>
+    </Center>
   )
 }
