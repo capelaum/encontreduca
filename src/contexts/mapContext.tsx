@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
-import { useModalStyles } from 'components/Modal/Shared/modalStyles'
+import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { defaultCenter } from 'config/options'
 import {
   createContext,

@@ -1,19 +1,19 @@
 import { useMantineColorScheme } from '@mantine/core'
 import { useJsApiLoader } from '@react-google-maps/api'
-import Map from 'components/Map/Map'
+import MapDark from 'components/Map/MapDark'
 import MapLight from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
-import { Menu } from 'components/Menu'
-import { Resource } from 'components/Resource'
-import { ResourceForm } from 'components/ResourceForm'
-import { ResourceList } from 'components/ResourceList'
 import { Sidebar } from 'components/Shared/Sidebar'
-import { UpdateProfile } from 'components/UpdateProfile'
+import { Menu } from 'components/Sidebars/Menu'
+import { UpdateProfile } from 'components/Sidebars/Profile'
+import { Resource } from 'components/Sidebars/Resource'
+import { ResourceForm } from 'components/Sidebars/ResourceForm'
+import { ResourceList } from 'components/Sidebars/ResourceList'
 import { useSidebar } from 'contexts/sidebarContext'
 import Head from 'next/head'
 import { libraries } from 'types/googleMaps'
 
-export default function Home() {
+export default function Map() {
   const {
     resourceOpened,
     setResourceOpened,
@@ -47,7 +47,7 @@ export default function Home() {
         <title>Mapa | Encontreduca</title>
       </Head>
 
-      {dark ? <Map /> : <MapLight />}
+      {dark ? <MapDark /> : <MapLight />}
 
       <Sidebar
         opened={resourceOpened}
