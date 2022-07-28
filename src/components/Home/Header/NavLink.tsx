@@ -1,20 +1,30 @@
 import { Anchor, CSSObject, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import Link from 'next/link'
+import { ReactNode } from 'react'
 
 interface NavLinkProps {
-  text: string
+  children: ReactNode
   link: string
+  target?: string
+  isInvertColors?: boolean
 }
 
-export function NavLink({ text, link }: NavLinkProps) {
+export function NavLink({
+  children,
+  link,
+  target,
+  isInvertColors
+}: NavLinkProps) {
   const largeScreen = useMediaQuery('(min-width: 480px)', false)
   const theme = useMantineTheme()
 
   const anchorStyles = (): CSSObject => ({
-    color: theme.white,
+    color: isInvertColors ? theme.colors.cyan[3] : theme.white,
     transition: '0.3s ease-out',
-    '&:hover': { color: theme.colors.cyan[3] }
+    '&:hover': {
+      color: isInvertColors ? theme.colors.cyan[5] : theme.colors.cyan[3]
+    }
   })
 
   return (
@@ -22,10 +32,12 @@ export function NavLink({ text, link }: NavLinkProps) {
       <Anchor
         component="a"
         variant="text"
+        target={target}
         size={largeScreen ? 'md' : 'sm'}
         sx={anchorStyles}
+        rel="noreferrer"
       >
-        {text}
+        {children}
       </Anchor>
     </Link>
   )

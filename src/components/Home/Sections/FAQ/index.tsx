@@ -28,7 +28,7 @@ const faq = [
     id: 4,
     title: 'Ao cadastrar um recurso, ele é adicionado automaticamente ao mapa?',
     content:
-      'Não, pois com o intuito de manter a qualidade das informações dos recursos educacionais presentes na plataforma, o recurso recem adicionado passará por um processo de votação e aprovação do administrador. '
+      'Não, com o intuito de manter a qualidade das informações dos recursos educacionais presentes na plataforma, recursos recem adicionados passarão por um processo de votação e aprovação do administrador.'
   },
   {
     id: 5,
@@ -93,8 +93,8 @@ export function FAQ() {
   })
 
   return (
-    <Box py={24} sx={{ backgroundColor: theme.white }}>
-      <SectionContainer id="#faq">
+    <Box py={24} sx={{ backgroundColor: theme.white }} id="faq">
+      <SectionContainer>
         <SectionTitle title="FAQ" />
 
         <Accordion
@@ -108,7 +108,7 @@ export function FAQ() {
           styles={accordionStyles}
         >
           {faq.map(({ id, title, content }) => (
-            <Accordion.Item value={id.toString()}>
+            <Accordion.Item value={id.toString()} key={id.toString()}>
               <Accordion.Control>{title}</Accordion.Control>
               <Accordion.Panel>{content}</Accordion.Panel>
             </Accordion.Item>

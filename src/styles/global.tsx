@@ -11,6 +11,9 @@ export const GlobalStyles = () => (
         color: theme.colors.cyan[3],
         backgroundColor: theme.colors.brand[7]
       },
+      html: {
+        scrollBehavior: 'smooth'
+      },
       '.Toastify__toast-theme--dark': {
         color: theme.colors.brand[7],
         backgroundColor: theme.colors.cyan[3]

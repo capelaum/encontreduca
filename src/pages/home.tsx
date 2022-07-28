@@ -1,4 +1,5 @@
 import { Box } from '@mantine/core'
+import { Footer } from 'components/Home/Footer'
 import { Header } from 'components/Home/Header'
 import { About } from 'components/Home/Sections/About'
 import { FAQ } from 'components/Home/Sections/FAQ'
@@ -24,7 +25,7 @@ export default function Home() {
         <FAQ />
       </Box>
 
-      <footer />
+      <Footer />
     </>
   )
 }

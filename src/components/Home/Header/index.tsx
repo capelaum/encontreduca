@@ -64,10 +64,10 @@ export function Header() {
             gap: largeScreen ? '48px' : '32px'
           }}
         >
-          <NavLink text="Sobre" link="#about" />
-          <NavLink text="FAQ" link="#faq" />
-          <NavLink text="Mapa" link="/" />
-          <NavLink text="Entrar" link="/login" />
+          <NavLink link="#about">Sobre</NavLink>
+          <NavLink link="#faq">FAQ</NavLink>
+          <NavLink link="/">Mapa</NavLink>
+          <NavLink link="/login">Entrar</NavLink>
         </Box>
       </Container>
     </Box>
