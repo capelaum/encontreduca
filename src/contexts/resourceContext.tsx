@@ -11,6 +11,7 @@ interface ResourceContextData {
   setResource: (resource: ResourceType | null) => void
   activeFilter: CategoryFilter | null
   setActiveFilter: (activeResource: CategoryFilter | null) => void
+  filterResources: (resources: ResourceType[]) => ResourceType[]
 }
 
 const ResourceContext = createContext<ResourceContextData>(
@@ -21,11 +22,32 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resource, setResource] = useState<ResourceType | null>(null)
   const [activeFilter, setActiveFilter] = useState<CategoryFilter | null>(null)
 
+  const filterResources = (resources: ResourceType[]) => {
+    const filteredResources = resources.filter(({ approved, category }) => {
+      if (approved && !activeFilter) {
+        return true
+      }
+
+      if (
+        approved &&
+        activeFilter &&
+        activeFilter.categoryNames.includes(category.name)
+      ) {
+        return true
+      }
+
+      return false
+    })
+
+    return filteredResources
+  }
+
   const ResourceContextProviderValues = {
     resource,
     setResource,
     activeFilter,
-    setActiveFilter
+    setActiveFilter,
+    filterResources
   }
 
   const ResourceContextProviderValue = useMemo<ResourceContextData>(

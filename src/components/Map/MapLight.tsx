@@ -2,6 +2,7 @@ import { Box } from '@mantine/core'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { mapContainerStyle, mapOptionsLight } from 'config/options'
 import { useMap } from 'contexts/mapContext'
+import { useResource } from 'contexts/resourceContext'
 import { CategoryType } from 'types/categories'
 import { ResourceType } from 'types/resources'
 import { ResourceMarker } from './ResourceMarker'
@@ -24,7 +25,8 @@ export function MapLight({ resources, categories }: MapLightProps) {
     handleMapClick
   } = useMap()
 
-  const approvedResources = resources.filter(({ approved }) => approved)
+  const { filterResources } = useResource()
+  const approvedResources = filterResources(resources)
 
   function renderResourcesMarkers() {
     return approvedResources.map((resource) => (
