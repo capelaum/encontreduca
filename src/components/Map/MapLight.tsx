@@ -2,14 +2,16 @@ import { Box } from '@mantine/core'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { mapContainerStyle, mapOptionsLight } from 'config/options'
 import { useMap } from 'contexts/mapContext'
-import data from 'data/resources.json'
+import { ResourceType } from 'types/resources'
 import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
 import { SideButtons } from './SideButtons'
 
-export default function Map(): JSX.Element {
-  const { resources } = data
+interface MapLightProps {
+  resources: ResourceType[]
+}
 
+export function MapLight({ resources }: MapLightProps) {
   const {
     center,
     zoom,

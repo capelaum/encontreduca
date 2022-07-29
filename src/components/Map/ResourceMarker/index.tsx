@@ -18,7 +18,7 @@ export function ResourceMarker({
   const { zoom } = useMap()
   const { setResourceOpened, setResource, setMenuOpened } = useSidebar()
 
-  const { name, category, position } = resource
+  const { name, category, position, approved } = resource
 
   const markerLabel = (): MarkerLabel | null => {
     if (zoom > 15) {
@@ -49,7 +49,9 @@ export function ResourceMarker({
       onClick={handleMarkerClick}
       position={position}
       icon={{
-        url: categorySwitch[category.name]?.markerIcon,
+        url: approved
+          ? categorySwitch[category.name].markerIcon
+          : '/markers/marker_unapproved.svg',
         scaledSize: new window.google.maps.Size(35, 35)
       }}
       title={name}

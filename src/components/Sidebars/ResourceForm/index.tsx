@@ -36,7 +36,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const [categoryId, setCategoryId] = useInputState<string>('')
+  const [category_id, setCategoryId] = useInputState<string>('')
   const [resourceName, setResourceName] = useInputState<string>('')
   const [resourceAddress, setResourceAddress] = useInputState<string>('')
   const [resourcePhone, setResourcePhone] = useInputState<string>('')
@@ -44,7 +44,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
 
   useEffect(() => {
     if (resource) {
-      setCategoryId(resource.categoryId.toString())
+      setCategoryId(resource.category_id.toString())
       setResourceName(resource.name)
       setResourceAddress(resource.address)
       setResourcePhone(resource.phone)
@@ -85,7 +85,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         required
         size="sm"
         placeholder="Selecione uma categoria"
-        value={categoryId ?? ''}
+        value={category_id ?? ''}
         variant="filled"
         onChange={setCategoryId}
         sx={inputStyles(theme, dark)}

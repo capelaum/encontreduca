@@ -1,7 +1,7 @@
 import { useMantineColorScheme } from '@mantine/core'
 import { useJsApiLoader } from '@react-google-maps/api'
 import MapDark from 'components/Map/MapDark'
-import MapLight from 'components/Map/MapLight'
+import { MapLight } from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
 import { Sidebar } from 'components/Shared/Sidebar'
 import { Menu } from 'components/Sidebars/Menu'
@@ -11,7 +11,6 @@ import { ResourceForm } from 'components/Sidebars/ResourceForm'
 import { ResourceList } from 'components/Sidebars/ResourceList'
 import { useSidebar } from 'contexts/sidebarContext'
 import { loadResources } from 'lib/loadResources'
-
 import Head from 'next/head'
 import { libraries } from 'types/googleMaps'
 import { ResourceType } from 'types/resources'
@@ -21,8 +20,6 @@ interface MapProps {
 }
 
 export default function Map({ resources }: MapProps) {
-  console.log('🚀 ~ resources', resources)
-
   const {
     resourceOpened,
     setResourceOpened,
@@ -56,7 +53,11 @@ export default function Map({ resources }: MapProps) {
         <title>Mapa | Encontreduca</title>
       </Head>
 
-      {dark ? <MapDark resources={resources} /> : <MapLight />}
+      {dark ? (
+        <MapDark resources={resources} />
+      ) : (
+        <MapLight resources={resources} />
+      )}
 
       <Sidebar
         opened={resourceOpened}
@@ -75,7 +76,7 @@ export default function Map({ resources }: MapProps) {
         setOpened={setSavedResourcesOpened}
         zIndex={3}
       >
-        <ResourceList />
+        <ResourceList resources={resources} />
       </Sidebar>
 
       <Sidebar
@@ -83,7 +84,7 @@ export default function Map({ resources }: MapProps) {
         setOpened={setVotingPanelOpened}
         zIndex={3}
       >
-        <ResourceList isVotingPainel />
+        <ResourceList isVotingPainel resources={resources} />
       </Sidebar>
 
       <Sidebar

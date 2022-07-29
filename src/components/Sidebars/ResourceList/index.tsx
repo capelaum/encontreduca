@@ -10,17 +10,17 @@ import {
 } from '@mantine/core'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { useSidebar } from 'contexts/sidebarContext'
-import data from 'data/resources.json'
 import { MdSearch } from 'react-icons/md'
+import { ResourceType } from 'types/resources'
 import { ResourceItem } from './ResourceItem'
 
 interface ResourceListProps {
   isVotingPainel?: boolean
+  resources: ResourceType[]
 }
 
-export function ResourceList({ isVotingPainel }: ResourceListProps) {
+export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
   const { setSavedResourcesOpened, setVotingPanelOpened } = useSidebar()
-  const { resources } = data
 
   const notApprovedResources = resources.filter(({ approved }) => !approved)
 

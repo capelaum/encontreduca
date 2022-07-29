@@ -3,7 +3,7 @@ import { LatLngLiteral } from './googleMaps'
 export type ResourceType = {
   id: string | number
   name: string
-  categoryId: string | number
+  category_id: string | number
   category: CategoryType
   latitude: string
   longitude: string
