@@ -8,13 +8,15 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { MdInfoOutline } from 'react-icons/md'
+import { User } from 'types/users'
 import { DefaultAvatar } from './DefaultAvatar'
 
 interface ProfileProps {
   isModal?: boolean
+  user: User
 }
 
-export function Profile({ isModal }: ProfileProps) {
+export function Profile({ isModal, user }: ProfileProps) {
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -70,7 +72,7 @@ export function Profile({ isModal }: ProfileProps) {
             color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
           }}
         >
-          Nome Completo
+          {user.name}
         </Text>
 
         {isModal ? (

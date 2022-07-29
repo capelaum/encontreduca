@@ -2,13 +2,21 @@ import { Box, Stack } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
+import { useEffect, useState } from 'react'
+import { Review } from 'types/reviews'
 import { ActionButtons } from './ActionButtons'
 import { Cover } from './Cover'
 import { Header } from './Header'
 import { Info } from './Info'
 import { Reviews } from './Reviews'
 
-export function Resource() {
+interface ResourceProps {
+  reviews: Review[]
+}
+
+export function Resource({ reviews }: ResourceProps) {
+  const [resourceReviews, setResourceReviews] = useState([] as Review[])
+
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
 
   const { setResourceOpened } = useSidebar()
@@ -19,6 +27,16 @@ export function Resource() {
     return null
   }
 
+  useEffect(() => {
+    if (resource) {
+      const getResourceReviews = reviews.filter(
+        ({ resource_id }) => resource.id === resource_id
+      )
+
+      setResourceReviews(getResourceReviews)
+    }
+  }, [resource])
+
   return (
     <Box>
       <Stack
@@ -28,14 +46,14 @@ export function Resource() {
       >
         <Header />
 
-        <Cover />
+        <Cover reviews={resourceReviews} />
 
         <ActionButtons />
       </Stack>
 
       <Info />
 
-      <Reviews />
+      {resourceReviews.length > 0 && <Reviews reviews={resourceReviews} />}
     </Box>
   )
 }

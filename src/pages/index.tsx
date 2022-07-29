@@ -12,17 +12,20 @@ import { ResourceList } from 'components/Sidebars/ResourceList'
 import { useSidebar } from 'contexts/sidebarContext'
 import { loadCategories } from 'lib/loadCategories'
 import { loadResources } from 'lib/loadResources'
+import { loadReviews } from 'lib/loadReviews'
 import Head from 'next/head'
 import { CategoryType } from 'types/categories'
 import { libraries } from 'types/googleMaps'
 import { ResourceType } from 'types/resources'
+import { Review } from 'types/reviews'
 
 interface MapProps {
   resources: ResourceType[]
   categories: CategoryType[]
+  reviews: Review[]
 }
 
-export default function Map({ resources, categories }: MapProps) {
+export default function Map({ resources, categories, reviews }: MapProps) {
   const {
     resourceOpened,
     setResourceOpened,
@@ -67,7 +70,7 @@ export default function Map({ resources, categories }: MapProps) {
         setOpened={setResourceOpened}
         zIndex={savedResourcesOpened || votingPanelOpened ? 4 : 1}
       >
-        <Resource />
+        <Resource reviews={reviews} />
       </Sidebar>
 
       <Sidebar opened={menuOpened} setOpened={setMenuOpened} zIndex={2}>
@@ -116,6 +119,7 @@ export default function Map({ resources, categories }: MapProps) {
 export const getStaticProps = async () => {
   const resources: ResourceType[] = await loadResources()
   const categories: CategoryType[] = await loadCategories()
+  const reviews: Review[] = await loadReviews()
 
   if (!resources) {
     return {
@@ -126,7 +130,8 @@ export const getStaticProps = async () => {
   return {
     props: {
       resources,
-      categories
+      categories,
+      reviews
     },
     revalidate: 10
   }

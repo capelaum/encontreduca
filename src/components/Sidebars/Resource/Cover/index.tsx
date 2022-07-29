@@ -1,9 +1,14 @@
 import { AspectRatio, Image, Stack } from '@mantine/core'
 import { useResource } from 'contexts/resourceContext'
+import { Review } from 'types/reviews'
 import { Author } from './Author'
 import { ReviewStats } from './ReviewStats'
 
-export function Cover() {
+interface CoverProps {
+  reviews: Review[]
+}
+
+export function Cover({ reviews }: CoverProps) {
   const { resource } = useResource()
 
   return (
@@ -21,7 +26,7 @@ export function Cover() {
         />
       </AspectRatio>
 
-      <ReviewStats />
+      <ReviewStats reviews={reviews} />
       <Author />
     </Stack>
   )

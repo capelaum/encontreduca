@@ -6,9 +6,14 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { Review } from 'types/reviews'
 import { UserReview } from './UserReview'
 
-export function Reviews() {
+interface ReviewsProps {
+  reviews: Review[]
+}
+
+export function Reviews({ reviews }: ReviewsProps) {
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -27,7 +32,7 @@ export function Reviews() {
         Sua avaliação
       </Title>
 
-      <UserReview isOwnReview />
+      <UserReview review={reviews[0]} isOwnReview />
 
       <Title
         order={2}
@@ -40,29 +45,31 @@ export function Reviews() {
         Avaliações
       </Title>
 
-      <Stack spacing={24}>
-        <UserReview />
-        <UserReview />
-        <UserReview />
+      <Stack spacing={24} mb={32}>
+        {reviews.slice(0, 3).map((review) => (
+          <UserReview key={review.id} review={review} />
+        ))}
       </Stack>
 
-      <Center my={32}>
-        <Button
-          variant="subtle"
-          compact
-          size="sm"
-          sx={{
-            color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
-            '&:hover': {
-              backgroundColor: dark
-                ? theme.colors.brand[8]
-                : theme.colors.gray[1]
-            }
-          }}
-        >
-          Mais avalições (17)
-        </Button>
-      </Center>
+      {reviews.length > 3 && (
+        <Center mb={32}>
+          <Button
+            variant="subtle"
+            compact
+            size="sm"
+            sx={{
+              color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
+              '&:hover': {
+                backgroundColor: dark
+                  ? theme.colors.brand[8]
+                  : theme.colors.gray[1]
+              }
+            }}
+          >
+            Mais avalições ({reviews.length - 3})
+          </Button>
+        </Center>
+      )}
     </>
   )
 }

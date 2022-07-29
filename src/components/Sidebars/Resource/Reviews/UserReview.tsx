@@ -9,13 +9,17 @@ import {
 } from '@mantine/core'
 import { Profile } from 'components/Shared/Profile'
 import { Stars } from 'components/Shared/Stars'
+import { Review } from 'types/reviews'
 import { Actions } from './Actions'
 
 interface UserReviewProps {
   isOwnReview?: boolean
+  review: Review
 }
 
-export function UserReview({ isOwnReview }: UserReviewProps) {
+export function UserReview({ isOwnReview, review }: UserReviewProps) {
+  const { created_at, comment, user } = review
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -31,7 +35,7 @@ export function UserReview({ isOwnReview }: UserReviewProps) {
     <>
       <Stack px="md" spacing={12}>
         <Group position="apart">
-          <Profile />
+          <Profile user={user} />
 
           <Actions isOwnReview={isOwnReview} />
         </Group>
@@ -40,18 +44,11 @@ export function UserReview({ isOwnReview }: UserReviewProps) {
           <Stars />
 
           <Text size="xs" ml="xs" sx={textStyles}>
-            10/06/22
+            {created_at}
           </Text>
         </Group>
 
-        <Text sx={textStyles}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis
-          rutrum fames quam tempus vitae sed malesuada. Vulputate purus accumsan
-          neque in vitae. Orci venenatis turpis rutrum vitae diam sed. At
-          placerat elit mattis nam nunc. Nibh donec sagittis, sed enim felis
-          mollis vitae aliquet varius. Blandit donec vestibulum, fermentum et
-          pretium.
-        </Text>
+        <Text sx={textStyles}>{comment}</Text>
       </Stack>
 
       {isOwnReview && (
