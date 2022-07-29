@@ -6,7 +6,7 @@ import {
 } from '@mantine/core'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { Review } from 'types/reviews'
-import { ReviewComplain } from './ModalActions/ReviewComplain'
+import { ReviewComplaint } from './ModalActions/ReviewComplaint'
 import { ReviewDelete } from './ModalActions/ReviewDelete'
 import { ReviewEdit } from './ModalActions/ReviewEdit'
 
@@ -26,12 +26,12 @@ export function Actions({ isOwnReview, review }: ActionsProps) {
       return (
         <>
           <ReviewEdit review={review} />
-          <ReviewDelete />
+          <ReviewDelete reviewId={review.id} />
         </>
       )
     }
 
-    return <ReviewComplain />
+    return <ReviewComplaint reviewId={review.id} />
   }
 
   return (

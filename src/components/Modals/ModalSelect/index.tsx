@@ -22,8 +22,9 @@ export function ModalSelect({
   data: string[]
   resourceName: string
   isReviewComplaint?: boolean
+  reviewId: string | number
 }>) {
-  const { data, resourceName, isReviewComplaint } = innerProps
+  const { data, resourceName, isReviewComplaint, reviewId } = innerProps
   const { closeModal } = context
 
   const theme = useMantineTheme()
@@ -69,6 +70,8 @@ export function ModalSelect({
       <ConfirmButtons
         onCancel={() => closeModal(id)}
         onConfirm={() => {
+          console.log(`Denunciar review com id ${reviewId}`)
+
           closeModal(id)
           showToast({
             title: isReviewComplaint

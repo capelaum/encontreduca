@@ -7,7 +7,11 @@ import { BsTrashFill } from 'react-icons/bs'
 import { MdCancel } from 'react-icons/md'
 import { ActionItem } from '../ActionItem'
 
-export function ReviewDelete() {
+interface ReviewDeleteProps {
+  reviewId: string | number
+}
+
+export function ReviewDelete({ reviewId }: ReviewDeleteProps) {
   const { openConfirmModal, closeModal } = useModals()
 
   const theme = useMantineTheme()
@@ -23,13 +27,16 @@ export function ReviewDelete() {
         openModalConfirm({
           title: 'Quer excluir esta avaliação?',
           description: 'Não é possível recuperar Avaliações excluídas.',
-          onConfirm: () =>
+          onConfirm: () => {
+            console.log(`Excluir Review com id ${reviewId}`)
+
             showToast({
               title: 'Avaliação excluída!',
               description: 'Pode avaliar novamente quando quiser.',
               icon: <MdCancel size={24} color={theme.colors.brand[7]} />,
               dark
-            }),
+            })
+          },
           openConfirmModal,
           closeModal,
           classes,

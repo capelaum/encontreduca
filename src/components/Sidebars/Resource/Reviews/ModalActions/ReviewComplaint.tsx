@@ -10,7 +10,11 @@ import { MdWarning } from 'react-icons/md'
 import { getModalSelectDataMotives } from 'utils/modalSelecDataFormatter'
 import { ActionItem } from '../ActionItem'
 
-export function ReviewComplain() {
+interface ReviewComplaintProps {
+  reviewId: string | number
+}
+
+export function ReviewComplaint({ reviewId }: ReviewComplaintProps) {
   const reviewMotives = getModalSelectDataMotives(data.motives, 'review')
   const { openContextModal } = useModals()
 
@@ -26,7 +30,7 @@ export function ReviewComplain() {
       title: <Title name="Denunciar avaliação" isModal />,
       classNames: classes,
       ...modalStyles,
-      innerProps: { data: reviewMotives, isReviewComplaint: true }
+      innerProps: { data: reviewMotives, isReviewComplaint: true, reviewId }
     })
   }
 
