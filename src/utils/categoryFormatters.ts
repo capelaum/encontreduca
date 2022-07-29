@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Category } from 'types/selectData'
+import { CategoryType } from 'types/resources'
 import { categorySwitch } from './categorySwitch'
 
 export type CategoryFilter = {
@@ -10,7 +10,7 @@ export type CategoryFilter = {
   iconBlueDark: ReactNode
 }
 
-export const getCategoryFilters = (categories: Category[]) => {
+export const getCategoryFilters = (categories: CategoryType[]) => {
   const categoryFilters = categories.reduce((acc, category) => {
     const foundValue = acc.find(
       (item) => item.filter === categorySwitch[category.name].filter

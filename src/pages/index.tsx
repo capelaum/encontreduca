@@ -10,16 +10,18 @@ import { Resource } from 'components/Sidebars/Resource'
 import { ResourceForm } from 'components/Sidebars/ResourceForm'
 import { ResourceList } from 'components/Sidebars/ResourceList'
 import { useSidebar } from 'contexts/sidebarContext'
+import { loadCategories } from 'lib/loadCategories'
 import { loadResources } from 'lib/loadResources'
 import Head from 'next/head'
 import { libraries } from 'types/googleMaps'
-import { ResourceType } from 'types/resources'
+import { CategoryType, ResourceType } from 'types/resources'
 
 interface MapProps {
   resources: ResourceType[]
+  categories: CategoryType[]
 }
 
-export default function Map({ resources }: MapProps) {
+export default function Map({ resources, categories }: MapProps) {
   const {
     resourceOpened,
     setResourceOpened,
@@ -54,9 +56,9 @@ export default function Map({ resources }: MapProps) {
       </Head>
 
       {dark ? (
-        <MapDark resources={resources} />
+        <MapDark resources={resources} categories={categories} />
       ) : (
-        <MapLight resources={resources} />
+        <MapLight resources={resources} categories={categories} />
       )}
 
       <Sidebar
@@ -112,6 +114,7 @@ export default function Map({ resources }: MapProps) {
 
 export const getStaticProps = async () => {
   const resources: ResourceType[] = await loadResources()
+  const categories: CategoryType[] = await loadCategories()
 
   if (!resources) {
     return {
@@ -121,7 +124,8 @@ export const getStaticProps = async () => {
 
   return {
     props: {
-      resources
+      resources,
+      categories
     },
     revalidate: 10
   }

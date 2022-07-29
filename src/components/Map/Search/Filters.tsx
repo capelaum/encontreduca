@@ -7,12 +7,15 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import data from 'data/categories.json'
 import { useState } from 'react'
+import { CategoryType } from 'types/resources'
 import { CategoryFilter, getCategoryFilters } from 'utils/categoryFormatters'
 
-export function Filters() {
-  const { categories } = data
+interface FiltersProps {
+  categories: CategoryType[]
+}
+
+export function Filters({ categories }: FiltersProps) {
   const categoryFilters = getCategoryFilters(categories)
 
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
@@ -49,7 +52,7 @@ export function Filters() {
       return {
         color: theme.colors.cyan[3],
         backgroundColor: theme.colors.brand[7],
-        '&:hover': { backgroundColor: theme.colors.brand[7] }
+        '&:hover': { backgroundColor: theme.colors.brand[8] }
       }
     }
 
@@ -103,12 +106,11 @@ export function Filters() {
           sx={{
             ...setFilterColors(activeFilter === category.filter),
             '&:focus': { outline: 'white', border: 'white' },
-            boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)'
+            boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)',
+            fontWeight: 400
           }}
         >
-          <Text size="sm" sx={{ lineHeight: 1 }}>
-            {category.filter}
-          </Text>
+          <Text size="sm">{category.filter}</Text>
         </Button>
       ))}
     </Group>
