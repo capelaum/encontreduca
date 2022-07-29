@@ -1,14 +1,13 @@
 import {
   Divider,
-  Group,
   Stack,
-  Text,
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
 import { useResource } from 'contexts/resourceContext'
 import { MdLocalPhone, MdPlace } from 'react-icons/md'
 import { TbWorld } from 'react-icons/tb'
+import { InfoItem } from './InfoItem'
 
 export function Info() {
   const theme = useMantineTheme()
@@ -28,35 +27,39 @@ export function Info() {
         sx={{ color: dark ? theme.colors.gray[6] : theme.colors.gray[4] }}
       />
       <Stack px="md" spacing="md">
-        <Group spacing={16} align="center" noWrap>
-          <MdPlace
-            size={24}
-            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-          />
-          <Text size="sm" sx={{ maxWidth: '320px', fontWeight: 600 }}>
-            {address}
-          </Text>
-        </Group>
+        <InfoItem
+          icon={
+            <MdPlace
+              size={24}
+              color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+            />
+          }
+          text={address}
+        />
 
-        <Group spacing={16} align="center">
-          <TbWorld
-            size={24}
-            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+        {website && (
+          <InfoItem
+            icon={
+              <TbWorld
+                size={24}
+                color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+              />
+            }
+            text={website}
           />
-          <Text size="sm" sx={{ maxWidth: '320px', fontWeight: 600 }}>
-            {website}
-          </Text>
-        </Group>
+        )}
 
-        <Group spacing={16} align="center">
-          <MdLocalPhone
-            size={24}
-            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+        {phone && (
+          <InfoItem
+            icon={
+              <MdLocalPhone
+                size={24}
+                color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+              />
+            }
+            text={phone}
           />
-          <Text size="sm" sx={{ maxWidth: '320px', fontWeight: 600 }}>
-            {phone}
-          </Text>
-        </Group>
+        )}
       </Stack>
 
       <Divider

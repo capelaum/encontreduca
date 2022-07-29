@@ -26,10 +26,10 @@ export default function MapDark({ resources, categories }: MapDarkProps) {
   } = useMap()
 
   const { filterResources } = useResource()
-  const approvedResources = filterResources(resources)
+  const filteredResources = filterResources(resources)
 
   function renderResourcesMarkers() {
-    return approvedResources.map((resource) => (
+    return filteredResources.map((resource) => (
       <ResourceMarker
         key={`resourceMarker-${resource.id}`}
         resource={resource}
