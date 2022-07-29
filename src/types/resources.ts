@@ -1,5 +1,6 @@
 import { CategoryType } from './categories'
 import { LatLngLiteral } from './googleMaps'
+import { User } from './users'
 
 export type ResourceType = {
   id: string | number
@@ -16,4 +17,5 @@ export type ResourceType = {
   approved: boolean
   created_at: string
   updated_at: string
+  user: User
 }
