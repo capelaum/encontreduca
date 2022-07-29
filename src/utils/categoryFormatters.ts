@@ -3,13 +3,18 @@ import { categorySwitch } from './categorySwitch'
 
 export const getCategoryFilters = (categories: CategoryType[]) => {
   const categoryFilters = categories.reduce((acc, category) => {
-    const foundValue = acc.find(
-      (item) => item.filter === categorySwitch[category.name].filter
+    const foundFilter = acc.find(
+      (item) => item.name === categorySwitch[category.name].filter
     )
 
-    if (!foundValue) {
+    if (foundFilter) {
+      foundFilter.categoryNames.push(category.name)
+    }
+
+    if (!foundFilter) {
       acc.push({
-        filter: categorySwitch[category.name].filter,
+        categoryNames: [category.name],
+        name: categorySwitch[category.name].filter,
         iconCyan: categorySwitch[category.name].iconCyan,
         iconWhite: categorySwitch[category.name].iconWhite,
         iconBlue: categorySwitch[category.name].iconBlue,

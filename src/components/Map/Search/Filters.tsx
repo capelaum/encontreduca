@@ -95,21 +95,30 @@ export function Filters({ categories }: FiltersProps) {
       sx={filterGroupStyles}
       spacing="xs"
     >
-      {categoryFilters.map((category) => (
+      {categoryFilters.map((categoryFilter) => (
         <Button
-          key={category.filter}
+          key={categoryFilter.name}
           size="xs"
           radius={theme.radius.xl}
-          onClick={() => setActiveFilter(category.filter)}
-          leftIcon={setFilterIcon(category, activeFilter === category.filter)}
+          onClick={() =>
+            setActiveFilter(
+              activeFilter && activeFilter.name === categoryFilter.name
+                ? null
+                : categoryFilter
+            )
+          }
+          leftIcon={setFilterIcon(
+            categoryFilter,
+            activeFilter?.name === categoryFilter.name
+          )}
           sx={{
-            ...setFilterColors(activeFilter === category.filter),
+            ...setFilterColors(activeFilter?.name === categoryFilter.name),
             '&:focus': { outline: 'white', border: 'white' },
             boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)',
             fontWeight: 400
           }}
         >
-          <Text size="sm">{category.filter}</Text>
+          <Text size="sm">{categoryFilter.name}</Text>
         </Button>
       ))}
     </Group>
