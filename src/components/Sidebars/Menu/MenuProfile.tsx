@@ -7,6 +7,7 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { DefaultAvatar } from 'components/Shared/DefaultAvatar'
+import { defaultUser } from 'utils/defaultUser'
 
 interface MenuProfileProps {
   setProfileOpened: (opened: boolean) => void
@@ -26,7 +27,7 @@ export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
       }}
     >
       <Group spacing={12} noWrap>
-        <DefaultAvatar size={50} />
+        <DefaultAvatar size={50} avatarSrc={defaultUser.avatar_url} />
 
         <Stack spacing={2}>
           <Text

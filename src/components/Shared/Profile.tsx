@@ -62,7 +62,7 @@ export function Profile({ isModal, user }: ProfileProps) {
 
   return (
     <Group spacing="sm" align="center">
-      <DefaultAvatar size={35} />
+      <DefaultAvatar size={35} avatarSrc={user.avatar_url} />
 
       <Stack spacing={0}>
         <Text
