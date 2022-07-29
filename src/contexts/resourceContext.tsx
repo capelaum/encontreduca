@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react'
 import { CategoryFilter } from 'types/categories'
 import { ResourceType } from 'types/resources'
+import { Review } from 'types/reviews'
 
 interface ResourceProviderProps {
   children: ReactNode
@@ -12,6 +13,7 @@ interface ResourceContextData {
   activeFilter: CategoryFilter | null
   setActiveFilter: (activeResource: CategoryFilter | null) => void
   filterResources: (resources: ResourceType[]) => ResourceType[]
+  getAverageRating: (reviews: Review[]) => number
 }
 
 const ResourceContext = createContext<ResourceContextData>(
@@ -42,11 +44,21 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     return filteredResources
   }
 
+  const getAverageRating = (reviews: Review[]) => {
+    if (reviews.length === 0) return 0
+
+    const average =
+      reviews.reduce((acc, { rating }) => acc + rating, 0) / reviews.length
+
+    return average
+  }
+
   const ResourceContextProviderValues = {
     resource,
     setResource,
     activeFilter,
     setActiveFilter,
+    getAverageRating,
     filterResources
   }
 

@@ -18,7 +18,7 @@ interface UserReviewProps {
 }
 
 export function UserReview({ isOwnReview, review }: UserReviewProps) {
-  const { created_at, comment, user } = review
+  const { created_at, comment, user, rating } = review
 
   const theme = useMantineTheme()
 
@@ -41,14 +41,16 @@ export function UserReview({ isOwnReview, review }: UserReviewProps) {
         </Group>
 
         <Group spacing={2} align="center">
-          <Stars />
+          <Stars rating={rating} />
 
           <Text size="xs" ml="xs" sx={textStyles}>
             {created_at}
           </Text>
         </Group>
 
-        <Text sx={textStyles}>{comment}</Text>
+        <Text size="md" sx={textStyles}>
+          {comment}
+        </Text>
       </Stack>
 
       {isOwnReview && (

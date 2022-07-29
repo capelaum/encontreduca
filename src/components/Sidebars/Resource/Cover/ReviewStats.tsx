@@ -1,5 +1,6 @@
 import { Group, Text, useMantineColorScheme } from '@mantine/core'
 import { Stars } from 'components/Shared/Stars'
+import { useResource } from 'contexts/resourceContext'
 import { Review } from 'types/reviews'
 
 interface ReviewStatsProps {
@@ -7,8 +8,8 @@ interface ReviewStatsProps {
 }
 
 export function ReviewStats({ reviews }: ReviewStatsProps) {
-  const average =
-    reviews.reduce((acc, { rating }) => acc + rating, 0) / reviews.length
+  const { getAverageRating } = useResource()
+  const averageRating = getAverageRating(reviews)
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
@@ -20,12 +21,10 @@ export function ReviewStats({ reviews }: ReviewStatsProps) {
   return (
     <Group align="center" spacing="sm">
       <Text size="sm" mt="xs">
-        {average.toFixed(1)}
+        {averageRating.toFixed(1)}
       </Text>
 
-      <Group spacing={2}>
-        <Stars />
-      </Group>
+      <Stars rating={averageRating} />
 
       <Text
         size="sm"

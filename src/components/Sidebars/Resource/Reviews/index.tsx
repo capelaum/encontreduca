@@ -2,11 +2,13 @@ import {
   Button,
   Center,
   Stack,
-  Title,
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { useResource } from 'contexts/resourceContext'
+import { useEffect, useState } from 'react'
 import { Review } from 'types/reviews'
+import { SectionTitle } from './SectionTitle'
 import { UserReview } from './UserReview'
 
 interface ReviewsProps {
@@ -15,48 +17,38 @@ interface ReviewsProps {
 
 export function Reviews({ reviews }: ReviewsProps) {
   const theme = useMantineTheme()
+  const { resource } = useResource()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
+  const [end, setEnd] = useState(3)
+
+  useEffect(() => {
+    setEnd(3)
+  }, [resource])
+
   return (
     <>
-      <Title
-        order={2}
-        px="md"
-        mb={24}
-        sx={{
-          fontSize: theme.fontSizes.lg
-        }}
-      >
-        Sua avaliação
-      </Title>
+      <SectionTitle title="Sua avaliação" />
 
       <UserReview review={reviews[0]} isOwnReview />
 
-      <Title
-        order={2}
-        px="md"
-        mb={24}
-        sx={{
-          fontSize: theme.fontSizes.lg
-        }}
-      >
-        Avaliações
-      </Title>
+      <SectionTitle title="Avaliações" />
 
-      <Stack spacing={24} mb={32}>
-        {reviews.slice(0, 3).map((review) => (
+      <Stack spacing={48} mb={32}>
+        {reviews.slice(0, end).map((review) => (
           <UserReview key={review.id} review={review} />
         ))}
       </Stack>
 
-      {reviews.length > 3 && (
+      {reviews.length - end > 0 && (
         <Center mb={32}>
           <Button
             variant="subtle"
             compact
             size="sm"
+            onClick={() => setEnd(() => end + 3)}
             sx={{
               color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
               '&:hover': {

@@ -15,7 +15,9 @@ interface ResourceProps {
 }
 
 export function Resource({ reviews }: ResourceProps) {
-  const [resourceReviews, setResourceReviews] = useState([] as Review[])
+  const [resourceReviews, setResourceReviews] = useState<Review[]>(
+    [] as Review[]
+  )
 
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
 

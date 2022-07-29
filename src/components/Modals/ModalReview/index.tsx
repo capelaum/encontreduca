@@ -43,7 +43,7 @@ export function ModalReview({
       <Profile isModal />
 
       <Group spacing={2} align="center">
-        {[...Array(5)].map((star, index) => {
+        {[...Array(5)].map((_, index) => {
           const starIndex = index + 1
 
           return (
