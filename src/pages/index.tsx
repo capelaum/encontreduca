@@ -10,10 +10,19 @@ import { Resource } from 'components/Sidebars/Resource'
 import { ResourceForm } from 'components/Sidebars/ResourceForm'
 import { ResourceList } from 'components/Sidebars/ResourceList'
 import { useSidebar } from 'contexts/sidebarContext'
+import { loadResources } from 'lib/loadResources'
+
 import Head from 'next/head'
 import { libraries } from 'types/googleMaps'
+import { ResourceType } from 'types/resources'
 
-export default function Map() {
+interface MapProps {
+  resources: ResourceType[]
+}
+
+export default function Map({ resources }: MapProps) {
+  console.log('🚀 ~ resources', resources)
+
   const {
     resourceOpened,
     setResourceOpened,
@@ -47,7 +56,7 @@ export default function Map() {
         <title>Mapa | Encontreduca</title>
       </Head>
 
-      {dark ? <MapDark /> : <MapLight />}
+      {dark ? <MapDark resources={resources} /> : <MapLight />}
 
       <Sidebar
         opened={resourceOpened}
@@ -98,4 +107,21 @@ export default function Map() {
       </Sidebar>
     </>
   )
+}
+
+export const getStaticProps = async () => {
+  const resources: ResourceType[] = await loadResources()
+
+  if (!resources) {
+    return {
+      notFound: true
+    }
+  }
+
+  return {
+    props: {
+      resources
+    },
+    revalidate: 10
+  }
 }

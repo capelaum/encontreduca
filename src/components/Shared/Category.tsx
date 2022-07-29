@@ -4,10 +4,11 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { CategoryType } from 'types/resources'
 import { categorySwitch } from 'utils/categorySwitch'
 
 interface CategoryProps {
-  category: string
+  category: CategoryType
   isSmall?: boolean
 }
 
@@ -17,7 +18,7 @@ export function Category({ category, isSmall }: CategoryProps) {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { iconCyan, iconBlueDark } = categorySwitch[category]
+  const { iconCyan, iconBlueDark } = categorySwitch[category.name]
 
   return (
     <Group align="center" spacing="sm">
@@ -27,7 +28,7 @@ export function Category({ category, isSmall }: CategoryProps) {
         color={dark ? theme.colors.gray[3] : theme.colors.gray[7]}
         size={isSmall ? 'sm' : 'md'}
       >
-        {category}
+        {category.name}
       </Text>
     </Group>
   )

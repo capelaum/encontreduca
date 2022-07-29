@@ -8,8 +8,3 @@ export type Motive = {
   name: string
   type: string
 }
-
-export type Category = {
-  id: number
-  name: string
-}

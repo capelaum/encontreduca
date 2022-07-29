@@ -2,14 +2,16 @@ import { Box } from '@mantine/core'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import { mapContainerStyle, mapOptions } from 'config/options'
 import { useMap } from 'contexts/mapContext'
-import data from 'data/resources.json'
+import { ResourceType } from 'types/resources'
 import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
 import { SideButtons } from './SideButtons'
 
-export default function MapDark(): JSX.Element {
-  const { resources } = data
+interface MapDarkProps {
+  resources: ResourceType[]
+}
 
+export default function MapDark({ resources }: MapDarkProps) {
   const {
     center,
     zoom,

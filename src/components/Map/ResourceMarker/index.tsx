@@ -49,7 +49,7 @@ export function ResourceMarker({
       onClick={handleMarkerClick}
       position={position}
       icon={{
-        url: categorySwitch[category].markerIcon,
+        url: categorySwitch[category.name]?.markerIcon,
         scaledSize: new window.google.maps.Size(35, 35)
       }}
       title={name}
