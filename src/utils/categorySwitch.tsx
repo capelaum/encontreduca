@@ -1,9 +1,9 @@
-import { ReactElement } from 'react'
 import { BsBriefcaseFill } from 'react-icons/bs'
 import { FaPencilRuler, FaSchool } from 'react-icons/fa'
 import { IoLibrarySharp } from 'react-icons/io5'
 import { MdSchool } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
+import { CategorySwitch } from 'types/categories'
 
 export const categorySwitch: CategorySwitch = {
   'Universidade privada': {
@@ -63,16 +63,5 @@ export const categorySwitch: CategorySwitch = {
     iconBlueDark: (
       <BsBriefcaseFill size={16} color={myTheme.colors!.brand![9]} />
     )
-  }
-}
-
-type CategorySwitch = {
-  [key: string]: {
-    markerIcon: string
-    iconCyan: ReactElement
-    iconWhite: ReactElement
-    iconBlue: ReactElement
-    iconBlueDark: ReactElement
-    filter: string
   }
 }

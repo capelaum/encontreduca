@@ -1,5 +1,6 @@
 import { Marker } from '@react-google-maps/api'
 import { useMap } from 'contexts/mapContext'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { MarkerLabel } from 'types/googleMaps'
 import { ResourceType } from 'types/resources'
@@ -16,7 +17,8 @@ export function ResourceMarker({
   clickable = true
 }: ResourceMarkerProps) {
   const { zoom } = useMap()
-  const { setResourceOpened, setResource, setMenuOpened } = useSidebar()
+  const { setResource } = useResource()
+  const { setResourceOpened, setMenuOpened } = useSidebar()
 
   const { name, category, position, approved } = resource
 

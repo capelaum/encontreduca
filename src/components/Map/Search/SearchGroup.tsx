@@ -9,6 +9,7 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { MdSearch } from 'react-icons/md'
 
@@ -19,9 +20,10 @@ export function SearchGroup() {
     resourceOpened,
     setSavedResourcesOpened,
     changeResourceOpened,
-    setVotingPanelOpened,
-    resource
+    setVotingPanelOpened
   } = useSidebar()
+
+  const { resource } = useResource()
 
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
   const theme = useMantineTheme()

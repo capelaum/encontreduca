@@ -6,7 +6,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { useSidebar } from 'contexts/sidebarContext'
+import { useResource } from 'contexts/resourceContext'
 import { MdLocalPhone, MdPlace } from 'react-icons/md'
 import { TbWorld } from 'react-icons/tb'
 
@@ -16,7 +16,7 @@ export function Info() {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { resource } = useSidebar()
+  const { resource } = useResource()
   const { address, website, phone } = resource!
 
   return (

@@ -4,7 +4,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { CategoryType } from 'types/resources'
+import { CategoryType } from 'types/categories'
 import { categorySwitch } from 'utils/categorySwitch'
 
 interface CategoryProps {

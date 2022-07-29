@@ -14,7 +14,7 @@ import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { buttonStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { defaultCenter, mapOptions, mapOptionsLight } from 'config/options'
-import { useSidebar } from 'contexts/sidebarContext'
+import { useResource } from 'contexts/resourceContext'
 import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation, MdPlace } from 'react-icons/md'
 import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
@@ -38,7 +38,7 @@ export function ModalResourceLocalChange({
 
   console.log('🚀 ~ currentCenter', currentCenter)
 
-  const { resource } = useSidebar()
+  const { resource } = useResource()
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,

@@ -1,5 +1,5 @@
 import { api } from 'services/api'
-import { CategoryType } from 'types/resources'
+import { CategoryType } from 'types/categories'
 
 export async function loadCategories(): Promise<CategoryType[]> {
   const { data } = await api.get('categories')

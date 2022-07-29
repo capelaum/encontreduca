@@ -19,12 +19,12 @@ import {
   mapOptionsForm,
   mapOptionsFormLight
 } from 'config/options'
-import { useSidebar } from 'contexts/sidebarContext'
+import { useResource } from 'contexts/resourceContext'
 import { MdEditLocationAlt } from 'react-icons/md'
 import { libraries } from 'types/googleMaps'
 
 export function Local() {
-  const { resource } = useSidebar()
+  const { resource } = useResource()
   const { openModal, closeModal } = useModals()
 
   const { isLoaded } = useJsApiLoader({

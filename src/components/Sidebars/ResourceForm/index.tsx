@@ -12,6 +12,7 @@ import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import data from 'data/categories.json'
 import { useEffect } from 'react'
@@ -28,15 +29,16 @@ interface ResourceFormProps {
 
 export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const resourceCategories = getModalSelectDataCategories(data.categories)
-  const { resource, setCreateResourceOpened, setChangeResourceOpened } =
-    useSidebar()
+  const { setCreateResourceOpened, setChangeResourceOpened } = useSidebar()
+
+  const { resource } = useResource()
 
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const [category_id, setCategoryId] = useInputState<string>('')
+  const [categoryId, setCategoryId] = useInputState<string>('')
   const [resourceName, setResourceName] = useInputState<string>('')
   const [resourceAddress, setResourceAddress] = useInputState<string>('')
   const [resourcePhone, setResourcePhone] = useInputState<string>('')
@@ -85,7 +87,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         required
         size="sm"
         placeholder="Selecione uma categoria"
-        value={category_id ?? ''}
+        value={categoryId ?? ''}
         variant="filled"
         onChange={setCategoryId}
         sx={inputStyles(theme, dark)}

@@ -1,14 +1,5 @@
-import { ReactNode } from 'react'
-import { CategoryType } from 'types/resources'
+import { CategoryFilter, CategoryType } from 'types/categories'
 import { categorySwitch } from './categorySwitch'
-
-export type CategoryFilter = {
-  filter: string
-  iconCyan: ReactNode
-  iconWhite: ReactNode
-  iconBlue: ReactNode
-  iconBlueDark: ReactNode
-}
 
 export const getCategoryFilters = (categories: CategoryType[]) => {
   const categoryFilters = categories.reduce((acc, category) => {

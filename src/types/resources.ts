@@ -1,3 +1,4 @@
+import { CategoryType } from './categories'
 import { LatLngLiteral } from './googleMaps'
 
 export type ResourceType = {
@@ -13,13 +14,6 @@ export type ResourceType = {
   phone: string | null
   cover: string
   approved: boolean
-  created_at: string
-  updated_at: string
-}
-
-export type CategoryType = {
-  id: number
-  name: string
   created_at: string
   updated_at: string
 }

@@ -7,12 +7,12 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
-import { useSidebar } from 'contexts/sidebarContext'
+import { useResource } from 'contexts/resourceContext'
 import { useState } from 'react'
 import { TbPhoto } from 'react-icons/tb'
 
 export function CoverDropzone() {
-  const { resource } = useSidebar()
+  const { resource } = useResource()
 
   const theme = useMantineTheme()
 

@@ -7,6 +7,7 @@ import {
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useRouter } from 'next/router'
 import { AiFillHome } from 'react-icons/ai'
@@ -25,9 +26,10 @@ export function Menu() {
     setCreateResourceOpened,
     setSavedResourcesOpened,
     setVotingPanelOpened,
-    setResource,
     setResourceOpened
   } = useSidebar()
+
+  const { setResource } = useResource()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'

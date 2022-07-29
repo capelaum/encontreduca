@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react'
-import { ResourceType } from 'types/resources'
 
 interface SidebarProviderProps {
   children: ReactNode
@@ -20,8 +19,6 @@ interface SidebarContextData {
   setSavedResourcesOpened: (savedResourcesOpened: boolean) => void
   votingPanelOpened: boolean
   setVotingPanelOpened: (votinPanelOpened: boolean) => void
-  resource: ResourceType | null
-  setResource: (resource: ResourceType | null) => void
 }
 
 const SidebarContext = createContext<SidebarContextData>(
@@ -37,8 +34,6 @@ export function SidebarProvider({ children }: SidebarProviderProps) {
   const [savedResourcesOpened, setSavedResourcesOpened] = useState(false)
   const [votingPanelOpened, setVotingPanelOpened] = useState(false)
 
-  const [resource, setResource] = useState<ResourceType | null>(null)
-
   const sidebarContextProviderValues = {
     menuOpened,
     setMenuOpened,
@@ -53,9 +48,7 @@ export function SidebarProvider({ children }: SidebarProviderProps) {
     savedResourcesOpened,
     setSavedResourcesOpened,
     votingPanelOpened,
-    setVotingPanelOpened,
-    resource,
-    setResource
+    setVotingPanelOpened
   }
 
   const sidebarContextProviderValue = useMemo<SidebarContextData>(

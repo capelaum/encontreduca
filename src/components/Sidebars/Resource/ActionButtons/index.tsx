@@ -1,6 +1,6 @@
 import { Group } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { useSidebar } from 'contexts/sidebarContext'
+import { useResource } from 'contexts/resourceContext'
 import { MdDirections } from 'react-icons/md'
 import { ActionButton } from './ActionButton'
 import { ResourceChange } from './ModalActions/ResourceChange'
@@ -11,7 +11,7 @@ import { ResourceSave } from './ResourceSave'
 export function ActionButtons() {
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
 
-  const { resource } = useSidebar()
+  const { resource } = useResource()
 
   return (
     <Group

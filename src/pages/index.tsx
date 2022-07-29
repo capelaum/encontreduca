@@ -13,8 +13,9 @@ import { useSidebar } from 'contexts/sidebarContext'
 import { loadCategories } from 'lib/loadCategories'
 import { loadResources } from 'lib/loadResources'
 import Head from 'next/head'
+import { CategoryType } from 'types/categories'
 import { libraries } from 'types/googleMaps'
-import { CategoryType, ResourceType } from 'types/resources'
+import { ResourceType } from 'types/resources'
 
 interface MapProps {
   resources: ResourceType[]

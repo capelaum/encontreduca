@@ -5,13 +5,13 @@ import {
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
-import { useSidebar } from 'contexts/sidebarContext'
+import { useResource } from 'contexts/resourceContext'
 import { MdEdit } from 'react-icons/md'
 import { ActionItem } from '../ActionItem'
 
 export function ReviewEdit() {
   const { openContextModal } = useModals()
-  const { resource } = useSidebar()
+  const { resource } = useResource()
 
   const theme = useMantineTheme()
 

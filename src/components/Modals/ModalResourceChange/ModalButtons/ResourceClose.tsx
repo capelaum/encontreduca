@@ -2,7 +2,7 @@ import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
-import { useSidebar } from 'contexts/sidebarContext'
+import { useResource } from 'contexts/resourceContext'
 import data from 'data/motives.json'
 import { MdCancel } from 'react-icons/md'
 import { getModalSelectDataMotives } from 'utils/modalSelecDataFormatter'
@@ -14,7 +14,7 @@ interface ResourceCloseProps {
 
 export function ResourceClose({ onClose }: ResourceCloseProps) {
   const { openContextModal } = useModals()
-  const { resource } = useSidebar()
+  const { resource } = useResource()
 
   const theme = useMantineTheme()
 

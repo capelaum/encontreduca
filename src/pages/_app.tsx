@@ -15,6 +15,7 @@ import { ToastContainer } from 'react-toastify'
 import { GlobalStyles } from 'styles/global'
 import { myTheme } from 'styles/theme'
 
+import { ResourceProvider } from 'contexts/resourceContext'
 import 'react-toastify/dist/ReactToastify.min.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -35,21 +36,27 @@ function MyApp({ Component, pageProps }: AppProps) {
       toggleColorScheme={toggleColorScheme}
     >
       <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
-        <SidebarProvider>
-          <ModalsProvider
-            modals={{
-              review: ModalReview,
-              select: ModalSelect,
-              vote: ModalVote
-            }}
-          >
-            <MapProvider>
-              <GlobalStyles />
-              <ToastContainer autoClose={5000} limit={5} position="top-right" />
-              <Component {...pageProps} />
-            </MapProvider>
-          </ModalsProvider>
-        </SidebarProvider>
+        <ResourceProvider>
+          <SidebarProvider>
+            <ModalsProvider
+              modals={{
+                review: ModalReview,
+                select: ModalSelect,
+                vote: ModalVote
+              }}
+            >
+              <MapProvider>
+                <GlobalStyles />
+                <ToastContainer
+                  autoClose={5000}
+                  limit={5}
+                  position="top-right"
+                />
+                <Component {...pageProps} />
+              </MapProvider>
+            </ModalsProvider>
+          </SidebarProvider>
+        </ResourceProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   )

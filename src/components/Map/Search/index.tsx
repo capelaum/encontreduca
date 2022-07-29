@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Group, useMantineTheme } from '@mantine/core'
-import { CategoryType } from 'types/resources'
+import { CategoryType } from 'types/categories'
 import { Filters } from './Filters'
 import { SearchGroup } from './SearchGroup'
 

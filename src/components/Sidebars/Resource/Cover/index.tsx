@@ -1,10 +1,10 @@
 import { AspectRatio, Image, Stack } from '@mantine/core'
-import { useSidebar } from 'contexts/sidebarContext'
+import { useResource } from 'contexts/resourceContext'
 import { Author } from './Author'
 import { ReviewStats } from './ReviewStats'
 
 export function Cover() {
-  const { resource } = useSidebar()
+  const { resource } = useResource()
 
   return (
     <Stack spacing="sm">

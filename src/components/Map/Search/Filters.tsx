@@ -7,9 +7,9 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { useState } from 'react'
-import { CategoryType } from 'types/resources'
-import { CategoryFilter, getCategoryFilters } from 'utils/categoryFormatters'
+import { useResource } from 'contexts/resourceContext'
+import { CategoryFilter, CategoryType } from 'types/categories'
+import { getCategoryFilters } from 'utils/categoryFormatters'
 
 interface FiltersProps {
   categories: CategoryType[]
@@ -18,13 +18,13 @@ interface FiltersProps {
 export function Filters({ categories }: FiltersProps) {
   const categoryFilters = getCategoryFilters(categories)
 
+  const { activeFilter, setActiveFilter } = useResource()
+
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
-
-  const [activeFilter, setActiveFilter] = useState('')
 
   const filterGroupStyles = (): CSSObject => ({
     zIndex: 1,
@@ -98,7 +98,6 @@ export function Filters({ categories }: FiltersProps) {
       {categoryFilters.map((category) => (
         <Button
           key={category.filter}
-          value={category.filter}
           size="xs"
           radius={theme.radius.xl}
           onClick={() => setActiveFilter(category.filter)}

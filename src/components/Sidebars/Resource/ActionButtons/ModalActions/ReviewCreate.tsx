@@ -5,13 +5,13 @@ import {
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
-import { useSidebar } from 'contexts/sidebarContext'
+import { useResource } from 'contexts/resourceContext'
 import { MdStarBorder } from 'react-icons/md'
 import { ActionButton } from '../ActionButton'
 
 export function ReviewCreate() {
   const { openContextModal } = useModals()
-  const { resource } = useSidebar()
+  const { resource } = useResource()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
