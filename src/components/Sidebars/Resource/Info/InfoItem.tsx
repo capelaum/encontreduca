@@ -1,4 +1,9 @@
-import { Group, Text, useMantineTheme } from '@mantine/core'
+import {
+  Group,
+  Text,
+  useMantineColorScheme,
+  useMantineTheme
+} from '@mantine/core'
 import { ReactNode } from 'react'
 
 interface InfoItemProps {
@@ -9,13 +14,16 @@ interface InfoItemProps {
 export function InfoItem({ icon, text }: InfoItemProps) {
   const theme = useMantineTheme()
 
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   return (
     <Group spacing={16} align="center" noWrap>
       {icon}
       <Text
         size="sm"
         sx={{
-          color: theme.white,
+          color: dark ? theme.white : theme.colors.brand[7],
           maxWidth: '320px',
           fontWeight: 400,
           overflow: 'hidden',
