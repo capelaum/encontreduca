@@ -13,6 +13,8 @@ import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
+import { Review } from 'types/reviews'
+import { defaultUser } from 'utils/defaultUser'
 import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 export function ModalReview({
@@ -20,11 +22,11 @@ export function ModalReview({
   id,
   innerProps
 }: ContextModalProps<{
-  text?: string
+  review?: Review
   onConfirmText: string
   isEdit?: boolean
 }>) {
-  const { text, onConfirmText, isEdit } = innerProps
+  const { onConfirmText, isEdit, review } = innerProps
   const { closeModal } = context
 
   const theme = useMantineTheme()
@@ -32,15 +34,15 @@ export function ModalReview({
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const [comment, setComment] = useState(text)
-  const [rating, setRating] = useState(0)
+  const [comment, setComment] = useState(review?.comment ?? '')
+  const [rating, setRating] = useState(review?.rating ?? 0)
   const [hover, setHover] = useState(0)
 
   return (
     <Stack spacing="md">
       <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar Modal" />
 
-      <Profile isModal />
+      <Profile isModal user={review?.user ?? defaultUser} />
 
       <Group spacing={2} align="center">
         {[...Array(5)].map((_, index) => {

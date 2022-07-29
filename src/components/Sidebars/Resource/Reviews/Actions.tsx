@@ -5,15 +5,17 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { Review } from 'types/reviews'
 import { ReviewComplain } from './ModalActions/ReviewComplain'
 import { ReviewDelete } from './ModalActions/ReviewDelete'
 import { ReviewEdit } from './ModalActions/ReviewEdit'
 
 interface ActionsProps {
   isOwnReview?: boolean
+  review: Review
 }
 
-export function Actions({ isOwnReview }: ActionsProps) {
+export function Actions({ isOwnReview, review }: ActionsProps) {
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -23,7 +25,7 @@ export function Actions({ isOwnReview }: ActionsProps) {
     if (isOwnReview) {
       return (
         <>
-          <ReviewEdit />
+          <ReviewEdit review={review} />
           <ReviewDelete />
         </>
       )

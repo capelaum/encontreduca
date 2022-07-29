@@ -37,7 +37,7 @@ export function UserReview({ isOwnReview, review }: UserReviewProps) {
         <Group position="apart">
           <Profile user={user} />
 
-          <Actions isOwnReview={isOwnReview} />
+          <Actions isOwnReview={isOwnReview} review={review} />
         </Group>
 
         <Group spacing={2} align="center">

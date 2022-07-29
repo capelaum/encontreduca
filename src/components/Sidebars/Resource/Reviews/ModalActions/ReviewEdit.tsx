@@ -7,9 +7,14 @@ import {
 import { Title } from 'components/Shared/Title'
 import { useResource } from 'contexts/resourceContext'
 import { MdEdit } from 'react-icons/md'
+import { Review } from 'types/reviews'
 import { ActionItem } from '../ActionItem'
 
-export function ReviewEdit() {
+interface ReviewEditProps {
+  review: Review
+}
+
+export function ReviewEdit({ review }: ReviewEditProps) {
   const { openContextModal } = useModals()
   const { resource } = useResource()
 
@@ -26,8 +31,8 @@ export function ReviewEdit() {
       ...modalStyles,
       classNames: classes,
       innerProps: {
+        review,
         isEdit: true,
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis rutrum fames quam tempus vitae sed malesuada. Vulputate purus accumsan neque in vitae. Orci venenatis turpis rutrum vitae diam sed. At placerat elit mattis nam nunc. Nibh donec sagittis, sed enim felis mollis vitae aliquet varius. Blandit donec vestibulum, fermentum et pretium.',
         onConfirmText: 'Atualizar'
       }
     })
