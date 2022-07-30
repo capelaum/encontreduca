@@ -44,7 +44,7 @@ export function Reviews({ resourceReviews }: ReviewsProps) {
         </>
       )}
 
-      <SectionTitle title="Avaliações" />
+      {reviewsWithoutUser.length > 0 && <SectionTitle title="Avaliações" />}
 
       <Stack spacing={48} mb={32}>
         {reviewsWithoutUser.slice(0, end).map((review) => (

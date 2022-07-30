@@ -8,15 +8,17 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { Profile } from 'components/Shared/Profile'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'
+import { getResource } from 'lib/loadResources'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
 import { api } from 'services/api'
-import { Review } from 'types/reviews'
+import { NewReview, Review } from 'types/reviews'
 import { defaultUser } from 'utils/defaultUser'
 import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
@@ -32,7 +34,7 @@ export function ModalReview({
   const { onConfirmText, isEdit, review } = innerProps
   const { closeModal } = context
 
-  const { resource } = useResource()
+  const { resource, setResource } = useResource()
 
   const theme = useMantineTheme()
 
@@ -43,6 +45,20 @@ export function ModalReview({
   const [comment, setComment] = useState(review?.comment ?? '')
   const [rating, setRating] = useState(review?.rating ?? 0)
   const [hover, setHover] = useState(0)
+
+  const createReview = async (newReview: NewReview) => {
+    const response = await api.post('/reviews', newReview)
+
+    return response.data
+  }
+
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation(createReview, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['resources'])
+    }
+  })
 
   const handleSubmit = async () => {
     if (!comment || !rating) {
@@ -58,14 +74,18 @@ export function ModalReview({
 
     setIsLoading(true)
 
-    await api.post('/reviews', {
+    await mutation.mutateAsync({
       comment,
       rating,
-      resource_id: resource?.id,
+      resource_id: resource!.id,
       user_id: defaultUser.id
     })
 
+    const updatedResource = await getResource(+resource!.id)
+    setResource(updatedResource)
+
     setIsLoading(false)
+
     closeModal(id)
     showToast({
       title: isEdit ? 'Avaliação atualizada!' : 'Avaliação enviada!',
@@ -78,18 +98,18 @@ export function ModalReview({
   }
 
   return (
-    <Stack spacing="md" sx={{ position: 'relative' }}>
+    <Stack spacing="md">
+      <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar Modal" />
+
       <LoadingOverlay
         visible={isLoading}
         overlayBlur={2}
-        overlayOpacity={0.5}
-        overlayColor={dark ? theme.colors.brand[7] : '#fff'}
+        overlayOpacity={0.3}
+        overlayColor={dark ? theme.black : theme.white}
         sx={{
           svg: { stroke: dark ? theme.colors.cyan[3] : theme.colors.brand[7] }
         }}
       />
-
-      <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar Modal" />
 
       <Profile isModal user={review?.user ?? defaultUser} />
 

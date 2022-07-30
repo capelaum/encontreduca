@@ -1,8 +1,10 @@
 import { useMantineColorScheme } from '@mantine/core'
 import { useJsApiLoader } from '@react-google-maps/api'
+import { useQuery } from '@tanstack/react-query'
 import MapDark from 'components/Map/MapDark'
 import { MapLight } from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
+import { ErrorView } from 'components/Shared/ErrorView'
 import { Sidebar } from 'components/Shared/Sidebar'
 import { Menu } from 'components/Sidebars/Menu'
 import { UpdateProfile } from 'components/Sidebars/Profile'
@@ -12,21 +14,21 @@ import { ResourceList } from 'components/Sidebars/ResourceList'
 import { useSidebar } from 'contexts/sidebarContext'
 import { loadCategories } from 'lib/loadCategories'
 import { loadResources } from 'lib/loadResources'
-import { loadReviews } from 'lib/loadReviews'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { CategoryType } from 'types/categories'
 import { libraries } from 'types/googleMaps'
-import { ResourceType } from 'types/resources'
-import { Review } from 'types/reviews'
 
 interface MapProps {
-  resources: ResourceType[]
   categories: CategoryType[]
-  reviews: Review[]
 }
 
-export default function Map({ resources, categories, reviews }: MapProps) {
+export default function Map({ categories }: MapProps) {
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+    libraries
+  })
+
   const {
     resourceOpened,
     setResourceOpened,
@@ -47,12 +49,33 @@ export default function Map({ resources, categories, reviews }: MapProps) {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-    libraries
-  })
+  const {
+    data: resources,
+    error: resourcesError,
+    status: resourcesStatus
+  } = useQuery(['resources'], loadResources)
 
-  if (!isLoaded) return <MapLoader />
+  if (resourcesStatus === 'loading' || !isLoaded) {
+    return <MapLoader />
+  }
+
+  if (resourcesStatus === 'error' && resourcesError instanceof Error) {
+    return <ErrorView message={resourcesError.message} />
+  }
+
+  if (!resources) {
+    return (
+      <ErrorView message="Ooops, houve um erro ao carregar os recursos 🥲" />
+    )
+  }
+
+  if (!categories) {
+    return (
+      <ErrorView message="Ooops, houve um erro ao carregar as categorias 🥲" />
+    )
+  }
+
+  const reviews = resources.map((resource) => resource.reviews).flat()
 
   return (
     <>
@@ -61,9 +84,9 @@ export default function Map({ resources, categories, reviews }: MapProps) {
       </Head>
 
       {dark ? (
-        <MapDark resources={resources} categories={categories} />
+        <MapDark resources={resources!} categories={categories} />
       ) : (
-        <MapLight resources={resources} categories={categories} />
+        <MapLight resources={resources!} categories={categories} />
       )}
 
       <Sidebar
@@ -118,11 +141,9 @@ export default function Map({ resources, categories, reviews }: MapProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const resources: ResourceType[] = await loadResources()
   const categories: CategoryType[] = await loadCategories()
-  const reviews: Review[] = await loadReviews()
 
-  if (!resources) {
+  if (!categories) {
     return {
       notFound: true
     }
@@ -130,9 +151,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      resources,
-      categories,
-      reviews
+      categories
     }
   }
 }

@@ -39,9 +39,9 @@ export function ResourceMarker({
 
   const handleMarkerClick = () => {
     if (clickable && setResourceOpened && setResource) {
+      setResource(resource)
       setMenuOpened(false)
       setResourceOpened(true)
-      setResource(resource)
     }
   }
 

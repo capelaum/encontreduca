@@ -9,6 +9,8 @@ interface ResourceProviderProps {
 }
 
 interface ResourceContextData {
+  resources: ResourceType[]
+  setResources: (resources: ResourceType[]) => void
   resource: ResourceType | null
   setResource: (resource: ResourceType | null) => void
   activeFilter: CategoryFilter | null
@@ -25,10 +27,13 @@ const ResourceContext = createContext<ResourceContextData>(
 
 export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resource, setResource] = useState<ResourceType | null>(null)
+  const [resources, setResources] = useState<ResourceType[]>(
+    [] as ResourceType[]
+  )
   const [activeFilter, setActiveFilter] = useState<CategoryFilter | null>(null)
 
-  const filterResources = (resources: ResourceType[]) => {
-    const filteredResources = resources.filter(({ approved, category }) => {
+  const filterResources = (resourcesList: ResourceType[]) => {
+    const filteredResources = resourcesList.filter(({ approved, category }) => {
       if (approved && !activeFilter) {
         return true
       }
@@ -71,6 +76,8 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const ResourceContextProviderValues = {
+    resources,
+    setResources,
     resource,
     setResource,
     activeFilter,

@@ -10,3 +10,8 @@ export type Review = {
   updated_at: string
   user: User
 }
+
+export type NewReview = Pick<
+  Review,
+  'user_id' | 'resource_id' | 'rating' | 'comment'
+>
