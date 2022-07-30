@@ -9,15 +9,12 @@ export function Stars({ rating }: StarsProps) {
   const theme = useMantineTheme()
 
   const renderStars = () => {
-    const starComponents = [...Array(5)].map((star, index) => {
-      const starIndex = index + 1
+    const starComponents = [...Array(5)].map((_, index) => {
+      const starIndex: number = index + 1
 
-      if (starIndex <= Math.round(rating))
-        return (
-          <MdStar key={starIndex} size={18} color={theme.colors.yellow[6]} />
-        )
-
-      return (
+      return starIndex <= Math.round(rating) ? (
+        <MdStar key={starIndex} size={18} color={theme.colors.yellow[6]} />
+      ) : (
         <MdStarBorder key={starIndex} size={18} color={theme.colors.gray[6]} />
       )
     })
