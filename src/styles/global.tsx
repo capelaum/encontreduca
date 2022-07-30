@@ -27,14 +27,14 @@ export const GlobalStyles = () => {
           color: theme.colors.brand[7],
           backgroundColor: theme.white
         },
+        '.Toastify__close-button': {
+          color: theme.colors.brand[7]
+        },
         '.Toastify__progress-bar-theme--light': {
           backgroundColor: theme.colors.brand[7]
         },
         '.Toastify__progress-bar-theme--dark': {
           backgroundColor: theme.colors.brand[7]
-        },
-        '.Toastify__close-button': {
-          color: theme.colors.brand[7]
         },
         '.Toastify__toast-container': {
           width: '100%',

@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useMemo, useState } from 'react'
 import { CategoryFilter } from 'types/categories'
 import { ResourceType } from 'types/resources'
 import { Review } from 'types/reviews'
+import { defaultUser } from 'utils/defaultUser'
 
 interface ResourceProviderProps {
   children: ReactNode
@@ -14,6 +15,8 @@ interface ResourceContextData {
   setActiveFilter: (activeResource: CategoryFilter | null) => void
   filterResources: (resources: ResourceType[]) => ResourceType[]
   getAverageRating: (reviews: Review[]) => number
+  getUserResourceReview: (reviews: Review[]) => Review | null
+  getReviewsWithoutUser: (reviews: Review[]) => Review[]
 }
 
 const ResourceContext = createContext<ResourceContextData>(
@@ -53,13 +56,29 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     return average
   }
 
+  const getUserResourceReview = (reviews: Review[]) => {
+    const userReview = reviews.find(({ user_id }) => user_id === defaultUser.id)
+
+    return userReview ?? null
+  }
+
+  const getReviewsWithoutUser = (reviews: Review[]) => {
+    const reviewsWithoutUser = reviews.filter(
+      ({ user_id }) => user_id !== defaultUser.id
+    )
+
+    return reviewsWithoutUser
+  }
+
   const ResourceContextProviderValues = {
     resource,
     setResource,
     activeFilter,
     setActiveFilter,
     getAverageRating,
-    filterResources
+    filterResources,
+    getUserResourceReview,
+    getReviewsWithoutUser
   }
 
   const ResourceContextProviderValue = useMemo<ResourceContextData>(

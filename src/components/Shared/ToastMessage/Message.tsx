@@ -8,7 +8,7 @@ export function Message({
 }: {
   title: string
   description: string
-  icon: ReactNode
+  icon?: ReactNode
 }) {
   return (
     <Group align="center" spacing={12} noWrap>

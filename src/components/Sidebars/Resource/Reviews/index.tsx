@@ -12,15 +12,21 @@ import { SectionTitle } from './SectionTitle'
 import { UserReview } from './UserReview'
 
 interface ReviewsProps {
-  reviews: Review[]
+  resourceReviews: Review[]
 }
 
-export function Reviews({ reviews }: ReviewsProps) {
+export function Reviews({ resourceReviews }: ReviewsProps) {
+  const { resource, getUserResourceReview, getReviewsWithoutUser } =
+    useResource()
+
   const theme = useMantineTheme()
-  const { resource } = useResource()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
+
+  const userResourceReview = getUserResourceReview(resourceReviews)
+
+  const reviewsWithoutUser = getReviewsWithoutUser(resourceReviews)
 
   const [end, setEnd] = useState(3)
 
@@ -30,19 +36,23 @@ export function Reviews({ reviews }: ReviewsProps) {
 
   return (
     <>
-      <SectionTitle title="Sua avaliação" />
+      {!!userResourceReview && (
+        <>
+          <SectionTitle title="Sua avaliação" />
 
-      <UserReview review={reviews[0]} isOwnReview />
+          <UserReview review={userResourceReview} isOwnReview />
+        </>
+      )}
 
       <SectionTitle title="Avaliações" />
 
       <Stack spacing={48} mb={32}>
-        {reviews.slice(0, end).map((review) => (
+        {reviewsWithoutUser.slice(0, end).map((review) => (
           <UserReview key={review.id} review={review} />
         ))}
       </Stack>
 
-      {reviews.length - end > 0 && (
+      {reviewsWithoutUser.length - end > 0 && (
         <Center mb={32}>
           <Button
             variant="subtle"
@@ -58,7 +68,7 @@ export function Reviews({ reviews }: ReviewsProps) {
               }
             }}
           >
-            Mais avalições ({reviews.length - 3})
+            Mais avalições ({reviewsWithoutUser.length - 3})
           </Button>
         </Center>
       )}

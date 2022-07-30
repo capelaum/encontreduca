@@ -13,6 +13,7 @@ import { useSidebar } from 'contexts/sidebarContext'
 import { loadCategories } from 'lib/loadCategories'
 import { loadResources } from 'lib/loadResources'
 import { loadReviews } from 'lib/loadReviews'
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { CategoryType } from 'types/categories'
 import { libraries } from 'types/googleMaps'
@@ -116,7 +117,7 @@ export default function Map({ resources, categories, reviews }: MapProps) {
   )
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const resources: ResourceType[] = await loadResources()
   const categories: CategoryType[] = await loadCategories()
   const reviews: Review[] = await loadReviews()
@@ -132,7 +133,6 @@ export const getStaticProps = async () => {
       resources,
       categories,
       reviews
-    },
-    revalidate: 10
+    }
   }
 }

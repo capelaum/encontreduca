@@ -22,7 +22,7 @@ export function Resource({ reviews }: ResourceProps) {
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
 
   const { setResourceOpened } = useSidebar()
-  const { resource } = useResource()
+  const { resource, getUserResourceReview } = useResource()
 
   if (!resource) {
     setResourceOpened(false)
@@ -39,6 +39,8 @@ export function Resource({ reviews }: ResourceProps) {
     }
   }, [resource])
 
+  const userResourceReview = getUserResourceReview(resourceReviews)
+
   return (
     <Box>
       <Stack
@@ -50,12 +52,14 @@ export function Resource({ reviews }: ResourceProps) {
 
         <Cover reviews={resourceReviews} />
 
-        <ActionButtons />
+        <ActionButtons userHasResourceReview={!!userResourceReview} />
       </Stack>
 
       <Info />
 
-      {resourceReviews.length > 0 && <Reviews reviews={resourceReviews} />}
+      {resourceReviews.length > 0 && (
+        <Reviews resourceReviews={resourceReviews} />
+      )}
     </Box>
   )
 }

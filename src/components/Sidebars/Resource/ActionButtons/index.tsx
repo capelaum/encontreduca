@@ -1,5 +1,4 @@
 import { Group } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
 import { useResource } from 'contexts/resourceContext'
 import { MdDirections } from 'react-icons/md'
 import { ActionButton } from './ActionButton'
@@ -8,25 +7,22 @@ import { ResourceVote } from './ModalActions/ResourceVote'
 import { ReviewCreate } from './ModalActions/ReviewCreate'
 import { ResourceSave } from './ResourceSave'
 
-export function ActionButtons() {
-  const largeScreen = useMediaQuery('(min-width: 768px)', false)
+interface ActionButtonsProps {
+  userHasResourceReview: boolean
+}
 
+export function ActionButtons({ userHasResourceReview }: ActionButtonsProps) {
   const { resource } = useResource()
 
   return (
-    <Group
-      spacing={32}
-      align="start"
-      position={largeScreen ? 'center' : 'left'}
-      mt="md"
-    >
+    <Group spacing={32} align="start" mt="md">
       <ActionButton text="Rotas" icon={<MdDirections size={28} />} />
 
       {resource?.approved && <ResourceSave />}
 
       <ResourceChange />
 
-      <ReviewCreate />
+      {!userHasResourceReview && <ReviewCreate />}
 
       {!resource?.approved && <ResourceVote />}
     </Group>
