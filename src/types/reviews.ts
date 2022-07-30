@@ -20,3 +20,9 @@ export type UpdatedReview = Pick<
   Review,
   'id' | 'user_id' | 'resource_id' | 'rating' | 'comment'
 >
+
+export type NewReviewComplaint = {
+  user_id: string | number
+  review_id: string | number
+  motive_id: string | number
+}

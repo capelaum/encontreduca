@@ -18,6 +18,7 @@ import { loadMotives } from 'lib/loadMotives'
 import { loadResources } from 'lib/loadResources'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import { useEffect } from 'react'
 import { CategoryType } from 'types/categories'
 import { libraries } from 'types/googleMaps'
 import { Motive } from 'types/motives'
@@ -28,6 +29,13 @@ interface MapProps {
 }
 
 export default function Map({ categories, motives }: MapProps) {
+  const { setCategories, setMotives } = useResource()
+
+  useEffect(() => {
+    setCategories(categories)
+    setMotives(motives)
+  }, [])
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     libraries
@@ -49,11 +57,6 @@ export default function Map({ categories, motives }: MapProps) {
     votingPanelOpened,
     setVotingPanelOpened
   } = useSidebar()
-
-  const { setCategories, setMotives } = useResource()
-
-  setCategories(categories)
-  setMotives(motives)
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'

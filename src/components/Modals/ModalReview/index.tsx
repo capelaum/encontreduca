@@ -64,9 +64,9 @@ export function ModalReview({
     if (!comment || !rating) {
       showToastError({
         title: 'Preencha todos os campos',
-        description: isEdit
-          ? 'Preencha o comentário e a nota para editar a avaliação.'
-          : 'Preencha o comentário e a nota para criar a avaliação.'
+        description: `Preencha o comentário e a nota para ${
+          isEdit ? 'editar' : 'criar'
+        }  a avaliação.`
       })
 
       return

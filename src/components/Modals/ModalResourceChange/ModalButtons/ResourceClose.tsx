@@ -22,7 +22,7 @@ export function ResourceClose({ onClose }: ResourceCloseProps) {
 
   const { classes } = useModalStyles(dark)
 
-  const closeResourceMotives = getMotivesSelectData(
+  const ResourceComplaintMotives = getMotivesSelectData(
     motives,
     'resource_complaint'
   )
@@ -36,8 +36,8 @@ export function ResourceClose({ onClose }: ResourceCloseProps) {
       classNames: classes,
       padding: 'md',
       innerProps: {
-        data: closeResourceMotives,
-        resourceName: resource!.name
+        motives: ResourceComplaintMotives,
+        resource
       }
     })
 

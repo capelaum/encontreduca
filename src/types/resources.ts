@@ -22,3 +22,9 @@ export type ResourceType = {
   user: User
   reviews: Review[]
 }
+
+export type NewResourceComplaint = {
+  user_id: string | number
+  resource_id: string | number
+  motive_id: string | number
+}

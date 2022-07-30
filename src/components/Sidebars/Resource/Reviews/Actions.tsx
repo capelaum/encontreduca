@@ -31,7 +31,7 @@ export function Actions({ isOwnReview, review }: ActionsProps) {
       )
     }
 
-    return <ReviewComplaint reviewId={review.id} />
+    return <ReviewComplaint review={review} />
   }
 
   return (

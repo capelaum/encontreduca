@@ -1,4 +1,5 @@
 import {
+  LoadingOverlay,
   Select,
   Stack,
   Text,
@@ -8,10 +9,14 @@ import {
 import { ContextModalProps } from '@mantine/modals'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { inputStyles } from 'components/Shared/styles/inputStyles'
-import { showToast } from 'components/Shared/ToastMessage'
+import { showToast, showToastError } from 'components/Shared/ToastMessage'
+import { createResourceComplaint, createReviewComplaint } from 'lib/complaints'
 import { useState } from 'react'
 import { IoIosSend } from 'react-icons/io'
 import { TbChevronDown } from 'react-icons/tb'
+import { ResourceType } from 'types/resources'
+import { Review } from 'types/reviews'
+import { defaultUser } from 'utils/defaultUser'
 import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 export function ModalSelect({
@@ -19,12 +24,12 @@ export function ModalSelect({
   id,
   innerProps
 }: ContextModalProps<{
-  data: string[]
-  resourceName: string
+  motives: string[]
+  resource?: ResourceType | null
   isReviewComplaint?: boolean
-  reviewId: string | number
+  review?: Review
 }>) {
-  const { data, resourceName, isReviewComplaint, reviewId } = innerProps
+  const { motives, resource, isReviewComplaint, review } = innerProps
   const { closeModal } = context
 
   const theme = useMantineTheme()
@@ -32,20 +37,85 @@ export function ModalSelect({
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const [motiveId, setMotiveId] = useState<string | null>()
+  const [isLoading, setIsLoading] = useState(false)
+  const [motiveId, setMotiveId] = useState<string | null>(null)
+
+  const handleConfirmComplaint = async () => {
+    if (!motiveId) {
+      showToastError({
+        title: 'Por favor, selecione um motivo',
+        description: `Precisa-se de um motivo para ${
+          isReviewComplaint ? 'denunciar a avaliação.' : 'fechar o recurso.'
+        }`
+      })
+
+      return
+    }
+
+    if ((isReviewComplaint && !review) || (!isReviewComplaint && !resource)) {
+      showToastError({
+        title: 'Ooops, algo deu errado',
+        description: 'Por favor, tente novamente mais tarde.'
+      })
+
+      return
+    }
+
+    setIsLoading(true)
+
+    if (isReviewComplaint && review) {
+      await createReviewComplaint({
+        user_id: defaultUser.id,
+        review_id: review.id,
+        motive_id: motiveId
+      })
+    }
+
+    if (!isReviewComplaint && resource) {
+      await createResourceComplaint({
+        user_id: defaultUser.id,
+        resource_id: resource.id,
+        motive_id: motiveId
+      })
+    }
+
+    setIsLoading(false)
+
+    closeModal(id)
+    showToast({
+      title: isReviewComplaint
+        ? 'Denúncia de avaliação enviada!'
+        : 'Sugestão de alteração enviada!',
+      description: 'Agradecemos sua colaboração!',
+      icon: <IoIosSend size={24} color={theme.colors.brand[7]} />,
+      dark
+    })
+  }
 
   return (
     <Stack spacing="md">
       <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar modal" />
 
-      <Text
+      <LoadingOverlay
+        visible={isLoading}
+        overlayBlur={2}
+        overlayOpacity={0.3}
+        overlayColor={dark ? theme.black : theme.white}
         sx={{
-          fontWeight: 500,
-          color: dark ? theme.colors.gray[2] : theme.colors.gray[6]
+          svg: { stroke: dark ? theme.colors.cyan[3] : theme.colors.brand[7] }
         }}
-      >
-        {resourceName}
-      </Text>
+      />
+
+      {resource && (
+        <Text
+          sx={{
+            fontWeight: 500,
+            color: dark ? theme.colors.gray[2] : theme.colors.gray[6]
+          }}
+        >
+          {resource.name}
+        </Text>
+      )}
 
       <Select
         label="Motivo"
@@ -64,26 +134,12 @@ export function ModalSelect({
           />
         }
         rightSectionWidth={30}
-        data={data}
+        data={motives}
       />
 
       <ConfirmButtons
         onCancel={() => closeModal(id)}
-        onConfirm={() => {
-          console.log(`Denunciar review com id ${reviewId}`)
-
-          closeModal(id)
-          showToast({
-            title: isReviewComplaint
-              ? 'Denúncia de avaliação enviada!'
-              : 'Sugestão de alteração enviada!',
-            description: isReviewComplaint
-              ? 'Agradecemos sua colaboração!'
-              : 'Agradecemos sua participação!',
-            icon: <IoIosSend size={24} color={theme.colors.brand[7]} />,
-            dark
-          })
-        }}
+        onConfirm={() => handleConfirmComplaint()}
         onConfirmText="Enviar"
       />
     </Stack>
