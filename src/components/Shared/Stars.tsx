@@ -13,9 +13,13 @@ export function Stars({ rating }: StarsProps) {
       const starIndex = index + 1
 
       if (starIndex <= Math.round(rating))
-        return <MdStar size={18} color={theme.colors.yellow[6]} />
+        return (
+          <MdStar key={starIndex} size={18} color={theme.colors.yellow[6]} />
+        )
 
-      return <MdStarBorder size={18} color={theme.colors.gray[6]} />
+      return (
+        <MdStarBorder key={starIndex} size={18} color={theme.colors.gray[6]} />
+      )
     })
 
     return starComponents

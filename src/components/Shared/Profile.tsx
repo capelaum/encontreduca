@@ -85,7 +85,7 @@ export function Profile({ isModal, user }: ProfileProps) {
               lineHeight: 1.5
             }}
           >
-            10 avaliações
+            {user.review_count} avaliações
           </Text>
         )}
       </Stack>
