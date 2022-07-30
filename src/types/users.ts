@@ -6,5 +6,7 @@ export type User = {
   password: string
   created_at: string
   updated_at: string
-  review_count: number
+  resource_count?: number
+  review_count?: number
+  resourcesIds?: string[] | number[]
 }
