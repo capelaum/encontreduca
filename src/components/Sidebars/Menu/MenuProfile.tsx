@@ -44,7 +44,7 @@ export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
             size="md"
             sx={{ color: dark ? theme.colors.gray[3] : theme.colors.gray[6] }}
           >
-            user@gmail.com
+            {defaultUser.email}
           </Text>
         </Stack>
       </Group>

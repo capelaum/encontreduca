@@ -15,10 +15,10 @@ import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'
 import { getResource } from 'lib/loadResources'
+import { createReview, updateReview } from 'lib/reviewsLib'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
-import { api } from 'services/api'
-import { NewReview, Review } from 'types/reviews'
+import { Review } from 'types/reviews'
 import { defaultUser } from 'utils/defaultUser'
 import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
@@ -46,15 +46,15 @@ export function ModalReview({
   const [rating, setRating] = useState(review?.rating ?? 0)
   const [hover, setHover] = useState(0)
 
-  const createReview = async (newReview: NewReview) => {
-    const response = await api.post('/reviews', newReview)
-
-    return response.data
-  }
-
   const queryClient = useQueryClient()
 
-  const mutation = useMutation(createReview, {
+  const createMutation = useMutation(createReview, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['resources'])
+    }
+  })
+
+  const updateMutation = useMutation(updateReview, {
     onSuccess: () => {
       queryClient.invalidateQueries(['resources'])
     }
@@ -74,12 +74,24 @@ export function ModalReview({
 
     setIsLoading(true)
 
-    await mutation.mutateAsync({
-      comment,
-      rating,
-      resource_id: resource!.id,
-      user_id: defaultUser.id
-    })
+    if (isEdit) {
+      await updateMutation.mutateAsync({
+        id: +review!.id,
+        comment,
+        rating,
+        resource_id: resource!.id,
+        user_id: review!.user.id
+      })
+    }
+
+    if (!isEdit) {
+      await createMutation.mutateAsync({
+        comment,
+        rating,
+        resource_id: resource!.id,
+        user_id: defaultUser.id
+      })
+    }
 
     const updatedResource = await getResource(+resource!.id)
     setResource(updatedResource)

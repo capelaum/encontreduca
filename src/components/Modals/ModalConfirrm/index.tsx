@@ -67,7 +67,6 @@ export const openModalConfirm = ({
     },
     onCancel: () => closeModal(id),
     onConfirm: () => {
-      closeModal(id)
       onConfirm()
     }
   })

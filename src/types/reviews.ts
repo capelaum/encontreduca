@@ -15,3 +15,8 @@ export type NewReview = Pick<
   Review,
   'user_id' | 'resource_id' | 'rating' | 'comment'
 >
+
+export type UpdatedReview = Pick<
+  Review,
+  'id' | 'user_id' | 'resource_id' | 'rating' | 'comment'
+>
