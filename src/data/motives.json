@@ -32,17 +32,18 @@
     },
     {
       "id": 7,
-      "name": "Sem relação com o tópico",
+      "name": "Spam",
       "type": "review"
     },
+
     {
       "id": 8,
-      "name": "Spam",
+      "name": "Linguagem Obscena",
       "type": "review"
     },
     {
       "id": 9,
-      "name": "Linguagem Obscena",
+      "name": "Sem relação com o tópico",
       "type": "review"
     },
     {
@@ -62,7 +63,7 @@
     },
     {
       "id": 13,
-      "name": "Não foi útil",
+      "name": "Outro",
       "type": "review"
     }
   ]

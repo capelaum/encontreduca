@@ -3,7 +3,6 @@ import { GoogleMap, Marker } from '@react-google-maps/api'
 import { mapContainerStyle, mapOptions } from 'config/options'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
-import { CategoryType } from 'types/categories'
 import { ResourceType } from 'types/resources'
 import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
@@ -11,10 +10,9 @@ import { SideButtons } from './SideButtons'
 
 interface MapDarkProps {
   resources: ResourceType[]
-  categories: CategoryType[]
 }
 
-export default function MapDark({ resources, categories }: MapDarkProps) {
+export default function MapDark({ resources }: MapDarkProps) {
   const {
     center,
     zoom,
@@ -39,7 +37,7 @@ export default function MapDark({ resources, categories }: MapDarkProps) {
 
   return (
     <Box sx={{ width: '100vw', height: '100vh' }}>
-      <Search categories={categories} />
+      <Search />
 
       <GoogleMap
         zoom={zoom}

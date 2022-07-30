@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react'
-import { CategoryFilter } from 'types/categories'
+import { CategoryFilter, CategoryType } from 'types/categories'
+import { Motive } from 'types/motives'
 import { ResourceType } from 'types/resources'
 import { Review } from 'types/reviews'
 import { defaultUser } from 'utils/defaultUser'
@@ -9,6 +10,10 @@ interface ResourceProviderProps {
 }
 
 interface ResourceContextData {
+  categories: CategoryType[]
+  setCategories: (categories: CategoryType[]) => void
+  motives: Motive[]
+  setMotives: (motives: Motive[]) => void
   resources: ResourceType[]
   setResources: (resources: ResourceType[]) => void
   resource: ResourceType | null
@@ -30,6 +35,13 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resources, setResources] = useState<ResourceType[]>(
     [] as ResourceType[]
   )
+
+  const [categories, setCategories] = useState<CategoryType[]>(
+    [] as CategoryType[]
+  )
+
+  const [motives, setMotives] = useState<Motive[]>([] as Motive[])
+
   const [activeFilter, setActiveFilter] = useState<CategoryFilter | null>(null)
 
   const filterResources = (resourcesList: ResourceType[]) => {
@@ -76,6 +88,10 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const ResourceContextProviderValues = {
+    categories,
+    setCategories,
+    motives,
+    setMotives,
     resources,
     setResources,
     resource,

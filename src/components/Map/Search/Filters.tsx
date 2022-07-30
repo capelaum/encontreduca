@@ -8,17 +8,13 @@ import {
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { useResource } from 'contexts/resourceContext'
-import { CategoryFilter, CategoryType } from 'types/categories'
+import { CategoryFilter } from 'types/categories'
 import { getCategoryFilters } from 'utils/categoryFormatters'
 
-interface FiltersProps {
-  categories: CategoryType[]
-}
+export function Filters() {
+  const { categories, activeFilter, setActiveFilter } = useResource()
 
-export function Filters({ categories }: FiltersProps) {
   const categoryFilters = getCategoryFilters(categories)
-
-  const { activeFilter, setActiveFilter } = useResource()
 
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
   const theme = useMantineTheme()

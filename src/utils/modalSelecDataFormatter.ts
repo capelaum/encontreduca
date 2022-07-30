@@ -1,6 +1,7 @@
-import { Category, ModalSelectData, Motive } from 'types/selectData'
+import { CategoryType } from 'types/categories'
+import { ModalSelectData, Motive } from 'types/motives'
 
-export const getModalSelectDataMotives = (motives: Motive[], type: string) => {
+export const getMotivesSelectData = (motives: Motive[], type: string) => {
   const reviewMotives = motives.reduce((acc, motive) => {
     if (motive.type === type) {
       acc.push({
@@ -15,7 +16,7 @@ export const getModalSelectDataMotives = (motives: Motive[], type: string) => {
   return reviewMotives
 }
 
-export const getModalSelectDataCategories = (categories: Category[]) => {
+export const getCategoriesSelectData = (categories: CategoryType[]) => {
   const resourceCategories = categories.reduce((acc, category) => {
     acc.push({
       value: category.id.toString(),

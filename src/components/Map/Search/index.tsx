@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Group, useMantineTheme } from '@mantine/core'
-import { CategoryType } from 'types/categories'
 import { Filters } from './Filters'
 import { SearchGroup } from './SearchGroup'
 
-interface SearchProps {
-  categories: CategoryType[]
-}
-
-export function Search({ categories }: SearchProps) {
+export function Search() {
   const theme = useMantineTheme()
 
   return (
@@ -24,7 +19,7 @@ export function Search({ categories }: SearchProps) {
     >
       <SearchGroup />
 
-      <Filters categories={categories} />
+      <Filters />
     </Group>
   )
 }

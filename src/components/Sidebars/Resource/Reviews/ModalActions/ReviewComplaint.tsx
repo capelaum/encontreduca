@@ -5,9 +5,9 @@ import {
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
-import data from 'data/motives.json'
+import { useResource } from 'contexts/resourceContext'
 import { MdWarning } from 'react-icons/md'
-import { getModalSelectDataMotives } from 'utils/modalSelecDataFormatter'
+import { getMotivesSelectData } from 'utils/modalSelecDataFormatter'
 import { ActionItem } from '../ActionItem'
 
 interface ReviewComplaintProps {
@@ -15,7 +15,9 @@ interface ReviewComplaintProps {
 }
 
 export function ReviewComplaint({ reviewId }: ReviewComplaintProps) {
-  const reviewMotives = getModalSelectDataMotives(data.motives, 'review')
+  const { motives } = useResource()
+
+  const reviewMotives = getMotivesSelectData(motives, 'review_complaint')
   const { openContextModal } = useModals()
 
   const theme = useMantineTheme()

@@ -14,21 +14,25 @@ import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import data from 'data/categories.json'
 import { useEffect } from 'react'
 import { GiStarsStack } from 'react-icons/gi'
 import { IoIosSend } from 'react-icons/io'
 import { TbChevronDown } from 'react-icons/tb'
-import { getModalSelectDataCategories } from 'utils/modalSelecDataFormatter'
+import { CategoryType } from 'types/categories'
+import { getCategoriesSelectData } from 'utils/modalSelecDataFormatter'
 import { CoverDropzone } from './CoverDropzone'
 import { Local } from './Local'
 
 interface ResourceFormProps {
   isCreateResource?: boolean
+  categories: CategoryType[]
 }
 
-export function ResourceForm({ isCreateResource }: ResourceFormProps) {
-  const resourceCategories = getModalSelectDataCategories(data.categories)
+export function ResourceForm({
+  isCreateResource,
+  categories
+}: ResourceFormProps) {
+  const resourceCategories = getCategoriesSelectData(categories)
   const { setCreateResourceOpened, setChangeResourceOpened } = useSidebar()
 
   const { resource } = useResource()

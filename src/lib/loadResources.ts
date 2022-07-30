@@ -32,7 +32,7 @@ export async function getResource(id: number): Promise<ResourceType> {
   const { data } = await api.get(`resources/${id}`)
 
   if (!data) {
-    throw new Error('No resources data returned from API')
+    throw new Error('No resource data returned from API')
   }
 
   const resource = {

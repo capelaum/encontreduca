@@ -11,19 +11,23 @@ import { UpdateProfile } from 'components/Sidebars/Profile'
 import { Resource } from 'components/Sidebars/Resource'
 import { ResourceForm } from 'components/Sidebars/ResourceForm'
 import { ResourceList } from 'components/Sidebars/ResourceList'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { loadCategories } from 'lib/loadCategories'
+import { loadMotives } from 'lib/loadMotives'
 import { loadResources } from 'lib/loadResources'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { CategoryType } from 'types/categories'
 import { libraries } from 'types/googleMaps'
+import { Motive } from 'types/motives'
 
 interface MapProps {
   categories: CategoryType[]
+  motives: Motive[]
 }
 
-export default function Map({ categories }: MapProps) {
+export default function Map({ categories, motives }: MapProps) {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
     libraries
@@ -45,6 +49,11 @@ export default function Map({ categories }: MapProps) {
     votingPanelOpened,
     setVotingPanelOpened
   } = useSidebar()
+
+  const { setCategories, setMotives } = useResource()
+
+  setCategories(categories)
+  setMotives(motives)
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
@@ -84,9 +93,9 @@ export default function Map({ categories }: MapProps) {
       </Head>
 
       {dark ? (
-        <MapDark resources={resources!} categories={categories} />
+        <MapDark resources={resources} />
       ) : (
-        <MapLight resources={resources!} categories={categories} />
+        <MapLight resources={resources} />
       )}
 
       <Sidebar
@@ -122,7 +131,7 @@ export default function Map({ categories }: MapProps) {
         setOpened={setChangeResourceOpened}
         zIndex={4}
       >
-        <ResourceForm />
+        <ResourceForm categories={categories} />
       </Sidebar>
 
       <Sidebar
@@ -130,7 +139,7 @@ export default function Map({ categories }: MapProps) {
         setOpened={setCreateResourceOpened}
         zIndex={4}
       >
-        <ResourceForm isCreateResource />
+        <ResourceForm isCreateResource categories={categories} />
       </Sidebar>
 
       <Sidebar opened={profileOpened} setOpened={setProfileOpened} zIndex={4}>
@@ -142,6 +151,7 @@ export default function Map({ categories }: MapProps) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const categories: CategoryType[] = await loadCategories()
+  const motives: Motive[] = await loadMotives()
 
   if (!categories) {
     return {
@@ -151,7 +161,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      categories
+      categories,
+      motives
     }
   }
 }

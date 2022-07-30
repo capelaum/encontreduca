@@ -39,7 +39,7 @@ export function ReviewDelete({ reviewId }: ReviewDeleteProps) {
     },
     onError: () => {
       showToastError({
-        title: 'Ooops, ocorreu um erro ao deletar sua avaliação',
+        title: 'Ooops, ocorreu um erro ao excluir sua avaliação',
         description: 'Por favor, tente novamente mais tarde.'
       })
     }
@@ -67,7 +67,7 @@ export function ReviewDelete({ reviewId }: ReviewDeleteProps) {
       type: 'success',
       theme: dark ? 'dark' : 'light',
       isLoading: false,
-      autoClose: 3000,
+      autoClose: 5000,
       icon: <BsTrashFill size={24} color={theme.colors.brand[7]} />
     })
   }

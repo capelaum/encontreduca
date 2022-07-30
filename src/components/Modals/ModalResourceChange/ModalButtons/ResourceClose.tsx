@@ -3,9 +3,8 @@ import { useModals } from '@mantine/modals'
 import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { useResource } from 'contexts/resourceContext'
-import data from 'data/motives.json'
 import { MdCancel } from 'react-icons/md'
-import { getModalSelectDataMotives } from 'utils/modalSelecDataFormatter'
+import { getMotivesSelectData } from 'utils/modalSelecDataFormatter'
 import { ModalResourceChangeButton } from '../ModalResourceChangeButton'
 
 interface ResourceCloseProps {
@@ -14,7 +13,7 @@ interface ResourceCloseProps {
 
 export function ResourceClose({ onClose }: ResourceCloseProps) {
   const { openContextModal } = useModals()
-  const { resource } = useResource()
+  const { resource, motives } = useResource()
 
   const theme = useMantineTheme()
 
@@ -23,9 +22,9 @@ export function ResourceClose({ onClose }: ResourceCloseProps) {
 
   const { classes } = useModalStyles(dark)
 
-  const closeResourceMotives = getModalSelectDataMotives(
-    data.motives,
-    'resource'
+  const closeResourceMotives = getMotivesSelectData(
+    motives,
+    'resource_complaint'
   )
 
   const openModalResourceClose = () =>
