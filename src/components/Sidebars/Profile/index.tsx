@@ -9,6 +9,7 @@ import { useInputState } from '@mantine/hooks'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { FaUserEdit } from 'react-icons/fa'
 import { AvatarDropzone } from './AvatarDropzone'
@@ -16,15 +17,15 @@ import { DeleteUserButton } from './DeleteUserButton'
 
 export function UpdateProfile() {
   const { setProfileOpened } = useSidebar()
+  const { user } = useResource()
 
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const [userName, setUserName] = useInputState('')
-  const [userEmail, setUserEmail] = useInputState('')
-  const [userCpf, setUserCpf] = useInputState('')
+  const [userName, setUserName] = useInputState(user?.name ?? '')
+  const [userEmail, setUserEmail] = useInputState(user?.email ?? '')
   const [userPassword, setUserPassword] = useInputState('')
   const [userPasswordRepeat, setUserPasswordRepeat] = useInputState('')
 
@@ -57,17 +58,6 @@ export function UpdateProfile() {
         onChange={setUserEmail}
         value={userEmail}
         required
-        sx={inputStyles(theme, dark)}
-      />
-
-      <TextInput
-        type="text"
-        radius="md"
-        variant="filled"
-        placeholder="CPF"
-        label="CPF"
-        onChange={setUserCpf}
-        value={userCpf}
         sx={inputStyles(theme, dark)}
       />
 

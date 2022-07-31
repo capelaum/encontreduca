@@ -8,5 +8,5 @@ export type User = {
   updated_at: string
   resource_count?: number
   review_count?: number
-  resourcesIds?: string[] | number[]
+  resourcesIds: number[]
 }

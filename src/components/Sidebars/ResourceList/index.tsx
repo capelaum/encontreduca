@@ -1,6 +1,5 @@
 import {
   Box,
-  CSSObject,
   Stack,
   Text,
   TextInput,
@@ -9,10 +8,12 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { MdSearch } from 'react-icons/md'
 import { ResourceType } from 'types/resources'
 import { ResourceItem } from './ResourceItem'
+import { searchInputStyles } from './searchInputStyles'
 
 interface ResourceListProps {
   isVotingPainel?: boolean
@@ -21,7 +22,11 @@ interface ResourceListProps {
 
 export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
   const { setSavedResourcesOpened, setVotingPanelOpened } = useSidebar()
+  const { user } = useResource()
 
+  const userApprovedResources = resources.filter(
+    ({ id, approved }) => approved && user && user.resourcesIds.includes(+id)
+  )
   const notApprovedResources = resources.filter(({ approved }) => !approved)
 
   const theme = useMantineTheme()
@@ -36,30 +41,25 @@ export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
       ))
     }
 
-    return resources.map((resource) => (
+    if (userApprovedResources.length <= 0) {
+      return (
+        <Text
+          px="md"
+          size="md"
+          weight={500}
+          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+        >
+          Hey, você não tem nenhum recursso salvo 😕.
+        </Text>
+      )
+    }
+
+    return userApprovedResources.map((resource) => (
       <ResourceItem key={`resource-${resource.id}`} resource={resource} />
     ))
   }
 
-  const searchInputStyles = (): CSSObject => ({
-    width: '100%',
-    zIndex: 1,
-    borderRadius: theme.radius.md,
-    input: {
-      color: dark ? theme.white : theme.colors.brand[7],
-      backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[2],
-      border: 'none',
-      '&:focus': {
-        backgroundColor: dark ? theme.colors.brand[8] : theme.white,
-        outline: `1px solid ${theme.colors.cyan[3]}`
-      },
-      '&::placeholder': {
-        color: theme.colors.gray[6]
-      }
-    }
-  })
-
-  const rightSection = (
+  const rightSection = () => (
     <Tooltip
       multiline
       label="Busque os recursos educacionais por nome"
@@ -102,7 +102,6 @@ export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
           }
         />
       </Box>
-
       {isVotingPainel && (
         <Text px="md">
           <Text
@@ -118,22 +117,25 @@ export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
         </Text>
       )}
 
-      <Box px="md">
-        <TextInput
-          size="md"
-          radius="md"
-          type="search"
-          variant="filled"
-          id="search-resource"
-          rightSection={rightSection}
-          rightSectionWidth={40}
-          placeholder="Busque um recurso"
-          aria-label="Buscar recursos educacionais"
-          sx={searchInputStyles}
-        />
-      </Box>
-
       <Stack spacing={0} pt={8}>
+        {isVotingPainel ||
+          (userApprovedResources.length > 0 && (
+            <Box px="md">
+              <TextInput
+                size="md"
+                radius="md"
+                type="search"
+                variant="filled"
+                id="search-resource"
+                rightSection={rightSection()}
+                rightSectionWidth={40}
+                placeholder="Busque um recurso"
+                aria-label="Buscar recursos educacionais"
+                sx={searchInputStyles(theme, dark)}
+              />
+            </Box>
+          ))}
+
         {renderResourceItems()}
       </Stack>
     </Stack>

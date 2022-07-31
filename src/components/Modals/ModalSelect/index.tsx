@@ -10,13 +10,13 @@ import { ContextModalProps } from '@mantine/modals'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
+import { useResource } from 'contexts/resourceContext'
 import { createResourceComplaint, createReviewComplaint } from 'lib/complaints'
 import { useState } from 'react'
 import { IoIosSend } from 'react-icons/io'
 import { TbChevronDown } from 'react-icons/tb'
 import { ResourceType } from 'types/resources'
 import { Review } from 'types/reviews'
-import { defaultUser } from 'utils/defaultUser'
 import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 export function ModalSelect({
@@ -31,6 +31,8 @@ export function ModalSelect({
 }>) {
   const { motives, resource, isReviewComplaint, review } = innerProps
   const { closeModal } = context
+
+  const { user } = useResource()
 
   const theme = useMantineTheme()
 
@@ -65,7 +67,7 @@ export function ModalSelect({
 
     if (isReviewComplaint && review) {
       await createReviewComplaint({
-        user_id: defaultUser.id,
+        user_id: user!.id,
         review_id: review.id,
         motive_id: motiveId
       })
@@ -73,7 +75,7 @@ export function ModalSelect({
 
     if (!isReviewComplaint && resource) {
       await createResourceComplaint({
-        user_id: defaultUser.id,
+        user_id: user!.id,
         resource_id: resource.id,
         motive_id: motiveId
       })

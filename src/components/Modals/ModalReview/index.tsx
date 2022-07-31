@@ -19,7 +19,6 @@ import { createReview, updateReview } from 'lib/reviewsLib'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
 import { Review } from 'types/reviews'
-import { defaultUser } from 'utils/defaultUser'
 import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 export function ModalReview({
@@ -34,7 +33,7 @@ export function ModalReview({
   const { onConfirmText, isEdit, review } = innerProps
   const { closeModal } = context
 
-  const { resource, setResource } = useResource()
+  const { resource, setResource, user } = useResource()
 
   const theme = useMantineTheme()
 
@@ -89,7 +88,7 @@ export function ModalReview({
         comment,
         rating,
         resource_id: resource!.id,
-        user_id: defaultUser.id
+        user_id: user!.id
       })
     }
 
@@ -123,7 +122,7 @@ export function ModalReview({
         }}
       />
 
-      <Profile isModal user={review?.user ?? defaultUser} />
+      <Profile isModal user={review?.user ?? user!} />
 
       <Group spacing={2} align="center">
         {[...Array(5)].map((_, index) => {

@@ -16,22 +16,26 @@ import { useSidebar } from 'contexts/sidebarContext'
 import { loadCategories } from 'lib/loadCategories'
 import { loadMotives } from 'lib/loadMotives'
 import { loadResources } from 'lib/resourcesLib'
+import { getUser } from 'lib/usersLib'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import { CategoryType } from 'types/categories'
 import { libraries } from 'types/googleMaps'
 import { Motive } from 'types/motives'
+import { User } from 'types/users'
 
 interface MapProps {
   categories: CategoryType[]
   motives: Motive[]
+  user: User
 }
 
-export default function Map({ categories, motives }: MapProps) {
-  const { setCategories, setMotives } = useResource()
+export default function Map({ categories, motives, user }: MapProps) {
+  const { setUser, setCategories, setMotives } = useResource()
 
   useEffect(() => {
+    setUser(user)
     setCategories(categories)
     setMotives(motives)
   }, [])
@@ -155,6 +159,7 @@ export default function Map({ categories, motives }: MapProps) {
 export const getServerSideProps: GetServerSideProps = async () => {
   const categories: CategoryType[] = await loadCategories()
   const motives: Motive[] = await loadMotives()
+  const user: User = await getUser(1)
 
   if (!categories) {
     return {
@@ -165,7 +170,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       categories,
-      motives
+      motives,
+      user
     }
   }
 }

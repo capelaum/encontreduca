@@ -3,13 +3,15 @@ import { CategoryFilter, CategoryType } from 'types/categories'
 import { Motive } from 'types/motives'
 import { ResourceType } from 'types/resources'
 import { Review } from 'types/reviews'
-import { defaultUser } from 'utils/defaultUser'
+import { User } from 'types/users'
 
 interface ResourceProviderProps {
   children: ReactNode
 }
 
 interface ResourceContextData {
+  user: User | null
+  setUser: (user: User | null) => void
   categories: CategoryType[]
   setCategories: (categories: CategoryType[]) => void
   motives: Motive[]
@@ -31,6 +33,8 @@ const ResourceContext = createContext<ResourceContextData>(
 )
 
 export function ResourceProvider({ children }: ResourceProviderProps) {
+  const [user, setUser] = useState<User | null>(null)
+
   const [resource, setResource] = useState<ResourceType | null>(null)
   const [resources, setResources] = useState<ResourceType[]>(
     [] as ResourceType[]
@@ -74,20 +78,22 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getUserResourceReview = (reviews: Review[]) => {
-    const userReview = reviews.find(({ user_id }) => user_id === defaultUser.id)
+    const userReview = reviews.find(({ user_id }) => user_id === user?.id)
 
     return userReview ?? null
   }
 
   const getReviewsWithoutUser = (reviews: Review[]) => {
     const reviewsWithoutUser = reviews.filter(
-      ({ user_id }) => user_id !== defaultUser.id
+      ({ user_id }) => user_id !== user?.id
     )
 
     return reviewsWithoutUser
   }
 
   const ResourceContextProviderValues = {
+    user,
+    setUser,
     categories,
     setCategories,
     motives,

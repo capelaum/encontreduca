@@ -1,9 +1,12 @@
 import { Center, CSSObject } from '@mantine/core'
 import { DefaultAvatar } from 'components/Shared/DefaultAvatar'
 import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
+import { useResource } from 'contexts/resourceContext'
 import { useState } from 'react'
 
 export function AvatarDropzone() {
+  const { user } = useResource()
+
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null)
 
   const containerStyles = (): CSSObject => ({
@@ -20,7 +23,7 @@ export function AvatarDropzone() {
         containerStyles={containerStyles}
         setImage={setAvatarSrc}
       >
-        <DefaultAvatar avatarSrc={avatarSrc} size={180} />
+        <DefaultAvatar avatarSrc={user?.avatar_url ?? avatarSrc} size={180} />
       </DefaultDropzone>
     </Center>
   )
