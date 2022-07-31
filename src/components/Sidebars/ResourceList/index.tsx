@@ -41,19 +41,6 @@ export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
       ))
     }
 
-    if (userApprovedResources.length <= 0) {
-      return (
-        <Text
-          px="md"
-          size="md"
-          weight={500}
-          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-        >
-          Hey, você não tem nenhum recursso salvo 😕.
-        </Text>
-      )
-    }
-
     return userApprovedResources.map((resource) => (
       <ResourceItem key={`resource-${resource.id}`} resource={resource} />
     ))
@@ -118,25 +105,36 @@ export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
       )}
 
       <Stack spacing={0} pt={8}>
-        {isVotingPainel ||
-          (userApprovedResources.length > 0 && (
-            <Box px="md">
-              <TextInput
-                size="md"
-                radius="md"
-                type="search"
-                variant="filled"
-                id="search-resource"
-                rightSection={rightSection()}
-                rightSectionWidth={40}
-                placeholder="Busque um recurso"
-                aria-label="Buscar recursos educacionais"
-                sx={searchInputStyles(theme, dark)}
-              />
-            </Box>
-          ))}
+        {(!isVotingPainel && userApprovedResources.length <= 0) ||
+        (isVotingPainel && notApprovedResources.length <= 0) ? (
+          <Text
+            px="md"
+            size="md"
+            weight={500}
+            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+          >
+            Hey, não tem nenhum recursso por aqui 😕.
+          </Text>
+        ) : (
+          <Box px="md">
+            <TextInput
+              size="md"
+              radius="md"
+              type="search"
+              variant="filled"
+              id="search-resource"
+              rightSection={rightSection()}
+              rightSectionWidth={40}
+              placeholder="Busque um recurso"
+              aria-label="Buscar recursos educacionais"
+              sx={searchInputStyles(theme, dark)}
+            />
+          </Box>
+        )}
 
-        {renderResourceItems()}
+        <Stack spacing={0} pt={32}>
+          {renderResourceItems()}
+        </Stack>
       </Stack>
     </Stack>
   )
