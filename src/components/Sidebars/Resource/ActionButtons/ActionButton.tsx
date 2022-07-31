@@ -10,9 +10,15 @@ interface ActionButtonProps {
   icon: React.ReactElement
   text: string
   onClick?: () => void
+  isLoading?: boolean
 }
 
-export function ActionButton({ text, icon, onClick }: ActionButtonProps) {
+export function ActionButton({
+  text,
+  icon,
+  onClick,
+  isLoading
+}: ActionButtonProps) {
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -29,13 +35,25 @@ export function ActionButton({ text, icon, onClick }: ActionButtonProps) {
         onClick={onClick}
         variant="outline"
         size="xl"
+        loading={isLoading}
         title={text}
         radius="md"
         sx={{
           color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
           border: `1px solid${
             dark ? theme.colors.cyan[3] : theme.colors.brand[7]
-          }`
+          }`,
+          '&[data-loading]': {
+            '&::before': {
+              backgroundColor: dark
+                ? 'rgba(0, 0, 0, 0.5)'
+                : 'rgba(255, 255, 255, 0.5)'
+            },
+            svg: {
+              zIndex: 3,
+              stroke: theme.colors.cyan[3]
+            }
+          }
         }}
       >
         {icon}

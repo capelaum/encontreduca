@@ -31,11 +31,11 @@ export function Resource({ reviews }: ResourceProps) {
 
   useEffect(() => {
     if (resource) {
-      const getResourceReviews = reviews.filter(
+      const resourceReviewsData = reviews.filter(
         ({ resource_id }) => resource.id === resource_id
       )
 
-      setResourceReviews(getResourceReviews)
+      setResourceReviews(resourceReviewsData)
     }
   }, [resource])
 
