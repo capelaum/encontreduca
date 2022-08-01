@@ -14,16 +14,17 @@ import {
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
-import {
-  defaultCenter,
-  mapOptionsForm,
-  mapOptionsFormLight
-} from 'config/options'
+import { mapOptionsForm, mapOptionsFormLight } from 'config/options'
 import { useResource } from 'contexts/resourceContext'
 import { MdEditLocationAlt } from 'react-icons/md'
-import { libraries } from 'types/googleMaps'
+import { LatLngLiteral, libraries } from 'types/googleMaps'
 
-export function Local() {
+interface LocalProps {
+  localPosition: LatLngLiteral
+  setLocalPosition: (position: LatLngLiteral) => void
+}
+
+export function Local({ localPosition, setLocalPosition }: LocalProps) {
   const { resource } = useResource()
   const { openModal, closeModal } = useModals()
 
@@ -51,7 +52,12 @@ export function Local() {
       ...modalStyles,
       overflow: 'outside',
       title: <Title name="Editar local" />,
-      children: <ModalResourceLocalChange onClose={() => closeModal(id)} />
+      children: (
+        <ModalResourceLocalChange
+          onClose={() => closeModal(id)}
+          setLocalPosition={setLocalPosition}
+        />
+      )
     })
   }
 
@@ -63,15 +69,15 @@ export function Local() {
     return (
       <GoogleMap
         clickableIcons={false}
-        zoom={14}
-        center={resource ? resource.position : defaultCenter}
+        zoom={12}
+        center={resource ? resource.position : localPosition}
         mapContainerStyle={mapContainerStyle}
         options={dark ? mapOptionsForm : mapOptionsFormLight}
       >
         {resource ? (
           <ResourceMarker resource={resource} clickable={false} />
         ) : (
-          <Marker position={defaultCenter} clickable={false} />
+          <Marker position={localPosition} clickable={false} />
         )}
       </GoogleMap>
     )

@@ -42,14 +42,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <ResourceProvider>
             <SidebarProvider>
-              <ModalsProvider
-                modals={{
-                  review: ModalReview,
-                  select: ModalSelect,
-                  vote: ModalVote
-                }}
-              >
-                <MapProvider>
+              <MapProvider>
+                <ModalsProvider
+                  modals={{
+                    review: ModalReview,
+                    select: ModalSelect,
+                    vote: ModalVote
+                  }}
+                >
                   <GlobalStyles />
                   <ToastContainer
                     autoClose={5000}
@@ -57,8 +57,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                     position="top-right"
                   />
                   <Component {...pageProps} />
-                </MapProvider>
-              </ModalsProvider>
+                </ModalsProvider>
+              </MapProvider>
             </SidebarProvider>
           </ResourceProvider>
         </QueryClientProvider>

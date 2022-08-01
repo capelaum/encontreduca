@@ -1,6 +1,5 @@
 import {
   Group,
-  LoadingOverlay,
   Stack,
   Textarea,
   UnstyledButton,
@@ -10,6 +9,7 @@ import {
 import { ContextModalProps } from '@mantine/modals'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { DefaultOverlay } from 'components/Shared/DefaultOverlay'
 import { Profile } from 'components/Shared/Profile'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
@@ -112,15 +112,7 @@ export function ModalReview({
     <Stack spacing="md">
       <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar Modal" />
 
-      <LoadingOverlay
-        visible={isLoading}
-        overlayBlur={2}
-        overlayOpacity={0.3}
-        overlayColor={dark ? theme.black : theme.white}
-        sx={{
-          svg: { stroke: dark ? theme.colors.cyan[3] : theme.colors.brand[7] }
-        }}
-      />
+      <DefaultOverlay visible={isLoading} />
 
       <Profile isModal user={review?.user ?? user!} />
 

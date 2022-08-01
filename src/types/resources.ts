@@ -9,8 +9,8 @@ export type ResourceType = {
   name: string
   category_id: string | number
   category: CategoryType
-  latitude: string
-  longitude: string
+  latitude: string | number
+  longitude: string | number
   position: LatLngLiteral
   address: string
   website: string | null
@@ -23,8 +23,31 @@ export type ResourceType = {
   reviews: Review[]
 }
 
+export type NewResource = {
+  user_id: string | number
+  name: string
+  category_id: string | number
+  latitude: string | number
+  longitude: string | number
+  address: string
+  phone: string | null
+  website: string | null
+  cover: string
+}
+
 export type NewResourceComplaint = {
   user_id: string | number
   resource_id: string | number
   motive_id: string | number
+}
+
+export interface ResourceFormValues {
+  resourceName: string
+  resourceAddress: string
+  resourcePhone: string
+  resourceWebsite: string
+  categoryId: string | number
+  resourceCover: string
+  latitude: number
+  longitude: number
 }

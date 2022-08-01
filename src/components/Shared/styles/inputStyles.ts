@@ -2,19 +2,29 @@ import { CSSObject, MantineTheme } from '@mantine/core'
 
 export const inputStyles = (theme: MantineTheme, dark: boolean): CSSObject => ({
   input: {
+    border: `1px solid ${dark ? theme.colors.cyan[3] : theme.colors.brand[7]}`,
+    backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
     color: dark ? theme.white : theme.colors.brand[7],
-    backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[2],
-    border: 'none',
-    '&:focus': {
-      backgroundColor: dark ? theme.colors.brand[8] : theme.white,
-      outline: `1px solid ${theme.colors.cyan[3]}`
-    },
     '&::placeholder': {
       color: dark ? theme.colors.gray[6] : theme.colors.gray[6]
+    },
+    '&:focus': {
+      border: `1px solid ${dark ? theme.colors.cyan[2] : theme.colors.cyan[3]}`
     }
   },
   label: {
-    color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
+    color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
+    marginBottom: theme.spacing.xs
+  },
+  '.mantine-TextInput-invalid, .mantine-Select-invalid': {
+    border: `1px solid ${theme.colors.red[6]}`,
+    '&:focus': {
+      border: `1px solid ${theme.colors.red[6]}`
+    }
+  },
+  '.mantine-TextInput-error, .mantine-Select-error': {
+    paddingTop: '4px',
+    color: theme.colors.red[6]
   }
 })
 

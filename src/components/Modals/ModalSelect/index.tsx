@@ -1,5 +1,4 @@
 import {
-  LoadingOverlay,
   Select,
   Stack,
   Text,
@@ -8,6 +7,7 @@ import {
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { DefaultOverlay } from 'components/Shared/DefaultOverlay'
 import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'
@@ -98,15 +98,7 @@ export function ModalSelect({
     <Stack spacing="md">
       <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar modal" />
 
-      <LoadingOverlay
-        visible={isLoading}
-        overlayBlur={2}
-        overlayOpacity={0.3}
-        overlayColor={dark ? theme.black : theme.white}
-        sx={{
-          svg: { stroke: dark ? theme.colors.cyan[3] : theme.colors.brand[7] }
-        }}
-      />
+      <DefaultOverlay visible={isLoading} />
 
       {resource && (
         <Text

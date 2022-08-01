@@ -7,15 +7,19 @@ import {
 import { buttonStyles } from 'components/Shared/styles/inputStyles'
 
 interface ButtonsProps {
-  onCancel: () => void
-  onConfirm: () => void
+  onConfirmType?: 'button' | 'submit' | 'reset' | undefined
+  onCancelType?: 'button' | 'submit' | 'reset' | undefined
   onConfirmText: string
+  onCancel: () => void
+  onConfirm?: () => void
 }
 
 export function ConfirmButtons({
+  onConfirmType,
+  onCancelType,
+  onConfirmText,
   onCancel,
-  onConfirm,
-  onConfirmText
+  onConfirm
 }: ButtonsProps) {
   const theme = useMantineTheme()
 
@@ -25,6 +29,7 @@ export function ConfirmButtons({
   return (
     <Group mt="md" spacing="md" align="center" position="right">
       <Button
+        type={onCancelType ?? 'button'}
         size="sm"
         radius="md"
         variant="outline"
@@ -40,6 +45,7 @@ export function ConfirmButtons({
       </Button>
 
       <Button
+        type={onConfirmType ?? 'button'}
         size="sm"
         radius="md"
         variant="default"

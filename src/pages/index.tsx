@@ -138,7 +138,7 @@ export default function Map({ categories, motives, user }: MapProps) {
         setOpened={setChangeResourceOpened}
         zIndex={4}
       >
-        <ResourceForm categories={categories} />
+        <ResourceForm />
       </Sidebar>
 
       <Sidebar
@@ -146,7 +146,7 @@ export default function Map({ categories, motives, user }: MapProps) {
         setOpened={setCreateResourceOpened}
         zIndex={4}
       >
-        <ResourceForm isCreateResource categories={categories} />
+        <ResourceForm isCreateResource />
       </Sidebar>
 
       <Sidebar opened={profileOpened} setOpened={setProfileOpened} zIndex={4}>

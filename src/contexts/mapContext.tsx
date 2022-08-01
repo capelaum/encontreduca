@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
-import { useModals } from '@mantine/modals'
-import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { defaultCenter } from 'config/options'
 import {
   createContext,
@@ -56,15 +52,6 @@ export function MapProvider({ children }: MapProviderProps) {
     useState<LatLngLiteral>(defaultCenter)
   const [currentCenter, setCurrentCenter] =
     useState<LatLngLiteral>(defaultCenter)
-
-  const { openConfirmModal, closeModal } = useModals()
-
-  const theme = useMantineTheme()
-
-  const { colorScheme } = useMantineColorScheme()
-  const dark = colorScheme === 'dark'
-
-  const { classes } = useModalStyles(dark)
 
   const mapRef = useRef<GoogleMapsMap>()
 

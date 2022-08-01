@@ -13,9 +13,10 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { buttonStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
-import { defaultCenter, mapOptions, mapOptionsLight } from 'config/options'
+import { mapOptions, mapOptionsLight } from 'config/options'
+import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { MdMyLocation, MdPlace } from 'react-icons/md'
 import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
 import { categorySwitch } from 'utils/categorySwitch'
@@ -23,20 +24,19 @@ import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 interface ModalResourceLocalChangeProps {
   onClose: () => void
+  setLocalPosition: (position: LatLngLiteral) => void
 }
 
 export function ModalResourceLocalChange({
-  onClose
+  onClose,
+  setLocalPosition
 }: ModalResourceLocalChangeProps) {
+  const { currentLocation } = useMap()
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
-
-  const [currentCenter, setCurrentCenter] =
-    useState<LatLngLiteral>(defaultCenter)
-
-  console.log('🚀 ~ currentCenter', currentCenter)
 
   const { resource } = useResource()
 
@@ -48,7 +48,9 @@ export function ModalResourceLocalChange({
   const mapRef = useRef<GoogleMapsMap>()
 
   const onIdle = useCallback(() => {
-    setCurrentCenter(mapRef.current!.getCenter()!.toJSON())
+    if (mapRef.current && mapRef.current.getCenter()) {
+      setLocalPosition(mapRef.current.getCenter()!.toJSON())
+    }
   }, [])
 
   const onMapLoad = useCallback((map: GoogleMapsMap) => {
@@ -59,7 +61,7 @@ export function ModalResourceLocalChange({
     if (!mapRef.current) return
 
     mapRef.current.panTo({ lat: position.lat, lng: position.lng })
-    mapRef.current.setZoom(16)
+    mapRef.current.setZoom(14)
   }, [])
 
   const mapContainerStyle = {
@@ -91,8 +93,8 @@ export function ModalResourceLocalChange({
             onLoad={onMapLoad}
             onIdle={onIdle}
             clickableIcons={false}
-            zoom={16}
-            center={resource ? resource.position : defaultCenter}
+            zoom={14}
+            center={resource ? resource.position : currentLocation}
             mapContainerStyle={mapContainerStyle}
             options={dark ? mapOptions : mapOptionsLight}
           />
@@ -123,7 +125,7 @@ export function ModalResourceLocalChange({
           radius="md"
           leftIcon={<MdMyLocation size={16} />}
           onClick={() =>
-            moveToLocation(resource ? resource.position : defaultCenter)
+            moveToLocation(resource ? resource.position : currentLocation)
           }
           sx={buttonStyles(theme, dark)}
         >
@@ -135,8 +137,8 @@ export function ModalResourceLocalChange({
           onConfirm={() => {
             onClose()
             showToast({
-              title: 'Novo local salvo com sucesso!',
-              description: 'Agradecemos sua participação!',
+              title: 'Novo local salvo',
+              description: 'Local foi atualizado com sucesso!',
               icon: <MdPlace size={24} color={theme.colors.brand[7]} />,
               dark
             })

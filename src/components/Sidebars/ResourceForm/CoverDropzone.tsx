@@ -6,21 +6,30 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { UseFormReturnType } from '@mantine/form'
 import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TbPhoto } from 'react-icons/tb'
+import { ResourceFormValues } from 'types/resources'
 
 interface CoverDropzoneProps {
+  form: UseFormReturnType<ResourceFormValues>
   setImageBase64: (image: string | ArrayBuffer | null) => void
 }
 
-export function CoverDropzone({ setImageBase64 }: CoverDropzoneProps) {
+export function CoverDropzone({ form, setImageBase64 }: CoverDropzoneProps) {
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
   const [preview, setPreview] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (preview) {
+      form.setFieldValue('resourceCover', preview)
+    }
+  }, [preview])
 
   const containerStyles = (): CSSObject => ({
     height: 200
