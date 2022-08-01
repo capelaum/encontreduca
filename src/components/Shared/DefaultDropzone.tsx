@@ -17,7 +17,8 @@ interface DefaultDropzoneProps {
   radius: MantineNumberSize
   children: ReactNode
   containerStyles: Sx | (Sx | undefined)[] | undefined
-  setImage: (image: string | null) => void
+  setPreview: (image: string | null) => void
+  setImageBase64: (image: string | ArrayBuffer | null) => void
 }
 
 export function DefaultDropzone({
@@ -25,7 +26,8 @@ export function DefaultDropzone({
   radius,
   children,
   containerStyles,
-  setImage
+  setPreview,
+  setImageBase64
 }: DefaultDropzoneProps) {
   const theme = useMantineTheme()
 
@@ -34,17 +36,28 @@ export function DefaultDropzone({
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const uploadImage = async (files: File[]) => {
+  const handleOnDrop = async (files: File[]) => {
     setIsLoading(true)
 
-    const preview = URL.createObjectURL(files[0])
+    const file = files[0]
 
-    setImage(preview)
+    // set preview
+    const previewImage = URL.createObjectURL(file)
+    setPreview(previewImage)
+
+    // encode imageFile to base64 data URI
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+
+    reader.onload = async (event) => {
+      setImageBase64((event.target as FileReader).result)
+    }
+
     setIsLoading(false)
   }
 
   return (
-    <Stack my="md" spacing="md" align="center">
+    <Stack spacing="md" align="center">
       <Dropzone
         name={name}
         radius={radius}
@@ -52,8 +65,7 @@ export function DefaultDropzone({
         multiple={false}
         loading={isLoading}
         accept={IMAGE_MIME_TYPE}
-        onDrop={(file) => uploadImage(file)}
-        color="cyan"
+        onDrop={(files) => handleOnDrop(files)}
         onReject={() =>
           showToast({
             title: 'Oops! Formato não suportado.',

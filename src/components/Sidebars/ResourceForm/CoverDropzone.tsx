@@ -7,19 +7,20 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
-import { useResource } from 'contexts/resourceContext'
 import { useState } from 'react'
 import { TbPhoto } from 'react-icons/tb'
 
-export function CoverDropzone() {
-  const { resource } = useResource()
+interface CoverDropzoneProps {
+  setImageBase64: (image: string | ArrayBuffer | null) => void
+}
 
+export function CoverDropzone({ setImageBase64 }: CoverDropzoneProps) {
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const [coverSrc, setCoverSrc] = useState<string | null>(null)
+  const [preview, setPreview] = useState<string | null>(null)
 
   const containerStyles = (): CSSObject => ({
     height: 200
@@ -30,13 +31,14 @@ export function CoverDropzone() {
       name="cover"
       radius="md"
       containerStyles={containerStyles}
-      setImage={setCoverSrc}
+      setPreview={setPreview}
+      setImageBase64={setImageBase64}
     >
-      {coverSrc || resource?.cover ? (
+      {preview ? (
         <Image
           height={200}
           radius="md"
-          src={coverSrc ?? resource?.cover}
+          src={preview}
           alt="Imagem de capa do recurso"
           title="Imagem de capa do recurso"
           sx={{
