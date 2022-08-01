@@ -17,7 +17,6 @@ export default async function handler(
   }
 
   const { imageBase64, folder } = req.body
-  console.log('🚀 ~ imageBase64', imageBase64)
 
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -29,7 +28,7 @@ export default async function handler(
 
   const result = await cloudinary.uploader.upload_large(
     imageBase64,
-    { ...cloudinaryOptions, folder, chunk_size: 1000000 },
+    { ...cloudinaryOptions, folder, chunk_size: 500000 },
     (error, response) => {
       if (error) {
         res.status(500).json({

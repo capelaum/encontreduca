@@ -1,15 +1,22 @@
 import axios from 'axios'
 import { UploadApiResponse } from 'cloudinary'
 
-export const uploadImage = async (
-  imageBase64: string | ArrayBuffer | null,
+export type UploadImageValues = {
   folder: string
-) => {
+  imageBase64?: string | ArrayBuffer | null
+}
+
+export const uploadImage = async ({
+  folder,
+  imageBase64
+}: UploadImageValues) => {
   try {
-    const { data }: { data: UploadApiResponse } = await axios.post(
-      '/api/upload-image',
-      { imageBase64, folder }
-    )
+    const data: UploadApiResponse = await axios.post('/api/upload-image', {
+      folder,
+      imageBase64
+    })
+
+    console.log('🚀 ~ data', data)
 
     const { secure_url } = data
 

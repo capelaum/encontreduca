@@ -134,7 +134,11 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     setIsLoading(true)
 
     try {
-      const secure_url = await uploadImage(imageBase64, 'encontreduca/covers')
+      const secure_url = await uploadImage({
+        imageBase64,
+        folder: 'encontreduca/covers'
+      })
+
       form.values.resourceCover = secure_url
     } catch (error) {
       console.log('ERROR:', (error as Error).message)

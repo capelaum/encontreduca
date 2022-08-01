@@ -19,12 +19,12 @@ export function CoverDropzone({
   setImageBase64,
   setHasPreview
 }: CoverDropzoneProps) {
+  const [preview, setPreview] = useState<string | null>(null)
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
-
-  const [preview, setPreview] = useState<string | null>(null)
 
   useEffect(() => {
     if (preview) {

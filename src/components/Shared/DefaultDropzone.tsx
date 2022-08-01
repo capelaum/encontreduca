@@ -47,11 +47,12 @@ export function DefaultDropzone({
 
     // encode imageFile to base64 data URI
     const reader = new FileReader()
-    reader.readAsDataURL(file)
 
     reader.onload = (event) => {
-      setImageBase64((event.target as FileReader).result)
+      setImageBase64(event.target!.result)
     }
+
+    reader.readAsDataURL(file)
 
     setIsLoading(false)
   }
