@@ -49,7 +49,7 @@ export function DefaultDropzone({
     const reader = new FileReader()
     reader.readAsDataURL(file)
 
-    reader.onload = async (event) => {
+    reader.onload = (event) => {
       setImageBase64((event.target as FileReader).result)
     }
 

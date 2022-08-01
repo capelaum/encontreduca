@@ -19,6 +19,7 @@ import { uploadImage } from 'helpers/uploadImage'
 import {
   validateCategoryId,
   validatePhone,
+  validateResourceCover,
   validateWebsite
 } from 'helpers/validate'
 import { createResource } from 'lib/resourcesLib'
@@ -38,6 +39,17 @@ interface ResourceFormProps {
 }
 
 export function ResourceForm({ isCreateResource }: ResourceFormProps) {
+  const { currentLocation } = useMap()
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [localPosition, setLocalPosition] =
+    useState<LatLngLiteral>(currentLocation)
+
+  const [hasPreview, setHasPreview] = useState(false)
+  const [imageBase64, setImageBase64] = useState<string | ArrayBuffer | null>(
+    null
+  )
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -45,23 +57,15 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
 
   const { setCreateResourceOpened, setChangeResourceOpened } = useSidebar()
   const { resource, categories, user } = useResource()
-  const { currentLocation } = useMap()
 
   const resourceCategories = getCategoriesSelectData(categories)
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [localPosition, setLocalPosition] =
-    useState<LatLngLiteral>(currentLocation)
-  const [imageBase64, setImageBase64] = useState<string | ArrayBuffer | null>(
-    null
-  )
-
   const form = useForm<ResourceFormValues>({
     initialValues: {
-      resourceName: '',
-      resourceAddress: '',
-      resourcePhone: '',
-      resourceWebsite: '',
+      resourceName: 'Colégio Militar de Brasília',
+      resourceAddress: '902/904 - Asa Norte, Brasília - DF, 70790-020',
+      resourcePhone: '(61) 3424-1128',
+      resourceWebsite: 'http://www.cmb.eb.mil.br',
       resourceCover: '',
       categoryId: '',
       latitude: currentLocation.lat,
@@ -84,8 +88,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
       resourceWebsite: (value) => validateWebsite(value),
       categoryId: (value: string) =>
         validateCategoryId(value, resourceCategories),
-      resourceCover: (value) =>
-        value.length === 0 ? 'Selecione uma imagem de capa' : null,
+      resourceCover: () => validateResourceCover(imageBase64, hasPreview),
       latitude: (value) =>
         value > 90 || value < -90 ? 'Latitude inválida' : null,
       longitude: (value) =>
@@ -101,7 +104,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         resourcePhone: resource.phone ?? '',
         resourceWebsite: resource.website ?? '',
         categoryId: resource.category_id.toString(),
-        resourceCover: resource.cover ?? '',
+        resourceCover: resource.cover,
         latitude: +resource.latitude,
         longitude: +resource.longitude
       })
@@ -112,19 +115,6 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     form.setFieldValue('latitude', localPosition.lat)
     form.setFieldValue('longitude', localPosition.lng)
   }, [localPosition])
-
-  const uploadCoverImage = async () => {
-    try {
-      const secure_url = await uploadImage(imageBase64)
-
-      form.setFieldValue('resourceCover', secure_url)
-    } catch (error) {
-      showToastError({
-        title: 'Cheque o formato da imagem de capa',
-        description: 'Não foi possível fazer o upload da imagem de capa'
-      })
-    }
-  }
 
   const queryClient = useQueryClient()
 
@@ -143,7 +133,20 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
 
-    await uploadCoverImage()
+    try {
+      const secure_url = await uploadImage(imageBase64, 'encontreduca/covers')
+      form.values.resourceCover = secure_url
+    } catch (error) {
+      console.log('ERROR:', (error as Error).message)
+
+      showToastError({
+        title: 'Erro ao criar recurso',
+        description: 'Não foi possível fazer upload desta imagem 😕'
+      })
+
+      setIsLoading(false)
+      return
+    }
 
     if (!resource && user) {
       await createMutation.mutateAsync({
@@ -219,7 +222,10 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
             </Text>
           </Text>
 
-          <CoverDropzone form={form} setImageBase64={setImageBase64} />
+          <CoverDropzone
+            setHasPreview={setHasPreview}
+            setImageBase64={setImageBase64}
+          />
         </Box>
 
         <ConfirmButtons
