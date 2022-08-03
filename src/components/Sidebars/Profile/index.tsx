@@ -128,7 +128,6 @@ export function UpdateProfile() {
 
     const updatedUser = await getUser(+user!.id)
     setUser(updatedUser)
-    console.log('🚀 ~ updatedUser', updatedUser)
 
     setIsLoading(false)
 

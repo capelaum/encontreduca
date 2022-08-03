@@ -60,6 +60,12 @@ export function Profile({ isModal, user }: ProfileProps) {
     </Group>
   )
 
+  const renderReviewCount = () => {
+    if (user.review_count === 0) return 'Sem avaliações'
+    if (user.review_count === 1) return '1 avaliação'
+    return `${user.review_count} avaliações`
+  }
+
   return (
     <Group spacing="sm" align="center">
       <DefaultAvatar size={35} avatarSrc={user.avatar_url} />
@@ -85,7 +91,7 @@ export function Profile({ isModal, user }: ProfileProps) {
               lineHeight: 1.5
             }}
           >
-            {user.review_count} avaliações
+            {renderReviewCount()}
           </Text>
         )}
       </Stack>
