@@ -227,6 +227,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
           </Text>
 
           <CoverDropzone
+            form={form}
             setHasPreview={setHasPreview}
             setImageBase64={setImageBase64}
           />

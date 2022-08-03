@@ -12,6 +12,9 @@ export const dropzoneStyles = (
   width: '100%',
   color: dark ? theme.colors.gray[4] : theme.colors.gray[6],
   border: `2px dashed  ${dark ? theme.colors.cyan[3] : theme.colors.brand[7]}`,
+  '&[error]': {
+    border: `2px dashed  ${theme.colors.red[6]}`
+  },
   '&[data-idle]': {
     '&:hover': {
       '&::after': {

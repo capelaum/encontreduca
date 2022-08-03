@@ -32,18 +32,15 @@ export function ResourceInfo({ form }: ResourceInfoProps) {
       </Text>
 
       <TextInput
-        radius="md"
+        required
         label="Nome do recurso"
         placeholder="Nome do recurso"
         {...form.getInputProps('resourceName')}
         sx={inputStyles(theme, dark)}
-        required
       />
 
       <Select
         required
-        size="sm"
-        radius="md"
         label="Categoria"
         placeholder="Selecione uma categoria"
         {...form.getInputProps('categoryId')}
@@ -60,12 +57,11 @@ export function ResourceInfo({ form }: ResourceInfoProps) {
       />
 
       <TextInput
-        placeholder="Endereço do recurso"
+        required
         label="Endereço"
-        radius="md"
+        placeholder="Endereço do recurso"
         {...form.getInputProps('resourceAddress')}
         sx={inputStyles(theme, dark)}
-        required
       />
     </>
   )

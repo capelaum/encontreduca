@@ -7,15 +7,18 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
-import { showToast } from 'components/Shared/ToastMessage'
+import { UseFormReturnType } from '@mantine/form'
+import { showToastError } from 'components/Shared/ToastMessage'
 import { ReactNode, useState } from 'react'
-import { MdCancel, MdClose, MdOutlineFileUpload } from 'react-icons/md'
+import { MdClose, MdOutlineFileUpload } from 'react-icons/md'
+import { ResourceFormValues } from 'types/resources'
 import { dropzoneStyles } from './styles/dropzoneStyles'
 
 interface DefaultDropzoneProps {
   name: string
   radius: MantineNumberSize
   children: ReactNode
+  form: UseFormReturnType<ResourceFormValues>
   containerStyles: Sx | (Sx | undefined)[] | undefined
   setPreview: (image: string | null) => void
   setImageBase64: (image: string | ArrayBuffer | null) => void
@@ -25,6 +28,7 @@ export function DefaultDropzone({
   name,
   radius,
   children,
+  form,
   containerStyles,
   setPreview,
   setImageBase64
@@ -57,6 +61,13 @@ export function DefaultDropzone({
     setIsLoading(false)
   }
 
+  const handleOnReject = () => {
+    showToastError({
+      title: 'Oops! Formato não suportado.',
+      description: 'Por favor, tente novamente com uma imagem válida.'
+    })
+  }
+
   return (
     <Stack spacing="md" align="center">
       <Dropzone
@@ -67,14 +78,8 @@ export function DefaultDropzone({
         loading={isLoading}
         accept={IMAGE_MIME_TYPE}
         onDrop={(files) => handleOnDrop(files)}
-        onReject={() =>
-          showToast({
-            title: 'Oops! Formato não suportado.',
-            description: 'Por favor, tente novamente com uma imagem válida.',
-            icon: <MdCancel size={24} color={theme.colors.brand[7]} />,
-            dark
-          })
-        }
+        onReject={() => handleOnReject()}
+        {...form.getInputProps('resourceCover')}
         sx={dropzoneStyles(theme, dark)}
       >
         <Center sx={containerStyles}>

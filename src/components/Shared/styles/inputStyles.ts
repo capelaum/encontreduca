@@ -2,6 +2,7 @@ import { CSSObject, MantineTheme } from '@mantine/core'
 
 export const inputStyles = (theme: MantineTheme, dark: boolean): CSSObject => ({
   input: {
+    borderRadius: theme.radius.md,
     border: `1px solid ${dark ? theme.colors.cyan[3] : theme.colors.brand[7]}`,
     backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
     color: dark ? theme.white : theme.colors.brand[7],
