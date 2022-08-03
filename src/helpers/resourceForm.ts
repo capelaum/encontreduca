@@ -1,7 +1,7 @@
 import type { FormErrors } from '@mantine/form'
 import { showToastError } from 'components/Shared/ToastMessage'
 
-export const handleError = (errors: FormErrors) => {
+export const handleErrors = (errors: FormErrors) => {
   if (errors.resourceName) {
     showToastError({
       title: 'Nome inválido',
@@ -32,7 +32,7 @@ export const handleError = (errors: FormErrors) => {
 
   if (errors.resourceCover) {
     showToastError({
-      title: 'Imagem de capa inválida',
+      title: 'Imagem de capa inválida 22',
       description: 'Imagem de capa é obrigatória.'
     })
   }

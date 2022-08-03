@@ -47,7 +47,9 @@ export const validateResourceCover = (
 ) => {
   if (!hasPreview || !imageBase64) return 'Imagem de capa é obrigatória'
 
-  const regex = /^data:image\/(png|jpg|jpeg|gif);base64,/
+  const regex = /^data:image\/(png|jpg|jpeg|webp);base64,/
 
-  return regex.test(imageBase64.toString()) ? null : 'Imagem de capa inválida'
+  return regex.test(imageBase64.toString())
+    ? null
+    : 'Imagem de capa possui formato incorreto!'
 }

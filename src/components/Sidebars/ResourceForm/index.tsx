@@ -14,7 +14,7 @@ import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { handleError } from 'helpers/resourceForm'
+import { handleErrors } from 'helpers/resourceForm'
 import { uploadImage } from 'helpers/uploadImage'
 import {
   validateCategoryId,
@@ -62,10 +62,10 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
 
   const form = useForm<ResourceFormValues>({
     initialValues: {
-      resourceName: 'Colégio Militar de Brasília',
-      resourceAddress: '902/904 - Asa Norte, Brasília - DF, 70790-020',
-      resourcePhone: '(61) 3424-1128',
-      resourceWebsite: 'http://www.cmb.eb.mil.br',
+      resourceName: '',
+      resourceAddress: '',
+      resourcePhone: '',
+      resourceWebsite: '',
       resourceCover: '',
       categoryId: '',
       latitude: currentLocation.lat,
@@ -81,9 +81,10 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     ],
 
     validate: {
-      resourceName: (value) => (value.length < 3 ? 'Nome muito curto' : null),
+      resourceName: (value) =>
+        value.trim().length < 3 ? 'Nome muito curto' : null,
       resourceAddress: (value) =>
-        value.length < 4 ? 'Endereço muito curto' : null,
+        value.trim().length < 4 ? 'Endereço muito curto' : null,
       resourcePhone: (value) => validatePhone(value),
       resourceWebsite: (value) => validateWebsite(value),
       categoryId: (value: string) =>
@@ -134,15 +135,15 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     setIsLoading(true)
 
     try {
-      const secure_url = await uploadImage({
+      const data = await uploadImage({
         imageBase64,
         folder: 'encontreduca/covers'
       })
 
+      const { secure_url } = data
+
       form.values.resourceCover = secure_url
     } catch (error) {
-      console.log('ERROR:', (error as Error).message)
-
       showToastError({
         title: 'Erro ao criar recurso',
         description: 'Não foi possível fazer upload desta imagem 😕'
@@ -189,7 +190,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   }
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit, handleError)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
       <DefaultOverlay visible={isLoading} />
 
       <Stack my="md" px="md" spacing="md">

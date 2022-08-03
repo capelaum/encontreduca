@@ -6,6 +6,14 @@ type ResponseError = {
   message?: string
 }
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb'
+    }
+  }
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<UploadApiResponse | ResponseError>
@@ -26,9 +34,9 @@ export default async function handler(
     secure: true
   })
 
-  const result = await cloudinary.uploader.upload_large(
+  const result = await cloudinary.uploader.upload(
     imageBase64,
-    { ...cloudinaryOptions, folder, chunk_size: 500000 },
+    { ...cloudinaryOptions, folder, chunk_size: 5000000 },
     (error, response) => {
       if (error) {
         res.status(500).json({

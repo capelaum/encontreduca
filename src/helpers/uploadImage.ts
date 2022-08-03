@@ -11,18 +11,18 @@ export const uploadImage = async ({
   imageBase64
 }: UploadImageValues) => {
   try {
-    const data: UploadApiResponse = await axios.post('/api/upload-image', {
+    const response = await axios.post('/api/upload-image', {
       folder,
       imageBase64
     })
 
-    console.log('🚀 ~ data', data)
+    if (response.status !== 200) throw new Error('Error uploading image')
 
-    const { secure_url } = data
+    const { data }: { data: UploadApiResponse } = response
 
-    if (!secure_url) throw new Error('Image not uploaded')
+    if (!data) throw new Error('Image not uploaded')
 
-    return secure_url
+    return data
   } catch (error) {
     throw new Error((error as Error).message)
   }

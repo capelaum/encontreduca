@@ -45,11 +45,9 @@ export function DefaultDropzone({
 
     const file = files[0]
 
-    // set preview
     const previewImage = URL.createObjectURL(file)
     setPreview(previewImage)
 
-    // encode imageFile to base64 data URI
     const reader = new FileReader()
 
     reader.onload = (event) => {
@@ -77,6 +75,7 @@ export function DefaultDropzone({
         multiple={false}
         loading={isLoading}
         accept={IMAGE_MIME_TYPE}
+        maxSize={5000000}
         onDrop={(files) => handleOnDrop(files)}
         onReject={() => handleOnReject()}
         {...form.getInputProps('resourceCover')}
