@@ -80,9 +80,9 @@ export function Menu() {
           icon={<BsPlusCircleFill size={20} />}
           text="Cadastrar recurso"
           onClick={() => {
-            setCreateResourceOpened(true)
-            setResourceOpened(false)
             setResource(null)
+            setResourceOpened(false)
+            setCreateResourceOpened(true)
           }}
         />
 

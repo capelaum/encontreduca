@@ -15,7 +15,7 @@ import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { handleErrors } from 'helpers/resourceForm'
-import { uploadImage } from 'helpers/uploadImage'
+import { uploadCoverImage } from 'helpers/uploadImage'
 import {
   validateCategoryId,
   validatePhone,
@@ -56,20 +56,40 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const dark = colorScheme === 'dark'
 
   const { setCreateResourceOpened, setChangeResourceOpened } = useSidebar()
-  const { resource, categories, user } = useResource()
+  const { resource, categories, user, setResource } = useResource()
 
   const resourceCategories = getCategoriesSelectData(categories)
 
+  const queryClient = useQueryClient()
+
+  const createMutation = useMutation(createResource, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['resources'])
+    },
+    onError: (error) => {
+      showToastError({
+        title: 'Erro ao criar recurso',
+        description: (error as Error).message
+      })
+    }
+  })
+
+  useEffect(() => {
+    if (isCreateResource) {
+      setResource(null)
+    }
+  }, [resource])
+
   const form = useForm<ResourceFormValues>({
     initialValues: {
-      resourceName: '',
-      resourceAddress: '',
-      resourcePhone: '',
-      resourceWebsite: '',
-      resourceCover: '',
-      categoryId: '',
-      latitude: currentLocation.lat,
-      longitude: currentLocation.lng
+      resourceName: resource ? resource!.name : '',
+      resourceAddress: resource ? resource!.address : '',
+      resourcePhone: resource ? resource!.phone ?? '' : '',
+      resourceWebsite: resource ? resource!.website ?? '' : '',
+      resourceCover: resource ? resource!.cover : '',
+      categoryId: resource ? resource.category_id.toString() : '',
+      latitude: resource ? +resource.latitude : currentLocation.lat,
+      longitude: resource ? +resource.longitude : currentLocation.lng
     },
 
     validateInputOnChange: [
@@ -98,52 +118,16 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   })
 
   useEffect(() => {
-    if (resource) {
-      form.setValues({
-        resourceName: resource.name,
-        resourceAddress: resource.address,
-        resourcePhone: resource.phone ?? '',
-        resourceWebsite: resource.website ?? '',
-        categoryId: resource.category_id.toString(),
-        resourceCover: resource.cover,
-        latitude: +resource.latitude,
-        longitude: +resource.longitude
-      })
-    }
-  }, [resource])
-
-  useEffect(() => {
     form.setFieldValue('latitude', localPosition.lat)
     form.setFieldValue('longitude', localPosition.lng)
   }, [localPosition])
 
-  const queryClient = useQueryClient()
-
-  const createMutation = useMutation(createResource, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['resources'])
-    },
-    onError: (error) => {
-      showToastError({
-        title: 'Erro ao criar recurso',
-        description: (error as Error).message
-      })
-    }
-  })
-
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
 
-    try {
-      const data = await uploadImage({
-        imageBase64,
-        folder: 'encontreduca/covers'
-      })
+    const secure_url = await uploadCoverImage()
 
-      const { secure_url } = data
-
-      form.values.resourceCover = secure_url
-    } catch (error) {
+    if (!secure_url) {
       showToastError({
         title: 'Erro ao criar recurso',
         description: 'Não foi possível fazer upload desta imagem 😕'
@@ -152,6 +136,8 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
       setIsLoading(false)
       return
     }
+
+    form.values.resourceCover = secure_url
 
     if (!resource && user) {
       await createMutation.mutateAsync({

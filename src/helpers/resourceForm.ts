@@ -32,7 +32,7 @@ export const handleErrors = (errors: FormErrors) => {
 
   if (errors.resourceCover) {
     showToastError({
-      title: 'Imagem de capa inválida 22',
+      title: 'Imagem de capa inválida',
       description: 'Imagem de capa é obrigatória.'
     })
   }

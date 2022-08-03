@@ -27,3 +27,16 @@ export const uploadImage = async ({
     throw new Error((error as Error).message)
   }
 }
+
+export const uploadCoverImage = async (
+  imageBase64?: string | ArrayBuffer | null
+) => {
+  const data = await uploadImage({
+    imageBase64,
+    folder: 'encontreduca/covers'
+  })
+
+  const { secure_url } = data
+
+  return secure_url
+}

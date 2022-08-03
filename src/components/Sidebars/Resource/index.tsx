@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mantine/core'
+import { Box, Stack, Text } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
@@ -24,11 +24,6 @@ export function Resource({ reviews }: ResourceProps) {
   const { setResourceOpened } = useSidebar()
   const { resource, getUserResourceReview } = useResource()
 
-  if (!resource) {
-    setResourceOpened(false)
-    return null
-  }
-
   useEffect(() => {
     if (resource) {
       const resourceReviewsData = reviews.filter(
@@ -38,6 +33,11 @@ export function Resource({ reviews }: ResourceProps) {
       setResourceReviews(resourceReviewsData)
     }
   }, [resource])
+
+  if (!resource) {
+    setResourceOpened(false)
+    return <Text>Ooops, selecione um recurso!</Text>
+  }
 
   const userResourceReview = getUserResourceReview(resourceReviews)
 
