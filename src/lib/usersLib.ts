@@ -1,7 +1,24 @@
 import { api } from 'services/api'
+import { UpdatedUser, User } from 'types/users'
 
-export async function getUser(userId: number) {
+export async function getUser(userId: number): Promise<User> {
   const { data } = await api.get(`users/${userId}`)
+
+  if (!data) {
+    throw new Error('No user data returned from API')
+  }
+
+  return data
+}
+
+export async function updateUser({
+  userId,
+  updatedUser
+}: {
+  userId: number
+  updatedUser: UpdatedUser
+}) {
+  const { data } = await api.put(`users/${userId}`, updatedUser)
 
   if (!data) {
     throw new Error('No user data returned from API')

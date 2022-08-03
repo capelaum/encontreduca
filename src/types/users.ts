@@ -10,3 +10,18 @@ export type User = {
   review_count?: number
   resourcesIds: number[]
 }
+
+export type UpdatedUser = {
+  name: string
+  email: string
+  password: string | null
+  avatar_url: string | null
+}
+
+export interface ProfileFormValues {
+  name: string
+  email: string
+  password: string
+  confirmPassword: string
+  avatarUrl: string | null
+}

@@ -11,6 +11,7 @@ import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
 import { useEffect, useState } from 'react'
 import { TbPhoto } from 'react-icons/tb'
 import { ResourceFormValues } from 'types/resources'
+import { ProfileFormValues } from 'types/users'
 
 interface CoverDropzoneProps {
   form: UseFormReturnType<ResourceFormValues>
@@ -44,10 +45,10 @@ export function CoverDropzone({
     <DefaultDropzone
       name="cover"
       radius="md"
-      form={form}
-      containerStyles={containerStyles}
+      form={form as UseFormReturnType<ResourceFormValues | ProfileFormValues>}
       setPreview={setPreview}
       setImageBase64={setImageBase64}
+      containerStyles={containerStyles}
     >
       {preview ? (
         <Image

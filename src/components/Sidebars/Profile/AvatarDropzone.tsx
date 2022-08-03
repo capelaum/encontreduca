@@ -1,13 +1,31 @@
 import { Center, CSSObject } from '@mantine/core'
+import { UseFormReturnType } from '@mantine/form'
 import { DefaultAvatar } from 'components/Shared/DefaultAvatar'
 import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
 import { useResource } from 'contexts/resourceContext'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { ResourceFormValues } from 'types/resources'
+import { ProfileFormValues } from 'types/users'
 
-export function AvatarDropzone() {
+interface AvatarDropzoneProps {
+  form: UseFormReturnType<ProfileFormValues>
+  setHasPreview: (hasPreview: boolean) => void
+  setImageBase64: (image: string | ArrayBuffer | null) => void
+}
+
+export function AvatarDropzone({
+  form,
+  setHasPreview,
+  setImageBase64
+}: AvatarDropzoneProps) {
+  const [preview, setPreview] = useState<string | null>(null)
   const { user } = useResource()
 
-  const [avatarSrc, setAvatarSrc] = useState<string | null>(null)
+  useEffect(() => {
+    if (preview) {
+      setHasPreview(true)
+    }
+  }, [preview])
 
   const containerStyles = (): CSSObject => ({
     borderRadius: 999,
@@ -20,10 +38,12 @@ export function AvatarDropzone() {
       <DefaultDropzone
         name="avatar"
         radius={999}
+        form={form as UseFormReturnType<ResourceFormValues | ProfileFormValues>}
+        setPreview={setPreview}
+        setImageBase64={setImageBase64}
         containerStyles={containerStyles}
-        setImage={setAvatarSrc}
       >
-        <DefaultAvatar avatarSrc={user?.avatar_url ?? avatarSrc} size={180} />
+        <DefaultAvatar avatarSrc={preview ?? user?.avatar_url} size={180} />
       </DefaultDropzone>
     </Center>
   )

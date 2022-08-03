@@ -20,23 +20,12 @@ export const uploadImage = async ({
 
     const { data }: { data: UploadApiResponse } = response
 
-    if (!data) throw new Error('Image not uploaded')
+    if (!data || !data.secure_url) throw new Error('Image not uploaded')
 
-    return data
+    const { secure_url } = data
+
+    return secure_url
   } catch (error) {
     throw new Error((error as Error).message)
   }
-}
-
-export const uploadCoverImage = async (
-  imageBase64?: string | ArrayBuffer | null
-) => {
-  const data = await uploadImage({
-    imageBase64,
-    folder: 'encontreduca/covers'
-  })
-
-  const { secure_url } = data
-
-  return secure_url
 }

@@ -41,15 +41,15 @@ export const validateCategoryId = (
   return founCategory ? null : 'Categoria inválida'
 }
 
-export const validateResourceCover = (
+export const validateImageBase64 = (
   imageBase64: string | ArrayBuffer | null,
   hasPreview: boolean
 ) => {
-  if (!hasPreview || !imageBase64) return 'Imagem de capa é obrigatória'
+  if (!hasPreview || !imageBase64) return 'Imagem é obrigatória'
 
   const regex = /^data:image\/(png|jpg|jpeg|webp);base64,/
 
   return regex.test(imageBase64.toString())
     ? null
-    : 'Imagem de capa possui formato incorreto!'
+    : 'Imagem possui formato incorreto!'
 }

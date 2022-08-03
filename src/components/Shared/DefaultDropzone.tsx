@@ -12,14 +12,15 @@ import { showToastError } from 'components/Shared/ToastMessage'
 import { ReactNode, useState } from 'react'
 import { MdClose, MdOutlineFileUpload } from 'react-icons/md'
 import { ResourceFormValues } from 'types/resources'
+import { ProfileFormValues } from 'types/users'
 import { dropzoneStyles } from './styles/dropzoneStyles'
 
 interface DefaultDropzoneProps {
   name: string
   radius: MantineNumberSize
   children: ReactNode
-  form: UseFormReturnType<ResourceFormValues>
   containerStyles: Sx | (Sx | undefined)[] | undefined
+  form: UseFormReturnType<ResourceFormValues | ProfileFormValues>
   setPreview: (image: string | null) => void
   setImageBase64: (image: string | ArrayBuffer | null) => void
 }

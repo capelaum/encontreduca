@@ -14,12 +14,12 @@ import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { handleErrors } from 'helpers/resourceForm'
-import { uploadCoverImage } from 'helpers/uploadImage'
+import { handleResourceFormErrors } from 'helpers/resourceForm'
+import { uploadImage } from 'helpers/uploadImage'
 import {
   validateCategoryId,
+  validateImageBase64,
   validatePhone,
-  validateResourceCover,
   validateWebsite
 } from 'helpers/validate'
 import { createResource } from 'lib/resourcesLib'
@@ -109,7 +109,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
       resourceWebsite: (value) => validateWebsite(value),
       categoryId: (value: string) =>
         validateCategoryId(value, resourceCategories),
-      resourceCover: () => validateResourceCover(imageBase64, hasPreview),
+      resourceCover: () => validateImageBase64(imageBase64, hasPreview),
       latitude: (value) =>
         value > 90 || value < -90 ? 'Latitude inválida' : null,
       longitude: (value) =>
@@ -125,7 +125,10 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
 
-    const secure_url = await uploadCoverImage()
+    const secure_url = await uploadImage({
+      imageBase64,
+      folder: 'encontreduca/covers'
+    })
 
     if (!secure_url) {
       showToastError({
@@ -176,7 +179,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   }
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit, handleErrors)}>
+    <form onSubmit={form.onSubmit(handleSubmit, handleResourceFormErrors)}>
       <DefaultOverlay visible={isLoading} />
 
       <Stack my="md" px="md" spacing="md">
