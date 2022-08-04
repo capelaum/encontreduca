@@ -1,7 +1,6 @@
 import {
   Center,
   MantineNumberSize,
-  Stack,
   Sx,
   useMantineColorScheme,
   useMantineTheme
@@ -68,32 +67,30 @@ export function DefaultDropzone({
   }
 
   return (
-    <Stack spacing="md" align="center">
-      <Dropzone
-        name={name}
-        radius={radius}
-        padding={0}
-        multiple={false}
-        loading={isLoading}
-        accept={IMAGE_MIME_TYPE}
-        maxSize={5000000}
-        onDrop={(files) => handleOnDrop(files)}
-        onReject={() => handleOnReject()}
-        {...form.getInputProps('resourceCover')}
-        sx={dropzoneStyles(theme, dark)}
-      >
-        <Center sx={containerStyles}>
-          <Dropzone.Accept>
-            <MdOutlineFileUpload size={50} color={theme.colors.cyan[5]} />
-          </Dropzone.Accept>
+    <Dropzone
+      name={name}
+      radius={radius}
+      padding={0}
+      multiple={false}
+      loading={isLoading}
+      accept={IMAGE_MIME_TYPE}
+      maxSize={5000000}
+      onDrop={(files) => handleOnDrop(files)}
+      onReject={() => handleOnReject()}
+      {...form.getInputProps('resourceCover')}
+      sx={dropzoneStyles(theme, dark)}
+    >
+      <Center sx={containerStyles}>
+        <Dropzone.Accept>
+          <MdOutlineFileUpload size={50} color={theme.colors.cyan[5]} />
+        </Dropzone.Accept>
 
-          <Dropzone.Reject>
-            <MdClose size={50} color={theme.colors.red[6]} />
-          </Dropzone.Reject>
+        <Dropzone.Reject>
+          <MdClose size={50} color={theme.colors.red[6]} />
+        </Dropzone.Reject>
 
-          <Dropzone.Idle>{children}</Dropzone.Idle>
-        </Center>
-      </Dropzone>
-    </Stack>
+        <Dropzone.Idle>{children}</Dropzone.Idle>
+      </Center>
+    </Dropzone>
   )
 }

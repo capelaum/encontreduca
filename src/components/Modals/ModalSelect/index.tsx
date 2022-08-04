@@ -112,12 +112,10 @@ export function ModalSelect({
       )}
 
       <Select
-        label="Motivo"
         required
-        size="sm"
+        label="Motivo"
         placeholder="Selecione um motivo"
         value={motiveId}
-        variant="filled"
         onChange={setMotiveId}
         sx={inputStyles(theme, dark)}
         maxDropdownHeight={300}

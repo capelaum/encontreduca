@@ -1,5 +1,12 @@
 import { ModalSelectData } from 'types/motives'
 
+export const validateEmail = (email: string) => {
+  const regex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+  return regex.test(String(email).toLowerCase()) ? null : 'Email inválido'
+}
+
 export const validateWebsite = (website: string) => {
   if (website.length === 0) return 'Website é obrigatório'
 
@@ -7,16 +14,6 @@ export const validateWebsite = (website: string) => {
     /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
   return regex.test(website) ? null : 'Website inválido'
-}
-
-export const validateCloudinaryImage = (secureUrl: string) => {
-  if (secureUrl.length === 0) return 'Imagem de capa é obrigatória'
-
-  // regex to check if url is in format https://res.cloudinary.com/capelaum/image/upload/v1659357663/encontreduca/covers/vawlb6vhnyggnzhojrur.jpg
-  const regex =
-    /^https:\/\/res.cloudinary.com\/capelaum\/image\/upload\/v\d+\/encontreduca\/covers\/*.(jpg|png|webp|jpeg|gif)$/
-
-  return regex.test(secureUrl) ? null : 'Imagem de capa inválida'
 }
 
 export const validatePhone = (value: string) => {
@@ -52,4 +49,13 @@ export const validateImageBase64 = (
   return regex.test(imageBase64.toString())
     ? null
     : 'Imagem possui formato incorreto!'
+}
+
+export const validateCloudinaryImage = (secureUrl: string) => {
+  if (secureUrl.length === 0) return 'Imagem de capa é obrigatória'
+
+  const regex =
+    /^https:\/\/res.cloudinary.com\/capelaum\/image\/upload\/v\d+\/encontreduca\/covers\/*.(jpg|png|webp|jpeg|gif)$/
+
+  return regex.test(secureUrl) ? null : 'Imagem de capa inválida'
 }

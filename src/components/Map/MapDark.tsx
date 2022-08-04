@@ -51,6 +51,7 @@ export default function MapDark({ resources }: MapDarkProps) {
       >
         <Marker
           position={currentLocation}
+          clickable={false}
           icon={{
             url: '/markers/marker_current.svg',
             scaledSize: new window.google.maps.Size(10, 10)

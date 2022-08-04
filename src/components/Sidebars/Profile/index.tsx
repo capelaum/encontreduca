@@ -15,7 +15,7 @@ import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { handleProfileFormErrors } from 'helpers/resourceForm'
 import { uploadImage } from 'helpers/uploadImage'
-import { validateImageBase64 } from 'helpers/validate'
+import { validateEmail, validateImageBase64 } from 'helpers/validate'
 import { getUser, updateUser } from 'lib/usersLib'
 import { useState } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
@@ -67,7 +67,7 @@ export function UpdateProfile() {
 
     validate: {
       name: (value) => (value.trim().length < 3 ? 'Nome muito curto' : null),
-      email: (value) => (value.trim().length < 3 ? 'Email muito curto' : null),
+      email: (value) => validateEmail(value),
       avatarUrl: () =>
         !hasPreview ? null : validateImageBase64(imageBase64, hasPreview),
       password: (value) =>
@@ -93,7 +93,7 @@ export function UpdateProfile() {
     if (hasPreview) {
       const secure_url = await uploadImage({
         imageBase64,
-        folder: 'encontreduca/covers'
+        folder: 'encontreduca/avatars'
       })
 
       if (!secure_url) {
