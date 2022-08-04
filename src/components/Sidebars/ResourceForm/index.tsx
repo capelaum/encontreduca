@@ -22,7 +22,7 @@ import {
   validatePhone,
   validateWebsite
 } from 'helpers/validate'
-import { createResource, createResourceChange } from 'lib/resourcesLib'
+import { createResource } from 'lib/resourcesLib'
 import { useEffect, useState } from 'react'
 import { GiStarsStack } from 'react-icons/gi'
 import { IoIosSend } from 'react-icons/io'
@@ -41,7 +41,14 @@ interface ResourceFormProps {
 
 export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const { setCreateResourceOpened, setChangeResourceOpened } = useSidebar()
-  const { resource, categories, user, setResource } = useResource()
+  const {
+    resource,
+    categories,
+    user,
+    setResource,
+    getResourceDiff,
+    createResourceChanges
+  } = useResource()
   const { currentLocation } = useMap()
 
   const theme = useMantineTheme()
@@ -76,12 +83,6 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
       setIsLoading(false)
     }
   })
-
-  useEffect(() => {
-    if (isCreateResource) {
-      setResource(null)
-    }
-  }, [resource])
 
   const form = useForm<ResourceFormValues>({
     initialValues: {
@@ -120,46 +121,16 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     }
   })
 
-  const getResourceDiff = (values: typeof form.values) => {
-    const resourceDiff = Object.keys(values).reduce((acc, key) => {
-      const resourceFormValuesKey = key as keyof ResourceFormValues
+  useEffect(() => {
+    if (isCreateResource) {
+      setResource(null)
+    }
 
-      if (values[resourceFormValuesKey] !== resource![resourceFormValuesKey]) {
-        ;(acc[resourceFormValuesKey] as any) = values[resourceFormValuesKey]
-      }
-
-      return acc
-    }, {} as Partial<ResourceFormValues>)
-
-    return resourceDiff
-  }
-
-  const createResourceChanges = async (
-    resourceDiff: Partial<ResourceFormValues>
-  ) => {
-    const resourceChanges = Object.keys(resourceDiff).map(async (key) => {
-      const resourceTypeKey = key as keyof ResourceFormValues
-
-      const oldValue = resource![resourceTypeKey]
-        ? resource![resourceTypeKey]!.toString()
-        : 'nulo'
-      const newValue = resourceDiff[resourceTypeKey]
-        ? resourceDiff[resourceTypeKey]!.toString()
-        : 'nulo'
-
-      const resourceChange = await createResourceChange({
-        resource_id: resource!.id,
-        user_id: user!.id,
-        field: key,
-        old_value: oldValue,
-        new_value: newValue
-      })
-
-      return resourceChange
-    })
-
-    return Promise.all(resourceChanges)
-  }
+    if (resource) {
+      form.setValues(resource)
+      setLocalPosition(resource.position)
+    }
+  }, [resource])
 
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
@@ -201,7 +172,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     }
 
     if (resource && user && !isCreateResource) {
-      const resourceDiff = getResourceDiff(values)
+      const resourceDiff = getResourceDiff(form)
 
       if (Object.keys(resourceDiff).length === 0) {
         showToast({
@@ -216,8 +187,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
       }
 
       if (Object.keys(resourceDiff).length > 0) {
-        const resourceChanges = await createResourceChanges(resourceDiff)
-        console.log('🚀 ~ resourceChanges', resourceChanges)
+        await createResourceChanges(resourceDiff)
       }
     }
 

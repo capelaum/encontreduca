@@ -1,7 +1,13 @@
+import { UseFormReturnType } from '@mantine/form'
+import { createResourceChange } from 'lib/resourcesLib'
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react'
 import { CategoryFilter, CategoryType } from 'types/categories'
 import { Motive } from 'types/motives'
-import { ResourceType } from 'types/resources'
+import {
+  ResourceChange,
+  ResourceFormValues,
+  ResourceType
+} from 'types/resources'
 import { Review } from 'types/reviews'
 import { User } from 'types/users'
 
@@ -26,6 +32,12 @@ interface ResourceContextData {
   getAverageRating: (reviews: Review[]) => number
   getUserResourceReview: (reviews: Review[]) => Review | null
   getReviewsWithoutUser: (reviews: Review[]) => Review[]
+  getResourceDiff: (
+    form: UseFormReturnType<ResourceFormValues>
+  ) => Partial<ResourceFormValues>
+  createResourceChanges: (
+    resourceDiff: Partial<ResourceFormValues>
+  ) => Promise<ResourceChange[]>
 }
 
 const ResourceContext = createContext<ResourceContextData>(
@@ -91,6 +103,49 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     return reviewsWithoutUser
   }
 
+  const getResourceDiff = (form: UseFormReturnType<ResourceFormValues>) => {
+    const { values } = form
+
+    const resourceDiff = Object.keys(values).reduce((acc, key) => {
+      const resourceFormValuesKey = key as keyof ResourceFormValues
+
+      if (values[resourceFormValuesKey] !== resource![resourceFormValuesKey]) {
+        ;(acc[resourceFormValuesKey] as any) = values[resourceFormValuesKey]
+      }
+
+      return acc
+    }, {} as Partial<ResourceFormValues>)
+
+    return resourceDiff
+  }
+
+  const createResourceChanges = async (
+    resourceDiff: Partial<ResourceFormValues>
+  ) => {
+    const resourceChanges = Object.keys(resourceDiff).map(async (key) => {
+      const resourceTypeKey = key as keyof ResourceFormValues
+
+      const oldValue = resource![resourceTypeKey]
+        ? resource![resourceTypeKey]!.toString()
+        : 'nulo'
+      const newValue = resourceDiff[resourceTypeKey]
+        ? resourceDiff[resourceTypeKey]!.toString()
+        : 'nulo'
+
+      const resourceChange = await createResourceChange({
+        resource_id: resource!.id,
+        user_id: user!.id,
+        field: key,
+        old_value: oldValue,
+        new_value: newValue
+      })
+
+      return resourceChange
+    })
+
+    return Promise.all(resourceChanges)
+  }
+
   const ResourceContextProviderValues = {
     user,
     setUser,
@@ -107,7 +162,9 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     getAverageRating,
     filterResources,
     getUserResourceReview,
-    getReviewsWithoutUser
+    getReviewsWithoutUser,
+    getResourceDiff,
+    createResourceChanges
   }
 
   const ResourceContextProviderValue = useMemo<ResourceContextData>(
