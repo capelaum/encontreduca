@@ -25,14 +25,14 @@ export function ResourceContact({ form }: ResourceContactProps) {
       <TextInput
         label="Telefone/celular com DDD"
         placeholder="(00) 00000-0000"
-        {...form.getInputProps('resourcePhone')}
+        {...form.getInputProps('phone')}
         sx={inputStyles(theme, dark)}
       />
 
       <TextInput
         label="Site"
         placeholder="Site do recurso"
-        {...form.getInputProps('resourceWebsite')}
+        {...form.getInputProps('website')}
         sx={inputStyles(theme, dark)}
       />
     </>

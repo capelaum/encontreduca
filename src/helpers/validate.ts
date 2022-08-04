@@ -8,19 +8,16 @@ export const validateEmail = (email: string) => {
 }
 
 export const validateWebsite = (website: string) => {
-  if (website.length === 0) return 'Website é obrigatório'
-
   const regex =
     /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
 
-  return regex.test(website) ? null : 'Website inválido'
+  return website.length === 0 || regex.test(website) ? null : 'Website inválido'
 }
 
 export const validatePhone = (value: string) => {
-  if (value.length < 14) return 'Telefone é obrigatório'
-
   const regex = /\(\d{2}\) \d{4,5}-\d{4}/
-  return regex.test(value)
+
+  return value.length === 0 || regex.test(value)
     ? null
     : 'Telefone inválido - formato (00) 00000-0000'
 }
@@ -31,11 +28,11 @@ export const validateCategoryId = (
 ) => {
   if (value.length === 0) return 'Categoria é obrigatória'
 
-  const founCategory = resourceCategories.find(
+  const foundCategory = resourceCategories.find(
     (category) => category.value === value
   )
 
-  return founCategory ? null : 'Categoria inválida'
+  return foundCategory ? null : 'Categoria inválida'
 }
 
 export const validateImageBase64 = (

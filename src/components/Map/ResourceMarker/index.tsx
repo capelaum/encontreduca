@@ -2,18 +2,20 @@ import { Marker } from '@react-google-maps/api'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { MarkerLabel } from 'types/googleMaps'
+import { LatLngLiteral, MarkerLabel } from 'types/googleMaps'
 import { ResourceType } from 'types/resources'
 import { categorySwitch } from 'utils/categorySwitch'
 import styles from './styles.module.scss'
 
 interface ResourceMarkerProps {
   resource: ResourceType
+  localPosition?: LatLngLiteral
   clickable?: boolean
 }
 
 export function ResourceMarker({
   resource,
+  localPosition,
   clickable = true
 }: ResourceMarkerProps) {
   const { zoom } = useMap()
@@ -49,7 +51,7 @@ export function ResourceMarker({
     <Marker
       clickable={clickable}
       onClick={handleMarkerClick}
-      position={position}
+      position={localPosition ?? position}
       icon={{
         url: approved
           ? categorySwitch[category.name].markerIcon

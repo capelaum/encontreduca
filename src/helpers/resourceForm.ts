@@ -2,42 +2,42 @@ import type { FormErrors } from '@mantine/form'
 import { showToastError } from 'components/Shared/ToastMessage'
 
 export const handleResourceFormErrors = (errors: FormErrors) => {
-  if (errors.resourceName) {
+  if (errors.name) {
     showToastError({
       title: 'Nome inválido',
       description: 'Nome do recurso deve ter mais de 3 caracteres.'
     })
   }
 
-  if (errors.resourceAddress) {
+  if (errors.address) {
     showToastError({
       title: 'Endereço inválido',
       description: 'Endereço deve ter mais de 4 caracteres.'
     })
   }
 
-  if (errors.resourcePhone) {
+  if (errors.phone) {
     showToastError({
       title: 'Telefone inválido',
       description: 'Telefone deve estar no formato (00) 00000-0000'
     })
   }
 
-  if (errors.resourceWebsite) {
+  if (errors.website) {
     showToastError({
       title: 'Website inválido',
       description: 'Website deve estar no formato http://www.website.com'
     })
   }
 
-  if (errors.resourceCover) {
+  if (errors.cover) {
     showToastError({
       title: 'Imagem de capa inválida',
       description: 'Imagem de capa é obrigatória.'
     })
   }
 
-  if (errors.categoryId) {
+  if (errors.category_id) {
     showToastError({
       title: 'Categoria inválida',
       description: 'Categoria é obrigatória.'

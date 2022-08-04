@@ -77,7 +77,7 @@ export function DefaultDropzone({
       maxSize={5000000}
       onDrop={(files) => handleOnDrop(files)}
       onReject={() => handleOnReject()}
-      {...form.getInputProps('resourceCover')}
+      {...form.getInputProps('cover')}
       sx={dropzoneStyles(theme, dark)}
     >
       <Center sx={containerStyles}>

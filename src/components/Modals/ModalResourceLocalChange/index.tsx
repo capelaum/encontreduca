@@ -14,9 +14,8 @@ import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { buttonStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { mapOptions, mapOptionsLight } from 'config/options'
-import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation, MdPlace } from 'react-icons/md'
 import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
 import { categorySwitch } from 'utils/categorySwitch'
@@ -24,14 +23,16 @@ import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 interface ModalResourceLocalChangeProps {
   onClose: () => void
+  localPosition: LatLngLiteral
   setLocalPosition: (position: LatLngLiteral) => void
 }
 
 export function ModalResourceLocalChange({
   onClose,
+  localPosition,
   setLocalPosition
 }: ModalResourceLocalChangeProps) {
-  const { currentLocation } = useMap()
+  const [currentPosition, setCurrentPosition] = useState(localPosition)
 
   const theme = useMantineTheme()
 
@@ -49,7 +50,7 @@ export function ModalResourceLocalChange({
 
   const onIdle = useCallback(() => {
     if (mapRef.current && mapRef.current.getCenter()) {
-      setLocalPosition(mapRef.current.getCenter()!.toJSON())
+      setCurrentPosition(mapRef.current.getCenter()!.toJSON())
     }
   }, [])
 
@@ -94,7 +95,7 @@ export function ModalResourceLocalChange({
             onIdle={onIdle}
             clickableIcons={false}
             zoom={14}
-            center={resource ? resource.position : currentLocation}
+            center={localPosition}
             mapContainerStyle={mapContainerStyle}
             options={dark ? mapOptions : mapOptionsLight}
           />
@@ -124,9 +125,7 @@ export function ModalResourceLocalChange({
           size="sm"
           radius="md"
           leftIcon={<MdMyLocation size={16} />}
-          onClick={() =>
-            moveToLocation(resource ? resource.position : currentLocation)
-          }
+          onClick={() => moveToLocation(localPosition)}
           sx={buttonStyles(theme, dark)}
         >
           Redefinir mapa
@@ -135,6 +134,10 @@ export function ModalResourceLocalChange({
         <ConfirmButtons
           onCancel={onClose}
           onConfirm={() => {
+            setLocalPosition({
+              lat: +currentPosition.lat.toFixed(7),
+              lng: +currentPosition.lng.toFixed(7)
+            })
             onClose()
             showToast({
               title: 'Novo local salvo',

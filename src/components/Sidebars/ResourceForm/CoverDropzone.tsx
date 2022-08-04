@@ -15,12 +15,14 @@ import { ProfileFormValues } from 'types/users'
 
 interface CoverDropzoneProps {
   form: UseFormReturnType<ResourceFormValues>
+  resourceCover: string | null
   setHasPreview: (hasPreview: boolean) => void
   setImageBase64: (image: string | ArrayBuffer | null) => void
 }
 
 export function CoverDropzone({
   form,
+  resourceCover,
   setImageBase64,
   setHasPreview
 }: CoverDropzoneProps) {
@@ -38,7 +40,8 @@ export function CoverDropzone({
   }, [preview])
 
   const containerStyles = (): CSSObject => ({
-    height: 200
+    height: 200,
+    width: '370px'
   })
 
   return (
@@ -50,17 +53,18 @@ export function CoverDropzone({
       setImageBase64={setImageBase64}
       containerStyles={containerStyles}
     >
-      {preview ? (
+      {preview || resourceCover ? (
         <Image
           height={200}
           radius="md"
-          src={preview}
+          src={preview ?? resourceCover ?? ''}
           alt="Imagem de capa do recurso"
           title="Imagem de capa do recurso"
           sx={{
             borderRadius: 'md',
             objectFit: 'cover',
-            objectPosition: 'center'
+            objectPosition: 'center',
+            width: '100%'
           }}
         />
       ) : (

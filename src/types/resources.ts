@@ -5,35 +5,40 @@ import { User } from './users'
 
 export type ResourceType = {
   id: string | number
-  user_id: string | number
-  name: string
-  category_id: string | number
-  category: CategoryType
-  latitude: string | number
-  longitude: string | number
-  position: LatLngLiteral
-  address: string
-  website: string | null
-  phone: string | null
-  cover: string
-  approved: boolean
-  created_at: string
-  updated_at: string
   user: User
   reviews: Review[]
+  user_id: string | number
+
+  name: string
+  category_id: string
+  category: CategoryType
+  address: string
+  website: string | null
+  phone: string | null
+  cover: string
+  latitude: number
+  longitude: number
+  position: LatLngLiteral
+  approved: boolean
+
+  created_at: string
+  updated_at: string
 }
 
-export type NewResource = {
-  user_id: string | number
-  name: string
-  category_id: string | number
-  latitude: string | number
-  longitude: string | number
-  address: string
-  phone: string | null
-  website: string | null
-  cover: string
-}
+export type NewResource = Pick<
+  ResourceType,
+  | 'user_id'
+  | 'name'
+  | 'category_id'
+  | 'latitude'
+  | 'longitude'
+  | 'address'
+  | 'phone'
+  | 'website'
+  | 'cover'
+>
+
+export type ResourceFormValues = Omit<NewResource, 'user_id'>
 
 export type NewResourceComplaint = {
   user_id: string | number
@@ -41,13 +46,10 @@ export type NewResourceComplaint = {
   motive_id: string | number
 }
 
-export interface ResourceFormValues {
-  resourceName: string
-  resourceAddress: string
-  resourcePhone: string
-  resourceWebsite: string
-  categoryId: string | number
-  resourceCover: string
-  latitude: number
-  longitude: number
+export type ResourceChange = {
+  user_id: string | number
+  resource_id: string | number
+  field: string
+  old_value: string
+  new_value: string
 }

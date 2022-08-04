@@ -1,5 +1,5 @@
 import { api } from 'services/api'
-import { NewResource, ResourceType } from 'types/resources'
+import { NewResource, ResourceChange, ResourceType } from 'types/resources'
 import { Review } from 'types/reviews'
 import { dateFormatter } from 'utils/dataFormatter'
 
@@ -12,6 +12,11 @@ export async function loadResources(): Promise<ResourceType[]> {
 
   const resources = data.map((resource: ResourceType) => ({
     ...resource,
+    category_id: resource.category_id.toString(),
+    website: resource.website ?? '',
+    phone: resource.phone ?? '',
+    latitude: parseFloat(resource.latitude.toString()),
+    longitude: parseFloat(resource.longitude.toString()),
     position: {
       lat: parseFloat(resource.latitude.toString()),
       lng: parseFloat(resource.longitude.toString())
@@ -52,6 +57,14 @@ export async function createResource(
   newResource: NewResource
 ): Promise<ResourceType> {
   const response = await api.post('/resources', newResource)
+
+  return response.data
+}
+
+export async function createResourceChange(
+  updatedResource: ResourceChange
+): Promise<ResourceChange> {
+  const response = await api.post('resources/changes', updatedResource)
 
   return response.data
 }

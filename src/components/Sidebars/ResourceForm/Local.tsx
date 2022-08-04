@@ -56,6 +56,7 @@ export function Local({ localPosition, setLocalPosition }: LocalProps) {
         <ModalResourceLocalChange
           onClose={() => closeModal(id)}
           setLocalPosition={setLocalPosition}
+          localPosition={localPosition}
         />
       )
     })
@@ -70,12 +71,16 @@ export function Local({ localPosition, setLocalPosition }: LocalProps) {
       <GoogleMap
         clickableIcons={false}
         zoom={12}
-        center={resource ? resource.position : localPosition}
+        center={localPosition}
         mapContainerStyle={mapContainerStyle}
         options={dark ? mapOptionsForm : mapOptionsFormLight}
       >
         {resource ? (
-          <ResourceMarker resource={resource} clickable={false} />
+          <ResourceMarker
+            resource={resource}
+            clickable={false}
+            localPosition={localPosition}
+          />
         ) : (
           <Marker position={localPosition} clickable={false} />
         )}

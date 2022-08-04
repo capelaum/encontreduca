@@ -35,7 +35,7 @@ export function ResourceInfo({ form }: ResourceInfoProps) {
         required
         label="Nome do recurso"
         placeholder="Nome do recurso"
-        {...form.getInputProps('resourceName')}
+        {...form.getInputProps('name')}
         sx={inputStyles(theme, dark)}
       />
 
@@ -43,7 +43,7 @@ export function ResourceInfo({ form }: ResourceInfoProps) {
         required
         label="Categoria"
         placeholder="Selecione uma categoria"
-        {...form.getInputProps('categoryId')}
+        {...form.getInputProps('category_id')}
         sx={inputStyles(theme, dark)}
         maxDropdownHeight={300}
         rightSectionWidth={30}
@@ -60,7 +60,7 @@ export function ResourceInfo({ form }: ResourceInfoProps) {
         required
         label="Endereço"
         placeholder="Endereço do recurso"
-        {...form.getInputProps('resourceAddress')}
+        {...form.getInputProps('address')}
         sx={inputStyles(theme, dark)}
       />
     </>
