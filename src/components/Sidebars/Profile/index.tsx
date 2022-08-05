@@ -13,8 +13,8 @@ import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
+import { updateImage, uploadImage } from 'helpers/imageHelpers'
 import { handleProfileFormErrors } from 'helpers/resourceForm'
-import { uploadImage } from 'helpers/uploadImage'
 import { validateEmail, validateImageBase64 } from 'helpers/validate'
 import { getUser, updateUser } from 'lib/usersLib'
 import { useState } from 'react'
@@ -71,12 +71,12 @@ export function UpdateProfile() {
       avatarUrl: () =>
         !hasPreview ? null : validateImageBase64(imageBase64, hasPreview),
       password: (value) =>
-        value.trim().length > 1 && value.trim().length < 6
-          ? 'Senha deve ter o menos 6 caracteres'
+        value.trim().length > 0 && value.trim().length < 6
+          ? 'Senha deve ter mais de 6 caracteres'
           : null,
       confirmPassword: (value) => {
-        if (value.trim().length > 1 && value.trim().length < 6) {
-          return 'Senha deve ter o menos 6 caracteres'
+        if (value.trim().length > 0 && value.trim().length < 6) {
+          return 'Senha deve ter mais de 6 caracteres'
         }
 
         if (value !== form.values.password) {
@@ -87,34 +87,61 @@ export function UpdateProfile() {
     }
   })
 
+  const sameUserData = (values: typeof form.values) =>
+    user!.name === values.name &&
+    user!.email === values.email &&
+    !hasPreview &&
+    values.password === '' &&
+    values.confirmPassword === ''
+
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
 
     if (hasPreview && imageBase64) {
-      const secure_url = await uploadImage({
-        imageBase64,
-        folder: 'encontreduca/avatars'
-      })
+      let secure_url = null
+      const folder = 'encontreduca/avatars'
+
+      try {
+        if (user!.avatar_url) {
+          secure_url = await updateImage({
+            imageUrl: user!.avatar_url,
+            imageBase64,
+            folder
+          })
+        }
+
+        if (!user!.avatar_url) {
+          secure_url = await uploadImage({
+            imageBase64,
+            folder
+          })
+        }
+      } catch (error) {
+        setIsLoading(false)
+
+        showToastError({
+          title: 'Erro ao atualizar foto de perfil',
+          description: (error as Error).message
+        })
+
+        return
+      }
 
       if (!secure_url) {
+        setIsLoading(false)
+
         showToastError({
-          title: 'Erro ao criar recurso',
+          title: 'Erro ao atualizar foto de perfil',
           description: 'Não foi possível fazer upload desta imagem 😕'
         })
 
-        setIsLoading(false)
         return
       }
 
       form.values.avatarUrl = secure_url
     }
 
-    const sameUserData = () =>
-      user!.name === values.name &&
-      user!.email === values.email &&
-      user!.avatar_url === values.avatarUrl
-
-    if (user && !sameUserData()) {
+    if (user && !sameUserData(values)) {
       await updateMutation.mutateAsync({
         userId: +user.id,
         updatedUser: {
@@ -191,6 +218,7 @@ export function UpdateProfile() {
 
         <Stack mt="sm" spacing="md">
           <Button
+            disabled={sameUserData(form.values)}
             size="sm"
             radius="md"
             type="submit"

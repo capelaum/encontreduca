@@ -14,8 +14,8 @@ import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
+import { uploadImage } from 'helpers/imageHelpers'
 import { handleResourceFormErrors } from 'helpers/resourceForm'
-import { uploadImage } from 'helpers/uploadImage'
 import {
   validateCategoryId,
   validateImageBase64,
@@ -148,7 +148,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     form.values.latitude = localPosition.lat
     form.values.longitude = localPosition.lng
 
-    if (hasPreview) {
+    if (hasPreview && imageBase64) {
       const secure_url = await uploadImage({
         imageBase64,
         folder: 'encontreduca/covers'

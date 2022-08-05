@@ -11,7 +11,7 @@ import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
 import { DefaultOverlay } from 'components/Shared/DefaultOverlay'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'
-import { destroyImage } from 'helpers/destroyImage'
+import { destroyImage } from 'helpers/imageHelpers'
 import { deleteUserAvatar, getUser } from 'lib/usersLib'
 import { useEffect, useState } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
@@ -96,8 +96,8 @@ export function AvatarDropzone({
         setImageBase64={setImageBase64}
         containerStyles={containerStyles}
       >
-        <DefaultAvatar avatarSrc={preview ?? user?.avatar_url} size={180} />
         <DefaultOverlay visible={isLoading} />
+        <DefaultAvatar avatarSrc={preview ?? user?.avatar_url} size={180} />
       </DefaultDropzone>
 
       {user!.avatar_url && (

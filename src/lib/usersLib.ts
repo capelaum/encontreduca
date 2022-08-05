@@ -65,10 +65,7 @@ export async function deleteUserResource({
 }
 
 export async function deleteUserAvatar({ userId }: { userId: number }) {
-  console.log('🚀 ~ userId', userId)
-
   const response = await api.delete(`users/${userId}/avatar`)
-  console.log('🚀 ~ response', response)
 
   if (response.status !== 200) {
     throw new Error('Something went wrong while deleting user avatar')
