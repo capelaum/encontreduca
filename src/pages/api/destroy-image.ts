@@ -6,14 +6,6 @@ type ResponseError = {
   message?: string
 }
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb'
-    }
-  }
-}
-
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -26,17 +18,17 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<UploadApiResponse | ResponseError>
 ) {
-  if (req.method !== 'POST') {
+  if (req.method !== 'DELETE') {
     res.status(405).json({
       message: 'Method not allowed'
     })
   }
 
-  const { imageBase64, folder } = req.body
+  const { imagePath } = req.body
 
-  const result = await cloudinary.uploader.upload(
-    imageBase64,
-    { ...cloudinaryOptions, folder, chunk_size: 5000000 },
+  const result = await cloudinary.uploader.destroy(
+    imagePath,
+    { ...cloudinaryOptions },
     (error, response) => {
       if (error) {
         res.status(500).json({

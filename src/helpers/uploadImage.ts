@@ -1,15 +1,15 @@
 import axios from 'axios'
 import { UploadApiResponse } from 'cloudinary'
 
-export type UploadImageValues = {
+export type UploadImageParams = {
   folder: string
-  imageBase64?: string | ArrayBuffer | null
+  imageBase64: string | ArrayBuffer
 }
 
 export const uploadImage = async ({
   folder,
   imageBase64
-}: UploadImageValues) => {
+}: UploadImageParams) => {
   try {
     const response = await axios.post('/api/upload-image', {
       folder,

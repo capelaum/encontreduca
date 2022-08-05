@@ -90,7 +90,7 @@ export function UpdateProfile() {
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
 
-    if (hasPreview) {
+    if (hasPreview && imageBase64) {
       const secure_url = await uploadImage({
         imageBase64,
         folder: 'encontreduca/avatars'

@@ -4,6 +4,8 @@ export const dropzoneStyles = (
   theme: MantineTheme,
   dark: boolean
 ): CSSObject => ({
+  position: 'relative',
+  overflow: 'hidden',
   backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
   display: 'flex',
   justifyContent: 'center',
