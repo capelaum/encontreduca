@@ -121,17 +121,6 @@ export function UpdateProfile() {
 
         showToastError({
           title: 'Erro ao atualizar foto de perfil',
-          description: (error as Error).message
-        })
-
-        return
-      }
-
-      if (!secure_url) {
-        setIsLoading(false)
-
-        showToastError({
-          title: 'Erro ao atualizar foto de perfil',
           description: 'Não foi possível fazer upload desta imagem 😕'
         })
 

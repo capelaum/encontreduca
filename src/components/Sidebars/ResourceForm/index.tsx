@@ -145,29 +145,41 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
 
+    if (!user) {
+      setIsLoading(false)
+
+      showToastError({
+        title: 'É necessário estar logado para criar/editar um recurso',
+        description: 'Por favor, faça login para continuar'
+      })
+
+      return
+    }
+
+    if (hasPreview && imageBase64) {
+      try {
+        const secure_url = await uploadImage({
+          imageBase64,
+          folder: 'encontreduca/covers'
+        })
+
+        form.values.cover = secure_url
+      } catch (error) {
+        setIsLoading(false)
+
+        showToastError({
+          title: 'Erro ao criar/editar recurso',
+          description: 'Não foi possível fazer upload desta imagem de capa 😕'
+        })
+
+        return
+      }
+    }
+
     form.values.latitude = localPosition.lat
     form.values.longitude = localPosition.lng
 
-    if (hasPreview && imageBase64) {
-      const secure_url = await uploadImage({
-        imageBase64,
-        folder: 'encontreduca/covers'
-      })
-
-      if (!secure_url) {
-        showToastError({
-          title: 'Erro ao criar recurso',
-          description: 'Não foi possível fazer upload desta imagem 😕'
-        })
-
-        setIsLoading(false)
-        return
-      }
-
-      form.values.cover = secure_url
-    }
-
-    if (!resource && user) {
+    if (!resource) {
       await createMutation.mutateAsync({
         user_id: user.id,
         name: values.name,
@@ -181,7 +193,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
       })
     }
 
-    if (resource && user && !isCreateResource) {
+    if (resource && !isCreateResource) {
       const resourceDiff = getResourceDiff(form)
 
       if (Object.keys(resourceDiff).length === 0) {
