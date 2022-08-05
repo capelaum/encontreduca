@@ -26,9 +26,9 @@ export function Resource({ reviews }: ResourceProps) {
 
   useEffect(() => {
     if (resource) {
-      const resourceReviewsData = reviews.filter(
-        ({ resource_id }) => resource.id === resource_id
-      )
+      const resourceReviewsData = reviews
+        .sort((a, b) => +b.id - +a.id)
+        .filter(({ resource_id }) => resource.id === resource_id)
 
       setResourceReviews(resourceReviewsData)
     }
