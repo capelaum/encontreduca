@@ -97,6 +97,17 @@ export function UpdateProfile() {
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
 
+    if (!user) {
+      setIsLoading(false)
+
+      showToastError({
+        title: 'É necessário estar logado para criar/editar um recurso',
+        description: 'Por favor, faça login para continuar'
+      })
+
+      return
+    }
+
     if (hasPreview && imageBase64) {
       let secure_url = null
       const folder = 'encontreduca/avatars'

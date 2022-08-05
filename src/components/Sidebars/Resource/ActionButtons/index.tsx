@@ -1,4 +1,4 @@
-import { Group } from '@mantine/core'
+import { Box, Group } from '@mantine/core'
 import { useResource } from 'contexts/resourceContext'
 import { MdDirections } from 'react-icons/md'
 import { ActionButton } from './ActionButton'
@@ -12,19 +12,36 @@ interface ActionButtonsProps {
 }
 
 export function ActionButtons({ userHasResourceReview }: ActionButtonsProps) {
-  const { resource } = useResource()
+  const { user, resource } = useResource()
+
+  const {
+    position: { lat, lng }
+  } = resource!
+
+  const directions = `https://www.google.com/maps/dir//${lat},${lng}/@${lat},${lng},14z`
 
   return (
     <Group spacing={32} align="start" mt="md">
-      <ActionButton text="Rotas" icon={<MdDirections size={28} />} />
+      <Box
+        href={directions}
+        component="a"
+        target="_blank"
+        sx={{ textDecoration: 'none' }}
+      >
+        <ActionButton text="Rotas" icon={<MdDirections size={28} />} />
+      </Box>
 
-      {resource?.approved && <ResourceSave />}
+      {user && (
+        <>
+          {resource?.approved && <ResourceSave />}
 
-      <ResourceChange />
+          <ResourceChange />
 
-      {!userHasResourceReview && <ReviewCreate />}
+          {!userHasResourceReview && <ReviewCreate />}
 
-      {!resource?.approved && <ResourceVote />}
+          {!resource?.approved && <ResourceVote />}
+        </>
+      )}
     </Group>
   )
 }

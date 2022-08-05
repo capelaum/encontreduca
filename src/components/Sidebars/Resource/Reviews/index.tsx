@@ -39,7 +39,6 @@ export function Reviews({ resourceReviews }: ReviewsProps) {
       {!!userResourceReview && (
         <>
           <SectionTitle title="Sua avaliação" />
-
           <UserReview review={userResourceReview} isOwnReview />
         </>
       )}

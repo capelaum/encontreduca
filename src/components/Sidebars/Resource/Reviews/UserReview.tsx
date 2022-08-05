@@ -9,6 +9,7 @@ import {
 } from '@mantine/core'
 import { Profile } from 'components/Shared/Profile'
 import { Stars } from 'components/Shared/Stars'
+import { useResource } from 'contexts/resourceContext'
 import { Review } from 'types/reviews'
 import { Actions } from './Actions'
 
@@ -18,7 +19,8 @@ interface UserReviewProps {
 }
 
 export function UserReview({ isOwnReview, review }: UserReviewProps) {
-  const { created_at, comment, user, rating } = review
+  const { created_at, comment, user: reviewUser, rating } = review
+  const { user } = useResource()
 
   const theme = useMantineTheme()
 
@@ -35,9 +37,9 @@ export function UserReview({ isOwnReview, review }: UserReviewProps) {
     <>
       <Stack px="md" spacing={12}>
         <Group position="apart">
-          <Profile user={user} />
+          <Profile user={reviewUser} />
 
-          <Actions isOwnReview={isOwnReview} review={review} />
+          {user && <Actions isOwnReview={isOwnReview} review={review} />}
         </Group>
 
         <Group spacing={2} align="center">

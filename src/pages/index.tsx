@@ -16,7 +16,6 @@ import { useSidebar } from 'contexts/sidebarContext'
 import { loadCategories } from 'lib/loadCategories'
 import { loadMotives } from 'lib/loadMotives'
 import { loadResources } from 'lib/resourcesLib'
-import { getUser } from 'lib/usersLib'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useEffect } from 'react'
@@ -159,7 +158,7 @@ export default function Map({ categories, motives, user }: MapProps) {
 export const getServerSideProps: GetServerSideProps = async () => {
   const categories: CategoryType[] = await loadCategories()
   const motives: Motive[] = await loadMotives()
-  const user: User = await getUser(1)
+  // const user: User = await getUser(4)
 
   if (!categories) {
     return {
@@ -171,7 +170,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       categories,
       motives,
-      user
+      user: null
     }
   }
 }
