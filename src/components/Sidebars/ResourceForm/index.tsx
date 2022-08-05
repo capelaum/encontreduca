@@ -127,7 +127,17 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     }
 
     if (resource) {
-      form.setValues(resource)
+      form.setValues({
+        name: resource.name,
+        address: resource.address,
+        phone: resource.phone ?? '',
+        website: resource.website ?? '',
+        cover: resource.cover,
+        category_id: resource.category_id,
+        latitude: resource.latitude,
+        longitude: resource.longitude
+      })
+
       setLocalPosition(resource.position)
     }
   }, [resource])

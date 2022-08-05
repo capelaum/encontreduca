@@ -128,6 +128,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
       const oldValue = resource![resourceTypeKey]
         ? resource![resourceTypeKey]!.toString()
         : 'nulo'
+
       const newValue = resourceDiff[resourceTypeKey]
         ? resourceDiff[resourceTypeKey]!.toString()
         : 'nulo'
