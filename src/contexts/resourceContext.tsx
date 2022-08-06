@@ -10,6 +10,7 @@ import {
 } from 'types/resources'
 import { Review } from 'types/reviews'
 import { User } from 'types/users'
+import { useSidebar } from './sidebarContext'
 
 interface ResourceProviderProps {
   children: ReactNode
@@ -46,32 +47,23 @@ const ResourceContext = createContext<ResourceContextData>(
 
 export function ResourceProvider({ children }: ResourceProviderProps) {
   const [user, setUser] = useState<User | null>(null)
-
-  const [resource, setResource] = useState<ResourceType | null>(null)
-  const [resources, setResources] = useState<ResourceType[]>(
-    [] as ResourceType[]
-  )
-
-  const [categories, setCategories] = useState<CategoryType[]>(
-    [] as CategoryType[]
-  )
-
+  const [categories, setCategories] = useState<CategoryType[]>([])
   const [motives, setMotives] = useState<Motive[]>([] as Motive[])
-
+  const [resource, setResource] = useState<ResourceType | null>(null)
+  const [resources, setResources] = useState<ResourceType[]>([])
   const [activeFilter, setActiveFilter] = useState<CategoryFilter | null>(null)
+  const { votingPanelOpened } = useSidebar()
 
   const filterResources = (resourcesList: ResourceType[]) => {
     const filteredResources = resourcesList.filter(({ approved, category }) => {
-      if (approved && !activeFilter) {
-        return true
+      if (!activeFilter) {
+        if (votingPanelOpened) return !approved
+        if (approved) return true
       }
 
-      if (
-        approved &&
-        activeFilter &&
-        activeFilter.categoryNames.includes(category.name)
-      ) {
-        return true
+      if (activeFilter && activeFilter.categoryNames.includes(category.name)) {
+        if (votingPanelOpened) return !approved
+        if (approved) return true
       }
 
       return false

@@ -94,7 +94,7 @@ export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
           <Text
             component="strong"
             sx={{
-              color: dark ? theme.colors.cyan[3] : theme.colors.cyan[8],
+              color: dark ? theme.white : theme.colors.cyan[5],
               fontWeight: 500
             }}
           >

@@ -40,8 +40,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
         <QueryClientProvider client={queryClient}>
-          <ResourceProvider>
-            <SidebarProvider>
+          <SidebarProvider>
+            <ResourceProvider>
               <MapProvider>
                 <ModalsProvider
                   modals={{
@@ -59,8 +59,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                   <Component {...pageProps} />
                 </ModalsProvider>
               </MapProvider>
-            </SidebarProvider>
-          </ResourceProvider>
+            </ResourceProvider>
+          </SidebarProvider>
         </QueryClientProvider>
       </MantineProvider>
     </ColorSchemeProvider>
