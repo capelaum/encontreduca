@@ -14,9 +14,13 @@ interface ActionButtonsProps {
 export function ActionButtons({ userHasResourceReview }: ActionButtonsProps) {
   const { user, resource } = useResource()
 
+  if (!resource) {
+    return null
+  }
+
   const {
     position: { lat, lng }
-  } = resource!
+  } = resource
 
   const directions = `https://www.google.com/maps/dir//${lat},${lng}/@${lat},${lng},14z`
 
@@ -33,13 +37,13 @@ export function ActionButtons({ userHasResourceReview }: ActionButtonsProps) {
 
       {user && (
         <>
-          {resource?.approved && <ResourceSave />}
+          {resource.approved ? <ResourceSave /> : null}
 
           <ResourceChange />
 
           {!userHasResourceReview && <ReviewCreate />}
 
-          {!resource?.approved && <ResourceVote />}
+          {!resource.approved && <ResourceVote />}
         </>
       )}
     </Group>
