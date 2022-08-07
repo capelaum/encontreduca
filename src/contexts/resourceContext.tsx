@@ -1,12 +1,20 @@
 import { UseFormReturnType } from '@mantine/form'
 import { createResourceChange } from 'lib/resourcesLib'
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react'
 import { CategoryFilter, CategoryType } from 'types/categories'
 import { Motive } from 'types/motives'
 import {
   ResourceChange,
   ResourceFormValues,
-  ResourceType
+  ResourceType,
+  ResourceVote
 } from 'types/resources'
 import { Review } from 'types/reviews'
 import { User } from 'types/users'
@@ -29,6 +37,10 @@ interface ResourceContextData {
   setResource: (resource: ResourceType | null) => void
   activeFilter: CategoryFilter | null
   setActiveFilter: (activeResource: CategoryFilter | null) => void
+  resourceReviews: Review[]
+  setResourceReviews: (resourceReviews: Review[]) => void
+  resourceVotes: ResourceVote[]
+  setResourceVotes: (resourceVotes: ResourceVote[]) => void
   filterResources: (resources: ResourceType[]) => ResourceType[]
   getAverageRating: (reviews: Review[]) => number
   getUserResourceReview: (reviews: Review[]) => Review | null
@@ -52,7 +64,28 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resource, setResource] = useState<ResourceType | null>(null)
   const [resources, setResources] = useState<ResourceType[]>([])
   const [activeFilter, setActiveFilter] = useState<CategoryFilter | null>(null)
+
+  const [resourceReviews, setResourceReviews] = useState<Review[]>([])
+  const [resourceVotes, setResourceVotes] = useState<ResourceVote[]>([])
+
   const { votingPanelOpened } = useSidebar()
+
+  useEffect(() => {
+    if (resource) {
+      const resourceReviewsData = resource.reviews
+        .flat()
+        .sort((a, b) => +b.id - +a.id)
+        .filter(({ resource_id }) => resource.id === resource_id)
+
+      setResourceReviews(resourceReviewsData)
+
+      const resourceVotesData = resource.votes
+        .flat()
+        .filter(({ resource_id }) => resource.id === resource_id)
+
+      setResourceVotes(resourceVotesData)
+    }
+  }, [resource])
 
   const filterResources = (resourcesList: ResourceType[]) => {
     const filteredResources = resourcesList.filter(({ approved, category }) => {
@@ -152,6 +185,10 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     setResource,
     activeFilter,
     setActiveFilter,
+    resourceReviews,
+    setResourceReviews,
+    resourceVotes,
+    setResourceVotes,
     getAverageRating,
     filterResources,
     getUserResourceReview,

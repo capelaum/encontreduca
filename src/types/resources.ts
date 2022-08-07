@@ -7,6 +7,7 @@ export type ResourceType = {
   id: string | number
   user: User
   reviews: Review[]
+  votes: ResourceVote[]
   user_id: string | number
 
   name: string
@@ -52,4 +53,14 @@ export type ResourceChange = {
   field: string
   old_value: string
   new_value: string
+}
+
+export type ResourceVote = {
+  user_id: string | number
+  resource_id: string | number
+  vote: boolean
+  justification: string
+
+  created_at: string
+  updated_at: string
 }

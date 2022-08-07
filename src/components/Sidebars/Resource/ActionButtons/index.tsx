@@ -7,12 +7,11 @@ import { ResourceVote } from './ModalActions/ResourceVote'
 import { ReviewCreate } from './ModalActions/ReviewCreate'
 import { ResourceSave } from './ResourceSave'
 
-interface ActionButtonsProps {
-  userHasResourceReview: boolean
-}
+export function ActionButtons() {
+  const { user, resource, getUserResourceReview, resourceReviews } =
+    useResource()
 
-export function ActionButtons({ userHasResourceReview }: ActionButtonsProps) {
-  const { user, resource } = useResource()
+  const userResourceReview = getUserResourceReview(resourceReviews)
 
   if (!resource) {
     return null
@@ -41,7 +40,7 @@ export function ActionButtons({ userHasResourceReview }: ActionButtonsProps) {
 
           <ResourceChange />
 
-          {!userHasResourceReview && <ReviewCreate />}
+          {!userResourceReview && <ReviewCreate />}
 
           {!resource.approved && <ResourceVote />}
         </>

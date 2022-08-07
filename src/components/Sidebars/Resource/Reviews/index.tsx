@@ -7,17 +7,16 @@ import {
 } from '@mantine/core'
 import { useResource } from 'contexts/resourceContext'
 import { useEffect, useState } from 'react'
-import { Review } from 'types/reviews'
 import { SectionTitle } from './SectionTitle'
 import { UserReview } from './UserReview'
 
-interface ReviewsProps {
-  resourceReviews: Review[]
-}
-
-export function Reviews({ resourceReviews }: ReviewsProps) {
-  const { resource, getUserResourceReview, getReviewsWithoutUser } =
-    useResource()
+export function Reviews() {
+  const {
+    resource,
+    getUserResourceReview,
+    getReviewsWithoutUser,
+    resourceReviews
+  } = useResource()
 
   const theme = useMantineTheme()
 

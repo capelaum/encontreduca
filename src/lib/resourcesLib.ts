@@ -1,5 +1,10 @@
 import { api } from 'services/api'
-import { NewResource, ResourceChange, ResourceType } from 'types/resources'
+import {
+  NewResource,
+  ResourceChange,
+  ResourceType,
+  ResourceVote
+} from 'types/resources'
 import { Review } from 'types/reviews'
 import { dateFormatter } from 'utils/dataFormatter'
 
@@ -27,6 +32,11 @@ export async function loadResources(): Promise<ResourceType[]> {
       ...review,
       created_at: dateFormatter(review.created_at),
       updated_at: dateFormatter(review.updated_at)
+    })),
+    votes: resource.votes.map((vote: ResourceVote) => ({
+      ...vote,
+      created_at: dateFormatter(vote.created_at),
+      updated_at: dateFormatter(vote.updated_at)
     }))
   }))
 
@@ -65,6 +75,14 @@ export async function createResourceChange(
   updatedResource: ResourceChange
 ): Promise<ResourceChange> {
   const response = await api.post('resources/changes', updatedResource)
+
+  return response.data
+}
+
+export async function createResourceVote(
+  resourceVote: ResourceVote
+): Promise<ResourceVote> {
+  const response = await api.post('resources/votes', resourceVote)
 
   return response.data
 }

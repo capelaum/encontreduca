@@ -91,8 +91,6 @@ export default function Map({ categories, motives, user }: MapProps) {
     )
   }
 
-  const reviews = resources.map((resource) => resource.reviews).flat()
-
   return (
     <>
       <Head>
@@ -110,7 +108,7 @@ export default function Map({ categories, motives, user }: MapProps) {
         setOpened={setResourceOpened}
         zIndex={savedResourcesOpened || votingPanelOpened ? 4 : 1}
       >
-        <Resource reviews={reviews} />
+        <Resource />
       </Sidebar>
 
       <Sidebar opened={menuOpened} setOpened={setMenuOpened} zIndex={2}>

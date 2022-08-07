@@ -8,7 +8,7 @@ import {
 import { ContextModalProps } from '@mantine/modals'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
-import { showToast } from 'components/Shared/ToastMessage'
+import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { ActionButton } from 'components/Sidebars/Resource/ActionButtons/ActionButton'
 import { useState } from 'react'
 import {
@@ -29,13 +29,13 @@ export function ModalVote({
   const { onConfirmText } = innerProps
   const { closeModal } = context
 
+  const [justification, setJustification] = useState('')
+  const [vote, setVote] = useState<Vote>(null)
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
-
-  const [justification, setJustification] = useState('')
-  const [vote, setVote] = useState<Vote>(null)
 
   const setVoteIcon = (isThumbsUp: boolean) => {
     switch (vote) {
@@ -60,6 +60,27 @@ export function ModalVote({
     }
   }
 
+  const handleOnConfirm = () => {
+    if (!vote || !justification) {
+      showToastError({
+        title: 'Voto e justificativa são obrigatórios',
+        description:
+          'Para votar é necessário selecionar um voto e inserir uma justificativa'
+      })
+
+      return
+    }
+
+    closeModal(id)
+
+    showToast({
+      title: 'Seu voto foi enviado!',
+      description: 'Agradecemos sua participação!',
+      icon: <FaThumbsUp size={24} color={theme.colors.brand[7]} />,
+      dark
+    })
+  }
+
   return (
     <Stack spacing="sm">
       <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar modal" />
@@ -68,17 +89,13 @@ export function ModalVote({
         <ActionButton
           text="Aprovar"
           icon={setVoteIcon(true)}
-          onClick={() => {
-            setVote('Aprovado')
-          }}
+          onClick={() => setVote('Aprovado')}
         />
 
         <ActionButton
           text="Desaprovar"
           icon={setVoteIcon(false)}
-          onClick={() => {
-            setVote('Reprovado')
-          }}
+          onClick={() => setVote('Reprovado')}
         />
       </Group>
 
@@ -98,15 +115,7 @@ export function ModalVote({
 
       <ConfirmButtons
         onCancel={() => closeModal(id)}
-        onConfirm={() => {
-          closeModal(id)
-          showToast({
-            title: 'Seu voto foi enviado!',
-            description: 'Agradecemos sua participação!',
-            icon: <FaThumbsUp size={24} color={theme.colors.brand[7]} />,
-            dark
-          })
-        }}
+        onConfirm={() => handleOnConfirm()}
         onConfirmText={onConfirmText}
       />
     </Stack>

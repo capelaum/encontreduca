@@ -1,20 +1,15 @@
 import { Group, Text, useMantineColorScheme } from '@mantine/core'
 import { Stars } from 'components/Shared/Stars'
 import { useResource } from 'contexts/resourceContext'
-import { Review } from 'types/reviews'
 
-interface ReviewStatsProps {
-  reviews: Review[]
-}
-
-export function ReviewStats({ reviews }: ReviewStatsProps) {
-  const { getAverageRating } = useResource()
-  const averageRating = getAverageRating(reviews)
+export function ReviewStats() {
+  const { getAverageRating, resourceReviews } = useResource()
+  const averageRating = getAverageRating(resourceReviews)
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  if (reviews.length === 0) {
+  if (resourceReviews.length === 0) {
     return <Text size="sm">Sem avaliações</Text>
   }
 
@@ -34,7 +29,7 @@ export function ReviewStats({ reviews }: ReviewStatsProps) {
           color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
         })}
       >
-        {reviews.length} avaliações
+        {resourceReviews.length} avaliações
       </Text>
     </Group>
   )
