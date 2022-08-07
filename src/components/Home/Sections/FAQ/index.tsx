@@ -1,4 +1,4 @@
-import { Accordion, Box, useMantineTheme } from '@mantine/core'
+import { Accordion, Box, Center, useMantineTheme } from '@mantine/core'
 import { useState } from 'react'
 import { TbPlus } from 'react-icons/tb'
 import { SectionContainer } from '../Shared/SectionContainer'
@@ -93,28 +93,42 @@ export function FAQ() {
   })
 
   return (
-    <Box py={20} sx={{ backgroundColor: theme.white }} id="faq">
-      <SectionContainer>
-        <SectionTitle title="FAQ" />
+    <Center
+      sx={{
+        backgroundColor: theme.colors.gray[0],
+        transform: 'skewY(3deg)',
+        transformOrigin: 'top left'
+      }}
+    >
+      <Box
+        sx={{
+          transform: 'skewY(-3deg)',
+          width: '100%',
+          marginBottom: '100px'
+        }}
+      >
+        <SectionContainer id="faq">
+          <SectionTitle title="FAQ" />
 
-        <Accordion
-          multiple
-          order={3}
-          variant="separated"
-          onChange={setValue}
-          chevron={<TbPlus size={20} />}
-          defaultValue={value}
-          mt={48}
-          styles={accordionStyles}
-        >
-          {faq.map(({ id, title, content }) => (
-            <Accordion.Item value={id.toString()} key={id.toString()}>
-              <Accordion.Control>{title}</Accordion.Control>
-              <Accordion.Panel>{content}</Accordion.Panel>
-            </Accordion.Item>
-          ))}
-        </Accordion>
-      </SectionContainer>
-    </Box>
+          <Accordion
+            multiple
+            order={3}
+            variant="separated"
+            onChange={setValue}
+            chevron={<TbPlus size={20} />}
+            defaultValue={value}
+            mt={48}
+            styles={accordionStyles}
+          >
+            {faq.map(({ id, title, content }) => (
+              <Accordion.Item value={id.toString()} key={id.toString()}>
+                <Accordion.Control>{title}</Accordion.Control>
+                <Accordion.Panel>{content}</Accordion.Panel>
+              </Accordion.Item>
+            ))}
+          </Accordion>
+        </SectionContainer>
+      </Box>
+    </Center>
   )
 }
