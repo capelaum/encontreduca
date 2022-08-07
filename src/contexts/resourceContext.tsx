@@ -41,6 +41,8 @@ interface ResourceContextData {
   setResourceReviews: (resourceReviews: Review[]) => void
   resourceVotes: ResourceVote[]
   setResourceVotes: (resourceVotes: ResourceVote[]) => void
+  resourceUserVote: ResourceVote | null
+  setResourceUserVote: (resourceUserVote: ResourceVote | null) => void
   filterResources: (resources: ResourceType[]) => ResourceType[]
   getAverageRating: (reviews: Review[]) => number
   getUserResourceReview: (reviews: Review[]) => Review | null
@@ -68,6 +70,10 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resourceReviews, setResourceReviews] = useState<Review[]>([])
   const [resourceVotes, setResourceVotes] = useState<ResourceVote[]>([])
 
+  const [resourceUserVote, setResourceUserVote] = useState<ResourceVote | null>(
+    null
+  )
+
   const { votingPanelOpened } = useSidebar()
 
   useEffect(() => {
@@ -84,6 +90,12 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
         .filter(({ resource_id }) => resource.id === resource_id)
 
       setResourceVotes(resourceVotesData)
+
+      const resourceUserVoteData = resourceVotesData.find(
+        ({ user_id }) => user_id === user?.id
+      )
+
+      setResourceUserVote(resourceUserVoteData ?? null)
     }
   }, [resource])
 
@@ -189,6 +201,8 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     setResourceReviews,
     resourceVotes,
     setResourceVotes,
+    resourceUserVote,
+    setResourceUserVote,
     getAverageRating,
     filterResources,
     getUserResourceReview,

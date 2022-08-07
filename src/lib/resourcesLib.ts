@@ -1,12 +1,12 @@
 import { api } from 'services/api'
 import {
   NewResource,
+  NewResourceVote,
   ResourceChange,
   ResourceType,
-  ResourceVote
+  ResourceVote,
+  UpdatedResourceVote
 } from 'types/resources'
-import { Review } from 'types/reviews'
-import { dateFormatter } from 'utils/dataFormatter'
 
 export async function loadResources(): Promise<ResourceType[]> {
   const { data } = await api.get('resources')
@@ -25,19 +25,7 @@ export async function loadResources(): Promise<ResourceType[]> {
     position: {
       lat: parseFloat(resource.latitude.toString()),
       lng: parseFloat(resource.longitude.toString())
-    },
-    created_at: dateFormatter(resource.created_at),
-    updated_at: dateFormatter(resource.updated_at),
-    reviews: resource.reviews.map((review: Review) => ({
-      ...review,
-      created_at: dateFormatter(review.created_at),
-      updated_at: dateFormatter(review.updated_at)
-    })),
-    votes: resource.votes.map((vote: ResourceVote) => ({
-      ...vote,
-      created_at: dateFormatter(vote.created_at),
-      updated_at: dateFormatter(vote.updated_at)
-    }))
+    }
   }))
 
   return resources
@@ -50,14 +38,17 @@ export async function getResource(id: number): Promise<ResourceType> {
     throw new Error('No resource data returned from API')
   }
 
-  const resource = {
+  const resource: ResourceType = {
     ...data,
+    category_id: data.category_id.toString(),
+    website: data.website ?? '',
+    phone: data.phone ?? '',
+    latitude: parseFloat(data.latitude.toString()),
+    longitude: parseFloat(data.longitude.toString()),
     position: {
       lat: parseFloat(data.latitude),
       lng: parseFloat(data.longitude)
-    },
-    created_at: dateFormatter(data.created_at),
-    updated_at: dateFormatter(data.updated_at)
+    }
   }
 
   return resource
@@ -80,9 +71,20 @@ export async function createResourceChange(
 }
 
 export async function createResourceVote(
-  resourceVote: ResourceVote
+  resourceVote: NewResourceVote
 ): Promise<ResourceVote> {
   const response = await api.post('resources/votes', resourceVote)
+
+  return response.data
+}
+
+export async function updateResourceVote(
+  resourceVote: UpdatedResourceVote
+): Promise<ResourceVote> {
+  const response = await api.put(
+    `resources/votes/${resourceVote.id}`,
+    resourceVote
+  )
 
   return response.data
 }

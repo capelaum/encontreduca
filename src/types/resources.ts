@@ -56,6 +56,7 @@ export type ResourceChange = {
 }
 
 export type ResourceVote = {
+  id: string | number
   user_id: string | number
   resource_id: string | number
   vote: boolean
@@ -64,3 +65,13 @@ export type ResourceVote = {
   created_at: string
   updated_at: string
 }
+
+export type NewResourceVote = Pick<
+  ResourceVote,
+  'user_id' | 'resource_id' | 'vote' | 'justification'
+>
+
+export type UpdatedResourceVote = Pick<
+  ResourceVote,
+  'id' | 'user_id' | 'resource_id' | 'vote' | 'justification'
+>

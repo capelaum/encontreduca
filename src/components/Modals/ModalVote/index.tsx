@@ -6,11 +6,19 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { DefaultOverlay } from 'components/Shared/DefaultOverlay'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { ActionButton } from 'components/Sidebars/Resource/ActionButtons/ActionButton'
-import { useState } from 'react'
+import { useResource } from 'contexts/resourceContext'
+import {
+  createResourceVote,
+  getResource,
+  updateResourceVote
+} from 'lib/resourcesLib'
+import { useEffect, useState } from 'react'
 import {
   FaRegThumbsDown,
   FaRegThumbsUp,
@@ -29,13 +37,38 @@ export function ModalVote({
   const { onConfirmText } = innerProps
   const { closeModal } = context
 
-  const [justification, setJustification] = useState('')
+  const { user, resource, resourceUserVote, setResource } = useResource()
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [justification, setJustification] = useState(
+    resourceUserVote ? resourceUserVote.justification : ''
+  )
   const [vote, setVote] = useState<Vote>(null)
+
+  useEffect(() => {
+    if (resourceUserVote) {
+      setVote(resourceUserVote.vote ? 'Aprovado' : 'Reprovado')
+    }
+  }, [])
 
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
+
+  const queryClient = useQueryClient()
+
+  const createMutation = useMutation(createResourceVote, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['resources'])
+    }
+  })
+
+  const updateMutation = useMutation(updateResourceVote, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['resources'])
+    }
+  })
 
   const setVoteIcon = (isThumbsUp: boolean) => {
     switch (vote) {
@@ -60,7 +93,7 @@ export function ModalVote({
     }
   }
 
-  const handleOnConfirm = () => {
+  const handleOnConfirm = async () => {
     if (!vote || !justification) {
       showToastError({
         title: 'Voto e justificativa são obrigatórios',
@@ -71,6 +104,31 @@ export function ModalVote({
       return
     }
 
+    setIsLoading(true)
+
+    if (!resourceUserVote) {
+      await createMutation.mutateAsync({
+        user_id: user!.id,
+        resource_id: resource!.id,
+        vote: vote === 'Aprovado',
+        justification
+      })
+    }
+
+    if (resourceUserVote) {
+      await updateMutation.mutateAsync({
+        id: resourceUserVote.id,
+        user_id: user!.id,
+        resource_id: resource!.id,
+        vote: vote === 'Aprovado',
+        justification
+      })
+    }
+
+    const updatedResource = await getResource(+resource!.id)
+    setResource(updatedResource)
+
+    setIsLoading(false)
     closeModal(id)
 
     showToast({
@@ -84,6 +142,8 @@ export function ModalVote({
   return (
     <Stack spacing="sm">
       <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar modal" />
+
+      <DefaultOverlay visible={isLoading} />
 
       <Group spacing={32} align="start" position="center" py="md">
         <ActionButton
