@@ -41,18 +41,17 @@ interface ResourceContextData {
   setResourceReviews: (resourceReviews: Review[]) => void
   resourceVotes: ResourceVote[]
   setResourceVotes: (resourceVotes: ResourceVote[]) => void
-  resourceUserVote: ResourceVote | null
-  setResourceUserVote: (resourceUserVote: ResourceVote | null) => void
   filterResources: (resources: ResourceType[]) => ResourceType[]
   getAverageRating: (reviews: Review[]) => number
-  getUserResourceReview: (reviews: Review[]) => Review | null
-  getReviewsWithoutUser: (reviews: Review[]) => Review[]
   getResourceDiff: (
     form: UseFormReturnType<ResourceFormValues>
   ) => Partial<ResourceFormValues>
   createResourceChanges: (
     resourceDiff: Partial<ResourceFormValues>
   ) => Promise<ResourceChange[]>
+  userResourceReview: Review | null
+  reviewsWithoutUser: Review[]
+  resourceUserVote: ResourceVote | null
 }
 
 const ResourceContext = createContext<ResourceContextData>(
@@ -70,10 +69,6 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resourceReviews, setResourceReviews] = useState<Review[]>([])
   const [resourceVotes, setResourceVotes] = useState<ResourceVote[]>([])
 
-  const [resourceUserVote, setResourceUserVote] = useState<ResourceVote | null>(
-    null
-  )
-
   const { votingPanelOpened } = useSidebar()
 
   useEffect(() => {
@@ -90,12 +85,6 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
         .filter(({ resource_id }) => resource.id === resource_id)
 
       setResourceVotes(resourceVotesData)
-
-      const resourceUserVoteData = resourceVotesData.find(
-        ({ user_id }) => user_id === user?.id
-      )
-
-      setResourceUserVote(resourceUserVoteData ?? null)
     }
   }, [resource])
 
@@ -139,6 +128,18 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
 
     return reviewsWithoutUser
   }
+
+  const getUseResourceVote = (votes: ResourceVote[]) => {
+    const userVote = votes.find(({ user_id }) => user_id === user?.id)
+
+    return userVote ?? null
+  }
+
+  const userResourceReview = getUserResourceReview(resourceReviews)
+
+  const reviewsWithoutUser = getReviewsWithoutUser(resourceReviews)
+
+  const resourceUserVote = getUseResourceVote(resourceVotes)
 
   const getResourceDiff = (form: UseFormReturnType<ResourceFormValues>) => {
     const { values } = form
@@ -201,14 +202,13 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     setResourceReviews,
     resourceVotes,
     setResourceVotes,
-    resourceUserVote,
-    setResourceUserVote,
     getAverageRating,
     filterResources,
-    getUserResourceReview,
-    getReviewsWithoutUser,
     getResourceDiff,
-    createResourceChanges
+    createResourceChanges,
+    userResourceReview,
+    reviewsWithoutUser,
+    resourceUserVote
   }
 
   const ResourceContextProviderValue = useMemo<ResourceContextData>(

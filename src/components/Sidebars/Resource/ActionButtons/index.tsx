@@ -8,10 +8,7 @@ import { ReviewCreate } from './ModalActions/ReviewCreate'
 import { ResourceSave } from './ResourceSave'
 
 export function ActionButtons() {
-  const { user, resource, getUserResourceReview, resourceReviews } =
-    useResource()
-
-  const userResourceReview = getUserResourceReview(resourceReviews)
+  const { user, resource, userResourceReview } = useResource()
 
   if (!resource) {
     return null

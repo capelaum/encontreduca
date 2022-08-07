@@ -11,21 +11,12 @@ import { SectionTitle } from './SectionTitle'
 import { UserReview } from './UserReview'
 
 export function Reviews() {
-  const {
-    resource,
-    getUserResourceReview,
-    getReviewsWithoutUser,
-    resourceReviews
-  } = useResource()
+  const { resource, userResourceReview, reviewsWithoutUser } = useResource()
 
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
-
-  const userResourceReview = getUserResourceReview(resourceReviews)
-
-  const reviewsWithoutUser = getReviewsWithoutUser(resourceReviews)
 
   const [end, setEnd] = useState(3)
 
