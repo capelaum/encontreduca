@@ -1,5 +1,6 @@
 import { UseFormReturnType } from '@mantine/form'
-import { createResourceChange } from 'lib/resourcesLib'
+import { useQuery } from '@tanstack/react-query'
+import { createResourceChange, loadResources } from 'lib/resourcesLib'
 import {
   createContext,
   ReactNode,
@@ -31,8 +32,9 @@ interface ResourceContextData {
   setCategories: (categories: CategoryType[]) => void
   motives: Motive[]
   setMotives: (motives: Motive[]) => void
-  resources: ResourceType[]
-  setResources: (resources: ResourceType[]) => void
+  resources: ResourceType[] | undefined
+  resourcesError: unknown
+  resourcesStatus: 'loading' | 'error' | 'success'
   resource: ResourceType | null
   setResource: (resource: ResourceType | null) => void
   activeFilter: CategoryFilter | null
@@ -63,13 +65,17 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [categories, setCategories] = useState<CategoryType[]>([])
   const [motives, setMotives] = useState<Motive[]>([] as Motive[])
   const [resource, setResource] = useState<ResourceType | null>(null)
-  const [resources, setResources] = useState<ResourceType[]>([])
   const [activeFilter, setActiveFilter] = useState<CategoryFilter | null>(null)
-
   const [resourceReviews, setResourceReviews] = useState<Review[]>([])
   const [resourceVotes, setResourceVotes] = useState<ResourceVote[]>([])
 
   const { votingPanelOpened } = useSidebar()
+
+  const {
+    data: resources,
+    error: resourcesError,
+    status: resourcesStatus
+  } = useQuery(['resources'], loadResources)
 
   useEffect(() => {
     if (resource) {
@@ -105,6 +111,8 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
 
     return filteredResources
   }
+
+  useEffect(() => {}, [activeFilter, votingPanelOpened])
 
   const getAverageRating = (reviews: Review[]) => {
     if (reviews.length === 0) return 0
@@ -193,7 +201,8 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     motives,
     setMotives,
     resources,
-    setResources,
+    resourcesError,
+    resourcesStatus,
     resource,
     setResource,
     activeFilter,

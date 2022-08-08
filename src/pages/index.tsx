@@ -1,6 +1,5 @@
 import { useMantineColorScheme } from '@mantine/core'
 import { useJsApiLoader } from '@react-google-maps/api'
-import { useQuery } from '@tanstack/react-query'
 import MapDark from 'components/Map/MapDark'
 import { MapLight } from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
@@ -15,7 +14,6 @@ import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { loadCategories } from 'lib/loadCategories'
 import { loadMotives } from 'lib/loadMotives'
-import { loadResources } from 'lib/resourcesLib'
 import { getUser } from 'lib/usersLib'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
@@ -32,18 +30,17 @@ interface MapProps {
 }
 
 export default function Map({ categories, motives, user }: MapProps) {
-  const { setUser, setCategories, setMotives } = useResource()
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
 
-  useEffect(() => {
-    setUser(user)
-    setCategories(categories)
-    setMotives(motives)
-  }, [])
-
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
-    libraries
-  })
+  const {
+    setUser,
+    setCategories,
+    setMotives,
+    resources,
+    resourcesStatus,
+    resourcesError
+  } = useResource()
 
   const {
     resourceOpened,
@@ -62,14 +59,16 @@ export default function Map({ categories, motives, user }: MapProps) {
     setVotingPanelOpened
   } = useSidebar()
 
-  const { colorScheme } = useMantineColorScheme()
-  const dark = colorScheme === 'dark'
+  useEffect(() => {
+    setUser(user)
+    setCategories(categories)
+    setMotives(motives)
+  }, [])
 
-  const {
-    data: resources,
-    error: resourcesError,
-    status: resourcesStatus
-  } = useQuery(['resources'], loadResources)
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
+    libraries
+  })
 
   if (resourcesStatus === 'loading' || !isLoaded) {
     return <MapLoader />
@@ -97,11 +96,7 @@ export default function Map({ categories, motives, user }: MapProps) {
         <title>Mapa | Encontreduca</title>
       </Head>
 
-      {dark ? (
-        <MapDark resources={resources} />
-      ) : (
-        <MapLight resources={resources} />
-      )}
+      {dark ? <MapDark /> : <MapLight resources={resources} />}
 
       <Sidebar
         opened={resourceOpened}

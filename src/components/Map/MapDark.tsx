@@ -3,16 +3,11 @@ import { GoogleMap, Marker } from '@react-google-maps/api'
 import { mapContainerStyle, mapOptions } from 'config/options'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
-import { ResourceType } from 'types/resources'
 import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
 import { SideButtons } from './SideButtons'
 
-interface MapDarkProps {
-  resources: ResourceType[]
-}
-
-export default function MapDark({ resources }: MapDarkProps) {
+export default function MapDark() {
   const {
     center,
     zoom,
@@ -23,8 +18,8 @@ export default function MapDark({ resources }: MapDarkProps) {
     handleMapClick
   } = useMap()
 
-  const { filterResources } = useResource()
-  const filteredResources = filterResources(resources)
+  const { resources, filterResources } = useResource()
+  const filteredResources = filterResources(resources!)
 
   function renderResourcesMarkers() {
     return filteredResources.map((resource) => (
