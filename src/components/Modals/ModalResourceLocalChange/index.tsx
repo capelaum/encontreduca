@@ -11,6 +11,7 @@ import {
 } from '@mantine/core'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
 import { buttonStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { mapOptions, mapOptionsLight } from 'config/options'
@@ -19,7 +20,6 @@ import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation, MdPlace } from 'react-icons/md'
 import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
 import { categorySwitch } from 'utils/categorySwitch'
-import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 interface ModalResourceLocalChangeProps {
   onClose: () => void

@@ -7,7 +7,8 @@ import {
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
-import { DefaultOverlay } from 'components/Shared/DefaultOverlay'
+import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
+import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'
@@ -17,7 +18,6 @@ import { IoIosSend } from 'react-icons/io'
 import { TbChevronDown } from 'react-icons/tb'
 import { ResourceType } from 'types/resources'
 import { Review } from 'types/reviews'
-import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 export function ModalSelect({
   context,

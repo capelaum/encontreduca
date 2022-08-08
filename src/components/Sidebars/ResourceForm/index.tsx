@@ -8,7 +8,7 @@ import {
 import { useForm } from '@mantine/form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
-import { DefaultOverlay } from 'components/Shared/DefaultOverlay'
+import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useMap } from 'contexts/mapContext'

@@ -6,7 +6,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { DefaultAvatar } from 'components/Shared/DefaultAvatar'
+import { DefaultAvatar } from 'components/Shared/Default/DefaultAvatar'
 import { useResource } from 'contexts/resourceContext'
 
 interface MenuProfileProps {

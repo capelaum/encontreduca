@@ -5,14 +5,14 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
-import { DefaultOverlay } from 'components/Shared/DefaultOverlay'
+import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
+import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'
 import { createSupportRequest } from 'lib/supportRequestsLib'
 import { useState } from 'react'
 import { MdOutlineHelp } from 'react-icons/md'
-import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 interface ModalSupportProps {
   onClose: () => void

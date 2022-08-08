@@ -1,7 +1,7 @@
 import { Space, Stack, useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { ModalSupport } from 'components/Modals/ModalSupport'
-import { DefaultCloseButton } from 'components/Shared/DefaultCloseButton'
+import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
 import {
   modalStyles,
   useModalStyles

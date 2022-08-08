@@ -12,7 +12,7 @@ import { ReactNode, useState } from 'react'
 import { MdClose, MdOutlineFileUpload } from 'react-icons/md'
 import { ResourceFormValues } from 'types/resources'
 import { ProfileFormValues } from 'types/users'
-import { dropzoneStyles } from './styles/dropzoneStyles'
+import { dropzoneStyles } from '../styles/dropzoneStyles'
 
 interface DefaultDropzoneProps {
   name: string

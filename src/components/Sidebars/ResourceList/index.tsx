@@ -5,7 +5,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { SearchResources } from 'components/Shared/SearchResources'
+import { SearchResources } from 'components/Shared/Search/SearchResources'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'

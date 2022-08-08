@@ -7,7 +7,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { DefaultOverlay } from 'components/Shared/DefaultOverlay'
+import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'

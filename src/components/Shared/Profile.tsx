@@ -9,7 +9,7 @@ import {
 } from '@mantine/core'
 import { MdInfoOutline } from 'react-icons/md'
 import { User } from 'types/users'
-import { DefaultAvatar } from './DefaultAvatar'
+import { DefaultAvatar } from './Default/DefaultAvatar'
 
 interface ProfileProps {
   isModal?: boolean

@@ -6,9 +6,9 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { UseFormReturnType } from '@mantine/form'
-import { DefaultAvatar } from 'components/Shared/DefaultAvatar'
-import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
-import { DefaultOverlay } from 'components/Shared/DefaultOverlay'
+import { DefaultAvatar } from 'components/Shared/Default/DefaultAvatar'
+import { DefaultDropzone } from 'components/Shared/Default/DefaultDropzone'
+import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'
 import { destroyImage } from 'helpers/imageHelpers'

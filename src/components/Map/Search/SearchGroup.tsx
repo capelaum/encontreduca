@@ -8,7 +8,7 @@ import {
 import { useMediaQuery } from '@mantine/hooks'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { SearchResources } from '../../Shared/SearchResources'
+import { SearchResources } from '../../Shared/Search/SearchResources'
 
 export function SearchGroup() {
   const {

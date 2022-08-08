@@ -6,7 +6,6 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { AutoCompleteItem } from 'components/Shared/AutoCompleteItem'
 import {
   mapSearchInputStyles,
   searchInputStyles
@@ -16,6 +15,7 @@ import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useState } from 'react'
 import { ResourceType } from 'types/resources'
+import { AutoCompleteItem } from './AutoCompleteItem'
 import { SearchRightSection } from './SearchRightSection'
 
 const useAutoCompleteStyles = createStyles((theme, dark: boolean) => ({

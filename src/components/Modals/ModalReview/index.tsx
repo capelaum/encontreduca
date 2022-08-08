@@ -9,7 +9,8 @@ import {
 import { ContextModalProps } from '@mantine/modals'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
-import { DefaultOverlay } from 'components/Shared/DefaultOverlay'
+import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
+import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { Profile } from 'components/Shared/Profile'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
@@ -19,7 +20,6 @@ import { createReview, updateReview } from 'lib/reviewsLib'
 import { useState } from 'react'
 import { MdStar, MdStarBorder } from 'react-icons/md'
 import { Review } from 'types/reviews'
-import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 export function ModalReview({
   context,

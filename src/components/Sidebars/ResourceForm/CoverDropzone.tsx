@@ -7,7 +7,7 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { UseFormReturnType } from '@mantine/form'
-import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
+import { DefaultDropzone } from 'components/Shared/Default/DefaultDropzone'
 import { useEffect, useState } from 'react'
 import { TbPhoto } from 'react-icons/tb'
 import { ResourceFormValues } from 'types/resources'
