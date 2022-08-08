@@ -40,7 +40,7 @@ export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
                 paddingRight: '32px'
               }}
             >
-              Luís Vinicius Capelletto
+              {user.name}
             </Text>
             <Text
               size="md"

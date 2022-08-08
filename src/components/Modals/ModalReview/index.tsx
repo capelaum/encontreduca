@@ -71,25 +71,45 @@ export function ModalReview({
       return
     }
 
-    setIsLoading(true)
-
-    if (isEdit) {
-      await updateMutation.mutateAsync({
-        id: +review!.id,
-        comment,
-        rating,
-        resource_id: resource!.id,
-        user_id: review!.user.id
+    if (comment.trim().length < 3) {
+      showToastError({
+        title: 'Comentário muito curto',
+        description: 'Preencha o comentário com pelo menos 3 caracteres.'
       })
+
+      return
     }
 
-    if (!isEdit) {
-      await createMutation.mutateAsync({
-        comment,
-        rating,
-        resource_id: resource!.id,
-        user_id: user!.id
+    setIsLoading(true)
+
+    try {
+      if (isEdit) {
+        await updateMutation.mutateAsync({
+          id: +review!.id,
+          comment,
+          rating,
+          resource_id: resource!.id,
+          user_id: review!.user.id
+        })
+      }
+
+      if (!isEdit) {
+        await createMutation.mutateAsync({
+          comment,
+          rating,
+          resource_id: resource!.id,
+          user_id: user!.id
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
+
+      showToastError({
+        title: 'Não foi possível avaliar o recurso 😕',
+        description: 'Por favor, tente novamente mais tarde.'
       })
+
+      return
     }
 
     const updatedResource = await getResource(+resource!.id)

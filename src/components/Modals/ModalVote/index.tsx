@@ -94,7 +94,7 @@ export function ModalVote({
   }
 
   const handleOnConfirm = async () => {
-    if (!vote || !justification) {
+    if (!vote || !justification || justification.trim().length < 3) {
       showToastError({
         title: 'Voto e justificativa são obrigatórios',
         description:

@@ -29,7 +29,7 @@ export function CurrentLocation() {
   return (
     <SideButton
       onClick={() => handleMoveToCurrentLocation()}
-      text="Alternar tema light/dark"
+      text="Centralizar em sua posição"
     >
       {disabled ? (
         <Loader
