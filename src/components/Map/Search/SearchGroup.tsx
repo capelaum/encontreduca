@@ -8,7 +8,7 @@ import {
 import { useMediaQuery } from '@mantine/hooks'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { SearchResources } from './SearchResources'
+import { SearchResources } from '../../Shared/SearchResources'
 
 export function SearchGroup() {
   const {
@@ -37,7 +37,7 @@ export function SearchGroup() {
       largeScreen &&
       !changeResourceOpened
         ? 100
-        : 1,
+        : 2,
     borderRadius: theme.radius.md,
     backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
     border: resourceOpened
@@ -63,7 +63,7 @@ export function SearchGroup() {
         }}
       />
 
-      <SearchResources />
+      <SearchResources isMap />
     </Group>
   )
 }

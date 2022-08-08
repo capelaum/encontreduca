@@ -2,32 +2,27 @@ import {
   Box,
   Stack,
   Text,
-  TextInput,
-  Tooltip,
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { SearchResources } from 'components/Shared/SearchResources'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { MdSearch } from 'react-icons/md'
-import { ResourceType } from 'types/resources'
 import { ResourceItem } from './ResourceItem'
-import { searchInputStyles } from './searchInputStyles'
 
 interface ResourceListProps {
   isVotingPainel?: boolean
-  resources: ResourceType[]
 }
 
-export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
+export function ResourceList({ isVotingPainel }: ResourceListProps) {
   const { setSavedResourcesOpened, setVotingPanelOpened } = useSidebar()
-  const { user } = useResource()
+  const { user, resources } = useResource()
 
-  const userApprovedResources = resources.filter(
+  const userApprovedResources = resources!.filter(
     ({ id, approved }) => approved && user && user.resourcesIds.includes(+id)
   )
-  const notApprovedResources = resources.filter(({ approved }) => !approved)
+  const notApprovedResources = resources!.filter(({ approved }) => !approved)
 
   const theme = useMantineTheme()
 
@@ -46,37 +41,6 @@ export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
     ))
   }
 
-  const rightSection = () => (
-    <Tooltip
-      multiline
-      label="Busque os recursos educacionais por nome"
-      position="bottom-end"
-      transition="pop-bottom-right"
-      radius={theme.radius.md}
-      width={170}
-      withArrow
-      arrowSize={6}
-      px={8}
-      offset={-2}
-      sx={{
-        color: theme.colors.brand[7],
-        backgroundColor: theme.colors.cyan[3],
-        borderRadius: theme.radius.md
-      }}
-    >
-      <Box>
-        <MdSearch
-          size={28}
-          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-          style={{
-            display: 'block',
-            position: 'relative'
-          }}
-        />
-      </Box>
-    </Tooltip>
-  )
-
   return (
     <Stack my="md" spacing="md">
       <Box px="md">
@@ -89,6 +53,7 @@ export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
           }
         />
       </Box>
+
       {isVotingPainel && (
         <Text px="md">
           <Text
@@ -117,18 +82,7 @@ export function ResourceList({ isVotingPainel, resources }: ResourceListProps) {
           </Text>
         ) : (
           <Box px="md">
-            <TextInput
-              size="md"
-              radius="md"
-              type="search"
-              variant="filled"
-              id="search-resource"
-              rightSection={rightSection()}
-              rightSectionWidth={40}
-              placeholder="Busque um recurso"
-              aria-label="Buscar recursos educacionais"
-              sx={searchInputStyles(theme, dark)}
-            />
+            <SearchResources />
           </Box>
         )}
 

@@ -36,13 +36,9 @@ export function SearchRightSection({
           radius="md"
           sx={{
             color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
-            backgroundColor: dark
-              ? theme.colors.brand[7]
-              : theme.colors.gray[0],
+            backgroundColor: 'transparent',
             '&:hover': {
-              backgroundColor: dark
-                ? theme.colors.brand[8]
-                : theme.colors.gray[1]
+              backgroundColor: 'transparent'
             }
           }}
         />

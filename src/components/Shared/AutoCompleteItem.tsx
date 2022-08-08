@@ -15,43 +15,33 @@ interface ItemProps extends SelectItemProps {
   cover: string
   theme: MantineTheme
   dark: boolean
+  isMap: boolean
+  largeScreen: boolean
 }
 
 export const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
-  ({ address, value, cover, theme, dark, ...others }: ItemProps, ref) => (
-    <Box
-      ref={ref}
-      {...others}
-      p={0}
-      sx={{
-        maxWidth: '328px'
-      }}
-    >
+  (
+    {
+      address,
+      value,
+      cover,
+      theme,
+      dark,
+      isMap,
+      largeScreen,
+      ...others
+    }: ItemProps,
+    ref
+  ) => (
+    <Box ref={ref} {...others} p={0}>
       <Group noWrap spacing={12} p={8}>
         <Avatar src={cover} alt={value} radius="md" size="lg" />
 
-        <Box
-          sx={{
-            overflow: 'hidden',
-            hovered: {
-              backgroundColor: dark
-                ? theme.colors.brand[8]
-                : theme.colors.gray[2]
-            }
-          }}
-        >
+        <Box>
           <Text color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}>
             {value}
           </Text>
-          <Text
-            size="xs"
-            color="dimmed"
-            sx={{
-              whiteSpace: 'nowrap',
-              textOverflow: 'ellipsis',
-              overflow: 'hidden'
-            }}
-          >
+          <Text size="xs" color="dimmed">
             {address}
           </Text>
         </Box>

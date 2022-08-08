@@ -115,7 +115,7 @@ export default function Map({ categories, motives, user }: MapProps) {
         setOpened={setSavedResourcesOpened}
         zIndex={3}
       >
-        <ResourceList resources={resources} />
+        <ResourceList />
       </Sidebar>
 
       <Sidebar
@@ -123,7 +123,7 @@ export default function Map({ categories, motives, user }: MapProps) {
         setOpened={setVotingPanelOpened}
         zIndex={3}
       >
-        <ResourceList isVotingPainel resources={resources} />
+        <ResourceList isVotingPainel />
       </Sidebar>
 
       <Sidebar

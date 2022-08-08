@@ -5,7 +5,12 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { AutoCompleteItem } from 'components/Shared/AutoCompleteItem'
+import {
+  mapSearchInputStyles,
+  searchInputStyles
+} from 'components/Sidebars/ResourceList/searchInputStyles'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
@@ -29,8 +34,14 @@ const useAutoCompleteStyles = createStyles((theme, dark: boolean) => ({
   }
 }))
 
-export function SearchResources() {
+interface SearchResourcesProps {
+  isMap?: boolean
+}
+
+export function SearchResources({ isMap }: SearchResourcesProps) {
   const [value, setValue] = useState('')
+
+  const largeScreen = useMediaQuery('(min-width: 768px)', false)
 
   const theme = useMantineTheme()
 
@@ -48,7 +59,9 @@ export function SearchResources() {
     ...item,
     value: item.name,
     dark,
-    theme
+    theme,
+    isMap,
+    largeScreen
   }))
 
   const handleOnItemSubmit = (item: AutocompleteItem) => {
@@ -90,20 +103,11 @@ export function SearchResources() {
         item.address.toLowerCase().includes(value.toLowerCase().trim())
       }
       classNames={classes}
-      sx={{
-        width: '420px',
-        flex: 1,
-        input: {
-          color: dark ? theme.white : theme.colors.brand[7],
-          // border: '1px solid red',
-          backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
-          // border: 'none',
-          '&:focus': {
-            outline: 'none',
-            border: 'none'
-          }
-        }
-      }}
+      sx={
+        isMap
+          ? mapSearchInputStyles(theme, dark)
+          : searchInputStyles(theme, dark)
+      }
     />
   )
 }
