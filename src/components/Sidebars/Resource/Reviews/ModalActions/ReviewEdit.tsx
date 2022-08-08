@@ -40,12 +40,7 @@ export function ReviewEdit({ review }: ReviewEditProps) {
   return (
     <ActionItem
       onClick={openModalReviewEdit}
-      icon={
-        <MdEdit
-          size={14}
-          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-        />
-      }
+      icon={<MdEdit size={14} color={theme.colors.cyan[3]} />}
     >
       <Box ml={8} sx={{ width: '120px' }}>
         Editar avaliação

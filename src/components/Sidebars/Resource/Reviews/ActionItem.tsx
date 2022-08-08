@@ -1,4 +1,4 @@
-import { Menu, useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import { Menu, useMantineTheme } from '@mantine/core'
 import { ReactNode } from 'react'
 
 interface ActionItemProps {
@@ -10,18 +10,15 @@ interface ActionItemProps {
 export function ActionItem({ children, onClick, icon }: ActionItemProps) {
   const theme = useMantineTheme()
 
-  const { colorScheme } = useMantineColorScheme()
-  const dark = colorScheme === 'dark'
-
   return (
     <Menu.Item
       onClick={onClick}
       icon={icon}
       sx={{
-        color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
+        color: theme.colors.cyan[3],
         fontSize: theme.fontSizes.md,
         '&:hover': {
-          backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[2]
+          backgroundColor: theme.colors.brand[7]
         },
         width: '100%'
       }}

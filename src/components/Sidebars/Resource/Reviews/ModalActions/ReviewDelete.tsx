@@ -86,12 +86,7 @@ export function ReviewDelete({ reviewId }: ReviewDeleteProps) {
           dark
         })
       }
-      icon={
-        <BsTrashFill
-          size={14}
-          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-        />
-      }
+      icon={<BsTrashFill size={14} color={theme.colors.cyan[3]} />}
     >
       <Box ml={8} sx={{ width: '120px' }}>
         Excluir avaliação
