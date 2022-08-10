@@ -74,10 +74,58 @@ export const handleProfileFormErrors = (errors: FormErrors) => {
     })
   }
 
-  if (errors.resourceWebsite) {
+  if (errors.password) {
     showToastError({
-      title: 'Website inválido',
-      description: 'Website deve estar no formato http://www.website.com'
+      title: 'Senha inválida',
+      description: 'Senha deve ter mais de 6 caracteres.'
+    })
+  }
+
+  if (errors.confirmPassword) {
+    showToastError({
+      title: 'Senha de confirmação inválida',
+      description: 'Senha de confirmação deve ser igual à senha.'
+    })
+  }
+}
+
+export const handleLoginFormErrors = (errors: FormErrors) => {
+  if (errors.email) {
+    showToastError({
+      title: 'Email inválido',
+      description: 'Você deve fornecer um email válido.'
+    })
+  }
+
+  if (errors.password) {
+    showToastError({
+      title: 'Senha inválida',
+      description: 'Senha deve ter mais de 6 caracteres.'
+    })
+  }
+}
+
+export const handleForgotFormErrors = (errors: FormErrors) => {
+  if (errors.email) {
+    showToastError({
+      title: 'Email inválido',
+      description: 'Você deve fornecer um email válido.'
+    })
+  }
+}
+
+export const handleRegisterFormErrors = (errors: FormErrors) => {
+  if (errors.name) {
+    showToastError({
+      title: 'Nome inválido',
+      description: 'Nome deve ter mais de 3 caracteres.'
+    })
+  }
+
+  if (errors.email) {
+    showToastError({
+      title: 'Email inválido',
+      description: 'Você deve fornecer um email válido.'
     })
   }
 

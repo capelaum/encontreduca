@@ -37,8 +37,6 @@ export type NewResource = Pick<
   | 'cover'
 >
 
-export type ResourceFormValues = Omit<NewResource, 'userId'>
-
 export type NewResourceComplaint = {
   userId: string | number
   resourceId: string | number

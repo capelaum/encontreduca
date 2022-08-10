@@ -26,7 +26,8 @@ export function Menu() {
     setCreateResourceOpened,
     setSavedResourcesOpened,
     setVotingPanelOpened,
-    setResourceOpened
+    setResourceOpened,
+    setAuthSidebarOpened
   } = useSidebar()
 
   const { user, setResource } = useResource()
@@ -108,7 +109,13 @@ export function Menu() {
         )}
 
         {!user && (
-          <MenuButton icon={<MdLogin size={20} />} text="Fazer login" />
+          <MenuButton
+            icon={<MdLogin size={20} />}
+            text="Fazer login"
+            onClick={() => {
+              setAuthSidebarOpened(true)
+            }}
+          />
         )}
       </Stack>
     </>

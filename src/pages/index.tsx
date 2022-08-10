@@ -5,6 +5,7 @@ import { MapLight } from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
 import { ErrorView } from 'components/Shared/ErrorView'
 import { Sidebar } from 'components/Shared/Sidebar'
+import { AuthSidebar } from 'components/Sidebars/AuthSidebar'
 import { Menu } from 'components/Sidebars/Menu'
 import { UpdateProfile } from 'components/Sidebars/Profile'
 import { Resource } from 'components/Sidebars/Resource'
@@ -14,7 +15,6 @@ import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { loadCategories } from 'lib/loadCategories'
 import { loadMotives } from 'lib/loadMotives'
-import { getUser } from 'lib/usersLib'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useEffect } from 'react'
@@ -56,7 +56,9 @@ export default function Map({ categories, motives, user }: MapProps) {
     savedResourcesOpened,
     setSavedResourcesOpened,
     votingPanelOpened,
-    setVotingPanelOpened
+    setVotingPanelOpened,
+    authSidebarOpened,
+    setAuthSidebarOpened
   } = useSidebar()
 
   useEffect(() => {
@@ -145,6 +147,14 @@ export default function Map({ categories, motives, user }: MapProps) {
       <Sidebar opened={profileOpened} setOpened={setProfileOpened} zIndex={4}>
         <UpdateProfile />
       </Sidebar>
+
+      <Sidebar
+        opened={authSidebarOpened}
+        setOpened={setAuthSidebarOpened}
+        zIndex={4}
+      >
+        <AuthSidebar />
+      </Sidebar>
     </>
   )
 }
@@ -152,7 +162,7 @@ export default function Map({ categories, motives, user }: MapProps) {
 export const getServerSideProps: GetServerSideProps = async () => {
   const categories: CategoryType[] = await loadCategories()
   const motives: Motive[] = await loadMotives()
-  const user: User = await getUser(1)
+  // const user: User = await getUser(1)
 
   if (!categories) {
     return {
@@ -164,7 +174,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       categories,
       motives,
-      user
+      user: null
     }
   }
 }

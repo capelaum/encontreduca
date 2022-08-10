@@ -5,9 +5,9 @@ export const inputStyles = (theme: MantineTheme, dark: boolean): CSSObject => ({
     borderRadius: theme.radius.md,
     color: dark ? theme.white : theme.colors.brand[7],
     backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
-    border: `1px solid ${dark ? theme.colors.cyan[2] : theme.colors.brand[7]}`,
+    border: `1px solid ${dark ? theme.colors.cyan[3] : theme.colors.brand[7]}`,
     '&:focus': {
-      border: `1px solid ${dark ? theme.colors.cyan[2] : theme.colors.brand[8]}`
+      border: `2px solid ${dark ? theme.colors.cyan[2] : theme.colors.cyan[5]}`
     },
     '&::placeholder': {
       color: dark ? theme.colors.gray[6] : theme.colors.gray[6]

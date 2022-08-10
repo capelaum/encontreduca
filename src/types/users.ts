@@ -14,11 +14,3 @@ export type UpdatedUser = {
   password: string | null
   avatarUrl: string | null
 }
-
-export interface ProfileFormValues {
-  name: string
-  email: string
-  password: string
-  confirmPassword: string
-  avatarUrl: string | null
-}

@@ -13,7 +13,7 @@ export function Resource() {
 
   if (!resource) {
     setResourceOpened(false)
-    return <Text>Ooops, selecione um recurso!</Text>
+    return <Text px="md">Ooops, selecione um recurso!</Text>
   }
 
   return (
