@@ -108,8 +108,8 @@ export function ModalVote({
 
     if (!resourceUserVote) {
       await createMutation.mutateAsync({
-        user_id: user!.id,
-        resource_id: resource!.id,
+        userId: user!.id,
+        resourceId: resource!.id,
         vote: vote === 'Aprovado',
         justification
       })
@@ -118,8 +118,8 @@ export function ModalVote({
     if (resourceUserVote) {
       await updateMutation.mutateAsync({
         id: resourceUserVote.id,
-        user_id: user!.id,
-        resource_id: resource!.id,
+        userId: user!.id,
+        resourceId: resource!.id,
         vote: vote === 'Aprovado',
         justification
       })

@@ -49,9 +49,9 @@ export function AvatarDropzone({
   const handleDeleteUserAvatar = async () => {
     setIsLoading(true)
 
-    if (user!.avatar_url) {
+    if (user!.avatarUrl) {
       try {
-        await destroyImage({ imageUrl: user!.avatar_url })
+        await destroyImage({ imageUrl: user!.avatarUrl })
         await deleteUserAvatar({ userId: +user!.id })
       } catch (error) {
         setIsLoading(false)
@@ -97,10 +97,10 @@ export function AvatarDropzone({
         containerStyles={containerStyles}
       >
         <DefaultOverlay visible={isLoading} />
-        <DefaultAvatar avatarSrc={preview ?? user?.avatar_url} size={180} />
+        <DefaultAvatar avatarSrc={preview ?? user?.avatarUrl} size={180} />
       </DefaultDropzone>
 
-      {user!.avatar_url && (
+      {user!.avatarUrl && (
         <Button
           size="xs"
           radius="md"

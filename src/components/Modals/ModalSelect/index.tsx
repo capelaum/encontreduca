@@ -65,20 +65,31 @@ export function ModalSelect({
 
     setIsLoading(true)
 
-    if (isReviewComplaint && review) {
-      await createReviewComplaint({
-        user_id: user!.id,
-        review_id: review.id,
-        motive_id: motiveId
-      })
-    }
+    try {
+      if (isReviewComplaint && review) {
+        await createReviewComplaint({
+          userId: user!.id,
+          reviewId: review.id,
+          motiveId
+        })
+      }
 
-    if (!isReviewComplaint && resource) {
-      await createResourceComplaint({
-        user_id: user!.id,
-        resource_id: resource.id,
-        motive_id: motiveId
+      if (!isReviewComplaint && resource) {
+        await createResourceComplaint({
+          userId: user!.id,
+          resourceId: resource.id,
+          motiveId
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
+
+      showToastError({
+        title: 'Ooops, algo deu errado',
+        description: 'Por favor, tente novamente mais tarde.'
       })
+
+      return
     }
 
     setIsLoading(false)

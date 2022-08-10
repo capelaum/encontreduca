@@ -10,6 +10,7 @@ import {
   useState
 } from 'react'
 import { CategoryFilter, CategoryType } from 'types/categories'
+import { LatLngLiteral } from 'types/googleMaps'
 import { Motive } from 'types/motives'
 import {
   ResourceChange,
@@ -82,13 +83,13 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
       const resourceReviewsData = resource.reviews
         .flat()
         .sort((a, b) => +b.id - +a.id)
-        .filter(({ resource_id }) => resource.id === resource_id)
+        .filter(({ resourceId }) => resource.id === resourceId)
 
       setResourceReviews(resourceReviewsData)
 
       const resourceVotesData = resource.votes
         .flat()
-        .filter(({ resource_id }) => resource.id === resource_id)
+        .filter(({ resourceId }) => resource.id === resourceId)
 
       setResourceVotes(resourceVotesData)
     }
@@ -124,21 +125,21 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getUserResourceReview = (reviews: Review[]) => {
-    const userReview = reviews.find(({ user_id }) => user_id === user?.id)
+    const userReview = reviews.find(({ userId }) => userId === user?.id)
 
     return userReview ?? null
   }
 
   const getReviewsWithoutUser = (reviews: Review[]) => {
     const reviewsWithoutUser = reviews.filter(
-      ({ user_id }) => user_id !== user?.id
+      ({ userId }) => userId !== user?.id
     )
 
     return reviewsWithoutUser
   }
 
   const getUseResourceVote = (votes: ResourceVote[]) => {
-    const userVote = votes.find(({ user_id }) => user_id === user?.id)
+    const userVote = votes.find(({ userId }) => userId === user?.id)
 
     return userVote ?? null
   }
@@ -149,14 +150,44 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
 
   const resourceUserVote = getUseResourceVote(resourceVotes)
 
+  const formatPositionAsString = (position: LatLngLiteral) =>
+    `${position.lat},${position.lng}`
+
+  const getResourceValue = (
+    value: string | number | null | LatLngLiteral | undefined
+  ) => {
+    if (!value) return null
+
+    return value.toString()
+  }
+
   const getResourceDiff = (form: UseFormReturnType<ResourceFormValues>) => {
     const { values } = form
 
     const resourceDiff = Object.keys(values).reduce((acc, key) => {
       const resourceFormValuesKey = key as keyof ResourceFormValues
 
-      if (values[resourceFormValuesKey] !== resource![resourceFormValuesKey]) {
-        ;(acc[resourceFormValuesKey] as any) = values[resourceFormValuesKey]
+      if (key === 'position') {
+        const resourcePositionAsString = formatPositionAsString(
+          resource!.position
+        )
+
+        const resourceFormPositionAsString = formatPositionAsString(
+          values.position
+        )
+
+        if (resourcePositionAsString !== resourceFormPositionAsString) {
+          ;(acc.position as any) = resourceFormPositionAsString
+        }
+
+        return acc
+      }
+
+      const resourceValue = getResourceValue(resource![resourceFormValuesKey])
+      const resourceFormValue = getResourceValue(values[resourceFormValuesKey])
+
+      if (resourceFormValue !== resourceValue) {
+        ;(acc[resourceFormValuesKey] as any) = resourceFormValue
       }
 
       return acc
@@ -171,20 +202,18 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     const resourceChanges = Object.keys(resourceDiff).map(async (key) => {
       const resourceTypeKey = key as keyof ResourceFormValues
 
-      const oldValue = resource![resourceTypeKey]
-        ? resource![resourceTypeKey]!.toString()
-        : 'nulo'
-
-      const newValue = resourceDiff[resourceTypeKey]
-        ? resourceDiff[resourceTypeKey]!.toString()
-        : 'nulo'
+      const oldValue = getResourceValue(resource![resourceTypeKey]) ?? 'nulo'
+      const newValue = getResourceValue(resourceDiff[resourceTypeKey]) ?? 'nulo'
 
       const resourceChange = await createResourceChange({
-        resource_id: resource!.id,
-        user_id: user!.id,
+        resourceId: resource!.id,
+        userId: user!.id,
         field: key,
-        old_value: oldValue,
-        new_value: newValue
+        oldValue:
+          key === 'position'
+            ? formatPositionAsString(resource!.position)
+            : oldValue,
+        newValue
       })
 
       return resourceChange

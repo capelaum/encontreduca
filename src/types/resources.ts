@@ -5,73 +5,68 @@ import { User } from './users'
 
 export type ResourceType = {
   id: string | number
-  user: User
-  reviews: Review[]
-  votes: ResourceVote[]
-  user_id: string | number
 
   name: string
-  category_id: string
-  category: CategoryType
   address: string
   website: string | null
   phone: string | null
   cover: string
-  latitude: number
-  longitude: number
   position: LatLngLiteral
   approved: boolean
 
-  created_at: string
-  updated_at: string
+  userId: string | number
+  user: User
+  categoryId: string | number
+  category: CategoryType
+  reviews: Review[]
+  votes: ResourceVote[]
+
+  createdAt: string
+  updatedAt: string
 }
 
 export type NewResource = Pick<
   ResourceType,
-  | 'user_id'
+  | 'userId'
+  | 'categoryId'
   | 'name'
-  | 'category_id'
-  | 'latitude'
-  | 'longitude'
   | 'address'
+  | 'position'
   | 'phone'
   | 'website'
   | 'cover'
 >
 
-export type ResourceFormValues = Omit<NewResource, 'user_id'>
+export type ResourceFormValues = Omit<NewResource, 'userId'>
 
 export type NewResourceComplaint = {
-  user_id: string | number
-  resource_id: string | number
-  motive_id: string | number
+  userId: string | number
+  resourceId: string | number
+  motiveId: string | number
 }
 
 export type ResourceChange = {
-  user_id: string | number
-  resource_id: string | number
+  userId: string | number
+  resourceId: string | number
   field: string
-  old_value: string
-  new_value: string
+  oldValue: string
+  newValue: string
 }
 
 export type ResourceVote = {
   id: string | number
-  user_id: string | number
-  resource_id: string | number
+  userId: string | number
+  resourceId: string | number
   vote: boolean
   justification: string
-
-  created_at: string
-  updated_at: string
 }
 
 export type NewResourceVote = Pick<
   ResourceVote,
-  'user_id' | 'resource_id' | 'vote' | 'justification'
+  'userId' | 'resourceId' | 'vote' | 'justification'
 >
 
 export type UpdatedResourceVote = Pick<
   ResourceVote,
-  'id' | 'user_id' | 'resource_id' | 'vote' | 'justification'
+  'id' | 'userId' | 'resourceId' | 'vote' | 'justification'
 >

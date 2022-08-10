@@ -29,7 +29,7 @@ export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
     >
       {user && (
         <Group spacing={12} noWrap>
-          <DefaultAvatar size={50} avatarSrc={user.avatar_url} />
+          <DefaultAvatar size={50} avatarSrc={user.avatarUrl} />
 
           <Stack spacing={2}>
             <Text

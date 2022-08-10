@@ -1,21 +1,16 @@
 import { api } from 'services/api'
 import { NewReview, Review, UpdatedReview } from 'types/reviews'
-import { dateFormatter } from 'utils/dataFormatter'
 
 export async function loadReviews(): Promise<Review[]> {
-  const { data } = await api.get('reviews')
+  const response = await api.get('reviews')
 
-  if (!data) {
-    throw new Error('No reviews data returned from API')
+  if (response.status !== 200) {
+    throw new Error('An error occurred while fetching reviews')
   }
 
-  const reviews = data.map((review: Review) => ({
-    ...review,
-    created_at: dateFormatter(review.created_at),
-    updated_at: dateFormatter(review.updated_at)
-  }))
+  const { data } = response
 
-  return reviews
+  return data
 }
 
 export async function createReview(newReview: NewReview) {

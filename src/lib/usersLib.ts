@@ -51,8 +51,8 @@ export async function createUserResource({
   resourceId: number
 }) {
   const response = await api.post('users/resources', {
-    user_id: userId,
-    resource_id: resourceId
+    userId,
+    resourceId: resourceId
   })
 
   const { data } = response

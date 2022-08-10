@@ -88,8 +88,8 @@ export function ModalReview({
           id: +review!.id,
           comment,
           rating,
-          resource_id: resource!.id,
-          user_id: review!.user.id
+          resourceId: resource!.id,
+          userId: review!.user.id
         })
       }
 
@@ -97,8 +97,8 @@ export function ModalReview({
         await createMutation.mutateAsync({
           comment,
           rating,
-          resource_id: resource!.id,
-          user_id: user!.id
+          resourceId: resource!.id,
+          userId: user!.id
         })
       }
     } catch (error) {

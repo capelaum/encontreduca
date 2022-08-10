@@ -43,7 +43,7 @@ export function ResourceInfo({ form }: ResourceInfoProps) {
         required
         label="Categoria"
         placeholder="Selecione uma categoria"
-        {...form.getInputProps('category_id')}
+        {...form.getInputProps('categoryId')}
         sx={inputStyles(theme, dark)}
         maxDropdownHeight={300}
         rightSectionWidth={30}

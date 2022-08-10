@@ -58,7 +58,7 @@ export function UpdateProfile() {
     initialValues: {
       name: user!.name,
       email: user!.email,
-      avatarUrl: user!.avatar_url,
+      avatarUrl: user!.avatarUrl,
       password: '',
       confirmPassword: ''
     },
@@ -113,15 +113,15 @@ export function UpdateProfile() {
       const folder = 'encontreduca/avatars'
 
       try {
-        if (user!.avatar_url) {
+        if (user!.avatarUrl) {
           secure_url = await updateImage({
-            imageUrl: user!.avatar_url,
+            imageUrl: user!.avatarUrl,
             imageBase64,
             folder
           })
         }
 
-        if (!user!.avatar_url) {
+        if (!user!.avatarUrl) {
           secure_url = await uploadImage({
             imageBase64,
             folder
@@ -147,7 +147,7 @@ export function UpdateProfile() {
         updatedUser: {
           name: values.name,
           email: values.email,
-          avatar_url: values.avatarUrl,
+          avatarUrl: values.avatarUrl,
           password: values.password === '' ? null : values.password
         }
       })

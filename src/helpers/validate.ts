@@ -1,3 +1,4 @@
+import { LatLngLiteral } from 'types/googleMaps'
 import { ModalSelectData } from 'types/motives'
 
 export const validateEmail = (email: string) => {
@@ -15,7 +16,7 @@ export const validateWebsite = (website: string) => {
 }
 
 export const validatePhone = (value: string) => {
-  const regex = /\(\d{2}\) \d{4,5}-\d{4}/
+  const regex = /\(\d{2}\) \d{4,5}-\d{4}$/
 
   return value.length === 0 || regex.test(value)
     ? null
@@ -55,4 +56,13 @@ export const validateCloudinaryImage = (secureUrl: string) => {
     /^https:\/\/res.cloudinary.com\/capelaum\/image\/upload\/v\d+\/encontreduca\/covers\/*.(jpg|png|webp|jpeg|gif)$/
 
   return regex.test(secureUrl) ? null : 'Imagem de capa inválida'
+}
+
+export const validadePosition = (position: LatLngLiteral) => {
+  const { lat, lng } = position
+
+  if (lat > 90 || lat < -90) return 'Latitude inválida'
+  if (lng > 180 || lng < -180) return 'Latitude inválida'
+
+  return null
 }

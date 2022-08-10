@@ -17,6 +17,7 @@ import { useSidebar } from 'contexts/sidebarContext'
 import { uploadImage } from 'helpers/imageHelpers'
 import { handleResourceFormErrors } from 'helpers/resourceForm'
 import {
+  validadePosition,
   validateCategoryId,
   validateImageBase64,
   validatePhone,
@@ -91,9 +92,8 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
       phone: resource ? resource.phone ?? '' : '',
       website: resource ? resource.website ?? '' : '',
       cover: resource ? resource.cover : '',
-      category_id: resource ? resource.category_id : '',
-      latitude: resource ? resource.latitude : currentLocation.lat,
-      longitude: resource ? resource.longitude : currentLocation.lng
+      categoryId: resource ? resource.categoryId.toString() : '',
+      position: resource ? resource.position : currentLocation
     },
 
     validateInputOnChange: [
@@ -101,7 +101,7 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
       'address',
       'phone',
       'website',
-      'category_id'
+      'categoryId'
     ],
 
     validate: {
@@ -110,14 +110,11 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         value.trim().length < 4 ? 'Endereço muito curto' : null,
       phone: (value: string) => validatePhone(value),
       website: (value: string) => validateWebsite(value),
-      category_id: (value: string) =>
+      categoryId: (value: string) =>
         validateCategoryId(value, resourceCategories),
       cover: () =>
-        isCreateResource ? validateImageBase64(imageBase64, hasPreview) : null,
-      latitude: (value: number) =>
-        value > 90 || value < -90 ? 'Latitude inválida' : null,
-      longitude: (value: number) =>
-        value > 180 || value < -180 ? 'Longitude inválida' : null
+        hasPreview ? validateImageBase64(imageBase64, hasPreview) : null,
+      position: (value) => validadePosition(value)
     }
   })
 
@@ -133,9 +130,8 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
         phone: resource.phone ?? '',
         website: resource.website ?? '',
         cover: resource.cover,
-        category_id: resource.category_id,
-        latitude: resource.latitude,
-        longitude: resource.longitude
+        categoryId: resource.categoryId.toString(),
+        position: resource.position
       })
 
       setLocalPosition(resource.position)
@@ -176,41 +172,61 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
       }
     }
 
-    form.values.latitude = localPosition.lat
-    form.values.longitude = localPosition.lng
+    form.values.position = localPosition
 
-    if (!resource) {
-      await createMutation.mutateAsync({
-        user_id: user.id,
-        name: values.name,
-        address: values.address,
-        phone: values.phone,
-        website: values.website,
-        category_id: values.category_id,
-        cover: values.cover,
-        latitude: values.latitude,
-        longitude: values.longitude
+    try {
+      if (!resource) {
+        await createMutation.mutateAsync({
+          userId: user.id,
+          name: values.name,
+          address: values.address,
+          phone: values.phone,
+          website: values.website,
+          categoryId: values.categoryId,
+          cover: values.cover,
+          position: values.position
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
+
+      showToastError({
+        title: 'Erro ao criar recurso',
+        description: 'Por favor, tente novamente mais tarde 😕'
       })
+
+      return
     }
 
-    if (resource && !isCreateResource) {
-      const resourceDiff = getResourceDiff(form)
+    try {
+      if (resource && !isCreateResource) {
+        const resourceDiff = getResourceDiff(form)
 
-      if (Object.keys(resourceDiff).length === 0) {
-        showToast({
-          title: 'Cade as alterações?',
-          description: 'Não há alterações para serem feitas 🥲',
-          icon: <MdHelp size={24} color={theme.colors.brand[8]} />,
-          dark
-        })
+        if (Object.keys(resourceDiff).length === 0) {
+          showToast({
+            title: 'Cade as alterações?',
+            description: 'Não há alterações para serem feitas 🥲',
+            icon: <MdHelp size={24} color={theme.colors.brand[8]} />,
+            dark
+          })
 
-        setIsLoading(false)
-        return
+          setIsLoading(false)
+          return
+        }
+
+        if (Object.keys(resourceDiff).length > 0) {
+          await createResourceChanges(resourceDiff)
+        }
       }
+    } catch (error) {
+      setIsLoading(false)
 
-      if (Object.keys(resourceDiff).length > 0) {
-        await createResourceChanges(resourceDiff)
-      }
+      showToastError({
+        title: 'Erro ao editar recurso',
+        description: (error as Error).message
+      })
+
+      return
     }
 
     setCreateResourceOpened(false)

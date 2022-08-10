@@ -15,20 +15,7 @@ export async function loadResources(): Promise<ResourceType[]> {
     throw new Error('No resources data returned from API')
   }
 
-  const resources = data.map((resource: ResourceType) => ({
-    ...resource,
-    category_id: resource.category_id.toString(),
-    website: resource.website ?? '',
-    phone: resource.phone ?? '',
-    latitude: parseFloat(resource.latitude.toString()),
-    longitude: parseFloat(resource.longitude.toString()),
-    position: {
-      lat: parseFloat(resource.latitude.toString()),
-      lng: parseFloat(resource.longitude.toString())
-    }
-  }))
-
-  return resources
+  return data
 }
 
 export async function getResource(id: number): Promise<ResourceType> {
@@ -38,20 +25,7 @@ export async function getResource(id: number): Promise<ResourceType> {
     throw new Error('No resource data returned from API')
   }
 
-  const resource: ResourceType = {
-    ...data,
-    category_id: data.category_id.toString(),
-    website: data.website ?? '',
-    phone: data.phone ?? '',
-    latitude: parseFloat(data.latitude.toString()),
-    longitude: parseFloat(data.longitude.toString()),
-    position: {
-      lat: parseFloat(data.latitude),
-      lng: parseFloat(data.longitude)
-    }
-  }
-
-  return resource
+  return data
 }
 
 export async function createResource(

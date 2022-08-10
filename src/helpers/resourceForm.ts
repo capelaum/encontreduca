@@ -37,14 +37,14 @@ export const handleResourceFormErrors = (errors: FormErrors) => {
     })
   }
 
-  if (errors.category_id) {
+  if (errors.categoryId) {
     showToastError({
       title: 'Categoria inválida',
       description: 'Categoria é obrigatória.'
     })
   }
 
-  if (errors.latitude || errors.longitude) {
+  if (errors.position) {
     showToastError({
       title: 'Local inválido',
       description: 'Local válido é obrigatório.'

@@ -1,7 +1,7 @@
 import { api } from 'services/api'
 
 export type NewSupportRequest = {
-  user_id: string | number
+  userId: string | number
   message: string
 }
 

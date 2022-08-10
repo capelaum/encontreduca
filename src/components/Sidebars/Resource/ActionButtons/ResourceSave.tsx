@@ -46,18 +46,29 @@ export function ResourceSave() {
 
     setIsLoading(true)
 
-    if (!isSaved) {
-      await createUserResource({
-        userId: +user.id,
-        resourceId: +resource.id
-      })
-    }
+    try {
+      if (!isSaved) {
+        await createUserResource({
+          userId: +user.id,
+          resourceId: +resource.id
+        })
+      }
 
-    if (isSaved) {
-      await deleteUserResource({
-        userId: +user.id,
-        resourceId: +resource.id
+      if (isSaved) {
+        await deleteUserResource({
+          userId: +user.id,
+          resourceId: +resource.id
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
+
+      showToastError({
+        title: 'Ooops, algo deu errado.',
+        description: 'Não foi possível salvar recurso ou remove-lo dos salvos..'
       })
+
+      return
     }
 
     const updatedUser = await getUser(+user.id)

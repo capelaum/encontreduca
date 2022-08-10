@@ -62,7 +62,7 @@ export function ModalResourceLocalChange({
     if (!mapRef.current) return
 
     mapRef.current.panTo({ lat: position.lat, lng: position.lng })
-    mapRef.current.setZoom(14)
+    // mapRef.current.setZoom(14)
   }, [])
 
   const mapContainerStyle = {

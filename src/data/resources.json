@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "CEUB",
-      "category_id": 1,
+      "categoryId": 1,
       "category": "Universidade privada",
       "position": {
         "lat": -15.7670265,
@@ -20,7 +20,7 @@
     {
       "id": 2,
       "name": "Universidade de Brasília",
-      "category_id": 2,
+      "categoryId": 2,
       "category": "Universidade pública",
       "position": {
         "lat": -15.7631573,
@@ -37,7 +37,7 @@
     {
       "id": 3,
       "name": "Centro Educacional Leonardo da Vinci",
-      "category_id": 3,
+      "categoryId": 3,
       "category": "Escola privada",
       "position": {
         "lat": -15.7467763,
@@ -54,7 +54,7 @@
     {
       "id": 4,
       "name": "Escola Classe 405 Norte",
-      "category_id": 4,
+      "categoryId": 4,
       "category": "Escola pública",
       "position": {
         "lat": -15.7708927,
@@ -71,7 +71,7 @@
     {
       "id": 5,
       "name": "Biblioteca Central",
-      "category_id": 5,
+      "categoryId": 5,
       "category": "Biblioteca",
       "position": {
         "lat": -15.7609124,
@@ -88,7 +88,7 @@
     {
       "id": 6,
       "name": "Curso Exatas",
-      "category_id": 6,
+      "categoryId": 6,
       "category": "Curso",
       "position": {
         "lat": -15.7747056,
@@ -105,7 +105,7 @@
     {
       "id": 7,
       "name": "The Brain Coworking - Ulysses Guimarães",
-      "category_id": 7,
+      "categoryId": 7,
       "category": "Coworking",
       "position": {
         "lat": -15.7880305,
@@ -122,7 +122,7 @@
     {
       "id": 8,
       "name": "Curso Exatas",
-      "category_id": 6,
+      "categoryId": 6,
       "category": "Curso",
       "position": {
         "lat": -15.7747056,
@@ -139,7 +139,7 @@
     {
       "id": 9,
       "name": "The Brain Coworking - Ulysses Guimarães",
-      "category_id": 7,
+      "categoryId": 7,
       "category": "Coworking",
       "position": {
         "lat": -15.7880305,

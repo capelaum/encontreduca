@@ -52,7 +52,7 @@ export function ModalSupport({ onClose }: ModalSupportProps) {
     setIsLoading(true)
 
     await createSupportRequest({
-      user_id: user!.id,
+      userId: user!.id,
       message
     })
 
