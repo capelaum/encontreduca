@@ -12,6 +12,7 @@ import { handleLoginFormErrors } from 'helpers/formErrorsHandlers'
 import { validateEmail } from 'helpers/validate'
 import { FormType, LoginFormValues } from 'types/forms'
 import { ActionText } from './ActionText'
+import { SocialButtons } from './SocialButtons'
 
 interface LoginFormProps {
   setFormType: (type: FormType) => void
@@ -81,6 +82,8 @@ export function LoginForm({ setFormType }: LoginFormProps) {
         >
           Entrar
         </Button>
+
+        <SocialButtons />
       </Stack>
     </form>
   )
