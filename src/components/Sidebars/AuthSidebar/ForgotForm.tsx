@@ -10,11 +10,11 @@ import { useForm } from '@mantine/form'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { handleForgotFormErrors } from 'helpers/formErrorsHandlers'
 import { validateEmail } from 'helpers/validate'
-import { ForgotFormValues } from 'types/forms'
+import { ForgotFormValues, FormType } from 'types/forms'
 import { ActionText } from './ActionText'
 
 interface ForgotFormProps {
-  setFormType: (type: string) => void
+  setFormType: (type: FormType) => void
 }
 
 export function ForgotForm({ setFormType }: ForgotFormProps) {

@@ -10,11 +10,11 @@ import { useForm } from '@mantine/form'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { handleLoginFormErrors } from 'helpers/formErrorsHandlers'
 import { validateEmail } from 'helpers/validate'
-import { LoginFormValues } from 'types/forms'
+import { FormType, LoginFormValues } from 'types/forms'
 import { ActionText } from './ActionText'
 
 interface LoginFormProps {
-  setFormType: (type: string) => void
+  setFormType: (type: FormType) => void
 }
 
 export function LoginForm({ setFormType }: LoginFormProps) {

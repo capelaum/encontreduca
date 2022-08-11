@@ -10,18 +10,10 @@ export interface ProfileFormValues {
   avatarUrl: string | null
 }
 
-export interface LoginFormValues {
-  email: string
-  password: string
-}
+export type LoginFormValues = Pick<ProfileFormValues, 'email' | 'password'>
 
-export interface ForgotFormValues {
-  email: string
-}
+export type ForgotFormValues = Pick<ProfileFormValues, 'email'>
 
-export interface RegisterFormValues {
-  name: string
-  email: string
-  password: string
-  confirmPassword: string
-}
+export type RegisterFormValues = Omit<ProfileFormValues, 'avatarUrl'>
+
+export type FormType = 'login' | 'register' | 'forgotPassword'

@@ -7,13 +7,14 @@ import {
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useState } from 'react'
+import { FormType } from 'types/forms'
 import { ActionText } from './ActionText'
 import { ForgotForm } from './ForgotForm'
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
 
 export function AuthSidebar() {
-  const [formType, setFormType] = useState('login')
+  const [formType, setFormType] = useState<FormType>('login')
 
   const { setAuthSidebarOpened } = useSidebar()
 

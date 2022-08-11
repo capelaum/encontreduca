@@ -42,6 +42,7 @@ export function RegisterForm() {
         if (value !== form.values.password) {
           return 'Senhas não conferem'
         }
+
         return null
       }
     }
