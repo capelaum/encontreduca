@@ -6,7 +6,14 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { useModals } from '@mantine/modals'
+import { ModalEmail } from 'components/Modals/ModalEmail'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
+import {
+  modalStyles,
+  useModalStyles
+} from 'components/Shared/styles/modalStyles'
+import { Title } from 'components/Shared/Title'
 import { handleRegisterFormErrors } from 'helpers/formErrorsHandlers'
 import { validateEmail } from 'helpers/validate'
 import { RegisterFormValues } from 'types/forms'
@@ -16,6 +23,30 @@ export function RegisterForm() {
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
+
+  const { classes } = useModalStyles(dark)
+
+  const { openModal, closeModal } = useModals()
+
+  const openModalRegister = () => {
+    const id = openModal({
+      classNames: classes,
+      ...modalStyles,
+      overflow: 'outside',
+      title: <Title name="Confirme seu email" />,
+      children: (
+        <ModalEmail
+          onClose={() => closeModal(id)}
+          title="Falta pouco! Confirme seu email."
+          text="Enviamos um link de confirrmação para seu e-mail. Acesse e siga as instruções para concluir seu cadastro e usufruir de todas funcionalidades da platatorma Encontreduca."
+          image={{
+            src: '/images/icons/plane.svg',
+            alt: 'Ícone de email enviado'
+          }}
+        />
+      )
+    })
+  }
 
   const form = useForm<RegisterFormValues>({
     initialValues: {
@@ -50,6 +81,8 @@ export function RegisterForm() {
 
   const handleSubmit = async (values: typeof form.values) => {
     console.log(values)
+
+    openModalRegister()
   }
 
   return (

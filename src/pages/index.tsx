@@ -17,6 +17,7 @@ import { loadCategories } from 'lib/loadCategories'
 import { loadMotives } from 'lib/loadMotives'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { CategoryType } from 'types/categories'
 import { libraries } from 'types/googleMaps'
@@ -30,6 +31,9 @@ interface MapProps {
 }
 
 export default function Map({ categories, motives, user }: MapProps) {
+  const router = useRouter()
+  const { emailVerified } = router.query
+
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
@@ -65,6 +69,10 @@ export default function Map({ categories, motives, user }: MapProps) {
     setUser(user)
     setCategories(categories)
     setMotives(motives)
+
+    if ((emailVerified === 'true' || emailVerified === 'already') && !user) {
+      setAuthSidebarOpened(true)
+    }
   }, [])
 
   const { isLoaded } = useJsApiLoader({

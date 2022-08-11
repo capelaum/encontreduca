@@ -10,14 +10,10 @@ import {
   useState
 } from 'react'
 import { CategoryFilter, CategoryType } from 'types/categories'
+import { ResourceFormValues } from 'types/forms'
 import { LatLngLiteral } from 'types/googleMaps'
 import { Motive } from 'types/motives'
-import {
-  ResourceChange,
-  ResourceFormValues,
-  ResourceType,
-  ResourceVote
-} from 'types/resources'
+import { ResourceChange, ResourceType, ResourceVote } from 'types/resources'
 import { Review } from 'types/reviews'
 import { User } from 'types/users'
 import { useSidebar } from './sidebarContext'
@@ -153,9 +149,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const formatPositionAsString = (position: LatLngLiteral) =>
     `${position.lat},${position.lng}`
 
-  const getResourceValue = (
-    value: string | number | null | LatLngLiteral | undefined
-  ) => {
+  const getResourceValue = (value: any) => {
     if (!value) return null
 
     return value.toString()
@@ -165,7 +159,8 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     const { values } = form
 
     const resourceDiff = Object.keys(values).reduce((acc, key) => {
-      const resourceFormValuesKey = key as keyof ResourceFormValues
+      const resourceFormKey = key as keyof ResourceFormValues
+      const resourceTypeKey = key as keyof ResourceType
 
       if (key === 'position') {
         const resourcePositionAsString = formatPositionAsString(
@@ -183,11 +178,11 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
         return acc
       }
 
-      const resourceValue = getResourceValue(resource![resourceFormValuesKey])
-      const resourceFormValue = getResourceValue(values[resourceFormValuesKey])
+      const resourceValue = getResourceValue(resource![resourceTypeKey])
+      const resourceFormValue = getResourceValue(values[resourceFormKey])
 
       if (resourceFormValue !== resourceValue) {
-        ;(acc[resourceFormValuesKey] as any) = resourceFormValue
+        ;(acc[resourceFormKey] as any) = resourceFormValue
       }
 
       return acc
@@ -200,10 +195,11 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     resourceDiff: Partial<ResourceFormValues>
   ) => {
     const resourceChanges = Object.keys(resourceDiff).map(async (key) => {
-      const resourceTypeKey = key as keyof ResourceFormValues
+      const resourceFormKey = key as keyof ResourceFormValues
+      const resourceTypeKey = key as keyof ResourceType
 
       const oldValue = getResourceValue(resource![resourceTypeKey]) ?? 'nulo'
-      const newValue = getResourceValue(resourceDiff[resourceTypeKey]) ?? 'nulo'
+      const newValue = getResourceValue(resourceDiff[resourceFormKey]) ?? 'nulo'
 
       const resourceChange = await createResourceChange({
         resourceId: resource!.id,

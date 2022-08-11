@@ -7,7 +7,7 @@ export function Author() {
 
   const { resource } = useResource()
 
-  const author = resource?.user?.name ?? 'Anônimo'
+  const author = resource?.author ?? 'Anônimo'
 
   return (
     <Text
