@@ -8,6 +8,7 @@ import {
 import { useForm } from '@mantine/form'
 import { useModals } from '@mantine/modals'
 import { ModalEmail } from 'components/Modals/ModalEmail'
+import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import {
   modalStyles,
@@ -16,9 +17,14 @@ import {
 import { Title } from 'components/Shared/Title'
 import { handleRegisterFormErrors } from 'helpers/formErrorsHandlers'
 import { validateEmail } from 'helpers/validate'
+import { useAuth } from 'hooks/useAuth'
 import { RegisterFormValues } from 'types/forms'
 
 export function RegisterForm() {
+  const { register, isLoading } = useAuth({
+    middleware: 'guest'
+  })
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -80,13 +86,17 @@ export function RegisterForm() {
   })
 
   const handleSubmit = async (values: typeof form.values) => {
-    console.log(values)
+    const response = await register(values)
+
+    if (!response) return
 
     openModalRegister()
   }
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit, handleRegisterFormErrors)}>
+      <DefaultOverlay visible={isLoading} />
+
       <Stack spacing="md">
         <TextInput
           required

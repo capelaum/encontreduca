@@ -1,7 +1,7 @@
 import { api } from 'services/api'
 import { UpdatedUser, User } from 'types/users'
 
-export async function getUser(userId: number): Promise<User> {
+export async function getUser(userId: number): Promise<User | null> {
   const response = await api.get(`users/${userId}`)
 
   if (response.status !== 200) {
@@ -52,7 +52,7 @@ export async function createUserResource({
 }) {
   const response = await api.post('users/resources', {
     userId,
-    resourceId: resourceId
+    resourceId
   })
 
   const { data } = response
