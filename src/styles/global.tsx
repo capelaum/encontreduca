@@ -35,10 +35,6 @@ export const GlobalStyles = () => {
         },
         '.Toastify__progress-bar-theme--dark': {
           backgroundColor: theme.colors.brand[7]
-        },
-        '.Toastify__toast-container': {
-          width: '100%',
-          maxWidth: '400px'
         }
       })}
     />

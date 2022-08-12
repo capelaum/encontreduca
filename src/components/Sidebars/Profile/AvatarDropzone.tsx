@@ -16,8 +16,7 @@ import { deleteUserAvatar, getUser } from 'lib/usersLib'
 import { useEffect, useState } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
 import { MdOutlineNoPhotography } from 'react-icons/md'
-import { ResourceFormValues } from 'types/resources'
-import { ProfileFormValues } from 'types/users'
+import { ProfileFormValues, ResourceFormValues } from 'types/forms'
 
 interface AvatarDropzoneProps {
   form: UseFormReturnType<ProfileFormValues>

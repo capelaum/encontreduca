@@ -18,12 +18,14 @@ import { Title } from 'components/Shared/Title'
 import { handleRegisterFormErrors } from 'helpers/formErrorsHandlers'
 import { validateEmail } from 'helpers/validate'
 import { useAuth } from 'hooks/useAuth'
-import { RegisterFormValues } from 'types/forms'
+import { FormType, RegisterFormValues } from 'types/forms'
 
-export function RegisterForm() {
-  const { register, isLoading } = useAuth({
-    middleware: 'guest'
-  })
+interface RegisterFormProps {
+  setFormType: (type: FormType) => void
+}
+
+export function RegisterForm({ setFormType }: RegisterFormProps) {
+  const { register, isLoading } = useAuth()
 
   const theme = useMantineTheme()
 
@@ -89,6 +91,9 @@ export function RegisterForm() {
     const response = await register(values)
 
     if (!response) return
+
+    form.reset()
+    setFormType('login')
 
     openModalRegister()
   }

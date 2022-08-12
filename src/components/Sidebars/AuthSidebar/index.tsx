@@ -121,7 +121,7 @@ export function AuthSidebar() {
               onClick={() => setFormType('login')}
             />
           </Text>
-          <RegisterForm />
+          <RegisterForm setFormType={setFormType} />
         </>
       )}
 
