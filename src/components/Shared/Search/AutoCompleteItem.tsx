@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Group,
-  MantineColor,
   MantineTheme,
   SelectItemProps,
   Text
@@ -10,13 +9,14 @@ import {
 import { forwardRef } from 'react'
 
 interface ItemProps extends SelectItemProps {
-  color: MantineColor
-  address: string
   cover: string
-  theme: MantineTheme
   dark: boolean
-  isMap: boolean
-  largeScreen: boolean
+  address: string
+  theme: MantineTheme
+  createdAt: string
+  updatedAt: string
+  userId: string | number
+  categoryId: string | number
 }
 
 export const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
@@ -27,8 +27,10 @@ export const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
       cover,
       theme,
       dark,
-      isMap,
-      largeScreen,
+      createdAt,
+      updatedAt,
+      userId,
+      categoryId,
       ...others
     }: ItemProps,
     ref

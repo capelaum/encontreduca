@@ -5,7 +5,6 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
 import {
   mapSearchInputStyles,
   searchInputStyles
@@ -41,8 +40,6 @@ interface SearchResourcesProps {
 export function SearchResources({ isMap }: SearchResourcesProps) {
   const [value, setValue] = useState('')
 
-  const largeScreen = useMediaQuery('(min-width: 768px)', false)
-
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -55,13 +52,11 @@ export function SearchResources({ isMap }: SearchResourcesProps) {
   const { resources, filterResources, setResource } = useResource()
   const filteredResources = filterResources(resources!)
 
-  const data = filteredResources.map((item) => ({
-    ...item,
-    value: item.name,
+  const data = filteredResources.map((resource) => ({
+    ...resource,
+    value: resource.name,
     dark,
-    theme,
-    isMap,
-    largeScreen
+    theme
   }))
 
   const handleOnItemSubmit = (item: AutocompleteItem) => {
