@@ -10,9 +10,13 @@ import {
   useMemo,
   useState
 } from 'react'
-import { MdLogout } from 'react-icons/md'
+import { MdDone, MdLogout, MdOutlineMarkEmailRead } from 'react-icons/md'
 import { api } from 'services/api'
-import { LoginFormValues, RegisterFormValues } from 'types/forms'
+import {
+  LoginFormValues,
+  RegisterFormValues,
+  ResetPasswordFormValues
+} from 'types/forms'
 import { User } from 'types/users'
 import { useSidebar } from './sidebarContext'
 
@@ -27,6 +31,8 @@ interface AuthContextData {
   login: (form: LoginFormValues) => Promise<User | null>
   logout: () => void
   isAuthLoading: boolean
+  sendResetPasswordLink: (email: string) => Promise<boolean>
+  resetPassword: (form: ResetPasswordFormValues) => Promise<boolean>
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
@@ -179,8 +185,86 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       showToastError({
         title: 'Ooops, erro ao realizar logout',
-        description: 'Por favor, tente novamente mais tarde.'
+        description: 'Por favor, tente novamente mais tarde...'
       })
+    }
+  }
+
+  const sendResetPasswordLink = async (email: string) => {
+    setIsAuthLoading(true)
+
+    try {
+      const response = await api.post('/forgot-password', { email })
+
+      if (response.status !== 200) {
+        throw new Error(
+          'Ocorreu um erro ao enviar o link de recuperação de senha'
+        )
+      }
+
+      setIsAuthLoading(false)
+
+      const { status } = response.data
+
+      showToast({
+        title: status,
+        description:
+          'Por favor verifique seu email e siga as instruções para recuperar sua sennha',
+        icon: (
+          <MdOutlineMarkEmailRead size={24} color={theme.colors.brand[7]} />
+        ),
+        dark
+      })
+
+      return true
+    } catch (error) {
+      setIsAuthLoading(false)
+
+      showToastError({
+        title: 'Ooops, erro ao enviar link de recuperação de senha',
+        description: 'Por favor, tente novamente mais tarde...'
+      })
+
+      return false
+    }
+  }
+
+  const resetPassword = async (
+    resetPasswordFormValues: ResetPasswordFormValues
+  ) => {
+    setIsAuthLoading(true)
+
+    try {
+      const response = await api.post(
+        '/reset-password',
+        resetPasswordFormValues
+      )
+
+      if (response.status !== 200) {
+        throw new Error('Ocorreu um erro ao resetar a senha')
+      }
+
+      setIsAuthLoading(false)
+
+      const { status } = response.data
+
+      showToast({
+        title: status,
+        description: 'Sua senha foi alterada com sucesso, faça login novamente',
+        icon: <MdDone size={24} color={theme.colors.brand[7]} />,
+        dark
+      })
+
+      return true
+    } catch (error) {
+      setIsAuthLoading(false)
+
+      showToastError({
+        title: 'Ooops, erro ao resetar senha',
+        description: 'Por favor, tente novamente mais tarde...'
+      })
+
+      return false
     }
   }
 
@@ -190,7 +274,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     register,
     login,
     logout,
-    isAuthLoading
+    isAuthLoading,
+    sendResetPasswordLink,
+    resetPassword
   }
 
   const authContextProviderValue = useMemo<AuthContextData>(

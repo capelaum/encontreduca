@@ -20,12 +20,13 @@ import { ActionText } from './ActionText'
 import { ForgotForm } from './ForgotForm'
 import { LoginForm } from './LoginForm'
 import { RegisterForm } from './RegisterForm'
+import ResetPasswordForm from './ResetPasswordForm'
 
 export function AuthSidebar() {
   const [formType, setFormType] = useState<FormType>('login')
 
   const router = useRouter()
-  const { emailVerified } = router.query
+  const { emailVerified, token, email } = router.query
 
   const { setAuthSidebarOpened } = useSidebar()
 
@@ -35,15 +36,19 @@ export function AuthSidebar() {
   const dark = colorScheme === 'dark'
 
   const setHeaderTitle = () => {
-    if (formType === 'login') {
-      return 'Fazer Login'
+    if (formType === 'resetPassword') {
+      return 'Resetar senha'
     }
 
     if (formType === 'register') {
       return 'Cadastre-se'
     }
 
-    return 'Recuperar Senha?'
+    if (formType === 'forgotPassword') {
+      return 'Recuperar Senha?'
+    }
+
+    return 'Fazer Login'
   }
 
   const { classes } = useModalStyles(dark)
@@ -90,7 +95,11 @@ export function AuthSidebar() {
       router.query.emailVerified = undefined
       openModalVerified()
     }
-  }, [])
+
+    if (token && email) {
+      setFormType('resetPassword')
+    }
+  }, [router.query.emailVerified, router.query.token, router.query.email])
 
   return (
     <Stack spacing="md" p="md">
@@ -131,6 +140,15 @@ export function AuthSidebar() {
             Informe seu email para receber um link de recuperação.
           </Text>
           <ForgotForm setFormType={setFormType} />
+        </>
+      )}
+
+      {formType === 'resetPassword' && (
+        <>
+          <Text color={dark ? theme.white : theme.colors.brand[7]}>
+            Digite uma nova senha com ao menos 8 caracteres.
+          </Text>
+          <ResetPasswordForm setFormType={setFormType} />
         </>
       )}
     </Stack>

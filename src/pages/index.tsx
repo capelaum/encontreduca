@@ -31,7 +31,7 @@ interface MapProps {
 
 export default function Map({ categories, motives }: MapProps) {
   const router = useRouter()
-  const { emailVerified } = router.query
+  const { emailVerified, token, email } = router.query
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
@@ -69,7 +69,11 @@ export default function Map({ categories, motives }: MapProps) {
     setCategories(categories)
     setMotives(motives)
 
-    if ((emailVerified === 'true' || emailVerified === 'already') && !user) {
+    if (
+      emailVerified === 'true' ||
+      emailVerified === 'already' ||
+      (token && email && !user)
+    ) {
       setAuthSidebarOpened(true)
     }
   }, [])

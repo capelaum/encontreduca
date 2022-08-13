@@ -12,8 +12,15 @@ export interface ProfileFormValues {
 
 export type LoginFormValues = Pick<ProfileFormValues, 'email' | 'password'>
 
-export type ForgotFormValues = Pick<ProfileFormValues, 'email'>
+export type ForgotPasswordFormValues = Pick<ProfileFormValues, 'email'>
 
 export type RegisterFormValues = Omit<ProfileFormValues, 'avatarUrl'>
 
-export type FormType = 'login' | 'register' | 'forgotPassword'
+export interface ResetPasswordFormValues {
+  token: string
+  email: string
+  password: string
+  confirmPassword: string
+}
+
+export type FormType = 'login' | 'register' | 'forgotPassword' | 'resetPassword'

@@ -7,10 +7,12 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
+import { useAuth } from 'contexts/authContext'
 import { handleForgotFormErrors } from 'helpers/formErrorsHandlers'
 import { validateEmail } from 'helpers/validate'
-import { ForgotFormValues, FormType } from 'types/forms'
+import { ForgotPasswordFormValues, FormType } from 'types/forms'
 import { ActionText } from './ActionText'
 
 interface ForgotFormProps {
@@ -18,12 +20,14 @@ interface ForgotFormProps {
 }
 
 export function ForgotForm({ setFormType }: ForgotFormProps) {
+  const { sendResetPasswordLink, isAuthLoading } = useAuth()
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const form = useForm<ForgotFormValues>({
+  const form = useForm<ForgotPasswordFormValues>({
     initialValues: {
       email: ''
     },
@@ -36,11 +40,17 @@ export function ForgotForm({ setFormType }: ForgotFormProps) {
   })
 
   const handleSubmit = async (values: typeof form.values) => {
-    console.log(values)
+    await sendResetPasswordLink(values.email)
+
+    form.reset()
+
+    setFormType('login')
   }
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit, handleForgotFormErrors)}>
+      <DefaultOverlay visible={isAuthLoading} />
+
       <Stack spacing="md">
         <Box>
           <TextInput
