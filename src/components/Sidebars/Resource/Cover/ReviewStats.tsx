@@ -9,8 +9,18 @@ export function ReviewStats() {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  if (resourceReviews.length === 0) {
+  const reviewsQuantity = resourceReviews.length
+
+  if (reviewsQuantity === 0) {
     return <Text size="sm">Sem avaliações</Text>
+  }
+
+  const renderReviewsQuantity = () => {
+    if (reviewsQuantity === 1) {
+      return <Text size="sm">1 avaliação</Text>
+    }
+
+    return <Text size="sm">{reviewsQuantity} avaliações</Text>
   }
 
   return (
@@ -29,7 +39,7 @@ export function ReviewStats() {
           color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
         })}
       >
-        {resourceReviews.length} avaliações
+        {renderReviewsQuantity()}
       </Text>
     </Group>
   )
