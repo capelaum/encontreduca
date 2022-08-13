@@ -8,7 +8,7 @@ export type NewSupportRequest = {
 export async function createSupportRequest(
   newSupportRequest: NewSupportRequest
 ) {
-  const response = await api.post('/support/requests', newSupportRequest)
+  const response = await api.post('/supports', newSupportRequest)
 
   return response.data
 }
