@@ -11,6 +11,7 @@ import { UpdateProfile } from 'components/Sidebars/Profile'
 import { Resource } from 'components/Sidebars/Resource'
 import { ResourceForm } from 'components/Sidebars/ResourceForm'
 import { ResourceList } from 'components/Sidebars/ResourceList'
+import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { loadCategories } from 'lib/loadCategories'
@@ -22,23 +23,22 @@ import { useEffect } from 'react'
 import { CategoryType } from 'types/categories'
 import { libraries } from 'types/googleMaps'
 import { Motive } from 'types/motives'
-import { User } from 'types/users'
 
 interface MapProps {
   categories: CategoryType[]
   motives: Motive[]
-  user: User
 }
 
-export default function Map({ categories, motives, user }: MapProps) {
+export default function Map({ categories, motives }: MapProps) {
   const router = useRouter()
   const { emailVerified } = router.query
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
+  const { user } = useAuth()
+
   const {
-    setUser,
     setCategories,
     setMotives,
     resources,
@@ -66,7 +66,6 @@ export default function Map({ categories, motives, user }: MapProps) {
   } = useSidebar()
 
   useEffect(() => {
-    setUser(user)
     setCategories(categories)
     setMotives(motives)
 
@@ -170,9 +169,8 @@ export default function Map({ categories, motives, user }: MapProps) {
 export const getServerSideProps: GetServerSideProps = async () => {
   const categories: CategoryType[] = await loadCategories()
   const motives: Motive[] = await loadMotives()
-  // const user: User = await getUser(1)
 
-  if (!categories) {
+  if (!categories || !motives) {
     return {
       notFound: true
     }
@@ -181,8 +179,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       categories,
-      motives,
-      user: null
+      motives
     }
   }
 }

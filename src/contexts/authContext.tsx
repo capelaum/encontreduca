@@ -1,5 +1,6 @@
-import { showToastError } from 'components/Shared/ToastMessage'
-import { deleteCookie, getCookie, setCookie } from 'cookies-next'
+import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import { showToast, showToastError } from 'components/Shared/ToastMessage'
+import { deleteCookie, hasCookie, setCookie } from 'cookies-next'
 import {
   createContext,
   ReactNode,
@@ -9,9 +10,11 @@ import {
   useMemo,
   useState
 } from 'react'
-import { api, headers } from 'services/api'
+import { MdLogout } from 'react-icons/md'
+import { api } from 'services/api'
 import { LoginFormValues, RegisterFormValues } from 'types/forms'
 import { User } from 'types/users'
+import { useSidebar } from './sidebarContext'
 
 interface AuthProviderProps {
   children: ReactNode
@@ -32,22 +35,35 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthLoading, setIsAuthLoading] = useState(false)
   const [user, setUser] = useState<User | null>(null)
 
+  const { setAuthSidebarOpened } = useSidebar()
+
+  const theme = useMantineTheme()
+
+  const { colorScheme } = useMantineColorScheme()
+  const dark = colorScheme === 'dark'
+
   const authUserCookieName = 'encontreduca_user_auth'
 
-  function getCookieAuth() {
-    return getCookie(authUserCookieName)
-      ? `Bearer ${getCookie(authUserCookieName)}`
-      : ''
-  }
+  api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response.status === 401) {
+        setUser(null)
+        setAuthSidebarOpened(false)
+
+        showToastError({
+          title: 'Erro de autenticação',
+          description: 'Sua sessão expirou, faça login novamente'
+        })
+      }
+
+      return Promise.reject(error)
+    }
+  )
 
   const getAuthUser = useCallback(async () => {
     try {
-      const response = await api.get('user', {
-        headers: {
-          ...headers,
-          Authorization: getCookieAuth()
-        }
-      })
+      const response = await api.get('user')
 
       if (response.status !== 200) {
         throw new Error('Ocorreu um erro ao buscar o usuário')
@@ -59,14 +75,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       return null
     }
-  }, [user])
+  }, [])
 
   useEffect(() => {
     ;(async () => {
-      const authUser = await getAuthUser()
+      if (hasCookie(authUserCookieName)) {
+        const authUser = await getAuthUser()
 
-      if (authUser) {
-        setUser(authUser)
+        if (authUser) {
+          setUser(authUser)
+        }
       }
     })()
   }, [])
@@ -93,7 +111,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       showToastError({
         title: 'Ooops, ocorreu um erro ao tentar te cadastrar',
-        description: (error as Error).message
+        description: (error as any).response.data.message
       })
 
       return null
@@ -134,7 +152,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       return authUser
     } catch (error) {
       setIsAuthLoading(false)
-      console.log('🚀 ~ error', error)
 
       showToastError({
         title: 'Ooops, erro ao fazer login',
@@ -149,9 +166,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       await api.post('/logout')
 
-      setUser(null)
-
       deleteCookie('encontreduca_user_auth')
+
+      showToast({
+        title: 'Logout realizado com sucesso',
+        description: `Até a proxima ${user?.name} 👋`,
+        icon: <MdLogout size={24} color={theme.colors.brand[7]} />,
+        dark
+      })
+
+      setUser(null)
     } catch (error) {
       showToastError({
         title: 'Ooops, erro ao realizar logout',

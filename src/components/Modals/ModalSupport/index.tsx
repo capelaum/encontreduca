@@ -10,7 +10,7 @@ import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useAuth } from 'contexts/authContext'
-import { createSupportRequest } from 'lib/supportRequestsLib'
+import { createSupportRequest } from 'lib/supportsLib'
 import { useState } from 'react'
 import { MdOutlineHelp } from 'react-icons/md'
 
@@ -51,10 +51,21 @@ export function ModalSupport({ onClose }: ModalSupportProps) {
 
     setIsLoading(true)
 
-    await createSupportRequest({
-      userId: user!.id,
-      message
-    })
+    try {
+      await createSupportRequest({
+        userId: user!.id,
+        message
+      })
+    } catch (error) {
+      setIsLoading(false)
+
+      showToastError({
+        title: 'Erro ao enviar pedido de suporte',
+        description: (error as Error).message
+      })
+
+      return
+    }
 
     setIsLoading(false)
 
