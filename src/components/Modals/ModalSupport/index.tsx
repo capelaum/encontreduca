@@ -9,7 +9,7 @@ import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
-import { useResource } from 'contexts/resourceContext'
+import { useAuth } from 'contexts/authContext'
 import { createSupportRequest } from 'lib/supportRequestsLib'
 import { useState } from 'react'
 import { MdOutlineHelp } from 'react-icons/md'
@@ -19,7 +19,7 @@ interface ModalSupportProps {
 }
 
 export function ModalSupport({ onClose }: ModalSupportProps) {
-  const { user } = useResource()
+  const { user } = useAuth()
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()

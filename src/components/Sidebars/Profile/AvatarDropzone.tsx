@@ -10,7 +10,7 @@ import { DefaultAvatar } from 'components/Shared/Default/DefaultAvatar'
 import { DefaultDropzone } from 'components/Shared/Default/DefaultDropzone'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
-import { useResource } from 'contexts/resourceContext'
+import { useAuth } from 'contexts/authContext'
 import { destroyImage } from 'helpers/imageHelpers'
 import { deleteUserAvatar, getUser } from 'lib/usersLib'
 import { useEffect, useState } from 'react'
@@ -32,7 +32,7 @@ export function AvatarDropzone({
   const [isLoading, setIsLoading] = useState(false)
   const [preview, setPreview] = useState<string | null>(null)
 
-  const { user, setUser } = useResource()
+  const { user, setUser } = useAuth()
 
   const theme = useMantineTheme()
 

@@ -7,6 +7,7 @@ import {
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
+import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useRouter } from 'next/router'
@@ -30,7 +31,8 @@ export function Menu() {
     setAuthSidebarOpened
   } = useSidebar()
 
-  const { user, setResource } = useResource()
+  const { setResource } = useResource()
+  const { user, logout } = useAuth()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
@@ -104,7 +106,13 @@ export function Menu() {
               onClick={openModalSupport}
             />
 
-            <MenuButton icon={<MdLogout size={20} />} text="Sair" />
+            <MenuButton
+              icon={<MdLogout size={20} />}
+              text="Sair"
+              onClick={() => {
+                logout()
+              }}
+            />
           </>
         )}
 

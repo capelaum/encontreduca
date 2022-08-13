@@ -3,7 +3,7 @@ import { useModals } from '@mantine/modals'
 import { openModalConfirm } from 'components/Modals/ModalConfirrm'
 import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { showToast } from 'components/Shared/ToastMessage'
-import { useResource } from 'contexts/resourceContext'
+import { useAuth } from 'contexts/authContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { deleteUser } from 'lib/usersLib'
 import { BsExclamationCircle } from 'react-icons/bs'
@@ -11,7 +11,7 @@ import { FaUserTimes } from 'react-icons/fa'
 
 export function DeleteUserButton() {
   const { openConfirmModal, closeModal } = useModals()
-  const { user, setUser } = useResource()
+  const { user, setUser } = useAuth()
 
   const { setProfileOpened } = useSidebar()
 

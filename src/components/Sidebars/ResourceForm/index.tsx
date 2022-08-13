@@ -11,6 +11,7 @@ import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
+import { useAuth } from 'contexts/authContext'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
@@ -45,11 +46,13 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
   const {
     resource,
     categories,
-    user,
     setResource,
     getResourceDiff,
     createResourceChanges
   } = useResource()
+
+  const { user } = useAuth()
+
   const { currentLocation } = useMap()
 
   const theme = useMantineTheme()

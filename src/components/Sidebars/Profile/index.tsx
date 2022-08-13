@@ -11,7 +11,7 @@ import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
-import { useResource } from 'contexts/resourceContext'
+import { useAuth } from 'contexts/authContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { handleProfileFormErrors } from 'helpers/formErrorsHandlers'
 import { updateImage, uploadImage } from 'helpers/imageHelpers'
@@ -31,7 +31,7 @@ export function UpdateProfile() {
   )
 
   const { setProfileOpened } = useSidebar()
-  const { user, setUser } = useResource()
+  const { user, setUser } = useAuth()
 
   const theme = useMantineTheme()
 

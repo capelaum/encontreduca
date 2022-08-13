@@ -9,7 +9,7 @@ import {
 } from '@mantine/core'
 import { Profile } from 'components/Shared/Profile'
 import { Stars } from 'components/Shared/Stars'
-import { useResource } from 'contexts/resourceContext'
+import { useAuth } from 'contexts/authContext'
 import { Review } from 'types/reviews'
 import { Actions } from './Actions'
 
@@ -20,7 +20,8 @@ interface UserReviewProps {
 
 export function UserReview({ isOwnReview, review }: UserReviewProps) {
   const { updatedAt, comment, user: reviewUser, rating } = review
-  const { user } = useResource()
+
+  const { user } = useAuth()
 
   const theme = useMantineTheme()
 

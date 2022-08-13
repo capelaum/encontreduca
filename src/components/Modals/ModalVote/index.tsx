@@ -13,6 +13,7 @@ import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { ActionButton } from 'components/Sidebars/Resource/ActionButtons/ActionButton'
+import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import {
   createResourceVote,
@@ -37,7 +38,8 @@ export function ModalVote({
   const { onConfirmText } = innerProps
   const { closeModal } = context
 
-  const { user, resource, resourceUserVote, setResource } = useResource()
+  const { resource, resourceUserVote, setResource } = useResource()
+  const { user } = useAuth()
 
   const [isLoading, setIsLoading] = useState(false)
   const [justification, setJustification] = useState(

@@ -1,5 +1,6 @@
 import { Box, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
+import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { createUserResource, deleteUserResource, getUser } from 'lib/usersLib'
 import { useEffect, useState } from 'react'
@@ -15,7 +16,8 @@ export function ResourceSave() {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { user, setUser, resource } = useResource()
+  const { resource } = useResource()
+  const { user, setUser } = useAuth()
 
   useEffect(() => {
     if (user && resource) {

@@ -14,6 +14,7 @@ import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { Profile } from 'components/Shared/Profile'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
+import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { getResource } from 'lib/resourcesLib'
 import { createReview, updateReview } from 'lib/reviewsLib'
@@ -33,7 +34,8 @@ export function ModalReview({
   const { onConfirmText, isEdit, review } = innerProps
   const { closeModal } = context
 
-  const { resource, setResource, user } = useResource()
+  const { resource, setResource } = useResource()
+  const { user } = useAuth()
 
   const theme = useMantineTheme()
 

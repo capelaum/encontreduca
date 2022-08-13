@@ -7,6 +7,7 @@ import {
 } from '@mantine/core'
 import { SearchResources } from 'components/Shared/Search/SearchResources'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
+import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { ResourceItem } from './ResourceItem'
@@ -17,7 +18,8 @@ interface ResourceListProps {
 
 export function ResourceList({ isVotingPainel }: ResourceListProps) {
   const { setSavedResourcesOpened, setVotingPanelOpened } = useSidebar()
-  const { user, resources } = useResource()
+  const { resources } = useResource()
+  const { user } = useAuth()
 
   const userApprovedResources = resources!.filter(
     ({ id, approved }) => approved && user && user.resourcesIds.includes(+id)

@@ -17,6 +17,7 @@ import { ToastContainer } from 'react-toastify'
 import { GlobalStyles } from 'styles/global'
 import { myTheme } from 'styles/theme'
 
+import { AuthProvider } from 'contexts/authContext'
 import 'react-toastify/dist/ReactToastify.min.css'
 
 const queryClient = new QueryClient()
@@ -40,27 +41,29 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
         <QueryClientProvider client={queryClient}>
-          <SidebarProvider>
-            <ResourceProvider>
-              <MapProvider>
-                <ModalsProvider
-                  modals={{
-                    review: ModalReview,
-                    select: ModalSelect,
-                    vote: ModalVote
-                  }}
-                >
-                  <GlobalStyles />
-                  <ToastContainer
-                    autoClose={5000}
-                    limit={5}
-                    position="top-right"
-                  />
-                  <Component {...pageProps} />
-                </ModalsProvider>
-              </MapProvider>
-            </ResourceProvider>
-          </SidebarProvider>
+          <AuthProvider>
+            <SidebarProvider>
+              <ResourceProvider>
+                <MapProvider>
+                  <ModalsProvider
+                    modals={{
+                      review: ModalReview,
+                      select: ModalSelect,
+                      vote: ModalVote
+                    }}
+                  >
+                    <GlobalStyles />
+                    <ToastContainer
+                      autoClose={5000}
+                      limit={5}
+                      position="top-right"
+                    />
+                    <Component {...pageProps} />
+                  </ModalsProvider>
+                </MapProvider>
+              </ResourceProvider>
+            </SidebarProvider>
+          </AuthProvider>
         </QueryClientProvider>
       </MantineProvider>
     </ColorSchemeProvider>

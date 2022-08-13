@@ -1,4 +1,5 @@
 import { Box, Group } from '@mantine/core'
+import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { MdDirections } from 'react-icons/md'
 import { ActionButton } from './ActionButton'
@@ -8,7 +9,8 @@ import { ReviewCreate } from './ModalActions/ReviewCreate'
 import { ResourceSave } from './ResourceSave'
 
 export function ActionButtons() {
-  const { user, resource, userResourceReview } = useResource()
+  const { resource, userResourceReview } = useResource()
+  const { user } = useAuth()
 
   if (!resource) {
     return null

@@ -7,14 +7,15 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { DefaultAvatar } from 'components/Shared/Default/DefaultAvatar'
-import { useResource } from 'contexts/resourceContext'
+import { useAuth } from 'contexts/authContext'
 
 interface MenuProfileProps {
   setProfileOpened: (opened: boolean) => void
 }
 
 export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
-  const { user } = useResource()
+  const { user } = useAuth()
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()

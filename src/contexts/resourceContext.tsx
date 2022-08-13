@@ -15,7 +15,7 @@ import { LatLngLiteral } from 'types/googleMaps'
 import { Motive } from 'types/motives'
 import { ResourceChange, ResourceType, ResourceVote } from 'types/resources'
 import { Review } from 'types/reviews'
-import { User } from 'types/users'
+import { useAuth } from './authContext'
 import { useSidebar } from './sidebarContext'
 
 interface ResourceProviderProps {
@@ -23,8 +23,6 @@ interface ResourceProviderProps {
 }
 
 interface ResourceContextData {
-  user: User | null
-  setUser: (user: User | null) => void
   categories: CategoryType[]
   setCategories: (categories: CategoryType[]) => void
   motives: Motive[]
@@ -58,7 +56,6 @@ const ResourceContext = createContext<ResourceContextData>(
 )
 
 export function ResourceProvider({ children }: ResourceProviderProps) {
-  const [user, setUser] = useState<User | null>(null)
   const [categories, setCategories] = useState<CategoryType[]>([])
   const [motives, setMotives] = useState<Motive[]>([] as Motive[])
   const [resource, setResource] = useState<ResourceType | null>(null)
@@ -67,6 +64,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resourceVotes, setResourceVotes] = useState<ResourceVote[]>([])
 
   const { votingPanelOpened } = useSidebar()
+  const { user } = useAuth()
 
   const {
     data: resources,
@@ -219,8 +217,6 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const ResourceContextProviderValues = {
-    user,
-    setUser,
     categories,
     setCategories,
     motives,

@@ -11,7 +11,7 @@ import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
-import { useResource } from 'contexts/resourceContext'
+import { useAuth } from 'contexts/authContext'
 import { createResourceComplaint, createReviewComplaint } from 'lib/complaints'
 import { useState } from 'react'
 import { IoIosSend } from 'react-icons/io'
@@ -32,7 +32,7 @@ export function ModalSelect({
   const { motives, resource, isReviewComplaint, review } = innerProps
   const { closeModal } = context
 
-  const { user } = useResource()
+  const { user } = useAuth()
 
   const theme = useMantineTheme()
 

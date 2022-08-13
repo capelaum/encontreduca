@@ -10,8 +10,8 @@ import { UseFormReturnType } from '@mantine/form'
 import { showToastError } from 'components/Shared/ToastMessage'
 import { ReactNode, useState } from 'react'
 import { MdClose, MdOutlineFileUpload } from 'react-icons/md'
-import { ResourceFormValues } from 'types/resources'
-import { ProfileFormValues } from 'types/users'
+import { ProfileFormValues, ResourceFormValues } from 'types/forms'
+
 import { dropzoneStyles } from '../styles/dropzoneStyles'
 
 interface DefaultDropzoneProps {
