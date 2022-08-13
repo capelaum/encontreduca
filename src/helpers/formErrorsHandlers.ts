@@ -77,7 +77,7 @@ export const handleProfileFormErrors = (errors: FormErrors) => {
   if (errors.password) {
     showToastError({
       title: 'Senha inválida',
-      description: 'Senha deve ter mais de 6 caracteres.'
+      description: 'Senha deve ter mais de 8 caracteres.'
     })
   }
 
@@ -100,7 +100,7 @@ export const handleLoginFormErrors = (errors: FormErrors) => {
   if (errors.password) {
     showToastError({
       title: 'Senha inválida',
-      description: 'Senha deve ter mais de 6 caracteres.'
+      description: 'Senha deve ter mais de 8 caracteres.'
     })
   }
 }
@@ -132,7 +132,30 @@ export const handleRegisterFormErrors = (errors: FormErrors) => {
   if (errors.password) {
     showToastError({
       title: 'Senha inválida',
-      description: 'Senha deve ter mais de 6 caracteres.'
+      description: 'Senha deve ter mais de 8 caracteres.'
+    })
+  }
+
+  if (errors.confirmPassword) {
+    showToastError({
+      title: 'Senha de confirmação inválida',
+      description: 'Senha de confirmação deve ser igual à senha.'
+    })
+  }
+}
+
+export const handleResetPasswordFormErrors = (errors: FormErrors) => {
+  if (errors.email) {
+    showToastError({
+      title: 'Email inválido',
+      description: 'Você deve fornecer um email válido.'
+    })
+  }
+
+  if (errors.password) {
+    showToastError({
+      title: 'Senha inválida',
+      description: 'Senha deve ter mais de 8 caracteres.'
     })
   }
 

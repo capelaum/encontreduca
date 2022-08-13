@@ -71,12 +71,12 @@ export function UpdateProfile() {
       avatarUrl: () =>
         !hasPreview ? null : validateImageBase64(imageBase64, hasPreview),
       password: (value) =>
-        value.trim().length > 0 && value.trim().length < 6
-          ? 'Senha deve ter mais de 6 caracteres'
+        value.trim().length > 0 && value.trim().length < 8
+          ? 'Senha deve ter mais de 8 caracteres'
           : null,
       confirmPassword: (value) => {
-        if (value.trim().length > 0 && value.trim().length < 6) {
-          return 'Senha deve ter mais de 6 caracteres'
+        if (value.trim().length > 0 && value.trim().length < 8) {
+          return 'Senha deve ter mais de 8 caracteres'
         }
 
         if (value !== form.values.password) {

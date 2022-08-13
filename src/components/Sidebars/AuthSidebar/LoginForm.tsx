@@ -44,8 +44,8 @@ export function LoginForm({ setFormType }: LoginFormProps) {
     validate: {
       email: (value) => validateEmail(value),
       password: (value) =>
-        value.trim().length > 0 && value.trim().length < 6
-          ? 'Senha deve ter mais de 6 caracteres'
+        value.trim().length > 0 && value.trim().length < 8
+          ? 'Senha deve ter mais de 8 caracteres'
           : null
     }
   })
