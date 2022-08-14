@@ -4,14 +4,8 @@ import MapDark from 'components/Map/MapDark'
 import { MapLight } from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
 import { ErrorView } from 'components/Shared/ErrorView'
-import { Sidebar } from 'components/Shared/Sidebar'
 import { showToast } from 'components/Shared/ToastMessage'
-import { AuthSidebar } from 'components/Sidebars/AuthSidebar'
-import { Menu } from 'components/Sidebars/Menu'
-import { UpdateProfile } from 'components/Sidebars/Profile'
-import { Resource } from 'components/Sidebars/Resource'
-import { ResourceForm } from 'components/Sidebars/ResourceForm'
-import { ResourceList } from 'components/Sidebars/ResourceList'
+import { Sidebars } from 'components/Sidebars'
 import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
@@ -52,24 +46,7 @@ export default function Map({ categories, motives }: MapProps) {
     resourcesError
   } = useResource()
 
-  const {
-    resourceOpened,
-    setResourceOpened,
-    menuOpened,
-    setMenuOpened,
-    profileOpened,
-    setProfileOpened,
-    changeResourceOpened,
-    setChangeResourceOpened,
-    createResourceOpened,
-    setCreateResourceOpened,
-    savedResourcesOpened,
-    setSavedResourcesOpened,
-    votingPanelOpened,
-    setVotingPanelOpened,
-    authSidebarOpened,
-    setAuthSidebarOpened
-  } = useSidebar()
+  const { setAuthSidebarOpened, setProfileOpened } = useSidebar()
 
   useEffect(() => {
     ;(async () => {
@@ -125,13 +102,13 @@ export default function Map({ categories, motives }: MapProps) {
 
   if (!resources) {
     return (
-      <ErrorView message="Ooops, houve um erro ao carregar os recursos 🥲" />
+      <ErrorView message="Ooops, houve um erro ao carregar os recursos educacionais 🥲" />
     )
   }
 
   if (!categories) {
     return (
-      <ErrorView message="Ooops, houve um erro ao carregar as categorias 🥲" />
+      <ErrorView message="Ooops, houve um erro ao carregar as categorias educacionais 🥲" />
     )
   }
 
@@ -143,61 +120,7 @@ export default function Map({ categories, motives }: MapProps) {
 
       {dark ? <MapDark /> : <MapLight resources={resources} />}
 
-      <Sidebar
-        opened={resourceOpened}
-        setOpened={setResourceOpened}
-        zIndex={savedResourcesOpened || votingPanelOpened ? 4 : 1}
-      >
-        <Resource />
-      </Sidebar>
-
-      <Sidebar opened={menuOpened} setOpened={setMenuOpened} zIndex={2}>
-        <Menu />
-      </Sidebar>
-
-      <Sidebar
-        opened={savedResourcesOpened}
-        setOpened={setSavedResourcesOpened}
-        zIndex={3}
-      >
-        <ResourceList />
-      </Sidebar>
-
-      <Sidebar
-        opened={votingPanelOpened}
-        setOpened={setVotingPanelOpened}
-        zIndex={3}
-      >
-        <ResourceList isVotingPainel />
-      </Sidebar>
-
-      <Sidebar
-        opened={changeResourceOpened}
-        setOpened={setChangeResourceOpened}
-        zIndex={4}
-      >
-        <ResourceForm />
-      </Sidebar>
-
-      <Sidebar
-        opened={createResourceOpened}
-        setOpened={setCreateResourceOpened}
-        zIndex={4}
-      >
-        <ResourceForm isCreateResource />
-      </Sidebar>
-
-      <Sidebar opened={profileOpened} setOpened={setProfileOpened} zIndex={4}>
-        <UpdateProfile />
-      </Sidebar>
-
-      <Sidebar
-        opened={authSidebarOpened}
-        setOpened={setAuthSidebarOpened}
-        zIndex={4}
-      >
-        <AuthSidebar />
-      </Sidebar>
+      <Sidebars />
     </>
   )
 }
