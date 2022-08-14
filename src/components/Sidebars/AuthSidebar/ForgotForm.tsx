@@ -40,7 +40,11 @@ export function ForgotForm({ setFormType }: ForgotFormProps) {
   })
 
   const handleSubmit = async (values: typeof form.values) => {
-    await sendResetPasswordLink(values.email)
+    const response = await sendResetPasswordLink(values.email)
+
+    if (!response) {
+      return
+    }
 
     form.reset()
 

@@ -72,6 +72,8 @@ export default function ResetPasswordForm({
     form.reset()
 
     setFormType('login')
+
+    router.push('/')
   }
 
   return (

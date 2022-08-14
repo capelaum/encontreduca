@@ -18,7 +18,6 @@ import {
   ResetPasswordFormValues
 } from 'types/forms'
 import { User } from 'types/users'
-import { useSidebar } from './sidebarContext'
 
 interface AuthProviderProps {
   children: ReactNode
@@ -29,19 +28,24 @@ interface AuthContextData {
   setUser: (user: User | null) => void
   register: (form: RegisterFormValues) => Promise<User | null>
   login: (form: LoginFormValues) => Promise<User | null>
-  logout: () => void
-  isAuthLoading: boolean
+  logout: () => Promise<boolean>
   sendResetPasswordLink: (email: string) => Promise<boolean>
   resetPassword: (form: ResetPasswordFormValues) => Promise<boolean>
+  resendEmailVerification: () => Promise<boolean>
+  isAuthLoading: boolean
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
+export type AuthError = {
+  message: string
+  type: string
+}
+
 export function AuthProvider({ children }: AuthProviderProps) {
   const [isAuthLoading, setIsAuthLoading] = useState(false)
+  const [errors, setErrors] = useState<AuthError[]>([])
   const [user, setUser] = useState<User | null>(null)
-
-  const { setAuthSidebarOpened } = useSidebar()
 
   const theme = useMantineTheme()
 
@@ -50,35 +54,102 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const authUserCookieName = 'encontreduca_user_auth'
 
-  api.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      if (error.response.status === 401) {
-        setUser(null)
-        setAuthSidebarOpened(false)
-
+  useEffect(() => {
+    if (errors.length > 0) {
+      errors.forEach((error) => {
         showToastError({
-          title: 'Erro de autenticação',
-          description: 'Sua sessão expirou, faça login novamente'
+          title: `Ocorreu um erro ao ${error.type}`,
+          description: error.message
         })
+      })
+    }
+  }, [errors])
+
+  const setAuthErrors = useCallback(
+    (error: any, type: string) => {
+      if (error.response?.data?.errors) {
+        Object.values(error.response?.data.errors as string[])
+          .flat()
+          .forEach((errorMessage) => {
+            setErrors((authErrors) => [
+              ...authErrors,
+              { message: errorMessage, type }
+            ])
+          })
       }
 
-      return Promise.reject(error)
-    }
+      if (error.response?.data?.message) {
+        setErrors([
+          {
+            message: error.response.data.message,
+            type
+          }
+        ])
+      }
+
+      if (error.response?.data?.email) {
+        setErrors([
+          {
+            message: error.response.data.email,
+            type
+          }
+        ])
+      }
+    },
+    [errors]
   )
+
+  const resendEmailVerification = async () => {
+    setIsAuthLoading(true)
+    try {
+      await api.post('email/verify/resend')
+      setIsAuthLoading(false)
+
+      showToast({
+        title: 'Verificação de email foi reenviada',
+        description: `Verifique seu email para continuar`,
+        icon: (
+          <MdOutlineMarkEmailRead size={24} color={theme.colors.brand[7]} />
+        ),
+        dark
+      })
+
+      return true
+    } catch (error) {
+      setIsAuthLoading(false)
+
+      setAuthErrors(error, 'reenviar email de verificação')
+
+      return false
+    }
+  }
 
   const getAuthUser = useCallback(async () => {
     try {
       const response = await api.get('user')
 
-      if (response.status !== 200) {
-        throw new Error('Ocorreu um erro ao buscar o usuário')
-      }
-
       const { data }: { data: User } = response
 
       return data
     } catch (error) {
+      setAuthErrors(error, 'fazer login')
+
+      if (
+        (error as any).response?.status === 403 &&
+        (error as any).response?.data?.message ===
+          'Your email address is not verified.'
+      ) {
+        const response = await resendEmailVerification()
+
+        if (!response) {
+          if (hasCookie(authUserCookieName)) {
+            deleteCookie(authUserCookieName)
+          }
+
+          return null
+        }
+      }
+
       return null
     }
   }, [])
@@ -103,10 +174,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const response = await api.post('register', registerFormValues)
 
-      if (response.status !== 201) {
-        throw new Error('Ocorreu um erro ao tentar cadastrar usuário')
-      }
-
       setIsAuthLoading(false)
 
       const { data }: { data: User } = response
@@ -115,10 +182,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       setIsAuthLoading(false)
 
-      showToastError({
-        title: 'Ooops, ocorreu um erro ao tentar te cadastrar',
-        description: (error as any).response.data.message
-      })
+      setAuthErrors(error, 'cadastrar')
 
       return null
     }
@@ -130,15 +194,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const response = await api.post('login', loginFormValues)
 
-      if (response.status !== 200) {
-        throw new Error('Ocorreu um erro ao fazer o login')
-      }
-
       const { token } = response.data
-
-      if (!token) {
-        throw new Error('Ocorreu um erro ao criar o token')
-      }
 
       setCookie(authUserCookieName, token, {
         maxAge: 30 * 24 * 60 * 60,
@@ -146,10 +202,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
 
       const authUser = await getAuthUser()
-
-      if (!authUser) {
-        throw new Error('Ocorreu um erro ao buscar o usuário')
-      }
 
       setUser(authUser)
 
@@ -159,10 +211,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       setIsAuthLoading(false)
 
-      showToastError({
-        title: 'Ooops, erro ao fazer login',
-        description: 'Credenciais inválidas'
-      })
+      setAuthErrors(error, 'fazer login')
 
       return null
     }
@@ -182,11 +231,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
       })
 
       setUser(null)
+
+      return true
     } catch (error) {
-      showToastError({
-        title: 'Ooops, erro ao realizar logout',
-        description: 'Por favor, tente novamente mais tarde...'
-      })
+      setIsAuthLoading(false)
+
+      setAuthErrors(error, 'fazer logout')
+
+      return false
     }
   }
 
@@ -196,12 +248,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const response = await api.post('/forgot-password', { email })
 
-      if (response.status !== 200) {
-        throw new Error(
-          'Ocorreu um erro ao enviar o link de recuperação de senha'
-        )
-      }
-
       setIsAuthLoading(false)
 
       const { status } = response.data
@@ -209,7 +255,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       showToast({
         title: status,
         description:
-          'Por favor verifique seu email e siga as instruções para recuperar sua sennha',
+          'Verifique seu email e siga as instruções para recuperar sua sennha',
         icon: (
           <MdOutlineMarkEmailRead size={24} color={theme.colors.brand[7]} />
         ),
@@ -220,10 +266,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       setIsAuthLoading(false)
 
-      showToastError({
-        title: 'Ooops, erro ao enviar link de recuperação de senha',
-        description: 'Por favor, tente novamente mais tarde...'
-      })
+      setAuthErrors(error, 'recuperar sua senha')
 
       return false
     }
@@ -240,10 +283,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         resetPasswordFormValues
       )
 
-      if (response.status !== 200) {
-        throw new Error('Ocorreu um erro ao resetar a senha')
-      }
-
       setIsAuthLoading(false)
 
       const { status } = response.data
@@ -259,10 +298,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       setIsAuthLoading(false)
 
-      showToastError({
-        title: 'Ooops, erro ao resetar senha',
-        description: 'Por favor, tente novamente mais tarde...'
-      })
+      setAuthErrors(error, 'resetar sua senha')
 
       return false
     }
@@ -276,7 +312,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
     logout,
     isAuthLoading,
     sendResetPasswordLink,
-    resetPassword
+    resetPassword,
+    resendEmailVerification
   }
 
   const authContextProviderValue = useMemo<AuthContextData>(
