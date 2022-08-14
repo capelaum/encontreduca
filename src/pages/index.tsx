@@ -1,10 +1,11 @@
-import { useMantineColorScheme } from '@mantine/core'
+import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useJsApiLoader } from '@react-google-maps/api'
 import MapDark from 'components/Map/MapDark'
 import { MapLight } from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
 import { ErrorView } from 'components/Shared/ErrorView'
 import { Sidebar } from 'components/Shared/Sidebar'
+import { showToast } from 'components/Shared/ToastMessage'
 import { AuthSidebar } from 'components/Sidebars/AuthSidebar'
 import { Menu } from 'components/Sidebars/Menu'
 import { UpdateProfile } from 'components/Sidebars/Profile'
@@ -14,12 +15,14 @@ import { ResourceList } from 'components/Sidebars/ResourceList'
 import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
+import { hasCookie } from 'cookies-next'
 import { loadCategories } from 'lib/loadCategories'
 import { loadMotives } from 'lib/loadMotives'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { MdOutlineMarkEmailRead } from 'react-icons/md'
 import { CategoryType } from 'types/categories'
 import { libraries } from 'types/googleMaps'
 import { Motive } from 'types/motives'
@@ -31,12 +34,15 @@ interface MapProps {
 
 export default function Map({ categories, motives }: MapProps) {
   const router = useRouter()
-  const { emailVerified, token, email, register } = router.query
+  const { emailVerified, token, email, register, newEmailVerified } =
+    router.query
+
+  const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { user } = useAuth()
+  const { user, setUser, getAuthUser, authUserCookieName } = useAuth()
 
   const {
     setCategories,
@@ -66,8 +72,33 @@ export default function Map({ categories, motives }: MapProps) {
   } = useSidebar()
 
   useEffect(() => {
+    ;(async () => {
+      if (hasCookie(authUserCookieName)) {
+        const authUser = await getAuthUser()
+
+        if (authUser) {
+          setUser(authUser)
+        }
+      }
+    })()
+  }, [])
+
+  useEffect(() => {
     setCategories(categories)
     setMotives(motives)
+
+    if (newEmailVerified === 'true') {
+      showToast({
+        title: 'Seu novo email foi verificado com sucesso',
+        description: 'Agora você pode fazer login com o novo email',
+        icon: (
+          <MdOutlineMarkEmailRead size={24} color={theme.colors.brand[7]} />
+        ),
+        dark
+      })
+
+      setProfileOpened(true)
+    }
 
     if (
       (register === 'true' && !user) ||

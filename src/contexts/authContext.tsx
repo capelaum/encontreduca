@@ -26,6 +26,7 @@ interface AuthProviderProps {
 interface AuthContextData {
   user: User | null
   setUser: (user: User | null) => void
+  getAuthUser: () => Promise<User | null>
   register: (form: RegisterFormValues) => Promise<User | null>
   login: (form: LoginFormValues) => Promise<User | null>
   logout: () => Promise<boolean>
@@ -33,6 +34,7 @@ interface AuthContextData {
   resetPassword: (form: ResetPasswordFormValues) => Promise<boolean>
   resendEmailVerification: () => Promise<boolean>
   isAuthLoading: boolean
+  authUserCookieName: string
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
@@ -154,18 +156,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [])
 
-  useEffect(() => {
-    ;(async () => {
-      if (hasCookie(authUserCookieName)) {
-        const authUser = await getAuthUser()
-
-        if (authUser) {
-          setUser(authUser)
-        }
-      }
-    })()
-  }, [])
-
   const register = async (
     registerFormValues: RegisterFormValues
   ): Promise<User | null> => {
@@ -206,6 +196,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setUser(authUser)
 
       setIsAuthLoading(false)
+
+      showToast({
+        title: 'Login realizado com sucesso',
+        description: `Bem vindo(a) ${user!.name}`,
+        icon: <MdDone size={24} color={theme.colors.brand[7]} />,
+        dark
+      })
 
       return authUser
     } catch (error) {
@@ -307,10 +304,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const authContextProviderValues = {
     user,
     setUser,
+    getAuthUser,
     register,
     login,
     logout,
     isAuthLoading,
+    authUserCookieName,
     sendResetPasswordLink,
     resetPassword,
     resendEmailVerification

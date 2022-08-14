@@ -9,12 +9,10 @@ import {
 import { useForm } from '@mantine/form'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
-import { showToast } from 'components/Shared/ToastMessage'
 import { useAuth } from 'contexts/authContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { handleLoginFormErrors } from 'helpers/formErrorsHandlers'
 import { validateEmail } from 'helpers/validate'
-import { MdDone } from 'react-icons/md'
 import { FormType, LoginFormValues } from 'types/forms'
 import { ActionText } from './ActionText'
 import { SocialButtons } from './SocialButtons'
@@ -54,13 +52,6 @@ export function LoginForm({ setFormType }: LoginFormProps) {
     const response = await login(values)
 
     if (!response) return
-
-    showToast({
-      title: 'Login realizado com sucesso',
-      description: `Bem vindo(a)`,
-      icon: <MdDone size={24} color={theme.colors.brand[7]} />,
-      dark
-    })
 
     setAuthSidebarOpened(false)
   }
