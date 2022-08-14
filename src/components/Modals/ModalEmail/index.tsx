@@ -41,7 +41,9 @@ export function ModalEmail({ onClose, title, text, image }: ModalEmailProps) {
         {title}
       </Text>
 
-      <Text align="center">{text}</Text>
+      <Text color={dark ? theme.white : theme.colors.brand[7]} align="center">
+        {text}
+      </Text>
     </Stack>
   )
 }

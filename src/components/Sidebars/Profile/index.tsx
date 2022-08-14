@@ -62,9 +62,9 @@ export function UpdateProfile() {
 
   const form = useForm<ProfileFormValues>({
     initialValues: {
-      name: user!.name,
-      email: user!.email,
-      avatarUrl: user!.avatarUrl,
+      name: user?.name ?? '',
+      email: user?.email ?? '',
+      avatarUrl: user?.avatarUrl ?? null,
       password: '',
       confirmPassword: ''
     },
