@@ -14,8 +14,9 @@ export function ButtonsCTA() {
       position={largeScreen ? 'left' : 'center'}
       noWrap
     >
-      <Link href="/login" passHref>
+      <Link href="/?register=true" passHref>
         <Button
+          title="Cadastre-se em Encontreduca"
           component="a"
           size={smallScreen ? 'sm' : 'md'}
           radius="sm"
@@ -34,6 +35,7 @@ export function ButtonsCTA() {
       </Link>
       <Link href="/" passHref>
         <Button
+          title="Ir para o Mapa Encontreduca"
           component="a"
           size={smallScreen ? 'sm' : 'md'}
           radius="sm"

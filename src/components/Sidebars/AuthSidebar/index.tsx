@@ -12,6 +12,7 @@ import {
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
+import { useAuth } from 'contexts/authContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -26,7 +27,9 @@ export function AuthSidebar() {
   const [formType, setFormType] = useState<FormType>('login')
 
   const router = useRouter()
-  const { emailVerified, token, email } = router.query
+  const { emailVerified, token, email, register } = router.query
+
+  const { user } = useAuth()
 
   const { setAuthSidebarOpened } = useSidebar()
 
@@ -34,6 +37,13 @@ export function AuthSidebar() {
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
+
+  useEffect(() => {
+    if (user) {
+      setAuthSidebarOpened(false)
+      setFormType('login')
+    }
+  }, [user])
 
   const setHeaderTitle = () => {
     if (formType === 'resetPassword') {
@@ -88,18 +98,24 @@ export function AuthSidebar() {
   }
 
   useEffect(() => {
-    if (
-      router.query.emailVerified === 'true' ||
-      router.query.emailVerified === 'already'
-    ) {
+    if (emailVerified === 'true' || emailVerified === 'already') {
       router.query.emailVerified = undefined
       openModalVerified()
+    }
+
+    if (register === 'true') {
+      setFormType('register')
     }
 
     if (token && email) {
       setFormType('resetPassword')
     }
-  }, [router.query.emailVerified, router.query.token, router.query.email])
+  }, [
+    router.query.emailVerified,
+    router.query.token,
+    router.query.email,
+    router.query.register
+  ])
 
   return (
     <Stack spacing="md" p="md">

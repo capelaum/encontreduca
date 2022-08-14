@@ -34,6 +34,7 @@ export function Platform() {
         backgroundColor: theme.colors.gray[0],
         transform: 'skewY(3deg)'
       }}
+      id="platform"
     >
       <Group
         position={largeScreen ? 'apart' : 'center'}
