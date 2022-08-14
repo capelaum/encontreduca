@@ -10,7 +10,11 @@ import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { useAuth } from 'contexts/authContext'
 import { handleResetPasswordFormErrors } from 'helpers/formErrorsHandlers'
-import { validateEmail } from 'helpers/validate'
+import {
+  validateConfirmPassword,
+  validateEmail,
+  validatePassword
+} from 'helpers/validate'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { FormType, ResetPasswordFormValues } from 'types/forms'
@@ -43,21 +47,9 @@ export default function ResetPasswordForm({
 
     validate: {
       email: (value) => validateEmail(value),
-      password: (value) =>
-        value.trim().length > 0 && value.trim().length < 8
-          ? 'Senha deve ter mais de 8 caracteres'
-          : null,
-      confirmPassword: (value) => {
-        if (value.trim().length > 0 && value.trim().length < 8) {
-          return 'Senha deve ter mais de 8 caracteres'
-        }
-
-        if (form.values.confirmPassword !== form.values.password) {
-          return 'Senhas não conferem'
-        }
-
-        return null
-      }
+      password: (value) => validatePassword(value),
+      confirmPassword: (value, values) =>
+        validateConfirmPassword(value, values.password)
     }
   })
 

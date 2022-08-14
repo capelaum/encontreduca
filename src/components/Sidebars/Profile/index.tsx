@@ -15,7 +15,12 @@ import { useAuth } from 'contexts/authContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { handleProfileFormErrors } from 'helpers/formErrorsHandlers'
 import { updateImage, uploadImage } from 'helpers/imageHelpers'
-import { validateEmail, validateImageBase64 } from 'helpers/validate'
+import {
+  validateConfirmPassword,
+  validateEmail,
+  validateImageBase64,
+  validatePassword
+} from 'helpers/validate'
 import { getUser, updateUser } from 'lib/usersLib'
 import { useState } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
@@ -46,7 +51,7 @@ export function UpdateProfile() {
     },
     onError: (error) => {
       showToastError({
-        title: 'Erro ao criar recurso',
+        title: 'Erro ao atualizar perfil',
         description: (error as Error).message
       })
 
@@ -70,20 +75,9 @@ export function UpdateProfile() {
       email: (value) => validateEmail(value),
       avatarUrl: () =>
         !hasPreview ? null : validateImageBase64(imageBase64, hasPreview),
-      password: (value) =>
-        value.trim().length > 0 && value.trim().length < 8
-          ? 'Senha deve ter mais de 8 caracteres'
-          : null,
-      confirmPassword: (value) => {
-        if (value.trim().length > 0 && value.trim().length < 8) {
-          return 'Senha deve ter mais de 8 caracteres'
-        }
-
-        if (value !== form.values.password) {
-          return 'Senhas não conferem'
-        }
-        return null
-      }
+      password: (value) => validatePassword(value),
+      confirmPassword: (value, values) =>
+        validateConfirmPassword(value, values.password)
     }
   })
 
@@ -148,13 +142,19 @@ export function UpdateProfile() {
           name: values.name,
           email: values.email,
           avatarUrl: values.avatarUrl,
-          password: values.password === '' ? null : values.password
+          password: values.password === '' ? null : values.password,
+          confirmPassword:
+            values.confirmPassword === '' ? null : values.confirmPassword
         }
       })
     }
 
     const updatedUser = await getUser(+user!.id)
     setUser(updatedUser)
+
+    form.values.name = updatedUser!.name
+    form.values.email = updatedUser!.email
+    form.values.avatarUrl = updatedUser!.avatarUrl
 
     setIsLoading(false)
 

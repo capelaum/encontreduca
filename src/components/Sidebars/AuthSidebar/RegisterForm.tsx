@@ -17,7 +17,11 @@ import {
 import { Title } from 'components/Shared/Title'
 import { useAuth } from 'contexts/authContext'
 import { handleRegisterFormErrors } from 'helpers/formErrorsHandlers'
-import { validateEmail } from 'helpers/validate'
+import {
+  validateConfirmPassword,
+  validateEmail,
+  validatePassword
+} from 'helpers/validate'
 import { FormType, RegisterFormValues } from 'types/forms'
 
 interface RegisterFormProps {
@@ -69,21 +73,9 @@ export function RegisterForm({ setFormType }: RegisterFormProps) {
     validate: {
       name: (value) => (value.trim().length < 3 ? 'Nome muito curto' : null),
       email: (value) => validateEmail(value),
-      password: (value) =>
-        value.trim().length > 0 && value.trim().length < 8
-          ? 'Senha deve ter mais de 8 caracteres'
-          : null,
-      confirmPassword: (value) => {
-        if (value.trim().length > 0 && value.trim().length < 8) {
-          return 'Senha deve ter mais de 8 caracteres'
-        }
-
-        if (form.values.confirmPassword !== form.values.password) {
-          return 'Senhas não conferem'
-        }
-
-        return null
-      }
+      password: (value) => validatePassword(value),
+      confirmPassword: (value, values) =>
+        validateConfirmPassword(value, values.password)
     }
   })
 

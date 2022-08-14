@@ -66,3 +66,18 @@ export const validadePosition = (position: LatLngLiteral) => {
 
   return null
 }
+
+export const validatePassword = (password: string) => {
+  if (password.length < 8) return 'Senha deve ter no mínimo 8 caracteres'
+
+  return null
+}
+
+export const validateConfirmPassword = (
+  confirmPassword: string,
+  password: string
+) => {
+  if (confirmPassword.length < 8) return 'Senha deve ter no mínimo 8 caracteres'
+
+  return confirmPassword === password ? null : 'Senhas não conferem'
+}
