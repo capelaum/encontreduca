@@ -88,10 +88,8 @@ export function ModalReview({
       if (isEdit) {
         await updateMutation.mutateAsync({
           id: +review!.id,
-          comment,
           rating,
-          resourceId: resource!.id,
-          userId: review!.user.id
+          comment
         })
       }
 

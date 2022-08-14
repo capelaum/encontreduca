@@ -15,10 +15,7 @@ export type NewReview = Pick<
   'userId' | 'resourceId' | 'rating' | 'comment'
 >
 
-export type UpdatedReview = Pick<
-  Review,
-  'id' | 'userId' | 'resourceId' | 'rating' | 'comment'
->
+export type UpdatedReview = Pick<Review, 'id' | 'rating' | 'comment'>
 
 export type NewReviewComplaint = {
   userId: string | number

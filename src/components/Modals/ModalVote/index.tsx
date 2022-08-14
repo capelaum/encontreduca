@@ -120,8 +120,6 @@ export function ModalVote({
     if (resourceUserVote) {
       await updateMutation.mutateAsync({
         id: resourceUserVote.id,
-        userId: user!.id,
-        resourceId: resource!.id,
         vote: vote === 'Aprovado',
         justification
       })

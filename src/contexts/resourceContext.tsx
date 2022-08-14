@@ -76,7 +76,6 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     if (resource) {
       const resourceReviewsData = resource.reviews
         .flat()
-        .sort((a, b) => +b.id - +a.id)
         .filter(({ resourceId }) => resource.id === resourceId)
 
       setResourceReviews(resourceReviewsData)

@@ -65,5 +65,5 @@ export type NewResourceVote = Pick<
 
 export type UpdatedResourceVote = Pick<
   ResourceVote,
-  'id' | 'userId' | 'resourceId' | 'vote' | 'justification'
+  'id' | 'vote' | 'justification'
 >
