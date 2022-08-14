@@ -24,6 +24,7 @@ import {
 import { getUser, updateUser } from 'lib/usersLib'
 import { useState } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
+import { MdOutlineMarkEmailUnread } from 'react-icons/md'
 import { ProfileFormValues } from 'types/forms'
 import { AvatarDropzone } from './AvatarDropzone'
 import { DeleteUserButton } from './DeleteUserButton'
@@ -81,12 +82,36 @@ export function UpdateProfile() {
     }
   })
 
+  const isUpdatedEmail = (email: string) => user!.email !== email
+
   const sameUserData = (values: typeof form.values) =>
     user!.name === values.name &&
     user!.email === values.email &&
     !hasPreview &&
     values.password === '' &&
     values.confirmPassword === ''
+
+  const createdOrUpdateUserAvatar = async (imgBase64: string | ArrayBuffer) => {
+    let secure_url = null
+    const folder = 'encontreduca/avatars'
+
+    if (!user!.avatarUrl) {
+      secure_url = await uploadImage({
+        imageBase64: imgBase64,
+        folder
+      })
+    }
+
+    if (user!.avatarUrl) {
+      secure_url = await updateImage({
+        imageUrl: user!.avatarUrl,
+        imageBase64: imgBase64,
+        folder
+      })
+    }
+
+    form.values.avatarUrl = secure_url
+  }
 
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
@@ -103,24 +128,8 @@ export function UpdateProfile() {
     }
 
     if (hasPreview && imageBase64) {
-      let secure_url = null
-      const folder = 'encontreduca/avatars'
-
       try {
-        if (user!.avatarUrl) {
-          secure_url = await updateImage({
-            imageUrl: user!.avatarUrl,
-            imageBase64,
-            folder
-          })
-        }
-
-        if (!user!.avatarUrl) {
-          secure_url = await uploadImage({
-            imageBase64,
-            folder
-          })
-        }
+        await createdOrUpdateUserAvatar(imageBase64)
       } catch (error) {
         setIsLoading(false)
 
@@ -131,8 +140,6 @@ export function UpdateProfile() {
 
         return
       }
-
-      form.values.avatarUrl = secure_url
     }
 
     if (user && !sameUserData(values)) {
@@ -157,6 +164,17 @@ export function UpdateProfile() {
     form.values.avatarUrl = updatedUser!.avatarUrl
 
     setIsLoading(false)
+
+    if (isUpdatedEmail(values.email)) {
+      showToast({
+        title: 'Verificar novo email',
+        description: 'Um email de confirmação foi enviado para o novo email',
+        icon: (
+          <MdOutlineMarkEmailUnread size={24} color={theme.colors.brand[7]} />
+        ),
+        dark
+      })
+    }
 
     showToast({
       title: 'Usuário atualizado com sucesso!',
