@@ -9,10 +9,13 @@ import {
 import { useForm } from '@mantine/form'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
+import { showToast } from 'components/Shared/ToastMessage'
 import { useAuth } from 'contexts/authContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { handleLoginFormErrors } from 'helpers/formErrorsHandlers'
 import { validateEmail } from 'helpers/validate'
+import { useEffect } from 'react'
+import { MdDone } from 'react-icons/md'
 import { FormType, LoginFormValues } from 'types/forms'
 import { ActionText } from './ActionText'
 import { SocialButtons } from './SocialButtons'
@@ -22,7 +25,7 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ setFormType }: LoginFormProps) {
-  const { login, isAuthLoading } = useAuth()
+  const { login, isAuthLoading, user } = useAuth()
 
   const { setAuthSidebarOpened } = useSidebar()
 
@@ -30,6 +33,19 @@ export function LoginForm({ setFormType }: LoginFormProps) {
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
+
+  useEffect(() => {
+    if (user) {
+      showToast({
+        title: 'Login realizado com sucesso',
+        description: `Bem vindo(a) ${user!.name}`,
+        icon: <MdDone size={24} color={theme.colors.brand[7]} />,
+        dark
+      })
+
+      setAuthSidebarOpened(false)
+    }
+  }, [user])
 
   const form = useForm<LoginFormValues>({
     initialValues: {
@@ -49,11 +65,7 @@ export function LoginForm({ setFormType }: LoginFormProps) {
   })
 
   const handleSubmit = async (values: typeof form.values) => {
-    const response = await login(values)
-
-    if (!response) return
-
-    setAuthSidebarOpened(false)
+    await login(values)
   }
 
   return (

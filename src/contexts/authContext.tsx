@@ -28,7 +28,7 @@ interface AuthContextData {
   setUser: (user: User | null) => void
   getAuthUser: () => Promise<User | null>
   register: (form: RegisterFormValues) => Promise<User | null>
-  login: (form: LoginFormValues) => Promise<User | null>
+  login: (form: LoginFormValues) => Promise<boolean>
   logout: () => Promise<boolean>
   sendResetPasswordLink: (email: string) => Promise<boolean>
   resetPassword: (form: ResetPasswordFormValues) => Promise<boolean>
@@ -197,20 +197,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       setIsAuthLoading(false)
 
-      showToast({
-        title: 'Login realizado com sucesso',
-        description: `Bem vindo(a) ${user!.name}`,
-        icon: <MdDone size={24} color={theme.colors.brand[7]} />,
-        dark
-      })
-
-      return authUser
+      return true
     } catch (error) {
       setIsAuthLoading(false)
 
       setAuthErrors(error, 'fazer login')
 
-      return null
+      return false
     }
   }
 
