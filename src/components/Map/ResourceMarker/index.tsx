@@ -20,7 +20,8 @@ export function ResourceMarker({
 }: ResourceMarkerProps) {
   const { zoom } = useMap()
   const { setResource } = useResource()
-  const { setResourceOpened, setMenuOpened } = useSidebar()
+  const { setResourceOpened, setMenuOpened, setAuthSidebarOpened } =
+    useSidebar()
 
   const { name, category, position, approved } = resource
 
@@ -43,6 +44,7 @@ export function ResourceMarker({
     if (clickable && setResourceOpened && setResource) {
       setResource(resource)
       setMenuOpened(false)
+      setAuthSidebarOpened(false)
       setResourceOpened(true)
     }
   }

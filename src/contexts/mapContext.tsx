@@ -101,7 +101,6 @@ export function MapProvider({ children }: MapProviderProps) {
     if (!mapRef.current) return
 
     mapRef.current.panTo({ lat: position.lat, lng: position.lng })
-    mapRef.current.setZoom(17)
   }, [])
 
   const mapContextProviderValues = {
