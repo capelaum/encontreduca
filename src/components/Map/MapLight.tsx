@@ -20,7 +20,8 @@ export function MapLight({ resources }: MapLightProps) {
     onIdle,
     onMapLoad,
     onUnmount,
-    handleMapClick
+    handleMapClick,
+    isCurrentLocationAllowed
   } = useMap()
 
   const { filterResources } = useResource()
@@ -49,13 +50,15 @@ export function MapLight({ resources }: MapLightProps) {
         onClick={handleMapClick}
         mapContainerStyle={mapContainerStyle}
       >
-        <Marker
-          position={currentLocation}
-          icon={{
-            url: '/markers/marker_current.svg',
-            scaledSize: new window.google.maps.Size(10, 10)
-          }}
-        />
+        {isCurrentLocationAllowed && (
+          <Marker
+            position={currentLocation}
+            icon={{
+              url: '/markers/marker_current.svg',
+              scaledSize: new window.google.maps.Size(10, 10)
+            }}
+          />
+        )}
 
         {renderResourcesMarkers()}
       </GoogleMap>

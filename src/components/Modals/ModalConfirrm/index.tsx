@@ -8,6 +8,7 @@ interface OpenModalReviewDeleteProps {
   title: string
   description: string
   onConfirm: () => void
+  onCancel?: () => void
   openConfirmModal: (props: OpenConfirmModal) => string
   closeModal: (id: string, canceled?: boolean | undefined) => void
   classes: Record<'modal', string>
@@ -19,6 +20,7 @@ export const openModalConfirm = ({
   title,
   description,
   onConfirm,
+  onCancel,
   openConfirmModal,
   closeModal,
   classes,
@@ -65,7 +67,12 @@ export const openModalConfirm = ({
         }
       }
     },
-    onCancel: () => closeModal(id),
+    onCancel: () => {
+      closeModal(id)
+      if (onCancel) {
+        onCancel()
+      }
+    },
     onConfirm: () => {
       onConfirm()
     }

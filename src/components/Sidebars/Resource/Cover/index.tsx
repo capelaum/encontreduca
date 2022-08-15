@@ -13,7 +13,8 @@ export function Cover() {
         sx={{ maxWidth: '380px', maxHeight: '200px' }}
       >
         <Image
-          radius="md"
+          fit="cover"
+          sx={{ borderRadius: '7px' }}
           withPlaceholder
           src={resource!.cover}
           alt={`Imagem de capa do recurso ${resource!.name}`}

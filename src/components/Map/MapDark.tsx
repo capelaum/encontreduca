@@ -15,7 +15,8 @@ export default function MapDark() {
     onIdle,
     onMapLoad,
     onUnmount,
-    handleMapClick
+    handleMapClick,
+    isCurrentLocationAllowed
   } = useMap()
 
   const { resources, filterResources } = useResource()
@@ -44,14 +45,16 @@ export default function MapDark() {
         onClick={handleMapClick}
         mapContainerStyle={mapContainerStyle}
       >
-        <Marker
-          position={currentLocation}
-          clickable={false}
-          icon={{
-            url: '/markers/marker_current.svg',
-            scaledSize: new window.google.maps.Size(10, 10)
-          }}
-        />
+        {isCurrentLocationAllowed && (
+          <Marker
+            position={currentLocation}
+            clickable={false}
+            icon={{
+              url: '/markers/marker_current.svg',
+              scaledSize: new window.google.maps.Size(10, 10)
+            }}
+          />
+        )}
 
         {renderResourcesMarkers()}
       </GoogleMap>

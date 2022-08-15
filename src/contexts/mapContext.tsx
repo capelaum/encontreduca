@@ -27,6 +27,8 @@ interface MapContextData {
   currentLocation: LatLngLiteral
   clickedPos: LatLngLiteral | null
   directions: DirectionsResult | null
+  isCurrentLocationAllowed: boolean
+  setIsCurrentLocationAllowed: (isAllowed: boolean) => void
   onIdle: () => void
   onUnmount: () => void
   clearLocation: () => void
@@ -38,12 +40,15 @@ interface MapContextData {
   setPlace: (place: string | null) => void
   setCenter: (position: LatLngLiteral) => void
   setZoom: (zoom: number) => void
+  getUserLocation: () => void
 }
 
 const MapContext = createContext<MapContextData>({} as MapContextData)
 
 export function MapProvider({ children }: MapProviderProps) {
   const [zoom, setZoom] = useState(14)
+  const [isCurrentLocationAllowed, setIsCurrentLocationAllowed] =
+    useState(false)
   const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
   const [directions, setDirections] = useState<DirectionsResult | null>(null)
   const [clickedPos, setClickedPos] = useState<LatLngLiteral | null>(null)
@@ -86,19 +91,6 @@ export function MapProvider({ children }: MapProviderProps) {
 
   const onMapLoad = useCallback((map: GoogleMapsMap) => {
     mapRef.current = map
-
-    getUserLocation()
-
-    // openModalConfirm({
-    //   title: 'Permite acessar sua localização?',
-    //   description: 'Para saber o seu local atual, precisamos de sua permissão.',
-    //   onConfirm: getUserLocation,
-    //   openConfirmModal,
-    //   closeModal,
-    //   classes,
-    //   theme,
-    //   dark
-    // })
   }, [])
 
   const onUnmount = useCallback(() => {
@@ -120,6 +112,8 @@ export function MapProvider({ children }: MapProviderProps) {
     currentLocation,
     clickedPos,
     directions,
+    isCurrentLocationAllowed,
+    setIsCurrentLocationAllowed,
     onIdle,
     onMapLoad,
     onUnmount,
@@ -130,7 +124,8 @@ export function MapProvider({ children }: MapProviderProps) {
     setPlace,
     setCenter,
     setZoom,
-    setDirections
+    setDirections,
+    getUserLocation
   }
 
   const mapContextProviderValue = useMemo<MapContextData>(
