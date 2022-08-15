@@ -58,7 +58,7 @@ export function ResourceMarker({
         url: approved
           ? categorySwitch[category.name].markerIcon
           : '/markers/marker_unapproved.svg',
-        scaledSize: new window.google.maps.Size(35, 35)
+        scaledSize: new window.google.maps.Size(20, 30)
       }}
       title={name}
       label={markerLabel() ?? undefined}

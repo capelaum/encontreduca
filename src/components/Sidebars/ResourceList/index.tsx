@@ -24,7 +24,10 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
   const userApprovedResources = resources!.filter(
     ({ id, approved }) => approved && user && user.resourcesIds.includes(+id)
   )
-  const notApprovedResources = resources!.filter(({ approved }) => !approved)
+
+  const notApprovedResources = resources!
+    .filter(({ approved }) => !approved)
+    .sort((a, b) => +b.id - +a.id)
 
   const theme = useMantineTheme()
 

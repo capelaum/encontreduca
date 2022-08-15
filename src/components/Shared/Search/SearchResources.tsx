@@ -54,7 +54,7 @@ export function SearchResources({ isMap }: SearchResourcesProps) {
 
   const data = filteredResources.map((resource) => ({
     ...resource,
-    value: resource.name,
+    value: resource.id.toString(),
     dark,
     theme
   }))
@@ -66,6 +66,7 @@ export function SearchResources({ isMap }: SearchResourcesProps) {
       theme: itemTheme,
       ...resource
     } = item
+    setValue(resource.name)
     setResource(resource as ResourceType)
     setMenuOpened(false)
     setResourceOpened(true)
@@ -78,6 +79,7 @@ export function SearchResources({ isMap }: SearchResourcesProps) {
       radius="md"
       variant="filled"
       value={value}
+      limit={5}
       onChange={setValue}
       placeholder="Busque um recurso"
       aria-label="Busque recursos educacionais"
@@ -93,9 +95,9 @@ export function SearchResources({ isMap }: SearchResourcesProps) {
       })}
       data={data}
       onItemSubmit={(item) => handleOnItemSubmit(item)}
-      filter={(_, item) =>
-        item.value.toLowerCase().includes(value.toLowerCase().trim()) ||
-        item.address.toLowerCase().includes(value.toLowerCase().trim())
+      filter={(filterValue, { name, address }) =>
+        name.toLowerCase().includes(filterValue.toLowerCase().trim()) ||
+        address.toLowerCase().includes(filterValue.toLowerCase().trim())
       }
       classNames={classes}
       sx={

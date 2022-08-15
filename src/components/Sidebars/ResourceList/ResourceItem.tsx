@@ -92,7 +92,7 @@ export function ResourceItem({ resource }: ResourceItemProps) {
                 fontSize: theme.fontSizes.xs
               }}
             >
-              Criado em {resource.created_at}
+              Criado em {resource.createdAt}
             </Text>
           )}
 
