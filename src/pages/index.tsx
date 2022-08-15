@@ -1,19 +1,16 @@
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
-import { useModals } from '@mantine/modals'
 import { useJsApiLoader } from '@react-google-maps/api'
 import MapDark from 'components/Map/MapDark'
 import { MapLight } from 'components/Map/MapLight'
 import { MapLoader } from 'components/Map/MapLoader'
-import { openModalConfirm } from 'components/Modals/ModalConfirrm'
 import { ErrorView } from 'components/Shared/ErrorView'
-import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { Sidebars } from 'components/Sidebars'
 import { useAuth } from 'contexts/authContext'
-import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { hasCookie } from 'cookies-next'
+import { useGetCurrentLocation } from 'hooks/useGetCurrentLocation'
 import { loadCategories } from 'lib/loadCategories'
 import { loadMotives } from 'lib/loadMotives'
 import { GetServerSideProps } from 'next'
@@ -40,11 +37,8 @@ export default function Map({ categories, motives }: MapProps) {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { openConfirmModal, closeModal } = useModals()
-  const { classes } = useModalStyles(dark)
-
   const { user, setUser, getAuthUser, authUserCookieName } = useAuth()
-  const { getUserLocation, setIsCurrentLocationAllowed } = useMap()
+  const { handleGetCurrentLocation } = useGetCurrentLocation()
 
   const {
     setCategories,
@@ -55,38 +49,6 @@ export default function Map({ categories, motives }: MapProps) {
   } = useResource()
 
   const { setAuthSidebarOpened, setProfileOpened } = useSidebar()
-
-  const handleGetCurrentLocation = () => {
-    const isCurrentLocationAllowed = localStorage.getItem(
-      'encontreduca_current_location_allowed'
-    )
-
-    if (isCurrentLocationAllowed && isCurrentLocationAllowed === 'true') {
-      getUserLocation()
-      setIsCurrentLocationAllowed(true)
-    }
-
-    if (!isCurrentLocationAllowed || isCurrentLocationAllowed !== 'true') {
-      openModalConfirm({
-        title: 'Permite acessar sua localização?',
-        description:
-          'Precisamos de sua permissão para saber o seu local atual.',
-        onConfirm: () => {
-          getUserLocation()
-          setIsCurrentLocationAllowed(true)
-          localStorage.setItem('encontreduca_current_location_allowed', 'true')
-        },
-        onCancel: () => {
-          setIsCurrentLocationAllowed(false)
-        },
-        openConfirmModal,
-        closeModal,
-        classes,
-        theme,
-        dark
-      })
-    }
-  }
 
   useEffect(() => {
     ;(async () => {
