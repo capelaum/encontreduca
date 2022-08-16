@@ -99,7 +99,7 @@ export function AvatarDropzone({
         <DefaultAvatar avatarSrc={preview ?? user?.avatarUrl} size={180} />
       </DefaultDropzone>
 
-      {user!.avatarUrl && (
+      {user?.avatarUrl && (
         <Button
           size="xs"
           radius="md"

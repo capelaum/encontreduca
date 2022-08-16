@@ -85,8 +85,8 @@ export function UpdateProfile() {
   const isUpdatedEmail = (email: string) => user!.email !== email
 
   const sameUserData = (values: typeof form.values) =>
-    user!.name === values.name &&
-    user!.email === values.email &&
+    user?.name === values.name &&
+    user?.email === values.email &&
     !hasPreview &&
     values.password === '' &&
     values.confirmPassword === ''
