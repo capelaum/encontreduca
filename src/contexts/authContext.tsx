@@ -1,6 +1,7 @@
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import axios from 'axios'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
-import { deleteCookie, hasCookie, setCookie } from 'cookies-next'
+import { deleteCookie, hasCookie } from 'cookies-next'
 import {
   createContext,
   ReactNode,
@@ -26,7 +27,6 @@ interface AuthProviderProps {
 interface AuthContextData {
   user: User | null
   setUser: (user: User | null) => void
-  getAuthUser: () => Promise<User | null>
   register: (form: RegisterFormValues) => Promise<User | null>
   login: (form: LoginFormValues) => Promise<boolean>
   logout: () => Promise<boolean>
@@ -40,8 +40,8 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export type AuthError = {
-  message: string
   type: string
+  message: string
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -56,12 +56,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const authUserCookieName = 'encontreduca_user_auth'
 
+  const setCustomErrorMessage = (message: string) => {
+    switch (message) {
+      case 'Your email address is not verified.':
+        return 'Seu email não foi verificado.'
+
+      default:
+        return message
+    }
+  }
+
   useEffect(() => {
     if (errors.length > 0) {
       errors.forEach((error) => {
         showToastError({
           title: `Ocorreu um erro ao ${error.type}`,
-          description: error.message
+          description: setCustomErrorMessage(error.message)
         })
       })
     }
@@ -126,36 +136,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  const getAuthUser = useCallback(async () => {
-    try {
-      const response = await api.get('user')
-
-      const { data }: { data: User } = response
-
-      return data
-    } catch (error) {
-      setAuthErrors(error, 'fazer login')
-
-      if (
-        (error as any).response?.status === 403 &&
-        (error as any).response?.data?.message ===
-          'Your email address is not verified.'
-      ) {
-        const response = await resendEmailVerification()
-
-        if (!response) {
-          if (hasCookie(authUserCookieName)) {
-            deleteCookie(authUserCookieName)
-          }
-
-          return null
-        }
-      }
-
-      return null
-    }
-  }, [])
-
   const register = async (
     registerFormValues: RegisterFormValues
   ): Promise<User | null> => {
@@ -182,16 +162,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setIsAuthLoading(true)
 
     try {
-      const response = await api.post('login', loginFormValues)
-
-      const { token } = response.data
-
-      setCookie(authUserCookieName, token, {
-        maxAge: 30 * 24 * 60 * 60,
-        sameSite: 'lax'
-      })
-
-      const authUser = await getAuthUser()
+      const {
+        data: { authUser }
+      } = await axios.post('/api/auth/login', loginFormValues)
 
       setUser(authUser)
 
@@ -199,9 +172,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       return true
     } catch (error) {
+      console.log('🚀 ~ Login error', error)
       setIsAuthLoading(false)
 
       setAuthErrors(error, 'fazer login')
+
+      if (
+        (error as any).response?.status === 403 &&
+        (error as any).response?.data?.message ===
+          'Your email address is not verified.'
+      ) {
+        const response = await resendEmailVerification()
+
+        if (!response && hasCookie(authUserCookieName)) {
+          deleteCookie(authUserCookieName)
+        }
+      }
 
       return false
     }
@@ -209,9 +195,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = async () => {
     try {
-      await api.post('/logout')
-
-      deleteCookie('encontreduca_user_auth')
+      await axios.post('/api/auth/logout')
 
       showToast({
         title: 'Logout realizado com sucesso',
@@ -297,7 +281,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const authContextProviderValues = {
     user,
     setUser,
-    getAuthUser,
     register,
     login,
     logout,

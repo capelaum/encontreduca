@@ -1,6 +1,14 @@
 import { api } from 'services/api'
 import { UpdatedUser, User } from 'types/users'
 
+export async function getAuthUser() {
+  const response = await api.get('user')
+
+  const { data }: { data: User } = response
+
+  return data
+}
+
 export async function getUser(userId: number): Promise<User | null> {
   const response = await api.get(`users/${userId}`)
 
