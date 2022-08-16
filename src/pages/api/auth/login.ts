@@ -35,7 +35,6 @@ export default async function handler(
       authUser
     })
   } catch (error) {
-    console.log('🚀 ~ handler error', error)
     res.status((error as any).response.status).json({
       message: (error as any).response.data.message
     })

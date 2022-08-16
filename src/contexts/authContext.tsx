@@ -172,7 +172,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       return true
     } catch (error) {
-      console.log('🚀 ~ Login error', error)
       setIsAuthLoading(false)
 
       setAuthErrors(error, 'fazer login')
