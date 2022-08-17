@@ -38,8 +38,10 @@ interface ResourceContextData {
   setResourceReviews: (resourceReviews: Review[]) => void
   resourceVotes: ResourceVote[]
   setResourceVotes: (resourceVotes: ResourceVote[]) => void
-  filterResources: (resources: ResourceType[]) => ResourceType[]
+  filterResources: () => ResourceType[]
   getAverageRating: (reviews: Review[]) => number
+  getUserResources: () => ResourceType[]
+  getNotApprovedResources: () => ResourceType[]
   getResourceDiff: (
     form: UseFormReturnType<ResourceFormValues>
   ) => Partial<ResourceFormValues>
@@ -63,7 +65,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resourceReviews, setResourceReviews] = useState<Review[]>([])
   const [resourceVotes, setResourceVotes] = useState<ResourceVote[]>([])
 
-  const { votingPanelOpened } = useSidebar()
+  const { votingPanelOpened, savedResourcesOpened } = useSidebar()
   const { user } = useAuth()
 
   const {
@@ -88,25 +90,40 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     }
   }, [resource])
 
-  const filterResources = (resourcesList: ResourceType[]) => {
-    const filteredResources = resourcesList.filter(({ approved, category }) => {
-      if (!activeFilter) {
-        if (votingPanelOpened) return !approved
-        if (approved) return true
-      }
+  const getUserResources = () =>
+    resources!.filter(
+      ({ id, approved }) => approved && user && user.resourcesIds.includes(+id)
+    )
 
-      if (activeFilter && activeFilter.categoryNames.includes(category.name)) {
-        if (votingPanelOpened) return !approved
-        if (approved) return true
-      }
+  const getNotApprovedResources = () =>
+    resources!.filter(({ approved }) => !approved).sort((a, b) => +b.id - +a.id)
 
-      return false
-    })
+  const filterResources = () => {
+    const filteredResources = resources!.filter(
+      ({ approved, category, id }) => {
+        if (!activeFilter) {
+          if (votingPanelOpened) return !approved
+          if (savedResourcesOpened)
+            return approved && user?.resourcesIds.includes(+id)
+          if (approved) return true
+        }
+
+        if (
+          activeFilter &&
+          activeFilter.categoryNames.includes(category.name)
+        ) {
+          if (votingPanelOpened) return !approved
+          if (savedResourcesOpened)
+            return approved && user?.resourcesIds.includes(+id)
+          if (approved) return true
+        }
+
+        return false
+      }
+    )
 
     return filteredResources
   }
-
-  useEffect(() => {}, [activeFilter, votingPanelOpened])
 
   const getAverageRating = (reviews: Review[]) => {
     if (reviews.length === 0) return 0
@@ -233,6 +250,8 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     setResourceVotes,
     getAverageRating,
     filterResources,
+    getUserResources,
+    getNotApprovedResources,
     getResourceDiff,
     createResourceChanges,
     userResourceReview,

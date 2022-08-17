@@ -3,16 +3,11 @@ import { GoogleMap, Marker } from '@react-google-maps/api'
 import { mapContainerStyle, mapOptionsLight } from 'config/options'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
-import { ResourceType } from 'types/resources'
 import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
 import { SideButtons } from './SideButtons'
 
-interface MapLightProps {
-  resources: ResourceType[]
-}
-
-export function MapLight({ resources }: MapLightProps) {
+export function MapLight() {
   const {
     center,
     zoom,
@@ -25,7 +20,7 @@ export function MapLight({ resources }: MapLightProps) {
   } = useMap()
 
   const { filterResources } = useResource()
-  const filteredResources = filterResources(resources)
+  const filteredResources = filterResources()
 
   function renderResourcesMarkers() {
     return filteredResources.map((resource) => (

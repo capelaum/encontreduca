@@ -115,7 +115,7 @@ export default function Map({ categories, motives, authUser }: MapProps) {
         <title>Mapa | Encontreduca</title>
       </Head>
 
-      {dark ? <MapDark /> : <MapLight resources={resources} />}
+      {dark ? <MapDark /> : <MapLight />}
 
       <Sidebars />
     </>

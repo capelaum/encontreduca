@@ -19,8 +19,8 @@ export default function MapDark() {
     isCurrentLocationAllowed
   } = useMap()
 
-  const { resources, filterResources } = useResource()
-  const filteredResources = filterResources(resources!)
+  const { filterResources } = useResource()
+  const filteredResources = filterResources()
 
   function renderResourcesMarkers() {
     return filteredResources.map((resource) => (

@@ -7,7 +7,6 @@ import {
 } from '@mantine/core'
 import { SearchResources } from 'components/Shared/Search/SearchResources'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
-import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { ResourceItem } from './ResourceItem'
@@ -18,16 +17,15 @@ interface ResourceListProps {
 
 export function ResourceList({ isVotingPainel }: ResourceListProps) {
   const { setSavedResourcesOpened, setVotingPanelOpened } = useSidebar()
-  const { resources } = useResource()
-  const { user } = useAuth()
+  const { filterResources } = useResource()
 
-  const userApprovedResources = resources!.filter(
-    ({ id, approved }) => approved && user && user.resourcesIds.includes(+id)
-  )
+  const userResources = filterResources()
 
-  const notApprovedResources = resources!
-    .filter(({ approved }) => !approved)
-    .sort((a, b) => +b.id - +a.id)
+  const notApprovedResources = filterResources().sort((a, b) => {
+    const newA = a.createdAt.split('/').reverse().join('-')
+    const newB = b.createdAt.split('/').reverse().join('-')
+    return +new Date(newB) - +new Date(newA)
+  })
 
   const theme = useMantineTheme()
 
@@ -41,7 +39,7 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
       ))
     }
 
-    return userApprovedResources.map((resource) => (
+    return userResources.map((resource) => (
       <ResourceItem key={`resource-${resource.id}`} resource={resource} />
     ))
   }
@@ -75,7 +73,7 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
       )}
 
       <Stack spacing={0} pt={8}>
-        {(!isVotingPainel && userApprovedResources.length <= 0) ||
+        {(!isVotingPainel && userResources.length <= 0) ||
         (isVotingPainel && notApprovedResources.length <= 0) ? (
           <Text
             px="md"

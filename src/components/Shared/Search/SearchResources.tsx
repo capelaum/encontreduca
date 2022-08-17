@@ -49,8 +49,8 @@ export function SearchResources({ isMap }: SearchResourcesProps) {
 
   const { moveToLocation } = useMap()
   const { setResourceOpened, setMenuOpened } = useSidebar()
-  const { resources, filterResources, setResource } = useResource()
-  const filteredResources = filterResources(resources!)
+  const { filterResources, setResource } = useResource()
+  const filteredResources = filterResources()
 
   const data = filteredResources.map((resource) => ({
     ...resource,
