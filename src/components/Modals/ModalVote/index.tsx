@@ -62,13 +62,13 @@ export function ModalVote({
 
   const createMutation = useMutation(createResourceVote, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['resources'])
+      queryClient.invalidateQueries(['votes'])
     }
   })
 
   const updateMutation = useMutation(updateResourceVote, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['resources'])
+      queryClient.invalidateQueries(['votes'])
     }
   })
 

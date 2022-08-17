@@ -5,13 +5,24 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { useResource } from 'contexts/resourceContext'
 import { useEffect, useState } from 'react'
 import { SectionTitle } from './SectionTitle'
 import { UserReview } from './UserReview'
 
 export function Reviews() {
-  const { resource, userResourceReview, reviewsWithoutUser } = useResource()
+  const {
+    resource,
+    resourceReviews,
+    isFetchingResourceData,
+    getUserResourceReview,
+    getReviewsWithoutUser
+  } = useResource()
+
+  const userResourceReview = getUserResourceReview(resourceReviews)
+
+  const reviewsWithoutUser = getReviewsWithoutUser(resourceReviews)
 
   const theme = useMantineTheme()
 
@@ -26,6 +37,7 @@ export function Reviews() {
 
   return (
     <>
+      <DefaultOverlay visible={isFetchingResourceData} />
       {!!userResourceReview && (
         <>
           <SectionTitle title="Sua avaliação" />

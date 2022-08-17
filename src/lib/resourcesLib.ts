@@ -7,6 +7,7 @@ import {
   ResourceVote,
   UpdatedResourceVote
 } from 'types/resources'
+import { Review } from 'types/reviews'
 
 export async function loadResources(): Promise<ResourceType[]> {
   const { data } = await api.get('resources')
@@ -15,7 +16,15 @@ export async function loadResources(): Promise<ResourceType[]> {
     throw new Error('No resources data returned from API')
   }
 
-  return data
+  const resources = data.map((resource: ResourceType) => ({
+    ...resource,
+    position: {
+      lat: parseFloat(resource.latitude),
+      lng: parseFloat(resource.longitude)
+    }
+  }))
+
+  return resources
 }
 
 export async function getResource(id: number): Promise<ResourceType> {
@@ -34,6 +43,26 @@ export async function createResource(
   const response = await api.post('/resources', newResource)
 
   return response.data
+}
+
+export async function getResourceVotes(id: number): Promise<ResourceVote[]> {
+  const { data } = await api.get(`resources/${id}/votes`)
+
+  if (!data) {
+    throw new Error('No resource votes returned from API')
+  }
+
+  return data
+}
+
+export async function getResourceReviews(id: number): Promise<Review[]> {
+  const { data } = await api.get(`resources/${id}/reviews`)
+
+  if (!data) {
+    throw new Error('No resource reviews returned from API')
+  }
+
+  return data
 }
 
 export async function createResourceChange(

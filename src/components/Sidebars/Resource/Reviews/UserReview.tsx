@@ -19,7 +19,14 @@ interface UserReviewProps {
 }
 
 export function UserReview({ isOwnReview, review }: UserReviewProps) {
-  const { updatedAt, comment, user: reviewUser, rating } = review
+  const {
+    updatedAt,
+    comment,
+    author,
+    authorAvatar,
+    authorReviewCount,
+    rating
+  } = review
 
   const { user } = useAuth()
 
@@ -38,7 +45,11 @@ export function UserReview({ isOwnReview, review }: UserReviewProps) {
     <>
       <Stack px="md" spacing={12}>
         <Group position="apart">
-          <Profile user={reviewUser} />
+          <Profile
+            author={author}
+            authorAvatar={authorAvatar}
+            authorReviewCount={authorReviewCount}
+          />
 
           {user && <Actions isOwnReview={isOwnReview} review={review} />}
         </Group>

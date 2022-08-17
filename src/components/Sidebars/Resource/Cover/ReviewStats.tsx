@@ -9,7 +9,7 @@ export function ReviewStats() {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const reviewsQuantity = resourceReviews.length
+  const reviewsQuantity = resourceReviews?.length
 
   if (reviewsQuantity === 0) {
     return <Text size="sm">Sem avaliações</Text>

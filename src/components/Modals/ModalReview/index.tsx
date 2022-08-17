@@ -51,13 +51,13 @@ export function ModalReview({
 
   const createMutation = useMutation(createReview, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['resources'])
+      queryClient.invalidateQueries(['reviews'])
     }
   })
 
   const updateMutation = useMutation(updateReview, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['resources'])
+      queryClient.invalidateQueries(['reviews'])
     }
   })
 
@@ -134,7 +134,12 @@ export function ModalReview({
 
       <DefaultOverlay visible={isLoading} />
 
-      <Profile isModal user={review?.user ?? user!} />
+      <Profile
+        isModal
+        author={review?.author ?? 'Autor'}
+        authorAvatar={review?.authorAvatar ?? null}
+        authorReviewCount={review?.authorReviewCount ?? 0}
+      />
 
       <Group spacing={2} align="center">
         {[...Array(5)].map((_, index) => {

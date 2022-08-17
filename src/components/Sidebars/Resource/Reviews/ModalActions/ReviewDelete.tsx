@@ -35,7 +35,7 @@ export function ReviewDelete({ reviewId }: ReviewDeleteProps) {
 
   const deleteMutation = useMutation(deleteReview, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['resources'])
+      queryClient.invalidateQueries(['reviews'])
     },
     onError: () => {
       showToastError({

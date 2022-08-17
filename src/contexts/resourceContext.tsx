@@ -1,6 +1,11 @@
 import { UseFormReturnType } from '@mantine/form'
 import { useQuery } from '@tanstack/react-query'
-import { createResourceChange, loadResources } from 'lib/resourcesLib'
+import {
+  createResourceChange,
+  getResourceReviews,
+  getResourceVotes,
+  loadResources
+} from 'lib/resourcesLib'
 import {
   createContext,
   ReactNode,
@@ -51,6 +56,9 @@ interface ResourceContextData {
   userResourceReview: Review | null
   reviewsWithoutUser: Review[]
   resourceUserVote: ResourceVote | null
+  isFetchingResourceData: boolean
+  getUserResourceReview: (reviews: Review[] | null) => Review | null
+  getReviewsWithoutUser: (reviews: Review[] | null) => Review[]
 }
 
 const ResourceContext = createContext<ResourceContextData>(
@@ -65,6 +73,8 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resourceReviews, setResourceReviews] = useState<Review[]>([])
   const [resourceVotes, setResourceVotes] = useState<ResourceVote[]>([])
 
+  const [isFetchingResourceData, setIsFetchingResourceData] = useState(false)
+
   const { votingPanelOpened, savedResourcesOpened } = useSidebar()
   const { user } = useAuth()
 
@@ -74,19 +84,32 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     status: resourcesStatus
   } = useQuery(['resources'], loadResources)
 
+  const { data: resourceReviewsData, refetch: refetchResourceReviews } =
+    useQuery(['reviews'], () => getResourceReviews(+resource!.id), {
+      enabled: !!resource
+    })
+
+  const { data: resourceVotesData, refetch: refetchResourceVotes } = useQuery(
+    ['votes'],
+    () => getResourceVotes(+resource!.id),
+    { enabled: !!resource }
+  )
+
+  const handleFetchResourceData = async () => {
+    setIsFetchingResourceData(true)
+
+    await refetchResourceReviews()
+    await refetchResourceVotes()
+
+    setIsFetchingResourceData(false)
+
+    setResourceReviews(resourceReviewsData!)
+    setResourceVotes(resourceVotesData!)
+  }
+
   useEffect(() => {
     if (resource) {
-      const resourceReviewsData = resource.reviews
-        .flat()
-        .filter(({ resourceId }) => resource.id === resourceId)
-
-      setResourceReviews(resourceReviewsData)
-
-      const resourceVotesData = resource.votes
-        .flat()
-        .filter(({ resourceId }) => resource.id === resourceId)
-
-      setResourceVotes(resourceVotesData)
+      handleFetchResourceData()
     }
   }, [resource])
 
@@ -100,7 +123,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
 
   const filterResources = () => {
     const filteredResources = resources!.filter(
-      ({ approved, category, id }) => {
+      ({ approved, categoryName, id }) => {
         if (!activeFilter) {
           if (votingPanelOpened) return !approved
           if (savedResourcesOpened)
@@ -108,10 +131,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
           if (approved) return true
         }
 
-        if (
-          activeFilter &&
-          activeFilter.categoryNames.includes(category.name)
-        ) {
+        if (activeFilter && activeFilter.categoryNames.includes(categoryName)) {
           if (votingPanelOpened) return !approved
           if (savedResourcesOpened)
             return approved && user?.resourcesIds.includes(+id)
@@ -126,6 +146,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getAverageRating = (reviews: Review[]) => {
+    if (!reviews) return 0
     if (reviews.length === 0) return 0
 
     const average =
@@ -135,12 +156,16 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getUserResourceReview = (reviews: Review[]) => {
+    if (!reviews) return null
+
     const userReview = reviews.find(({ userId }) => userId === user?.id)
 
     return userReview ?? null
   }
 
   const getReviewsWithoutUser = (reviews: Review[]) => {
+    if (!reviews) return []
+
     const reviewsWithoutUser = reviews.filter(
       ({ userId }) => userId !== user?.id
     )
@@ -149,6 +174,8 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getUseResourceVote = (votes: ResourceVote[]) => {
+    if (!votes) return null
+
     const userVote = votes.find(({ userId }) => userId === user?.id)
 
     return userVote ?? null
@@ -256,7 +283,10 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     createResourceChanges,
     userResourceReview,
     reviewsWithoutUser,
-    resourceUserVote
+    resourceUserVote,
+    isFetchingResourceData,
+    getUserResourceReview,
+    getReviewsWithoutUser
   }
 
   const ResourceContextProviderValue = useMemo<ResourceContextData>(

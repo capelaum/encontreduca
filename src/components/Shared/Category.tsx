@@ -4,21 +4,22 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { CategoryType } from 'types/categories'
 import { categorySwitch } from 'utils/categorySwitch'
 
 interface CategoryProps {
-  category: CategoryType
+  categoryName: string | undefined
   isSmall?: boolean
 }
 
-export function Category({ category, isSmall }: CategoryProps) {
+export function Category({ categoryName, isSmall }: CategoryProps) {
+  console.log('🚀 ~ categoryName', categoryName)
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { iconCyan, iconBlueDark } = categorySwitch[category.name]
+  const { iconCyan, iconBlueDark } =
+    categorySwitch[categoryName || 'Escola pública']
 
   return (
     <Group align="center" spacing="sm">
@@ -28,7 +29,7 @@ export function Category({ category, isSmall }: CategoryProps) {
         color={dark ? theme.colors.gray[3] : theme.colors.gray[7]}
         size={isSmall ? 'sm' : 'md'}
       >
-        {category.name}
+        {categoryName}
       </Text>
     </Group>
   )

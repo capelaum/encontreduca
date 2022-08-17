@@ -28,7 +28,7 @@ export function Resource() {
 
       <Info />
 
-      {resourceReviews.length > 0 && <Reviews />}
+      {resourceReviews?.length > 0 && <Reviews />}
     </Box>
   )
 }

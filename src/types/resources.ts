@@ -1,6 +1,4 @@
-import { CategoryType } from './categories'
 import { LatLngLiteral } from './googleMaps'
-import { Review } from './reviews'
 
 export type ResourceType = {
   id: string | number
@@ -12,13 +10,13 @@ export type ResourceType = {
   cover: string
   position: LatLngLiteral
   approved: boolean
+  latitude: string
+  longitude: string
 
   userId: string | number
   author: string
   categoryId: string | number
-  category: CategoryType
-  reviews: Review[]
-  votes: ResourceVote[]
+  categoryName: string
 
   createdAt: string
   updatedAt: string

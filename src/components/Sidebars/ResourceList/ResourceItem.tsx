@@ -96,7 +96,7 @@ export function ResourceItem({ resource }: ResourceItemProps) {
             </Text>
           )}
 
-          <Category category={resource.category} isSmall />
+          <Category categoryName={resource.categoryName} isSmall />
         </Stack>
 
         <Box

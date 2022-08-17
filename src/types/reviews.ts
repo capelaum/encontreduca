@@ -1,5 +1,3 @@
-import { User } from './users'
-
 export type Review = {
   id: string | number
   userId: string | number
@@ -7,7 +5,9 @@ export type Review = {
   rating: number
   comment: string
   updatedAt: string
-  user: User
+  author: string
+  authorAvatar: string
+  authorReviewCount: number
 }
 
 export type NewReview = Pick<

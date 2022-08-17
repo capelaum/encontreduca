@@ -11,11 +11,11 @@ export function Header() {
   return (
     <Stack spacing="sm">
       <SidebarHeader
-        title={resource!.name}
+        title={resource?.name ?? 'Nome do Recurso'}
         closeSidebar={() => setResourceOpened(false)}
       />
 
-      <Category category={resource!.category} />
+      <Category categoryName={resource?.categoryName} />
     </Stack>
   )
 }

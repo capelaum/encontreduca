@@ -10,6 +10,7 @@ import { forwardRef } from 'react'
 
 interface ItemProps extends SelectItemProps {
   name: string
+  categoryName: string
   cover: string
   dark: boolean
   address: string
@@ -29,6 +30,7 @@ export const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(
       cover,
       theme,
       dark,
+      categoryName,
       createdAt,
       updatedAt,
       userId,
