@@ -1,11 +1,11 @@
 import {
+  Box,
   Button,
   Center,
   Stack,
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { useResource } from 'contexts/resourceContext'
 import { useEffect, useState } from 'react'
 import { SectionTitle } from './SectionTitle'
@@ -15,7 +15,6 @@ export function Reviews() {
   const {
     resource,
     resourceReviews,
-    isFetchingResourceData,
     getUserResourceReview,
     getReviewsWithoutUser
   } = useResource()
@@ -36,8 +35,7 @@ export function Reviews() {
   }, [resource])
 
   return (
-    <>
-      <DefaultOverlay visible={isFetchingResourceData} />
+    <Box>
       {!!userResourceReview && (
         <>
           <SectionTitle title="Sua avaliação" />
@@ -73,6 +71,6 @@ export function Reviews() {
           </Button>
         </Center>
       )}
-    </>
+    </Box>
   )
 }

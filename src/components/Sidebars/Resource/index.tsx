@@ -5,15 +5,20 @@ import { ActionButtons } from './ActionButtons'
 import { Cover } from './Cover'
 import { Header } from './Header'
 import { Info } from './Info'
+import { ResourceSkeleton } from './ResourceSkeleton'
 import { Reviews } from './Reviews'
 
 export function Resource() {
   const { setResourceOpened } = useSidebar()
-  const { resource, resourceReviews } = useResource()
+  const { resource, resourceReviews, isFetchingResourceData } = useResource()
 
   if (!resource) {
     setResourceOpened(false)
     return <Text px="md">Ooops, selecione um recurso!</Text>
+  }
+
+  if (isFetchingResourceData) {
+    return <ResourceSkeleton />
   }
 
   return (

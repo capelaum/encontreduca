@@ -102,9 +102,6 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     await refetchResourceVotes()
 
     setIsFetchingResourceData(false)
-
-    setResourceReviews(resourceReviewsData!)
-    setResourceVotes(resourceVotesData!)
   }
 
   useEffect(() => {
@@ -112,6 +109,11 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
       handleFetchResourceData()
     }
   }, [resource])
+
+  useEffect(() => {
+    setResourceReviews(resourceReviewsData!)
+    setResourceVotes(resourceVotesData!)
+  }, [resourceReviewsData, resourceVotesData])
 
   const getUserResources = () =>
     resources!.filter(
@@ -155,7 +157,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     return average
   }
 
-  const getUserResourceReview = (reviews: Review[]) => {
+  const getUserResourceReview = (reviews: Review[] | null) => {
     if (!reviews) return null
 
     const userReview = reviews.find(({ userId }) => userId === user?.id)
@@ -163,7 +165,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     return userReview ?? null
   }
 
-  const getReviewsWithoutUser = (reviews: Review[]) => {
+  const getReviewsWithoutUser = (reviews: Review[] | null) => {
     if (!reviews) return []
 
     const reviewsWithoutUser = reviews.filter(
