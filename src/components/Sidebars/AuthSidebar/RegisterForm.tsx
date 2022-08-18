@@ -45,12 +45,12 @@ export function RegisterForm({ setFormType }: RegisterFormProps) {
       classNames: classes,
       ...modalStyles,
       overflow: 'outside',
-      title: <Title name="Confirme seu email" />,
+      title: <Title name="Verifique seu email" />,
       children: (
         <ModalEmail
           onClose={() => closeModal(id)}
-          title="Falta pouco! Confirme seu email."
-          text="Enviamos um link de confirrmação para seu e-mail. Acesse e siga as instruções para concluir seu cadastro e usufruir de todas funcionalidades da platatorma Encontreduca."
+          title="Falta pouco! Verifique seu email."
+          text="Enviamos um link de verificação para seu email. Acesse e siga as instruções para concluir seu cadastro e usufruir de todas funcionalidades da platatorma Encontreduca."
           image={{
             src: '/images/icons/plane.svg',
             alt: 'Ícone de email enviado'

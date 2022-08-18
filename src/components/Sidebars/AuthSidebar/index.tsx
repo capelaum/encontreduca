@@ -55,7 +55,7 @@ export function AuthSidebar() {
     }
 
     if (formType === 'forgotPassword') {
-      return 'Recuperar Senha?'
+      return 'Recuperar Senha'
     }
 
     return 'Fazer Login'
@@ -74,8 +74,8 @@ export function AuthSidebar() {
         <Title
           name={
             emailVerified === 'true'
-              ? 'Email confirmado'
-              : 'Email já confirmado'
+              ? 'Email verificado'
+              : 'Email já verificado'
           }
         />
       ),
@@ -84,8 +84,8 @@ export function AuthSidebar() {
           onClose={() => closeModal(id)}
           title={
             emailVerified === 'true'
-              ? 'Tudo pronto! Seu email foi confirmado.'
-              : 'Seu email já foi confirmado.'
+              ? 'Tudo pronto! Seu email foi verificado.'
+              : 'Seu email já foi verificado.'
           }
           text="Faça login e comece a usufruir de todas funcionalidades do Encontreduca."
           image={{
@@ -162,7 +162,7 @@ export function AuthSidebar() {
       {formType === 'resetPassword' && (
         <>
           <Text color={dark ? theme.white : theme.colors.brand[7]}>
-            Digite uma nova senha com ao menos 8 caracteres.
+            Use uma senha forte e você não será hackeado por ninguém.
           </Text>
           <ResetPasswordForm setFormType={setFormType} />
         </>
