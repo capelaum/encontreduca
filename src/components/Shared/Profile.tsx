@@ -14,7 +14,7 @@ interface ProfileProps {
   isModal?: boolean
   author: string
   authorAvatar: string | null
-  authorReviewCount: number
+  authorReviewCount?: number
 }
 
 export function Profile({

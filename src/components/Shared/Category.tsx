@@ -12,7 +12,6 @@ interface CategoryProps {
 }
 
 export function Category({ categoryName, isSmall }: CategoryProps) {
-  console.log('🚀 ~ categoryName', categoryName)
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()

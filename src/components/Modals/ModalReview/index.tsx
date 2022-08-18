@@ -134,12 +134,7 @@ export function ModalReview({
 
       <DefaultOverlay visible={isLoading} />
 
-      <Profile
-        isModal
-        author={review?.author ?? 'Autor'}
-        authorAvatar={review?.authorAvatar ?? null}
-        authorReviewCount={review?.authorReviewCount ?? 0}
-      />
+      <Profile isModal author={user!.name} authorAvatar={user!.avatarUrl} />
 
       <Group spacing={2} align="center">
         {[...Array(5)].map((_, index) => {
