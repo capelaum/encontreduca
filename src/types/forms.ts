@@ -1,3 +1,4 @@
+import { UseFormReturnType } from '@mantine/form'
 import { NewResource } from './resources'
 
 export type ResourceFormValues = Omit<NewResource, 'userId'>
@@ -24,3 +25,10 @@ export interface ResetPasswordFormValues {
 }
 
 export type FormType = 'login' | 'register' | 'forgotPassword' | 'resetPassword'
+
+export type PasswordFormTypes = UseFormReturnType<
+  | RegisterFormValues
+  | LoginFormValues
+  | ProfileFormValues
+  | ResetPasswordFormValues
+>

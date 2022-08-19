@@ -8,6 +8,7 @@ import {
 import { useForm } from '@mantine/form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
+import { PasswordGroup } from 'components/Shared/PasswordGroup'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
@@ -25,7 +26,7 @@ import { getUser, updateUser } from 'lib/usersLib'
 import { useState } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
 import { MdOutlineMarkEmailUnread } from 'react-icons/md'
-import { ProfileFormValues } from 'types/forms'
+import { PasswordFormTypes, ProfileFormValues } from 'types/forms'
 import { AvatarDropzone } from './AvatarDropzone'
 import { DeleteUserButton } from './DeleteUserButton'
 
@@ -185,7 +186,10 @@ export function UpdateProfile() {
   }
 
   return (
-    <form onSubmit={form.onSubmit(handleSubmit, handleProfileFormErrors)}>
+    <form
+      onSubmit={form.onSubmit(handleSubmit, handleProfileFormErrors)}
+      autoComplete="off"
+    >
       <DefaultOverlay visible={isLoading} />
 
       <Stack spacing="md" p="md">
@@ -218,21 +222,7 @@ export function UpdateProfile() {
           sx={inputStyles(theme, dark)}
         />
 
-        <TextInput
-          type="password"
-          label="Senha"
-          placeholder="Senha"
-          {...form.getInputProps('password')}
-          sx={inputStyles(theme, dark)}
-        />
-
-        <TextInput
-          type="password"
-          placeholder="Repetir senha"
-          label="Repetir senha"
-          {...form.getInputProps('confirmPassword')}
-          sx={inputStyles(theme, dark)}
-        />
+        <PasswordGroup form={form as PasswordFormTypes} isRequired={false} />
 
         <Stack mt="sm" spacing="md">
           <Button

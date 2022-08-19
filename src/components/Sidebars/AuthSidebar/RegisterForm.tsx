@@ -9,6 +9,7 @@ import { useForm } from '@mantine/form'
 import { useModals } from '@mantine/modals'
 import { ModalEmail } from 'components/Modals/ModalEmail'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
+import { PasswordGroup } from 'components/Shared/PasswordGroup'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import {
   modalStyles,
@@ -22,7 +23,7 @@ import {
   validateEmail,
   validatePassword
 } from 'helpers/validate'
-import { FormType, RegisterFormValues } from 'types/forms'
+import { FormType, PasswordFormTypes, RegisterFormValues } from 'types/forms'
 
 interface RegisterFormProps {
   setFormType: (type: FormType) => void
@@ -113,22 +114,7 @@ export function RegisterForm({ setFormType }: RegisterFormProps) {
           sx={inputStyles(theme, dark)}
         />
 
-        <TextInput
-          required
-          type="password"
-          placeholder="Senha"
-          label="Senha"
-          {...form.getInputProps('password')}
-          sx={inputStyles(theme, dark)}
-        />
-
-        <TextInput
-          type="password"
-          placeholder="Repetir senha"
-          label="Repetir senha"
-          {...form.getInputProps('confirmPassword')}
-          sx={inputStyles(theme, dark)}
-        />
+        <PasswordGroup form={form as PasswordFormTypes} />
 
         <Button
           size="sm"

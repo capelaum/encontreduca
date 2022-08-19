@@ -7,6 +7,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
+import { PasswordGroup } from 'components/Shared/PasswordGroup'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { useAuth } from 'contexts/authContext'
 import { handleResetPasswordFormErrors } from 'helpers/formErrorsHandlers'
@@ -17,7 +18,11 @@ import {
 } from 'helpers/validate'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { FormType, ResetPasswordFormValues } from 'types/forms'
+import {
+  FormType,
+  PasswordFormTypes,
+  ResetPasswordFormValues
+} from 'types/forms'
 
 interface ResetPasswordFormProps {
   setFormType: (type: FormType) => void
@@ -83,22 +88,7 @@ export default function ResetPasswordForm({
           sx={inputStyles(theme, dark)}
         />
 
-        <TextInput
-          required
-          type="password"
-          placeholder="Senha"
-          label="Senha"
-          {...form.getInputProps('password')}
-          sx={inputStyles(theme, dark)}
-        />
-
-        <TextInput
-          type="password"
-          placeholder="Repetir senha"
-          label="Repetir senha"
-          {...form.getInputProps('confirmPassword')}
-          sx={inputStyles(theme, dark)}
-        />
+        <PasswordGroup form={form as PasswordFormTypes} />
 
         <Button
           size="sm"

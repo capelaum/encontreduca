@@ -8,6 +8,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
+import { PasswordGroup } from 'components/Shared/PasswordGroup'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useAuth } from 'contexts/authContext'
@@ -83,14 +84,7 @@ export function LoginForm({ setFormType }: LoginFormProps) {
         />
 
         <Box>
-          <TextInput
-            required
-            type="password"
-            placeholder="Senha"
-            label="Senha"
-            {...form.getInputProps('password')}
-            sx={inputStyles(theme, dark)}
-          />
+          <PasswordGroup form={form} isConfirmPassord={false} isAutoComplete />
 
           <ActionText
             size="sm"
