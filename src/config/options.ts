@@ -1,8 +1,8 @@
 import { myTheme } from 'styles/theme'
 
 export const defaultCenter = {
-  lat: -15.7919382,
-  lng: -47.881988
+  lat: -15.793,
+  lng: -47.884
 }
 
 export const mapOptions = {
