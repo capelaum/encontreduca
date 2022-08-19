@@ -1,6 +1,6 @@
 import { Box } from '@mantine/core'
 import { GoogleMap, Marker } from '@react-google-maps/api'
-import { mapContainerStyle, mapOptionsLight } from 'config/options'
+import { mapContainerStyle, mapOptionsLight } from 'config/mapOptions'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { ResourceMarker } from './ResourceMarker'

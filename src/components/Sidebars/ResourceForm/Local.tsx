@@ -14,7 +14,7 @@ import {
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
-import { mapOptionsForm, mapOptionsFormLight } from 'config/options'
+import { mapOptionsForm, mapOptionsFormLight } from 'config/mapOptions'
 import { useResource } from 'contexts/resourceContext'
 import { MdEditLocationAlt } from 'react-icons/md'
 import { LatLngLiteral, libraries } from 'types/googleMaps'

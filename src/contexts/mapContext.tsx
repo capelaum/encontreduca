@@ -1,4 +1,4 @@
-import { defaultCenter } from 'config/options'
+import { defaultCenter } from 'config/mapOptions'
 import {
   createContext,
   ReactNode,
