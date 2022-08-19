@@ -23,7 +23,7 @@ export function Resource() {
 
   return (
     <Box>
-      <Stack mt={resource.approved ? 88 : 'md'} px="md" spacing="md">
+      <Stack mt={88} px="md" spacing="md">
         <Header />
 
         <Cover />

@@ -35,7 +35,12 @@ export function Actions({ isOwnReview, review }: ActionsProps) {
   }
 
   return (
-    <Menu position="right" transition="pop-bottom-left" radius="md" offset={24}>
+    <Menu
+      position="left-start"
+      transition="pop-top-right"
+      radius="md"
+      offset={12}
+    >
       <Menu.Target>
         <Button
           size="xs"
@@ -57,8 +62,8 @@ export function Actions({ isOwnReview, review }: ActionsProps) {
 
       <Menu.Dropdown
         sx={{
-          backgroundColor: theme.colors.brand[8],
-          color: theme.colors.cyan[3],
+          backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[3],
+          color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
           border: 'none',
           zIndex: 333
         }}

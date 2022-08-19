@@ -47,7 +47,7 @@ export function AuthSidebar() {
 
   const setHeaderTitle = () => {
     if (formType === 'resetPassword') {
-      return 'Resetar senha'
+      return 'Redefinição de senha'
     }
 
     if (formType === 'register') {

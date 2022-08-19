@@ -8,6 +8,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { ReactNode, useState } from 'react'
 import { MdContentCopy, MdOutlineCheck } from 'react-icons/md'
 import { TbExternalLink } from 'react-icons/tb'
@@ -20,6 +21,8 @@ interface InfoItemProps {
 
 export function InfoItem({ icon, text, type }: InfoItemProps) {
   const [isHovered, setIsHovered] = useState(false)
+
+  const largeScreen = useMediaQuery('(min-width: 768px)', false)
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -107,9 +110,9 @@ export function InfoItem({ icon, text, type }: InfoItemProps) {
             <ActionIcon
               color={dark ? theme.colors.cyan[3] : theme.colors.gray[3]}
               size="sm"
-              sx={{ position: 'absolute', right: '8px' }}
+              sx={{ position: 'absolute', right: '20px' }}
             >
-              {isHovered && renderIcon(copied)}
+              {(isHovered || !largeScreen) && renderIcon(copied)}
             </ActionIcon>
           </Group>
         </Tooltip>

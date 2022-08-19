@@ -216,7 +216,7 @@ export function UpdateProfile() {
         <TextInput
           required
           type="email"
-          label="Email (necessário confirmar)"
+          label="Email (verificação necessária)"
           placeholder="Email"
           {...form.getInputProps('email')}
           sx={inputStyles(theme, dark)}
