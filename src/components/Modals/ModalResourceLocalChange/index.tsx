@@ -104,7 +104,7 @@ export function ModalResourceLocalChange({
         <Image
           src={
             resource
-              ? categorySwitch[resource.category.name].markerIcon
+              ? categorySwitch[resource.categoryName].markerIcon
               : '/markers/marker.svg'
           }
           alt="Marcador"

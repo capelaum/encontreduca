@@ -49,7 +49,7 @@ export function ResourceClose({ onClose }: ResourceCloseProps) {
           color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
         />
       }
-      label="Fechar ou remover"
+      label="Fechar ou remover recurso educacional"
       description="Marcar como fechado, inexistente ou duplicado"
       onClick={() => {
         onClose()

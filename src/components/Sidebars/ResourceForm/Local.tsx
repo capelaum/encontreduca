@@ -120,7 +120,7 @@ export function Local({ localPosition, setLocalPosition }: LocalProps) {
           boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)'
         }}
       >
-        Editar local do mapa
+        Editar local do recurso
       </Button>
     </Box>
   )
