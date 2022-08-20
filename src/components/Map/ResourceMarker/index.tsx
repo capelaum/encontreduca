@@ -1,9 +1,12 @@
+import { useMantineTheme } from '@mantine/core'
 import { Marker } from '@react-google-maps/api'
+import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { LatLngLiteral } from 'types/googleMaps'
+import { LatLngLiteral, MarkerLabel } from 'types/googleMaps'
 import { ResourceType } from 'types/resources'
 import { categorySwitch } from 'utils/categorySwitch'
+import styles from './styles.module.scss'
 
 interface ResourceMarkerProps {
   resource: ResourceType
@@ -16,27 +19,29 @@ export function ResourceMarker({
   localPosition,
   clickable = true
 }: ResourceMarkerProps) {
-  // const { zoom } = useMap()
+  const { zoom } = useMap()
   const { setResource } = useResource()
   const { setResourceOpened, setMenuOpened, setAuthSidebarOpened } =
     useSidebar()
 
+  const theme = useMantineTheme()
+
   const { name, categoryName, position, approved } = resource
 
-  // const markerLabel = (): MarkerLabel | null => {
-  //   if (zoom > 15) {
-  //     return {
-  //       text: name,
-  //       fontFamily: 'Roboto',
-  //       color: '#66d9e8',
-  //       fontSize: '14px',
-  //       fontWeight: '400',
-  //       className: styles.markerLabel
-  //     }
-  //   }
+  const markerLabel = (): MarkerLabel | null => {
+    if (zoom > 15) {
+      return {
+        text: name,
+        fontFamily: 'Roboto',
+        color: theme.colors.cyan[3],
+        fontSize: '14px',
+        fontWeight: '500',
+        className: styles.markerLabel
+      }
+    }
 
-  //   return null
-  // }
+    return null
+  }
 
   const handleMarkerClick = () => {
     if (clickable && setResourceOpened && setResource) {
@@ -59,7 +64,7 @@ export function ResourceMarker({
         // scaledSize: new window.google.maps.Size(20, 28)
       }}
       title={name}
-      // label={markerLabel() ?? undefined}
+      label={markerLabel() ?? undefined}
     />
   )
 }
