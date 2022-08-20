@@ -15,7 +15,6 @@ export function MapLight() {
     onIdle,
     onMapLoad,
     onUnmount,
-    handleMapClick,
     isCurrentLocationAllowed
   } = useMap()
 
@@ -42,14 +41,13 @@ export function MapLight() {
         onIdle={onIdle}
         onLoad={onMapLoad}
         onUnmount={onUnmount}
-        onClick={handleMapClick}
         mapContainerStyle={mapContainerStyle}
       >
         {isCurrentLocationAllowed && (
           <Marker
             position={currentLocation}
             icon={{
-              url: '/markers/marker_current.svg',
+              url: '/markers/marker_current.png',
               scaledSize: new window.google.maps.Size(10, 10)
             }}
           />

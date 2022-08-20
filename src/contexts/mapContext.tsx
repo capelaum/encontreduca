@@ -8,12 +8,7 @@ import {
   useRef,
   useState
 } from 'react'
-import {
-  DirectionsResult,
-  GoogleMapsMap,
-  LatLngLiteral,
-  MapMouseEvent
-} from 'types/googleMaps'
+import { GoogleMapsMap, LatLngLiteral } from 'types/googleMaps'
 
 interface MapProviderProps {
   children: ReactNode
@@ -23,21 +18,13 @@ interface MapContextData {
   center: LatLngLiteral
   currentCenter: LatLngLiteral
   zoom: number
-  place: string | null
   currentLocation: LatLngLiteral
-  clickedPos: LatLngLiteral | null
-  directions: DirectionsResult | null
   isCurrentLocationAllowed: boolean
   setIsCurrentLocationAllowed: (isAllowed: boolean) => void
   onIdle: () => void
   onUnmount: () => void
-  clearLocation: () => void
   onMapLoad: (map: GoogleMapsMap) => void
-  handleMapClick: (e: MapMouseEvent) => void
   moveToLocation: (position: LatLngLiteral) => void
-  setDirections: (directions: DirectionsResult | null) => void
-  setClickedPos: (position: LatLngLiteral | null) => void
-  setPlace: (place: string | null) => void
   setCenter: (position: LatLngLiteral) => void
   setZoom: (zoom: number) => void
   getUserLocation: () => void
@@ -50,30 +37,12 @@ export function MapProvider({ children }: MapProviderProps) {
   const [isCurrentLocationAllowed, setIsCurrentLocationAllowed] =
     useState(false)
   const [center, setCenter] = useState<LatLngLiteral>(defaultCenter)
-  const [directions, setDirections] = useState<DirectionsResult | null>(null)
-  const [clickedPos, setClickedPos] = useState<LatLngLiteral | null>(null)
-  const [place, setPlace] = useState<string | null>(null)
   const [currentLocation, setCurrentLocation] =
     useState<LatLngLiteral>(defaultCenter)
   const [currentCenter, setCurrentCenter] =
     useState<LatLngLiteral>(defaultCenter)
 
   const mapRef = useRef<GoogleMapsMap>()
-
-  const handleMapClick = ({ latLng }: MapMouseEvent) => {
-    const mapClicklickedPos = { lat: latLng!.lat(), lng: latLng!.lng() }
-
-    setClickedPos(clickedPos)
-    setCenter(mapClicklickedPos)
-    setDirections(null)
-    setPlace(null)
-  }
-
-  const clearLocation = useCallback(() => {
-    setClickedPos(null)
-    setDirections(null)
-    setPlace(null)
-  }, [])
 
   const onIdle = useCallback(() => {
     setZoom(mapRef.current!.getZoom()!)
@@ -108,23 +77,15 @@ export function MapProvider({ children }: MapProviderProps) {
     center,
     currentCenter,
     zoom,
-    place,
     currentLocation,
-    clickedPos,
-    directions,
     isCurrentLocationAllowed,
     setIsCurrentLocationAllowed,
     onIdle,
     onMapLoad,
     onUnmount,
     moveToLocation,
-    handleMapClick,
-    clearLocation,
-    setClickedPos,
-    setPlace,
     setCenter,
     setZoom,
-    setDirections,
     getUserLocation
   }
 

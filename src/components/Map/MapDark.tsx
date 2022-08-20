@@ -15,7 +15,6 @@ export default function MapDark() {
     onIdle,
     onMapLoad,
     onUnmount,
-    handleMapClick,
     isCurrentLocationAllowed
   } = useMap()
 
@@ -42,7 +41,6 @@ export default function MapDark() {
         onIdle={onIdle}
         onLoad={onMapLoad}
         onUnmount={onUnmount}
-        onClick={handleMapClick}
         mapContainerStyle={mapContainerStyle}
       >
         {isCurrentLocationAllowed && (
