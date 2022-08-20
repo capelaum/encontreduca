@@ -41,8 +41,8 @@ export default function Map({ categories, motives, authUser }: MapProps) {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { user, setUser } = useAuth()
   const { handleGetCurrentLocation } = useGetCurrentLocation()
+  const { user, setUser } = useAuth()
 
   const {
     setCategories,

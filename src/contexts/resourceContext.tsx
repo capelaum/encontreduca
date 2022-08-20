@@ -57,8 +57,8 @@ interface ResourceContextData {
   reviewsWithoutUser: Review[]
   resourceUserVote: ResourceVote | null
   isFetchingResourceData: boolean
-  getUserResourceReview: (reviews: Review[] | null) => Review | null
-  getReviewsWithoutUser: (reviews: Review[] | null) => Review[]
+  getUserResourceReview: (reviews: Review[]) => Review | null
+  getReviewsWithoutUser: (reviews: Review[]) => Review[]
 }
 
 const ResourceContext = createContext<ResourceContextData>(
@@ -163,25 +163,19 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getAverageRating = (reviews: Review[]) => {
-    if (!reviews || reviews.length === 0) return 0
-
     const average =
       reviews.reduce((acc, { rating }) => acc + rating, 0) / reviews.length
 
     return average
   }
 
-  const getUserResourceReview = (reviews: Review[] | null) => {
-    if (!reviews || reviews.length === 0) return null
-
+  const getUserResourceReview = (reviews: Review[]) => {
     const userReview = reviews.find(({ userId }) => userId === user?.id)
 
     return userReview ?? null
   }
 
-  const getReviewsWithoutUser = (reviews: Review[] | null) => {
-    if (!reviews || reviews.length === 0) return []
-
+  const getReviewsWithoutUser = (reviews: Review[]) => {
     const reviewsWithoutUser = reviews.filter(
       ({ userId }) => userId !== user?.id
     )
@@ -190,8 +184,6 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getUseResourceVote = (votes: ResourceVote[]) => {
-    if (!votes || votes.length === 0) return null
-
     const userVote = votes.find(({ userId }) => userId === user?.id)
 
     return userVote ?? null
