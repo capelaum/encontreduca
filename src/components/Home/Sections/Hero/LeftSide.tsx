@@ -25,7 +25,13 @@ export function LeftSide() {
           fontSize: smallScreen ? '40px' : '56px'
         }}
       >
-        Encontreduca
+        Encontr
+        <Text
+          color={theme.white}
+          sx={{ display: 'inline-block', paddingLeft: '2px' }}
+        >
+          educa
+        </Text>
       </Title>
       <Text
         align={largeScreen ? 'left' : 'center'}

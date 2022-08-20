@@ -31,7 +31,7 @@ export default class MyDocument extends Document {
           <Seo
             title="Encontreduca - Encontre recursos educacionais"
             url="https://encontreduca.com.br"
-            description="Use o mapa interativos e encontre os recursos educacionas mais próximos!"
+            description="Use o mapa interativo e encontre os recursos educacionas mais próximos!"
           />
         </Head>
         <body>
