@@ -2,19 +2,30 @@ import { CSSObject, MantineTheme } from '@mantine/core'
 
 export const inputStyles = (theme: MantineTheme, dark: boolean): CSSObject => ({
   input: {
+    borderRadius: theme.radius.md,
     color: dark ? theme.white : theme.colors.brand[7],
-    backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[2],
-    border: 'none',
+    backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
+    border: `1px solid ${dark ? theme.colors.cyan[3] : theme.colors.brand[7]}`,
     '&:focus': {
-      backgroundColor: dark ? theme.colors.brand[8] : theme.white,
-      outline: `1px solid ${theme.colors.cyan[3]}`
+      border: `2px solid ${dark ? theme.colors.cyan[2] : theme.colors.cyan[5]}`
     },
     '&::placeholder': {
       color: dark ? theme.colors.gray[6] : theme.colors.gray[6]
     }
   },
   label: {
-    color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
+    color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
+    marginBottom: theme.spacing.xs
+  },
+  '.mantine-TextInput-invalid, .mantine-Select-invalid': {
+    border: `1px solid ${theme.colors.red[6]}`,
+    '&:focus': {
+      border: `1px solid ${theme.colors.red[6]}`
+    }
+  },
+  '.mantine-TextInput-error, .mantine-Select-error': {
+    paddingTop: '4px',
+    color: theme.colors.red[6]
   }
 })
 
@@ -57,5 +68,12 @@ export const buttonStyles = (
   border: 'none',
   '&:hover': {
     backgroundColor: dark ? theme.colors.cyan[4] : theme.colors.brand[8]
+  },
+  '&[data-disabled]': {
+    color: theme.colors.gray[7],
+    backgroundColor: theme.colors.gray[5],
+    '&:hover': {
+      opacity: 0.8
+    }
   }
 })

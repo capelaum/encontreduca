@@ -6,8 +6,22 @@ export function Footer() {
   const theme = useMantineTheme()
 
   return (
-    <Center pt={48} component="footer">
-      <Stack align="center" spacing={24}>
+    <Center
+      component="footer"
+      sx={{
+        backgroundColor: theme.colors.brand[7]
+      }}
+    >
+      <Stack
+        align="center"
+        pt={48}
+        spacing={24}
+        sx={{
+          width: '100%',
+          backgroundColor: theme.colors.brand[7],
+          zIndex: 3
+        }}
+      >
         <NavLink
           link="https://luis-capelletto-portfolio.netlify.app"
           target="_blank"

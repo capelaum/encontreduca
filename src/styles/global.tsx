@@ -3,6 +3,7 @@ import { useMediaQuery } from '@mantine/hooks'
 
 export const GlobalStyles = () => {
   const largeScreen = useMediaQuery('(min-width: 992px)', false)
+  const smallScreen = useMediaQuery('(min-width: 480px)', false)
 
   return (
     <Global
@@ -27,18 +28,18 @@ export const GlobalStyles = () => {
           color: theme.colors.brand[7],
           backgroundColor: theme.white
         },
+        '.Toastify__close-button': {
+          color: theme.colors.brand[7]
+        },
         '.Toastify__progress-bar-theme--light': {
           backgroundColor: theme.colors.brand[7]
         },
         '.Toastify__progress-bar-theme--dark': {
           backgroundColor: theme.colors.brand[7]
         },
-        '.Toastify__close-button': {
-          color: theme.colors.brand[7]
-        },
         '.Toastify__toast-container': {
-          width: '100%',
-          maxWidth: '400px'
+          maxWidth: '768px',
+          width: smallScreen ? '400px' : '100%'
         }
       })}
     />

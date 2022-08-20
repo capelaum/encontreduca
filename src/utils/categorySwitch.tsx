@@ -1,14 +1,14 @@
-import { ReactElement } from 'react'
 import { BsBriefcaseFill } from 'react-icons/bs'
 import { FaPencilRuler, FaSchool } from 'react-icons/fa'
 import { IoLibrarySharp } from 'react-icons/io5'
 import { MdSchool } from 'react-icons/md'
 import { myTheme } from 'styles/theme'
+import { CategorySwitch } from 'types/categories'
 
 export const categorySwitch: CategorySwitch = {
   'Universidade privada': {
     filter: 'Ensino Superior',
-    markerIcon: '/markers/marker_university.svg',
+    markerIcon: '/markers/marker_university.png',
     iconCyan: <MdSchool size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <MdSchool size={16} color={myTheme.white} />,
     iconBlue: <MdSchool size={16} color={myTheme.colors!.brand![7]} />,
@@ -16,7 +16,7 @@ export const categorySwitch: CategorySwitch = {
   },
   'Universidade pública': {
     filter: 'Ensino Superior',
-    markerIcon: '/markers/marker_university.svg',
+    markerIcon: '/markers/marker_university.png',
     iconCyan: <MdSchool size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <MdSchool size={16} color={myTheme.white} />,
     iconBlue: <MdSchool size={16} color={myTheme.colors!.brand![7]} />,
@@ -24,7 +24,7 @@ export const categorySwitch: CategorySwitch = {
   },
   'Escola privada': {
     filter: 'Ensino Básico',
-    markerIcon: '/markers/marker_school.svg',
+    markerIcon: '/markers/marker_school.png',
     iconCyan: <FaSchool size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <FaSchool size={16} color={myTheme.white} />,
     iconBlue: <FaSchool size={16} color={myTheme.colors!.brand![7]} />,
@@ -32,7 +32,7 @@ export const categorySwitch: CategorySwitch = {
   },
   'Escola pública': {
     filter: 'Ensino Básico',
-    markerIcon: '/markers/marker_school.svg',
+    markerIcon: '/markers/marker_school.png',
     iconCyan: <FaSchool size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <FaSchool size={16} color={myTheme.white} />,
     iconBlue: <FaSchool size={16} color={myTheme.colors!.brand![7]} />,
@@ -40,7 +40,7 @@ export const categorySwitch: CategorySwitch = {
   },
   Biblioteca: {
     filter: 'Biblioteca',
-    markerIcon: '/markers/marker_library.svg',
+    markerIcon: '/markers/marker_library.png',
     iconCyan: <IoLibrarySharp size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <IoLibrarySharp size={16} color={myTheme.white} />,
     iconBlue: <IoLibrarySharp size={16} color={myTheme.colors!.brand![7]} />,
@@ -48,7 +48,7 @@ export const categorySwitch: CategorySwitch = {
   },
   Curso: {
     filter: 'Curso',
-    markerIcon: '/markers/marker_course.svg',
+    markerIcon: '/markers/marker_course.png',
     iconCyan: <FaPencilRuler size={14} color={myTheme.colors!.brand![0]} />,
     iconWhite: <FaPencilRuler size={14} color={myTheme.white} />,
     iconBlue: <FaPencilRuler size={14} color={myTheme.colors!.brand![7]} />,
@@ -56,23 +56,12 @@ export const categorySwitch: CategorySwitch = {
   },
   Coworking: {
     filter: 'Coworking',
-    markerIcon: '/markers/marker_coworking.svg',
+    markerIcon: '/markers/marker_coworking.png',
     iconCyan: <BsBriefcaseFill size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <BsBriefcaseFill size={16} color={myTheme.white} />,
     iconBlue: <BsBriefcaseFill size={16} color={myTheme.colors!.brand![7]} />,
     iconBlueDark: (
       <BsBriefcaseFill size={16} color={myTheme.colors!.brand![9]} />
     )
-  }
-}
-
-type CategorySwitch = {
-  [key: string]: {
-    markerIcon: string
-    iconCyan: ReactElement
-    iconWhite: ReactElement
-    iconBlue: ReactElement
-    iconBlueDark: ReactElement
-    filter: string
   }
 }

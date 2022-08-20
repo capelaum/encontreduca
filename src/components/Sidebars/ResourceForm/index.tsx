@@ -1,178 +1,314 @@
 import {
   Box,
-  Select,
   Stack,
   Text,
-  TextInput,
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { useInputState } from '@mantine/hooks'
+import { useForm } from '@mantine/form'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
-import { inputStyles } from 'components/Shared/styles/inputStyles'
-import { showToast } from 'components/Shared/ToastMessage'
+import { showToast, showToastError } from 'components/Shared/ToastMessage'
+import { useAuth } from 'contexts/authContext'
+import { useMap } from 'contexts/mapContext'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import data from 'data/categories.json'
-import { useEffect } from 'react'
+import { handleResourceFormErrors } from 'helpers/formErrorsHandlers'
+import { uploadImage } from 'helpers/imageHelpers'
+import {
+  validadePosition,
+  validateCategoryId,
+  validateImageBase64,
+  validatePhone,
+  validateWebsite
+} from 'helpers/validate'
+import { createResource } from 'lib/resourcesLib'
+import { useEffect, useState } from 'react'
 import { GiStarsStack } from 'react-icons/gi'
 import { IoIosSend } from 'react-icons/io'
-import { TbChevronDown } from 'react-icons/tb'
-import { getModalSelectDataCategories } from 'utils/modalSelecDataFormatter'
+import { MdHelp } from 'react-icons/md'
+import { ResourceFormValues } from 'types/forms'
+import { LatLngLiteral } from 'types/googleMaps'
+import { getCategoriesSelectData } from 'utils/modalSelecDataFormatter'
 import { CoverDropzone } from './CoverDropzone'
 import { Local } from './Local'
+import { ResourceContact } from './ResourceContact'
+import { ResourceInfo } from './ResourceInfo'
 
 interface ResourceFormProps {
   isCreateResource?: boolean
 }
 
 export function ResourceForm({ isCreateResource }: ResourceFormProps) {
-  const resourceCategories = getModalSelectDataCategories(data.categories)
-  const { resource, setCreateResourceOpened, setChangeResourceOpened } =
-    useSidebar()
+  const { setCreateResourceOpened, setChangeResourceOpened } = useSidebar()
+  const {
+    resource,
+    categories,
+    setResource,
+    getResourceDiff,
+    createResourceChanges
+  } = useResource()
+
+  const { user } = useAuth()
+
+  const { currentLocation } = useMap()
 
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const [categoryId, setCategoryId] = useInputState<string>('')
-  const [resourceName, setResourceName] = useInputState<string>('')
-  const [resourceAddress, setResourceAddress] = useInputState<string>('')
-  const [resourcePhone, setResourcePhone] = useInputState<string>('')
-  const [resourceWebsite, setResourceWebsite] = useInputState<string>('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [localPosition, setLocalPosition] = useState<LatLngLiteral>(
+    resource?.position ?? currentLocation
+  )
+
+  const [hasPreview, setHasPreview] = useState(false)
+  const [imageBase64, setImageBase64] = useState<string | ArrayBuffer | null>(
+    null
+  )
+
+  const resourceCategories = getCategoriesSelectData(categories)
+
+  const queryClient = useQueryClient()
+
+  const createMutation = useMutation(createResource, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['resources'])
+    },
+    onError: (error) => {
+      showToastError({
+        title: 'Erro ao criar recurso',
+        description: (error as Error).message
+      })
+
+      setIsLoading(false)
+    }
+  })
+
+  const form = useForm<ResourceFormValues>({
+    initialValues: {
+      name: resource ? resource.name : '',
+      address: resource ? resource.address : '',
+      phone: resource ? resource.phone ?? '' : '',
+      website: resource ? resource.website ?? '' : '',
+      cover: resource ? resource.cover : '',
+      categoryId: resource ? resource.categoryId.toString() : '',
+      position: resource ? resource.position : currentLocation
+    },
+
+    validateInputOnChange: [
+      'name',
+      'address',
+      'phone',
+      'website',
+      'categoryId'
+    ],
+
+    validate: {
+      name: (value) => (value.trim().length < 3 ? 'Nome muito curto' : null),
+      address: (value) =>
+        value.trim().length < 4 ? 'Endereço muito curto' : null,
+      phone: (value: string) => validatePhone(value),
+      website: (value: string) => validateWebsite(value),
+      categoryId: (value: string) =>
+        validateCategoryId(value, resourceCategories),
+      cover: () =>
+        hasPreview ? validateImageBase64(imageBase64, hasPreview) : null,
+      position: (value) => validadePosition(value)
+    }
+  })
 
   useEffect(() => {
+    if (isCreateResource) {
+      setResource(null)
+    }
+
     if (resource) {
-      setCategoryId(resource.categoryId.toString())
-      setResourceName(resource.name)
-      setResourceAddress(resource.address)
-      setResourcePhone(resource.phone)
-      setResourceWebsite(resource.website)
+      form.setValues({
+        name: resource.name,
+        address: resource.address,
+        phone: resource.phone ?? '',
+        website: resource.website ?? '',
+        cover: resource.cover,
+        categoryId: resource.categoryId.toString(),
+        position: resource.position
+      })
+
+      setLocalPosition(resource.position)
     }
   }, [resource])
 
-  const title = isCreateResource
-    ? 'Cadastro de recurso'
-    : 'Sugerir alteração de recurso'
+  const handleSubmit = async (values: typeof form.values) => {
+    setIsLoading(true)
 
-  return (
-    <Stack my="md" px="md" spacing="md" role="form">
-      <SidebarHeader
-        title={title}
-        closeSidebar={
-          isCreateResource
-            ? () => setCreateResourceOpened(false)
-            : () => setChangeResourceOpened(false)
-        }
-      />
+    if (!user) {
+      setIsLoading(false)
 
-      <Text>Informações do local</Text>
+      showToastError({
+        title: 'É necessário estar logado para criar/editar um recurso',
+        description: 'Por favor, faça login para continuar'
+      })
 
-      <TextInput
-        variant="filled"
-        placeholder="Nome do recurso"
-        label="Nome"
-        radius="md"
-        onChange={setResourceName}
-        value={resourceName}
-        sx={inputStyles(theme, dark)}
-        required
-      />
+      return
+    }
 
-      <Select
-        label="Categoria"
-        required
-        size="sm"
-        placeholder="Selecione uma categoria"
-        value={categoryId ?? ''}
-        variant="filled"
-        onChange={setCategoryId}
-        sx={inputStyles(theme, dark)}
-        maxDropdownHeight={300}
-        rightSectionWidth={30}
-        rightSection={
-          <TbChevronDown
-            size={14}
-            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-          />
-        }
-        data={resourceCategories}
-      />
+    if (hasPreview && imageBase64) {
+      try {
+        const secure_url = await uploadImage({
+          imageBase64,
+          folder: 'encontreduca/covers'
+        })
 
-      <TextInput
-        variant="filled"
-        placeholder="Endereço do recurso"
-        label="Endereço"
-        radius="md"
-        onChange={setResourceAddress}
-        value={resourceAddress ?? ''}
-        sx={inputStyles(theme, dark)}
-        required
-      />
+        form.values.cover = secure_url
+      } catch (error) {
+        setIsLoading(false)
 
-      <Local />
+        showToastError({
+          title: 'Erro ao criar/editar recurso',
+          description: 'Não foi possível fazer upload desta imagem de capa 😕'
+        })
 
-      <Text>Contato</Text>
+        return
+      }
+    }
 
-      <TextInput
-        variant="filled"
-        placeholder="(00) 00000-0000"
-        label="Número de telefone/celular"
-        radius="md"
-        onChange={setResourcePhone}
-        value={resourcePhone ?? ''}
-        sx={inputStyles(theme, dark)}
-      />
+    form.values.position = localPosition
 
-      <TextInput
-        variant="filled"
-        placeholder="Site do recurso"
-        label="Site"
-        radius="md"
-        onChange={setResourceWebsite}
-        value={resourceWebsite ?? ''}
-        sx={inputStyles(theme, dark)}
-      />
+    try {
+      if (!resource) {
+        await createMutation.mutateAsync({
+          userId: user.id,
+          name: values.name,
+          address: values.address,
+          phone: values.phone,
+          website: values.website,
+          categoryId: values.categoryId,
+          cover: values.cover,
+          position: values.position
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
 
-      <Box>
-        <Text
-          pb={8}
-          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-        >
-          Imagem de capa do recurso{' '}
-          <Text component="span" color={theme.colors.red[6]}>
-            *
-          </Text>
-        </Text>
-        <CoverDropzone />
-      </Box>
+      showToastError({
+        title: 'Erro ao criar recurso',
+        description: 'Por favor, tente novamente mais tarde 😕'
+      })
 
-      <ConfirmButtons
-        onCancel={() => {
-          setCreateResourceOpened(false)
-          setChangeResourceOpened(false)
-        }}
-        onConfirm={() => {
-          setCreateResourceOpened(false)
-          setChangeResourceOpened(false)
+      return
+    }
+
+    try {
+      if (resource && !isCreateResource) {
+        const resourceDiff = getResourceDiff(form)
+
+        if (Object.keys(resourceDiff).length === 0) {
           showToast({
-            title: isCreateResource
-              ? 'Recurso cadastrado com sucesso!'
-              : 'Sugestão de alteração de recurso enviada!',
-            description: isCreateResource
-              ? 'Confira este recurso no Painel de votação.'
-              : 'Agradecemos sua sugestão!',
-            icon: isCreateResource ? (
-              <GiStarsStack size={24} color={theme.colors.brand[8]} />
-            ) : (
-              <IoIosSend size={24} color={theme.colors.brand[8]} />
-            ),
+            title: 'Cade as alterações?',
+            description: 'Não há alterações para serem feitas 🥲',
+            icon: <MdHelp size={24} color={theme.colors.brand[8]} />,
             dark
           })
-        }}
-        onConfirmText="Enviar"
-      />
-    </Stack>
+
+          setIsLoading(false)
+          return
+        }
+
+        if (Object.keys(resourceDiff).length > 0) {
+          await createResourceChanges(resourceDiff)
+        }
+      }
+    } catch (error) {
+      setIsLoading(false)
+
+      showToastError({
+        title: 'Erro ao editar recurso',
+        description: (error as Error).message
+      })
+
+      return
+    }
+
+    setCreateResourceOpened(false)
+    setChangeResourceOpened(false)
+    form.reset()
+
+    setIsLoading(false)
+
+    showToast({
+      title: isCreateResource
+        ? 'Recurso cadastrado com sucesso!'
+        : 'Sugestão de alteração de recurso enviada!',
+      description: isCreateResource
+        ? 'Confira este recurso no Painel de votação.'
+        : 'Agradecemos sua sugestão!',
+      icon: isCreateResource ? (
+        <GiStarsStack size={24} color={theme.colors.brand[8]} />
+      ) : (
+        <IoIosSend size={24} color={theme.colors.brand[8]} />
+      ),
+      dark
+    })
+  }
+
+  return (
+    <form onSubmit={form.onSubmit(handleSubmit, handleResourceFormErrors)}>
+      <DefaultOverlay visible={isLoading} />
+
+      <Stack my="md" px="md" spacing="md">
+        <SidebarHeader
+          title={
+            isCreateResource
+              ? 'Cadastro de recurso'
+              : 'Sugerir alteração de recurso'
+          }
+          closeSidebar={
+            isCreateResource
+              ? () => setCreateResourceOpened(false)
+              : () => setChangeResourceOpened(false)
+          }
+        />
+
+        <ResourceInfo form={form} />
+
+        <Local
+          localPosition={localPosition}
+          setLocalPosition={setLocalPosition}
+        />
+
+        <ResourceContact form={form} />
+
+        <Box>
+          <Text
+            mb="xs"
+            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+          >
+            Imagem de capa do recurso{' '}
+            <Text component="span" color={theme.colors.red[6]}>
+              *
+            </Text>
+          </Text>
+
+          <CoverDropzone
+            resourceCover={resource ? resource.cover : null}
+            form={form}
+            setHasPreview={setHasPreview}
+            setImageBase64={setImageBase64}
+          />
+        </Box>
+
+        <ConfirmButtons
+          onConfirmType="submit"
+          onCancel={() => {
+            setCreateResourceOpened(false)
+            setChangeResourceOpened(false)
+          }}
+          onConfirmText="Enviar"
+        />
+      </Stack>
+    </form>
   )
 }

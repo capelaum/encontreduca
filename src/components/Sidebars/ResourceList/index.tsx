@@ -1,17 +1,14 @@
 import {
   Box,
-  CSSObject,
   Stack,
   Text,
-  TextInput,
-  Tooltip,
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { SearchResources } from 'components/Shared/Search/SearchResources'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import data from 'data/resources.json'
-import { MdSearch } from 'react-icons/md'
 import { ResourceItem } from './ResourceItem'
 
 interface ResourceListProps {
@@ -20,9 +17,15 @@ interface ResourceListProps {
 
 export function ResourceList({ isVotingPainel }: ResourceListProps) {
   const { setSavedResourcesOpened, setVotingPanelOpened } = useSidebar()
-  const { resources } = data
+  const { filterResources } = useResource()
 
-  const notApprovedResources = resources.filter(({ approved }) => !approved)
+  const userResources = filterResources()
+
+  const notApprovedResources = filterResources().sort((a, b) => {
+    const newA = a.createdAt.split('/').reverse().join('-')
+    const newB = b.createdAt.split('/').reverse().join('-')
+    return +new Date(newB) - +new Date(newA)
+  })
 
   const theme = useMantineTheme()
 
@@ -36,59 +39,10 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
       ))
     }
 
-    return resources.map((resource) => (
+    return userResources.map((resource) => (
       <ResourceItem key={`resource-${resource.id}`} resource={resource} />
     ))
   }
-
-  const searchInputStyles = (): CSSObject => ({
-    width: '100%',
-    zIndex: 1,
-    borderRadius: theme.radius.md,
-    input: {
-      color: dark ? theme.white : theme.colors.brand[7],
-      backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[2],
-      border: 'none',
-      '&:focus': {
-        backgroundColor: dark ? theme.colors.brand[8] : theme.white,
-        outline: `1px solid ${theme.colors.cyan[3]}`
-      },
-      '&::placeholder': {
-        color: theme.colors.gray[6]
-      }
-    }
-  })
-
-  const rightSection = (
-    <Tooltip
-      multiline
-      label="Busque os recursos educacionais por nome"
-      position="bottom-end"
-      transition="pop-bottom-right"
-      radius={theme.radius.md}
-      width={170}
-      withArrow
-      arrowSize={6}
-      px={8}
-      offset={-2}
-      sx={{
-        color: theme.colors.brand[7],
-        backgroundColor: theme.colors.cyan[3],
-        borderRadius: theme.radius.md
-      }}
-    >
-      <Box>
-        <MdSearch
-          size={28}
-          color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-          style={{
-            display: 'block',
-            position: 'relative'
-          }}
-        />
-      </Box>
-    </Tooltip>
-  )
 
   return (
     <Stack my="md" spacing="md">
@@ -108,7 +62,7 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
           <Text
             component="strong"
             sx={{
-              color: dark ? theme.colors.cyan[3] : theme.colors.cyan[8],
+              color: dark ? theme.white : theme.colors.cyan[5],
               fontWeight: 500
             }}
           >
@@ -118,23 +72,26 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
         </Text>
       )}
 
-      <Box px="md">
-        <TextInput
-          size="md"
-          radius="md"
-          type="search"
-          variant="filled"
-          id="search-resource"
-          rightSection={rightSection}
-          rightSectionWidth={40}
-          placeholder="Busque um recurso"
-          aria-label="Buscar recursos educacionais"
-          sx={searchInputStyles}
-        />
-      </Box>
-
       <Stack spacing={0} pt={8}>
-        {renderResourceItems()}
+        {(!isVotingPainel && userResources.length <= 0) ||
+        (isVotingPainel && notApprovedResources.length <= 0) ? (
+          <Text
+            px="md"
+            size="md"
+            weight={500}
+            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+          >
+            Hey, não tem nenhum recursso por aqui 😕.
+          </Text>
+        ) : (
+          <Box px="md">
+            <SearchResources />
+          </Box>
+        )}
+
+        <Stack spacing={0} pt={32}>
+          {renderResourceItems()}
+        </Stack>
       </Stack>
     </Stack>
   )

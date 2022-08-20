@@ -21,7 +21,7 @@ export function ActionItem({ children, onClick, icon }: ActionItemProps) {
         color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
         fontSize: theme.fontSizes.md,
         '&:hover': {
-          backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[2]
+          backgroundColor: theme.colors.brand[7]
         },
         width: '100%'
       }}

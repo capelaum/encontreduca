@@ -1,58 +1,113 @@
-import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
-import { showToast } from 'components/Shared/ToastMessage'
-import { useState } from 'react'
+import { Box, useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import { showToast, showToastError } from 'components/Shared/ToastMessage'
+import { useAuth } from 'contexts/authContext'
+import { useResource } from 'contexts/resourceContext'
+import { createUserResource, deleteUserResource, getUser } from 'lib/usersLib'
+import { useEffect, useState } from 'react'
 import { BsBookmarkStar, BsBookmarkStarFill } from 'react-icons/bs'
 import { ActionButton } from './ActionButton'
 
-const iconTypes = {
-  saved: {
-    icon: <BsBookmarkStarFill size={24} />,
-    text: 'Salvo'
-  },
-  unsaved: {
-    icon: <BsBookmarkStar size={24} />,
-    text: 'Salvar'
-  }
-}
-
 export function ResourceSave() {
+  const [isSaved, setIsSaved] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const [saveIcon, setSaveIcon] = useState(iconTypes.unsaved)
+  const { resource } = useResource()
+  const { user, setUser } = useAuth()
 
-  const saveResource = () => {
-    const wasUnsaved = saveIcon === iconTypes.unsaved
+  useEffect(() => {
+    if (user && resource) {
+      const { id } = resource
+      const { resourcesIds } = user
 
-    if (wasUnsaved) {
-      setSaveIcon(iconTypes.saved)
+      if (resourcesIds.includes(+id)) {
+        setIsSaved(true)
+      }
+
+      if (!resourcesIds.includes(+id)) {
+        setIsSaved(false)
+      }
+    }
+  }, [user, resource])
+
+  const handleSaveResource = async () => {
+    const wasSaved = isSaved
+
+    if (!user || !resource) {
+      showToastError({
+        title: 'Ooops, algo deu errado.',
+        description: 'Não foi possível salvar recurso ou remove-lo dos salvos..'
+      })
+
+      return
     }
 
-    if (!wasUnsaved) {
-      setSaveIcon(iconTypes.unsaved)
+    setIsLoading(true)
+
+    try {
+      if (!isSaved) {
+        await createUserResource({
+          userId: +user.id,
+          resourceId: +resource.id
+        })
+      }
+
+      if (isSaved) {
+        await deleteUserResource({
+          userId: +user.id,
+          resourceId: +resource.id
+        })
+      }
+    } catch (error) {
+      setIsLoading(false)
+
+      showToastError({
+        title: 'Ooops, algo deu errado.',
+        description: 'Não foi possível salvar recurso ou remove-lo dos salvos..'
+      })
+
+      return
     }
+
+    const updatedUser = await getUser(+user.id)
+    setUser(updatedUser)
+
+    setIsLoading(false)
 
     showToast({
-      title: wasUnsaved ? 'Recurso salvo' : 'Recurso removido dos salvos',
-      description: wasUnsaved
-        ? 'Agora disponível na lista de salvos.'
-        : 'Você pode sempre salvar novamente.',
-      icon: wasUnsaved ? (
-        <BsBookmarkStarFill size={20} color={theme.colors.brand[8]} />
-      ) : (
+      title: wasSaved ? 'Recurso removido dos salvos' : 'Recurso salvo',
+      description: wasSaved
+        ? 'Você pode sempre salvar novamente.'
+        : 'Agora disponível na lista de salvos.',
+      icon: wasSaved ? (
         <BsBookmarkStar size={20} color={theme.colors.brand[8]} />
+      ) : (
+        <BsBookmarkStarFill size={20} color={theme.colors.brand[8]} />
       ),
       dark
     })
+
+    setIsSaved(() => !isSaved)
   }
 
   return (
-    <ActionButton
-      text={saveIcon.text}
-      icon={saveIcon.icon}
-      onClick={saveResource}
-    />
+    <Box sx={{ position: 'relative' }}>
+      <ActionButton
+        isLoading={isLoading}
+        text={isSaved ? 'Salvo' : 'Salvar'}
+        icon={
+          isSaved ? (
+            <BsBookmarkStarFill size={24} />
+          ) : (
+            <BsBookmarkStar size={24} />
+          )
+        }
+        onClick={handleSaveResource}
+      />
+    </Box>
   )
 }

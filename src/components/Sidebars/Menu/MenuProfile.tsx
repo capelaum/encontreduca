@@ -6,13 +6,16 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { DefaultAvatar } from 'components/Shared/DefaultAvatar'
+import { DefaultAvatar } from 'components/Shared/Default/DefaultAvatar'
+import { useAuth } from 'contexts/authContext'
 
 interface MenuProfileProps {
   setProfileOpened: (opened: boolean) => void
 }
 
 export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
+  const { user } = useAuth()
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -25,28 +28,30 @@ export function MenuProfile({ setProfileOpened }: MenuProfileProps) {
         margin: theme.spacing.md
       }}
     >
-      <Group spacing={12} noWrap>
-        <DefaultAvatar size={50} />
+      {user && (
+        <Group spacing={12} noWrap>
+          <DefaultAvatar size={50} avatarSrc={user.avatarUrl} />
 
-        <Stack spacing={2}>
-          <Text
-            size="md"
-            weight={500}
-            sx={{
-              color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
-              paddingRight: '32px'
-            }}
-          >
-            Luís Vinicius Capelletto
-          </Text>
-          <Text
-            size="md"
-            sx={{ color: dark ? theme.colors.gray[3] : theme.colors.gray[6] }}
-          >
-            user@gmail.com
-          </Text>
-        </Stack>
-      </Group>
+          <Stack spacing={2}>
+            <Text
+              size="md"
+              weight={500}
+              sx={{
+                color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
+                paddingRight: '32px'
+              }}
+            >
+              {user.name}
+            </Text>
+            <Text
+              size="md"
+              sx={{ color: dark ? theme.colors.gray[3] : theme.colors.gray[6] }}
+            >
+              {user.email}
+            </Text>
+          </Stack>
+        </Group>
+      )}
     </UnstyledButton>
   )
 }

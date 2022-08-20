@@ -2,10 +2,9 @@ import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
-import { useSidebar } from 'contexts/sidebarContext'
-import data from 'data/motives.json'
+import { useResource } from 'contexts/resourceContext'
 import { MdCancel } from 'react-icons/md'
-import { getModalSelectDataMotives } from 'utils/modalSelecDataFormatter'
+import { getMotivesSelectData } from 'utils/modalSelecDataFormatter'
 import { ModalResourceChangeButton } from '../ModalResourceChangeButton'
 
 interface ResourceCloseProps {
@@ -14,7 +13,7 @@ interface ResourceCloseProps {
 
 export function ResourceClose({ onClose }: ResourceCloseProps) {
   const { openContextModal } = useModals()
-  const { resource } = useSidebar()
+  const { resource, motives } = useResource()
 
   const theme = useMantineTheme()
 
@@ -23,9 +22,9 @@ export function ResourceClose({ onClose }: ResourceCloseProps) {
 
   const { classes } = useModalStyles(dark)
 
-  const closeResourceMotives = getModalSelectDataMotives(
-    data.motives,
-    'resource'
+  const ResourceComplaintMotives = getMotivesSelectData(
+    motives,
+    'resource_complaint'
   )
 
   const openModalResourceClose = () =>
@@ -37,8 +36,8 @@ export function ResourceClose({ onClose }: ResourceCloseProps) {
       classNames: classes,
       padding: 'md',
       innerProps: {
-        data: closeResourceMotives,
-        resourceName: resource!.name
+        motives: ResourceComplaintMotives,
+        resource
       }
     })
 
@@ -50,7 +49,7 @@ export function ResourceClose({ onClose }: ResourceCloseProps) {
           color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
         />
       }
-      label="Fechar ou remover"
+      label="Fechar ou remover recurso educacional"
       description="Marcar como fechado, inexistente ou duplicado"
       onClick={() => {
         onClose()

@@ -14,17 +14,18 @@ import {
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
-import {
-  defaultCenter,
-  mapOptionsForm,
-  mapOptionsFormLight
-} from 'config/options'
-import { useSidebar } from 'contexts/sidebarContext'
+import { mapOptionsForm, mapOptionsFormLight } from 'config/mapOptions'
+import { useResource } from 'contexts/resourceContext'
 import { MdEditLocationAlt } from 'react-icons/md'
-import { libraries } from 'types/googleMaps'
+import { LatLngLiteral, libraries } from 'types/googleMaps'
 
-export function Local() {
-  const { resource } = useSidebar()
+interface LocalProps {
+  localPosition: LatLngLiteral
+  setLocalPosition: (position: LatLngLiteral) => void
+}
+
+export function Local({ localPosition, setLocalPosition }: LocalProps) {
+  const { resource } = useResource()
   const { openModal, closeModal } = useModals()
 
   const { isLoaded } = useJsApiLoader({
@@ -51,7 +52,13 @@ export function Local() {
       ...modalStyles,
       overflow: 'outside',
       title: <Title name="Editar local" />,
-      children: <ModalResourceLocalChange onClose={() => closeModal(id)} />
+      children: (
+        <ModalResourceLocalChange
+          onClose={() => closeModal(id)}
+          setLocalPosition={setLocalPosition}
+          localPosition={localPosition}
+        />
+      )
     })
   }
 
@@ -63,15 +70,19 @@ export function Local() {
     return (
       <GoogleMap
         clickableIcons={false}
-        zoom={14}
-        center={resource ? resource.position : defaultCenter}
+        zoom={12}
+        center={localPosition}
         mapContainerStyle={mapContainerStyle}
         options={dark ? mapOptionsForm : mapOptionsFormLight}
       >
         {resource ? (
-          <ResourceMarker resource={resource} clickable={false} />
+          <ResourceMarker
+            resource={resource}
+            clickable={false}
+            localPosition={localPosition}
+          />
         ) : (
-          <Marker position={defaultCenter} clickable={false} />
+          <Marker position={localPosition} clickable={false} />
         )}
       </GoogleMap>
     )
@@ -109,7 +120,7 @@ export function Local() {
           boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)'
         }}
       >
-        Editar local do mapa
+        Editar local do recurso
       </Button>
     </Box>
   )

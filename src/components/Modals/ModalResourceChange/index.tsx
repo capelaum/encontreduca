@@ -4,7 +4,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
+import { DefaultCloseButton } from '../../Shared/Default/DefaultCloseButton'
 import { ResourceChange } from './ModalButtons/ResourceChange'
 import { ResourceClose } from './ModalButtons/ResourceClose'
 

@@ -11,34 +11,35 @@ import {
 } from '@mantine/core'
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
+import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
 import { buttonStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
-import { defaultCenter, mapOptions, mapOptionsLight } from 'config/options'
-import { useSidebar } from 'contexts/sidebarContext'
+import { mapOptions, mapOptionsLight } from 'config/mapOptions'
+import { useResource } from 'contexts/resourceContext'
 import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation, MdPlace } from 'react-icons/md'
 import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
 import { categorySwitch } from 'utils/categorySwitch'
-import { DefaultCloseButton } from '../../Shared/DefaultCloseButton'
 
 interface ModalResourceLocalChangeProps {
   onClose: () => void
+  localPosition: LatLngLiteral
+  setLocalPosition: (position: LatLngLiteral) => void
 }
 
 export function ModalResourceLocalChange({
-  onClose
+  onClose,
+  localPosition,
+  setLocalPosition
 }: ModalResourceLocalChangeProps) {
+  const [currentPosition, setCurrentPosition] = useState(localPosition)
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const [currentCenter, setCurrentCenter] =
-    useState<LatLngLiteral>(defaultCenter)
-
-  console.log('🚀 ~ currentCenter', currentCenter)
-
-  const { resource } = useSidebar()
+  const { resource } = useResource()
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
@@ -48,7 +49,9 @@ export function ModalResourceLocalChange({
   const mapRef = useRef<GoogleMapsMap>()
 
   const onIdle = useCallback(() => {
-    setCurrentCenter(mapRef.current!.getCenter()!.toJSON())
+    if (mapRef.current && mapRef.current.getCenter()) {
+      setCurrentPosition(mapRef.current.getCenter()!.toJSON())
+    }
   }, [])
 
   const onMapLoad = useCallback((map: GoogleMapsMap) => {
@@ -59,7 +62,7 @@ export function ModalResourceLocalChange({
     if (!mapRef.current) return
 
     mapRef.current.panTo({ lat: position.lat, lng: position.lng })
-    mapRef.current.setZoom(16)
+    // mapRef.current.setZoom(14)
   }, [])
 
   const mapContainerStyle = {
@@ -91,8 +94,8 @@ export function ModalResourceLocalChange({
             onLoad={onMapLoad}
             onIdle={onIdle}
             clickableIcons={false}
-            zoom={16}
-            center={resource ? resource.position : defaultCenter}
+            zoom={14}
+            center={localPosition}
             mapContainerStyle={mapContainerStyle}
             options={dark ? mapOptions : mapOptionsLight}
           />
@@ -101,7 +104,7 @@ export function ModalResourceLocalChange({
         <Image
           src={
             resource
-              ? categorySwitch[resource.category].markerIcon
+              ? categorySwitch[resource.categoryName].markerIcon
               : '/markers/marker.svg'
           }
           alt="Marcador"
@@ -122,9 +125,7 @@ export function ModalResourceLocalChange({
           size="sm"
           radius="md"
           leftIcon={<MdMyLocation size={16} />}
-          onClick={() =>
-            moveToLocation(resource ? resource.position : defaultCenter)
-          }
+          onClick={() => moveToLocation(localPosition)}
           sx={buttonStyles(theme, dark)}
         >
           Redefinir mapa
@@ -133,10 +134,14 @@ export function ModalResourceLocalChange({
         <ConfirmButtons
           onCancel={onClose}
           onConfirm={() => {
+            setLocalPosition({
+              lat: +currentPosition.lat.toFixed(7),
+              lng: +currentPosition.lng.toFixed(7)
+            })
             onClose()
             showToast({
-              title: 'Novo local salvo com sucesso!',
-              description: 'Agradecemos sua participação!',
+              title: 'Novo local salvo',
+              description: 'Local foi atualizado com sucesso!',
               icon: <MdPlace size={24} color={theme.colors.brand[7]} />,
               dark
             })

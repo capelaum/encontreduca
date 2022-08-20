@@ -9,13 +9,27 @@ import {
 } from '@mantine/core'
 import { Profile } from 'components/Shared/Profile'
 import { Stars } from 'components/Shared/Stars'
+import { useAuth } from 'contexts/authContext'
+import { Review } from 'types/reviews'
 import { Actions } from './Actions'
 
 interface UserReviewProps {
   isOwnReview?: boolean
+  review: Review
 }
 
-export function UserReview({ isOwnReview }: UserReviewProps) {
+export function UserReview({ isOwnReview, review }: UserReviewProps) {
+  const {
+    updatedAt,
+    comment,
+    author,
+    authorAvatar,
+    authorReviewCount,
+    rating
+  } = review
+
+  const { user } = useAuth()
+
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -31,26 +45,25 @@ export function UserReview({ isOwnReview }: UserReviewProps) {
     <>
       <Stack px="md" spacing={12}>
         <Group position="apart">
-          <Profile />
+          <Profile
+            author={author}
+            authorAvatar={authorAvatar}
+            authorReviewCount={authorReviewCount}
+          />
 
-          <Actions isOwnReview={isOwnReview} />
+          {user && <Actions isOwnReview={isOwnReview} review={review} />}
         </Group>
 
         <Group spacing={2} align="center">
-          <Stars />
+          <Stars rating={rating} />
 
           <Text size="xs" ml="xs" sx={textStyles}>
-            10/06/22
+            {updatedAt}
           </Text>
         </Group>
 
-        <Text sx={textStyles}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi mattis
-          rutrum fames quam tempus vitae sed malesuada. Vulputate purus accumsan
-          neque in vitae. Orci venenatis turpis rutrum vitae diam sed. At
-          placerat elit mattis nam nunc. Nibh donec sagittis, sed enim felis
-          mollis vitae aliquet varius. Blandit donec vestibulum, fermentum et
-          pretium.
+        <Text size="md" sx={textStyles}>
+          {comment}
         </Text>
       </Stack>
 

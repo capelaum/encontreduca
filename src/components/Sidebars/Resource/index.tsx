@@ -1,29 +1,26 @@
-import { Box, Stack } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
-import { useSidebar } from 'contexts/sidebarContext'
+import { Box, Stack, Text } from '@mantine/core'
+import { useResource } from 'contexts/resourceContext'
 import { ActionButtons } from './ActionButtons'
 import { Cover } from './Cover'
 import { Header } from './Header'
 import { Info } from './Info'
+import { ResourceSkeleton } from './ResourceSkeleton'
 import { Reviews } from './Reviews'
 
 export function Resource() {
-  const largeScreen = useMediaQuery('(min-width: 768px)', false)
-
-  const { resource, setResourceOpened } = useSidebar()
+  const { resource, resourceReviews, isFetchingResourceData } = useResource()
 
   if (!resource) {
-    setResourceOpened(false)
-    return null
+    return <Text px="md">Ooops, por favor selecione um recurso...</Text>
+  }
+
+  if (isFetchingResourceData) {
+    return <ResourceSkeleton />
   }
 
   return (
     <Box>
-      <Stack
-        mt={resource.approved && largeScreen ? 88 : 'md'}
-        px="md"
-        spacing="md"
-      >
+      <Stack mt={88} px="md" spacing="md">
         <Header />
 
         <Cover />
@@ -33,7 +30,7 @@ export function Resource() {
 
       <Info />
 
-      <Reviews />
+      {resourceReviews?.length > 0 && <Reviews />}
     </Box>
   )
 }

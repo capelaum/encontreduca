@@ -10,7 +10,7 @@ export function CurrentLocation() {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { moveToLocation } = useMap()
+  const { moveToLocation, isCurrentLocationAllowed, currentLocation } = useMap()
   const [disabled, setDisabled] = useState(false)
 
   const handleMoveToCurrentLocation = () => {
@@ -28,8 +28,20 @@ export function CurrentLocation() {
 
   return (
     <SideButton
-      onClick={() => handleMoveToCurrentLocation()}
-      text="Alternar tema light/dark"
+      onClick={() => {
+        if (!isCurrentLocationAllowed) {
+          moveToLocation(currentLocation)
+        }
+
+        if (isCurrentLocationAllowed) {
+          handleMoveToCurrentLocation()
+        }
+      }}
+      text={
+        isCurrentLocationAllowed
+          ? 'Centralizar em sua posição atual'
+          : 'Centralizar'
+      }
     >
       {disabled ? (
         <Loader

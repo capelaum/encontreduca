@@ -1,8 +1,13 @@
 import { Text, useMantineColorScheme } from '@mantine/core'
+import { useResource } from 'contexts/resourceContext'
 
 export function Author() {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
+
+  const { resource } = useResource()
+
+  const author = resource?.author ?? 'Anônimo'
 
   return (
     <Text
@@ -12,7 +17,7 @@ export function Author() {
         color: dark ? theme.colors.gray[4] : theme.colors.gray[7]
       })}
     >
-      Criado por Nome Completo
+      Criado por {author}
     </Text>
   )
 }

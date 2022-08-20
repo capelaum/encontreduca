@@ -1,15 +1,13 @@
 import { Box } from '@mantine/core'
 import { GoogleMap, Marker } from '@react-google-maps/api'
-import { mapContainerStyle, mapOptionsLight } from 'config/options'
+import { mapContainerStyle, mapOptionsLight } from 'config/mapOptions'
 import { useMap } from 'contexts/mapContext'
-import data from 'data/resources.json'
+import { useResource } from 'contexts/resourceContext'
 import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
 import { SideButtons } from './SideButtons'
 
-export default function Map(): JSX.Element {
-  const { resources } = data
-
+export function MapLight() {
   const {
     center,
     zoom,
@@ -17,13 +15,14 @@ export default function Map(): JSX.Element {
     onIdle,
     onMapLoad,
     onUnmount,
-    handleMapClick
+    isCurrentLocationAllowed
   } = useMap()
 
-  const approvedResources = resources.filter(({ approved }) => approved)
+  const { filterResources } = useResource()
+  const filteredResources = filterResources()
 
   function renderResourcesMarkers() {
-    return approvedResources.map((resource) => (
+    return filteredResources.map((resource) => (
       <ResourceMarker
         key={`resourceMarker-${resource.id}`}
         resource={resource}
@@ -42,16 +41,17 @@ export default function Map(): JSX.Element {
         onIdle={onIdle}
         onLoad={onMapLoad}
         onUnmount={onUnmount}
-        onClick={handleMapClick}
         mapContainerStyle={mapContainerStyle}
       >
-        <Marker
-          position={currentLocation}
-          icon={{
-            url: '/markers/marker_current.svg',
-            scaledSize: new window.google.maps.Size(10, 10)
-          }}
-        />
+        {isCurrentLocationAllowed && (
+          <Marker
+            position={currentLocation}
+            icon={{
+              url: '/markers/marker_current.png',
+              scaledSize: new window.google.maps.Size(10, 10)
+            }}
+          />
+        )}
 
         {renderResourcesMarkers()}
       </GoogleMap>

@@ -1,11 +1,12 @@
 import { ReactNode } from 'react'
+import { BsExclamationCircleFill } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import { Message } from './Message'
 
 export interface ShowToastProps {
   title: string
   description: string
-  icon: ReactNode
+  icon?: ReactNode
   dark?: boolean
 }
 
@@ -22,4 +23,11 @@ export const showToast = ({
       theme: dark ? 'dark' : 'light'
     }
   )
+}
+
+export const showToastError = ({ title, description }: ShowToastProps) => {
+  toast.error(<Message title={title} description={description} />, {
+    icon: <BsExclamationCircleFill size={24} color="#fff" />,
+    theme: 'colored'
+  })
 }

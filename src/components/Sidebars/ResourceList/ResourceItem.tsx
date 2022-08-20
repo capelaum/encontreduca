@@ -11,6 +11,7 @@ import {
 } from '@mantine/core'
 import { Category } from 'components/Shared/Category'
 import { useMap } from 'contexts/mapContext'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { TbChevronRight } from 'react-icons/tb'
 import { ResourceType } from 'types/resources'
@@ -21,8 +22,8 @@ interface ResourceItemProps {
 
 export function ResourceItem({ resource }: ResourceItemProps) {
   const { moveToLocation } = useMap()
-  const { setResource, setResourceOpened, setMenuOpened, votingPanelOpened } =
-    useSidebar()
+  const { setResource } = useResource()
+  const { setResourceOpened, setMenuOpened, votingPanelOpened } = useSidebar()
 
   const theme = useMantineTheme()
 
@@ -91,19 +92,11 @@ export function ResourceItem({ resource }: ResourceItemProps) {
                 fontSize: theme.fontSizes.xs
               }}
             >
-              Criado em{' '}
-              {new Intl.DateTimeFormat('pt-BR', {
-                year: 'numeric',
-                month: 'numeric',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                timeZone: 'America/Sao_Paulo'
-              }).format(new Date(resource.created_at))}
+              Criado em {resource.createdAt}
             </Text>
           )}
 
-          <Category category={resource.category} isSmall />
+          <Category categoryName={resource.categoryName} isSmall />
         </Stack>
 
         <Box

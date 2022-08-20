@@ -7,12 +7,13 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import data from 'data/categories.json'
-import { useState } from 'react'
-import { CategoryFilter, getCategoryFilters } from 'utils/categoryFormatters'
+import { useResource } from 'contexts/resourceContext'
+import { CategoryFilter } from 'types/categories'
+import { getCategoryFilters } from 'utils/categoryFormatters'
 
 export function Filters() {
-  const { categories } = data
+  const { categories, activeFilter, setActiveFilter } = useResource()
+
   const categoryFilters = getCategoryFilters(categories)
 
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
@@ -20,8 +21,6 @@ export function Filters() {
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
-
-  const [activeFilter, setActiveFilter] = useState('')
 
   const filterGroupStyles = (): CSSObject => ({
     zIndex: 1,
@@ -49,7 +48,7 @@ export function Filters() {
       return {
         color: theme.colors.cyan[3],
         backgroundColor: theme.colors.brand[7],
-        '&:hover': { backgroundColor: theme.colors.brand[7] }
+        '&:hover': { backgroundColor: theme.colors.brand[8] }
       }
     }
 
@@ -92,23 +91,30 @@ export function Filters() {
       sx={filterGroupStyles}
       spacing="xs"
     >
-      {categoryFilters.map((category) => (
+      {categoryFilters.map((categoryFilter) => (
         <Button
-          key={category.filter}
-          value={category.filter}
+          key={categoryFilter.name}
           size="xs"
           radius={theme.radius.xl}
-          onClick={() => setActiveFilter(category.filter)}
-          leftIcon={setFilterIcon(category, activeFilter === category.filter)}
+          onClick={() =>
+            setActiveFilter(
+              activeFilter && activeFilter.name === categoryFilter.name
+                ? null
+                : categoryFilter
+            )
+          }
+          leftIcon={setFilterIcon(
+            categoryFilter,
+            activeFilter?.name === categoryFilter.name
+          )}
           sx={{
-            ...setFilterColors(activeFilter === category.filter),
+            ...setFilterColors(activeFilter?.name === categoryFilter.name),
             '&:focus': { outline: 'white', border: 'white' },
-            boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)'
+            boxShadow: dark ? 'none' : '0 1px 4px rgba(0, 0, 0, 0.3)',
+            fontWeight: 400
           }}
         >
-          <Text size="sm" sx={{ lineHeight: 1 }}>
-            {category.filter}
-          </Text>
+          <Text size="sm">{categoryFilter.name}</Text>
         </Button>
       ))}
     </Group>

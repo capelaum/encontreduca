@@ -1,22 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Group, useMantineTheme } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
 import { Filters } from './Filters'
 import { SearchGroup } from './SearchGroup'
 
 export function Search() {
-  // const { colorScheme } = useMantineColorScheme()
-  // const dark = colorScheme === 'dark'
-
   const theme = useMantineTheme()
-
-  const largeScreen = useMediaQuery('(min-width: 768px)', false)
 
   return (
     <Group
-      direction={largeScreen ? 'row' : 'column'}
       spacing="md"
       align="left"
-      noWrap
       sx={{
         width: 'calc(100vw - 20px)',
         position: 'absolute',

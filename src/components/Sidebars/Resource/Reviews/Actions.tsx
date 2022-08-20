@@ -5,15 +5,17 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { BsThreeDotsVertical } from 'react-icons/bs'
-import { ReviewComplain } from './ModalActions/ReviewComplain'
+import { Review } from 'types/reviews'
+import { ReviewComplaint } from './ModalActions/ReviewComplaint'
 import { ReviewDelete } from './ModalActions/ReviewDelete'
 import { ReviewEdit } from './ModalActions/ReviewEdit'
 
 interface ActionsProps {
   isOwnReview?: boolean
+  review: Review
 }
 
-export function Actions({ isOwnReview }: ActionsProps) {
+export function Actions({ isOwnReview, review }: ActionsProps) {
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -23,17 +25,22 @@ export function Actions({ isOwnReview }: ActionsProps) {
     if (isOwnReview) {
       return (
         <>
-          <ReviewEdit />
-          <ReviewDelete />
+          <ReviewEdit review={review} />
+          <ReviewDelete reviewId={review.id} />
         </>
       )
     }
 
-    return <ReviewComplain />
+    return <ReviewComplaint review={review} />
   }
 
   return (
-    <Menu position="right" transition="pop-top-left" radius="md" offset={4}>
+    <Menu
+      position="left-start"
+      transition="pop-top-right"
+      radius="md"
+      offset={12}
+    >
       <Menu.Target>
         <Button
           size="xs"
@@ -55,9 +62,10 @@ export function Actions({ isOwnReview }: ActionsProps) {
 
       <Menu.Dropdown
         sx={{
-          backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[1],
+          backgroundColor: dark ? theme.colors.brand[8] : theme.colors.gray[3],
           color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
-          border: 'none'
+          border: 'none',
+          zIndex: 333
         }}
       >
         {renderMenuItems()}

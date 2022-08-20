@@ -1,33 +1,41 @@
+import { useMantineTheme } from '@mantine/core'
 import { Marker } from '@react-google-maps/api'
 import { useMap } from 'contexts/mapContext'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { MarkerLabel } from 'types/googleMaps'
+import { LatLngLiteral, MarkerLabel } from 'types/googleMaps'
 import { ResourceType } from 'types/resources'
 import { categorySwitch } from 'utils/categorySwitch'
 import styles from './styles.module.scss'
 
 interface ResourceMarkerProps {
   resource: ResourceType
+  localPosition?: LatLngLiteral
   clickable?: boolean
 }
 
 export function ResourceMarker({
   resource,
+  localPosition,
   clickable = true
 }: ResourceMarkerProps) {
   const { zoom } = useMap()
-  const { setResourceOpened, setResource, setMenuOpened } = useSidebar()
+  const { setResource } = useResource()
+  const { setResourceOpened, setMenuOpened, setAuthSidebarOpened } =
+    useSidebar()
 
-  const { name, category, position } = resource
+  const theme = useMantineTheme()
+
+  const { name, categoryName, position, approved } = resource
 
   const markerLabel = (): MarkerLabel | null => {
     if (zoom > 15) {
       return {
         text: name,
         fontFamily: 'Roboto',
-        color: '#66d9e8',
+        color: theme.colors.cyan[3],
         fontSize: '14px',
-        fontWeight: '400',
+        fontWeight: '500',
         className: styles.markerLabel
       }
     }
@@ -37,9 +45,10 @@ export function ResourceMarker({
 
   const handleMarkerClick = () => {
     if (clickable && setResourceOpened && setResource) {
-      setMenuOpened(false)
-      setResourceOpened(true)
       setResource(resource)
+      setMenuOpened(false)
+      setAuthSidebarOpened(false)
+      setResourceOpened(true)
     }
   }
 
@@ -47,10 +56,12 @@ export function ResourceMarker({
     <Marker
       clickable={clickable}
       onClick={handleMarkerClick}
-      position={position}
+      position={localPosition ?? position}
       icon={{
-        url: categorySwitch[category].markerIcon,
-        scaledSize: new window.google.maps.Size(35, 35)
+        url: approved
+          ? categorySwitch[categoryName].markerIcon
+          : '/markers/marker_unapproved.png'
+        // scaledSize: new window.google.maps.Size(20, 28)
       }}
       title={name}
       label={markerLabel() ?? undefined}

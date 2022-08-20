@@ -3,11 +3,18 @@ import { useModals } from '@mantine/modals'
 import { openModalConfirm } from 'components/Modals/ModalConfirrm'
 import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { showToast } from 'components/Shared/ToastMessage'
+import { useAuth } from 'contexts/authContext'
+import { useSidebar } from 'contexts/sidebarContext'
+import { deleteCookie } from 'cookies-next'
+import { deleteUser } from 'lib/usersLib'
 import { BsExclamationCircle } from 'react-icons/bs'
 import { FaUserTimes } from 'react-icons/fa'
 
 export function DeleteUserButton() {
   const { openConfirmModal, closeModal } = useModals()
+  const { user, setUser, authUserCookieName } = useAuth()
+
+  const { setProfileOpened } = useSidebar()
 
   const theme = useMantineTheme()
 
@@ -15,6 +22,23 @@ export function DeleteUserButton() {
   const dark = colorScheme === 'dark'
 
   const { classes } = useModalStyles(dark)
+
+  const handleOnConfirm = async () => {
+    await deleteUser(+user!.id)
+
+    setProfileOpened(false)
+
+    deleteCookie(authUserCookieName)
+
+    setUser(null)
+
+    showToast({
+      title: 'Sua conta foi excluída!',
+      description: 'É uma pena vermos você ir 😕',
+      icon: <FaUserTimes size={24} color={theme.colors.brand[7]} />,
+      dark
+    })
+  }
 
   return (
     <Button
@@ -26,13 +50,7 @@ export function DeleteUserButton() {
         openModalConfirm({
           title: 'Quer mesmo excluir sua conta?',
           description: 'Não é possível recuperar sua conta após a exclusão!',
-          onConfirm: () =>
-            showToast({
-              title: 'Sua conta foi excluída!',
-              description: 'É uma pena vermos você ir 😕',
-              icon: <FaUserTimes size={24} color={theme.colors.brand[7]} />,
-              dark
-            }),
+          onConfirm: () => handleOnConfirm(),
           openConfirmModal,
           closeModal,
           classes,

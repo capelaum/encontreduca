@@ -1,11 +1,11 @@
 :root {
   $color-primary: rgb(102, 217, 232);
   $color-secondary: rgb(40, 44, 77);
-  $color-dark-blue: hsl(233, 55%, 16%);
+  $color-dark-blue: rgb(18, 24, 63);
 }
 
 .markerLabel {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(18, 24, 63, 0.9);
   padding: 0.125rem 0.25rem;
 
   border-radius: 0.25rem;

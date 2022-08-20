@@ -6,43 +6,64 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { DefaultDropzone } from 'components/Shared/DefaultDropzone'
-import { useSidebar } from 'contexts/sidebarContext'
-import { useState } from 'react'
+import { UseFormReturnType } from '@mantine/form'
+import { DefaultDropzone } from 'components/Shared/Default/DefaultDropzone'
+import { useEffect, useState } from 'react'
 import { TbPhoto } from 'react-icons/tb'
+import { ProfileFormValues, ResourceFormValues } from 'types/forms'
 
-export function CoverDropzone() {
-  const { resource } = useSidebar()
+interface CoverDropzoneProps {
+  form: UseFormReturnType<ResourceFormValues>
+  resourceCover: string | null
+  setHasPreview: (hasPreview: boolean) => void
+  setImageBase64: (image: string | ArrayBuffer | null) => void
+}
+
+export function CoverDropzone({
+  form,
+  resourceCover,
+  setImageBase64,
+  setHasPreview
+}: CoverDropzoneProps) {
+  const [preview, setPreview] = useState<string | null>(null)
 
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const [coverSrc, setCoverSrc] = useState<string | null>(null)
+  useEffect(() => {
+    if (preview) {
+      setHasPreview(true)
+    }
+  }, [preview])
 
   const containerStyles = (): CSSObject => ({
-    height: 200
+    height: 200,
+    width: '370px'
   })
 
   return (
     <DefaultDropzone
       name="cover"
       radius="md"
+      form={form as UseFormReturnType<ResourceFormValues | ProfileFormValues>}
+      setPreview={setPreview}
+      setImageBase64={setImageBase64}
       containerStyles={containerStyles}
-      setImage={setCoverSrc}
     >
-      {coverSrc || resource?.cover ? (
+      {preview || resourceCover ? (
         <Image
           height={200}
           radius="md"
-          src={coverSrc ?? resource?.cover}
+          src={preview ?? resourceCover ?? ''}
           alt="Imagem de capa do recurso"
           title="Imagem de capa do recurso"
           sx={{
             borderRadius: 'md',
             objectFit: 'cover',
-            objectPosition: 'center'
+            objectPosition: 'center',
+            width: '100%'
           }}
         />
       ) : (

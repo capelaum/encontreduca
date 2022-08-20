@@ -5,13 +5,23 @@ import {
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
-import data from 'data/motives.json'
+import { useResource } from 'contexts/resourceContext'
 import { MdWarning } from 'react-icons/md'
-import { getModalSelectDataMotives } from 'utils/modalSelecDataFormatter'
+import { Review } from 'types/reviews'
+import { getMotivesSelectData } from 'utils/modalSelecDataFormatter'
 import { ActionItem } from '../ActionItem'
 
-export function ReviewComplain() {
-  const reviewMotives = getModalSelectDataMotives(data.motives, 'review')
+interface ReviewComplaintProps {
+  review: Review
+}
+
+export function ReviewComplaint({ review }: ReviewComplaintProps) {
+  const { motives } = useResource()
+
+  const reviewComplaintMotives = getMotivesSelectData(
+    motives,
+    'review_complaint'
+  )
   const { openContextModal } = useModals()
 
   const theme = useMantineTheme()
@@ -26,7 +36,11 @@ export function ReviewComplain() {
       title: <Title name="Denunciar avaliação" isModal />,
       classNames: classes,
       ...modalStyles,
-      innerProps: { data: reviewMotives, isReviewComplaint: true }
+      innerProps: {
+        motives: reviewComplaintMotives,
+        isReviewComplaint: true,
+        review
+      }
     })
   }
 

@@ -8,13 +8,21 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { MdInfoOutline } from 'react-icons/md'
-import { DefaultAvatar } from './DefaultAvatar'
+import { DefaultAvatar } from './Default/DefaultAvatar'
 
 interface ProfileProps {
   isModal?: boolean
+  author: string
+  authorAvatar: string | null
+  authorReviewCount?: number
 }
 
-export function Profile({ isModal }: ProfileProps) {
+export function Profile({
+  isModal,
+  author,
+  authorAvatar,
+  authorReviewCount
+}: ProfileProps) {
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -58,9 +66,15 @@ export function Profile({ isModal }: ProfileProps) {
     </Group>
   )
 
+  const renderReviewCount = () => {
+    if (authorReviewCount === 0) return 'Sem avaliações'
+    if (authorReviewCount === 1) return '1 avaliação'
+    return `${authorReviewCount} avaliações`
+  }
+
   return (
     <Group spacing="sm" align="center">
-      <DefaultAvatar size={35} />
+      <DefaultAvatar size={35} avatarSrc={authorAvatar} />
 
       <Stack spacing={0}>
         <Text
@@ -70,7 +84,7 @@ export function Profile({ isModal }: ProfileProps) {
             color: dark ? theme.colors.cyan[3] : theme.colors.brand[7]
           }}
         >
-          Nome Completo
+          {author}
         </Text>
 
         {isModal ? (
@@ -83,7 +97,7 @@ export function Profile({ isModal }: ProfileProps) {
               lineHeight: 1.5
             }}
           >
-            10 avaliações
+            {renderReviewCount()}
           </Text>
         )}
       </Stack>

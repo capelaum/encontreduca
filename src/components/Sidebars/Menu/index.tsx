@@ -1,18 +1,20 @@
 import { Space, Stack, useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { ModalSupport } from 'components/Modals/ModalSupport'
-import { DefaultCloseButton } from 'components/Shared/DefaultCloseButton'
+import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
 import {
   modalStyles,
   useModalStyles
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
+import { useAuth } from 'contexts/authContext'
+import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useRouter } from 'next/router'
 import { AiFillHome } from 'react-icons/ai'
 import { BsBookmarksFill, BsPlusCircleFill } from 'react-icons/bs'
 import { GiStarsStack } from 'react-icons/gi'
-import { MdHelp, MdLogout } from 'react-icons/md'
+import { MdHelp, MdLogin, MdLogout } from 'react-icons/md'
 import { MenuButton } from './MenuButton'
 import { MenuProfile } from './MenuProfile'
 
@@ -25,9 +27,12 @@ export function Menu() {
     setCreateResourceOpened,
     setSavedResourcesOpened,
     setVotingPanelOpened,
-    setResource,
-    setResourceOpened
+    setResourceOpened,
+    setAuthSidebarOpened
   } = useSidebar()
+
+  const { setResource } = useResource()
+  const { user, logout } = useAuth()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
@@ -65,41 +70,61 @@ export function Menu() {
           }}
         />
 
-        <MenuButton
-          icon={<BsBookmarksFill size={20} />}
-          text="Recursos salvos"
-          onClick={() => {
-            setSavedResourcesOpened(true)
-            setResourceOpened(false)
-          }}
-        />
+        {user && (
+          <>
+            <MenuButton
+              icon={<BsBookmarksFill size={20} />}
+              text="Recursos salvos"
+              onClick={() => {
+                setSavedResourcesOpened(true)
+                setResourceOpened(false)
+              }}
+            />
 
-        <MenuButton
-          icon={<BsPlusCircleFill size={20} />}
-          text="Cadastrar recurso"
-          onClick={() => {
-            setCreateResourceOpened(true)
-            setResourceOpened(false)
-            setResource(null)
-          }}
-        />
+            <MenuButton
+              icon={<BsPlusCircleFill size={20} />}
+              text="Cadastrar recurso"
+              onClick={() => {
+                setResource(null)
+                setResourceOpened(false)
+                setCreateResourceOpened(true)
+              }}
+            />
 
-        <MenuButton
-          icon={<GiStarsStack size={20} />}
-          text="Painel de votação"
-          onClick={() => {
-            setVotingPanelOpened(true)
-            setResourceOpened(false)
-          }}
-        />
+            <MenuButton
+              icon={<GiStarsStack size={20} />}
+              text="Painel de votação"
+              onClick={() => {
+                setVotingPanelOpened(true)
+                setResourceOpened(false)
+              }}
+            />
 
-        <MenuButton
-          icon={<MdHelp size={20} />}
-          text="Suporte"
-          onClick={openModalSupport}
-        />
+            <MenuButton
+              icon={<MdHelp size={20} />}
+              text="Suporte"
+              onClick={openModalSupport}
+            />
 
-        <MenuButton icon={<MdLogout size={20} />} text="Sair" />
+            <MenuButton
+              icon={<MdLogout size={20} />}
+              text="Sair"
+              onClick={() => {
+                logout()
+              }}
+            />
+          </>
+        )}
+
+        {!user && (
+          <MenuButton
+            icon={<MdLogin size={20} />}
+            text="Fazer login"
+            onClick={() => {
+              setAuthSidebarOpened(true)
+            }}
+          />
+        )}
       </Stack>
     </>
   )

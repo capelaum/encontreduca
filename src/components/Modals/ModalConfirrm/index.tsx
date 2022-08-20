@@ -1,6 +1,6 @@
 import { MantineTheme, Text } from '@mantine/core'
 import { OpenConfirmModal } from '@mantine/modals/lib/context'
-import { DefaultCloseButton } from 'components/Shared/DefaultCloseButton'
+import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
 import { Title } from 'components/Shared/Title'
 import { modalStyles } from '../../Shared/styles/modalStyles'
 
@@ -8,6 +8,7 @@ interface OpenModalReviewDeleteProps {
   title: string
   description: string
   onConfirm: () => void
+  onCancel?: () => void
   openConfirmModal: (props: OpenConfirmModal) => string
   closeModal: (id: string, canceled?: boolean | undefined) => void
   classes: Record<'modal', string>
@@ -19,6 +20,7 @@ export const openModalConfirm = ({
   title,
   description,
   onConfirm,
+  onCancel,
   openConfirmModal,
   closeModal,
   classes,
@@ -65,9 +67,13 @@ export const openModalConfirm = ({
         }
       }
     },
-    onCancel: () => closeModal(id),
-    onConfirm: () => {
+    onCancel: () => {
       closeModal(id)
+      if (onCancel) {
+        onCancel()
+      }
+    },
+    onConfirm: () => {
       onConfirm()
     }
   })

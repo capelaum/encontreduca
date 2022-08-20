@@ -1,14 +1,15 @@
 import {
+  Box,
   Divider,
-  Group,
   Stack,
-  Text,
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { useSidebar } from 'contexts/sidebarContext'
+import { useResource } from 'contexts/resourceContext'
+import Link from 'next/link'
 import { MdLocalPhone, MdPlace } from 'react-icons/md'
 import { TbWorld } from 'react-icons/tb'
+import { InfoItem } from './InfoItem'
 
 export function Info() {
   const theme = useMantineTheme()
@@ -16,51 +17,62 @@ export function Info() {
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const { resource } = useSidebar()
+  const { resource } = useResource()
   const { address, website, phone } = resource!
 
   return (
     <>
       <Divider
-        my="md"
+        mt="md"
         size="xs"
         color="none"
         sx={{ color: dark ? theme.colors.gray[6] : theme.colors.gray[4] }}
       />
-      <Stack px="md" spacing="md">
-        <Group spacing={16} align="center" noWrap>
-          <MdPlace
-            size={24}
-            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-          />
-          <Text size="sm" sx={{ maxWidth: '320px', fontWeight: 600 }}>
-            {address}
-          </Text>
-        </Group>
+      <Stack spacing={0}>
+        <InfoItem
+          type="address"
+          text={address}
+          icon={
+            <MdPlace
+              size={24}
+              color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+            />
+          }
+        />
 
-        <Group spacing={16} align="center">
-          <TbWorld
-            size={24}
-            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
-          />
-          <Text size="sm" sx={{ maxWidth: '320px', fontWeight: 600 }}>
-            {website}
-          </Text>
-        </Group>
+        {website && (
+          <Link href={website} passHref>
+            <Box component="a" target="_blank" sx={{ textDecoration: 'none' }}>
+              <InfoItem
+                type="website"
+                text={website}
+                icon={
+                  <TbWorld
+                    size={24}
+                    color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+                  />
+                }
+              />
+            </Box>
+          </Link>
+        )}
 
-        <Group spacing={16} align="center">
-          <MdLocalPhone
-            size={24}
-            color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+        {phone && (
+          <InfoItem
+            type="phone"
+            text={phone}
+            icon={
+              <MdLocalPhone
+                size={24}
+                color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
+              />
+            }
           />
-          <Text size="sm" sx={{ maxWidth: '320px', fontWeight: 600 }}>
-            {phone}
-          </Text>
-        </Group>
+        )}
       </Stack>
 
       <Divider
-        my="md"
+        mb="md"
         size="xs"
         color="none"
         sx={{ color: dark ? theme.colors.gray[6] : theme.colors.gray[4] }}
