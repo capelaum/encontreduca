@@ -1,6 +1,5 @@
 import { Box, Stack, Text } from '@mantine/core'
 import { useResource } from 'contexts/resourceContext'
-import { useSidebar } from 'contexts/sidebarContext'
 import { ActionButtons } from './ActionButtons'
 import { Cover } from './Cover'
 import { Header } from './Header'
@@ -9,12 +8,10 @@ import { ResourceSkeleton } from './ResourceSkeleton'
 import { Reviews } from './Reviews'
 
 export function Resource() {
-  const { setResourceOpened } = useSidebar()
   const { resource, resourceReviews, isFetchingResourceData } = useResource()
 
   if (!resource) {
-    setResourceOpened(false)
-    return <Text px="md">Ooops, selecione um recurso!</Text>
+    return <Text px="md">Ooops, por favor selecione um recurso...</Text>
   }
 
   if (isFetchingResourceData) {

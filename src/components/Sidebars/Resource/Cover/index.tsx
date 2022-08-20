@@ -1,9 +1,12 @@
 import { Image, Stack } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { useResource } from 'contexts/resourceContext'
 import { Author } from './Author'
 import { ReviewStats } from './ReviewStats'
 
 export function Cover() {
+  const largeScreen = useMediaQuery('(min-width: 768px)', false)
+
   const { resource } = useResource()
 
   return (
@@ -12,9 +15,9 @@ export function Cover() {
         fit="cover"
         sx={{
           borderRadius: '7px',
-          maxWidth: '380px',
-          maxHeight: '200px',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          maxWidth: largeScreen ? '380px' : '100%',
+          maxHeight: largeScreen ? '200px' : '300px'
         }}
         withPlaceholder
         src={resource!.cover}

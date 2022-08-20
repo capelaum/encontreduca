@@ -111,20 +111,35 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }, [resource])
 
   useEffect(() => {
-    setResourceReviews(resourceReviewsData!)
-    setResourceVotes(resourceVotesData!)
+    if (resourceReviewsData) {
+      setResourceReviews(resourceReviewsData)
+    }
+
+    if (resourceVotesData) {
+      setResourceVotes(resourceVotesData)
+    }
   }, [resourceReviewsData, resourceVotesData])
 
-  const getUserResources = () =>
-    resources!.filter(
+  const getUserResources = () => {
+    if (!resources) return []
+
+    return resources.filter(
       ({ id, approved }) => approved && user && user.resourcesIds.includes(+id)
     )
+  }
 
-  const getNotApprovedResources = () =>
-    resources!.filter(({ approved }) => !approved).sort((a, b) => +b.id - +a.id)
+  const getNotApprovedResources = () => {
+    if (!resources) return []
 
-  const filterResources = () => {
-    const filteredResources = resources!.filter(
+    return resources
+      .filter(({ approved }) => !approved)
+      .sort((a, b) => +b.id - +a.id)
+  }
+
+  const filterResources = (): ResourceType[] => {
+    if (!resources) return []
+
+    const filteredResources = resources.filter(
       ({ approved, categoryName, id }) => {
         if (!activeFilter) {
           if (votingPanelOpened) return !approved
@@ -148,8 +163,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getAverageRating = (reviews: Review[]) => {
-    if (!reviews) return 0
-    if (reviews.length === 0) return 0
+    if (!reviews || reviews.length === 0) return 0
 
     const average =
       reviews.reduce((acc, { rating }) => acc + rating, 0) / reviews.length
@@ -158,7 +172,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getUserResourceReview = (reviews: Review[] | null) => {
-    if (!reviews) return null
+    if (!reviews || reviews.length === 0) return null
 
     const userReview = reviews.find(({ userId }) => userId === user?.id)
 
@@ -166,7 +180,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getReviewsWithoutUser = (reviews: Review[] | null) => {
-    if (!reviews) return []
+    if (!reviews || reviews.length === 0) return []
 
     const reviewsWithoutUser = reviews.filter(
       ({ userId }) => userId !== user?.id
@@ -176,7 +190,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getUseResourceVote = (votes: ResourceVote[]) => {
-    if (!votes) return null
+    if (!votes || votes.length === 0) return null
 
     const userVote = votes.find(({ userId }) => userId === user?.id)
 
