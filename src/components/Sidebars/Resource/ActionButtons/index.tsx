@@ -1,7 +1,7 @@
 import { Box, Group } from '@mantine/core'
 import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
-import { MdDirections } from 'react-icons/md'
+import { MdOutlineDirections } from 'react-icons/md'
 import { ActionButton } from './ActionButton'
 import { ResourceChange } from './ModalActions/ResourceChange'
 import { ResourceVote } from './ModalActions/ResourceVote'
@@ -24,26 +24,26 @@ export function ActionButtons() {
 
   return (
     <Group spacing={32} align="start" mt="md">
+      {user && (
+        <>
+          <ResourceChange />
+
+          {!userResourceReview && <ReviewCreate />}
+
+          {resource.approved ? <ResourceSave /> : null}
+
+          {!resource.approved && <ResourceVote />}
+        </>
+      )}
+
       <Box
         href={directions}
         component="a"
         target="_blank"
         sx={{ textDecoration: 'none' }}
       >
-        <ActionButton text="Rotas" icon={<MdDirections size={28} />} />
+        <ActionButton text="Rotas" icon={<MdOutlineDirections size={28} />} />
       </Box>
-
-      {user && (
-        <>
-          {resource.approved ? <ResourceSave /> : null}
-
-          <ResourceChange />
-
-          {!userResourceReview && <ReviewCreate />}
-
-          {!resource.approved && <ResourceVote />}
-        </>
-      )}
     </Group>
   )
 }
