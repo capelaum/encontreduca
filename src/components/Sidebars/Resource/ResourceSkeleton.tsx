@@ -9,11 +9,8 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { useResource } from 'contexts/resourceContext'
 
 export function ResourceSkeleton() {
-  const { resource } = useResource()
-
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
@@ -30,7 +27,7 @@ export function ResourceSkeleton() {
 
   return (
     <>
-      <Stack mt={resource!.approved ? 88 : 'md'} px="md" spacing="md">
+      <Stack mt={88} px="md" spacing="md">
         <Skeleton height={28} radius="lg" sx={skeletonStyles} />
         <Skeleton height={18} width="40%" radius="lg" sx={skeletonStyles} />
         <Stack spacing={16}>
