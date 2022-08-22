@@ -5,10 +5,12 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
+import { DefaultLoadMoreButton } from 'components/Shared/Default/DefaultLoadMoreButton'
 import { SearchResources } from 'components/Shared/Search/SearchResources'
 import { SidebarHeader } from 'components/Shared/SidebarHeader'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
+import { useState } from 'react'
 import { ResourceItem } from './ResourceItem'
 
 interface ResourceListProps {
@@ -16,6 +18,8 @@ interface ResourceListProps {
 }
 
 export function ResourceList({ isVotingPainel }: ResourceListProps) {
+  const [end, setEnd] = useState(30)
+
   const { setSavedResourcesOpened, setVotingPanelOpened } = useSidebar()
   const { filterResources } = useResource()
 
@@ -35,14 +39,14 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
   function renderResourceItems() {
     if (isVotingPainel) {
       return notApprovedResources
-        .slice(0, 30)
+        .slice(0, end)
         .map((resource) => (
           <ResourceItem key={`resource-${resource.id}`} resource={resource} />
         ))
     }
 
     return userResources
-      .slice(0, 30)
+      .slice(0, end)
       .map((resource) => (
         <ResourceItem key={`resource-${resource.id}`} resource={resource} />
       ))
@@ -97,6 +101,15 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
           {renderResourceItems()}
         </Stack>
       </Stack>
+
+      {notApprovedResources.length - end > 0 && (
+        <DefaultLoadMoreButton
+          end={end}
+          step={30}
+          setEnd={setEnd}
+          data={notApprovedResources}
+        />
+      )}
     </Stack>
   )
 }

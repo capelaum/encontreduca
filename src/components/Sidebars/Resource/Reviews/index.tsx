@@ -1,17 +1,13 @@
-import {
-  Box,
-  Button,
-  Center,
-  Stack,
-  useMantineColorScheme,
-  useMantineTheme
-} from '@mantine/core'
+import { Box, Stack } from '@mantine/core'
+import { DefaultLoadMoreButton } from 'components/Shared/Default/DefaultLoadMoreButton'
 import { useResource } from 'contexts/resourceContext'
 import { useEffect, useState } from 'react'
 import { SectionTitle } from './SectionTitle'
 import { UserReview } from './UserReview'
 
 export function Reviews() {
+  const [end, setEnd] = useState(3)
+
   const {
     resource,
     resourceReviews,
@@ -22,13 +18,6 @@ export function Reviews() {
   const userResourceReview = getUserResourceReview(resourceReviews)
 
   const reviewsWithoutUser = getReviewsWithoutUser(resourceReviews)
-
-  const theme = useMantineTheme()
-
-  const { colorScheme } = useMantineColorScheme()
-  const dark = colorScheme === 'dark'
-
-  const [end, setEnd] = useState(3)
 
   useEffect(() => {
     setEnd(3)
@@ -52,24 +41,12 @@ export function Reviews() {
       </Stack>
 
       {reviewsWithoutUser.length - end > 0 && (
-        <Center mb={32}>
-          <Button
-            variant="subtle"
-            compact
-            size="sm"
-            onClick={() => setEnd(() => end + 3)}
-            sx={{
-              color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],
-              '&:hover': {
-                backgroundColor: dark
-                  ? theme.colors.brand[8]
-                  : theme.colors.gray[1]
-              }
-            }}
-          >
-            Mais avalições ({reviewsWithoutUser.length - 3})
-          </Button>
-        </Center>
+        <DefaultLoadMoreButton
+          end={end}
+          step={3}
+          setEnd={setEnd}
+          data={reviewsWithoutUser}
+        />
       )}
     </Box>
   )
