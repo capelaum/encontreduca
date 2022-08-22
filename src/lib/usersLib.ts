@@ -1,12 +1,24 @@
+import { deleteCookie, hasCookie } from 'cookies-next'
 import { api } from 'services/api'
 import { UpdatedUser, User } from 'types/users'
 
 export async function getAuthUser() {
-  const response = await api.get('user')
+  try {
+    const response = await api.get('user')
 
-  const { data }: { data: User } = response
+    if (response.status !== 200) {
+      throw new Error('User not found')
+    }
 
-  return data
+    const { data }: { data: User } = response
+
+    return data
+  } catch (error) {
+    if (hasCookie('encontreduca_user_auth')) {
+      deleteCookie('encontreduca_user_auth')
+    }
+    return null
+  }
 }
 
 export async function getUser(userId: number): Promise<User | null> {
