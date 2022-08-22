@@ -6,7 +6,6 @@ import {
   mapOptionsLight
 } from 'config/mapOptions'
 import { useMap } from 'contexts/mapContext'
-import { useResource } from 'contexts/resourceContext'
 import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
 import { SideButtons } from './SideButtons'
@@ -19,14 +18,13 @@ export function MapLight() {
     onIdle,
     onMapLoad,
     onUnmount,
+    onTilesLoaded,
+    visibleResources,
     isCurrentLocationAllowed
   } = useMap()
 
-  const { filterResources } = useResource()
-  const filteredResources = filterResources()
-
   function renderResourcesMarkers(clusterer: any) {
-    return filteredResources.map((resource) => (
+    return visibleResources.map((resource) => (
       <ResourceMarker
         key={`resourceMarker-${resource.id}`}
         resource={resource}
@@ -46,6 +44,7 @@ export function MapLight() {
         onIdle={onIdle}
         onLoad={onMapLoad}
         onUnmount={onUnmount}
+        onTilesLoaded={onTilesLoaded}
         mapContainerStyle={mapContainerStyle}
       >
         {isCurrentLocationAllowed && (
@@ -58,7 +57,12 @@ export function MapLight() {
           />
         )}
 
-        <MarkerClusterer averageCenter maxZoom={13} options={ClustererOtions}>
+        <MarkerClusterer
+          averageCenter
+          maxZoom={14}
+          options={ClustererOtions}
+          minimumClusterSize={3}
+        >
           {(clusterer) => <>{renderResourcesMarkers(clusterer)}</>}
         </MarkerClusterer>
       </GoogleMap>

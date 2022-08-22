@@ -6,7 +6,6 @@ import {
   mapOptions
 } from 'config/mapOptions'
 import { useMap } from 'contexts/mapContext'
-import { useResource } from 'contexts/resourceContext'
 import { ResourceMarker } from './ResourceMarker'
 import { Search } from './Search'
 import { SideButtons } from './SideButtons'
@@ -19,14 +18,13 @@ export default function MapDark() {
     onIdle,
     onMapLoad,
     onUnmount,
+    onTilesLoaded,
+    visibleResources,
     isCurrentLocationAllowed
   } = useMap()
 
-  const { filterResources } = useResource()
-  const filteredResources = filterResources()
-
-  function renderResourcesMarkers(clusterer: any) {
-    return filteredResources.map((resource) => (
+  function renderResourcesMarkers(clusterer: MarkerClusterer | undefined) {
+    return visibleResources.map((resource) => (
       <ResourceMarker
         key={`resourceMarker-${resource.id}`}
         resource={resource}
@@ -45,6 +43,7 @@ export default function MapDark() {
         options={mapOptions}
         onIdle={onIdle}
         onLoad={onMapLoad}
+        onTilesLoaded={onTilesLoaded}
         onUnmount={onUnmount}
         mapContainerStyle={mapContainerStyle}
       >
@@ -59,8 +58,13 @@ export default function MapDark() {
           />
         )}
 
-        <MarkerClusterer averageCenter maxZoom={13} options={ClustererOtions}>
-          {(clusterer) => <>{renderResourcesMarkers(clusterer)}</>}
+        <MarkerClusterer
+          averageCenter
+          maxZoom={14}
+          options={ClustererOtions}
+          minimumClusterSize={3}
+        >
+          {(clusterer) => <>{renderResourcesMarkers(clusterer as any)}</>}
         </MarkerClusterer>
       </GoogleMap>
 

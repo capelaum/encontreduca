@@ -1,5 +1,5 @@
 import { useMantineTheme } from '@mantine/core'
-import { Marker } from '@react-google-maps/api'
+import { Marker, MarkerClusterer } from '@react-google-maps/api'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
@@ -12,7 +12,7 @@ interface ResourceMarkerProps {
   resource: ResourceType
   localPosition?: LatLngLiteral
   clickable?: boolean
-  clusterer: any
+  clusterer: MarkerClusterer | undefined
 }
 
 export function ResourceMarker({
@@ -72,7 +72,7 @@ export function ResourceMarker({
       clickable={clickable}
       onClick={handleMarkerClick}
       position={localPosition ?? position}
-      clusterer={clusterer}
+      clusterer={clusterer as any}
       icon={{
         url: markerIcon()
         // scaledSize: new window.google.maps.Size(20, 28)
