@@ -34,14 +34,18 @@ export function ResourceList({ isVotingPainel }: ResourceListProps) {
 
   function renderResourceItems() {
     if (isVotingPainel) {
-      return notApprovedResources.map((resource) => (
-        <ResourceItem key={`resource-${resource.id}`} resource={resource} />
-      ))
+      return notApprovedResources
+        .slice(0, 30)
+        .map((resource) => (
+          <ResourceItem key={`resource-${resource.id}`} resource={resource} />
+        ))
     }
 
-    return userResources.map((resource) => (
-      <ResourceItem key={`resource-${resource.id}`} resource={resource} />
-    ))
+    return userResources
+      .slice(0, 30)
+      .map((resource) => (
+        <ResourceItem key={`resource-${resource.id}`} resource={resource} />
+      ))
   }
 
   return (

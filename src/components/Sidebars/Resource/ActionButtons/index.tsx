@@ -16,11 +16,9 @@ export function ActionButtons() {
     return null
   }
 
-  const {
-    position: { lat, lng }
-  } = resource
+  const { latitude, longitude } = resource
 
-  const directions = `https://www.google.com/maps/dir//${lat},${lng}/@${lat},${lng},14z`
+  const directions = `https://www.google.com/maps/dir//${latitude},${longitude}/@${latitude},${longitude},14z`
 
   return (
     <Group spacing={32} align="start" mt="md">

@@ -1,6 +1,10 @@
 import { Box } from '@mantine/core'
-import { GoogleMap, Marker } from '@react-google-maps/api'
-import { mapContainerStyle, mapOptions } from 'config/mapOptions'
+import { GoogleMap, Marker, MarkerClusterer } from '@react-google-maps/api'
+import {
+  ClustererOtions,
+  mapContainerStyle,
+  mapOptions
+} from 'config/mapOptions'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { ResourceMarker } from './ResourceMarker'
@@ -21,11 +25,12 @@ export default function MapDark() {
   const { filterResources } = useResource()
   const filteredResources = filterResources()
 
-  function renderResourcesMarkers() {
+  function renderResourcesMarkers(clusterer: any) {
     return filteredResources.map((resource) => (
       <ResourceMarker
         key={`resourceMarker-${resource.id}`}
         resource={resource}
+        clusterer={clusterer}
       />
     ))
   }
@@ -54,7 +59,9 @@ export default function MapDark() {
           />
         )}
 
-        {renderResourcesMarkers()}
+        <MarkerClusterer averageCenter maxZoom={13} options={ClustererOtions}>
+          {(clusterer) => <>{renderResourcesMarkers(clusterer)}</>}
+        </MarkerClusterer>
       </GoogleMap>
 
       <SideButtons />

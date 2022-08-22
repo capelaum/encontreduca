@@ -12,15 +12,17 @@ interface ResourceMarkerProps {
   resource: ResourceType
   localPosition?: LatLngLiteral
   clickable?: boolean
+  clusterer: any
 }
 
 export function ResourceMarker({
   resource,
   localPosition,
-  clickable = true
+  clickable = true,
+  clusterer
 }: ResourceMarkerProps) {
   const { zoom } = useMap()
-  const { setResource } = useResource()
+  const { setResource, resource: selectedResource } = useResource()
   const { setResourceOpened, setMenuOpened, setAuthSidebarOpened } =
     useSidebar()
 
@@ -28,6 +30,7 @@ export function ResourceMarker({
 
   const { name, categoryName, position, approved } = resource
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const markerLabel = (): MarkerLabel | null => {
     if (zoom > 15) {
       return {
@@ -52,19 +55,30 @@ export function ResourceMarker({
     }
   }
 
+  const markerIcon = () => {
+    if (selectedResource?.id === resource.id) {
+      return '/markers/marker.svg'
+    }
+
+    if (approved) {
+      return categorySwitch[categoryName].markerIcon
+    }
+
+    return '/markers/marker_unapproved.png'
+  }
+
   return (
     <Marker
       clickable={clickable}
       onClick={handleMarkerClick}
       position={localPosition ?? position}
+      clusterer={clusterer}
       icon={{
-        url: approved
-          ? categorySwitch[categoryName].markerIcon
-          : '/markers/marker_unapproved.png'
+        url: markerIcon()
         // scaledSize: new window.google.maps.Size(20, 28)
       }}
       title={name}
-      label={markerLabel() ?? undefined}
+      // label={markerLabel() ?? undefined}
     />
   )
 }

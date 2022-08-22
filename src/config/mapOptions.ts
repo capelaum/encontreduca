@@ -46,3 +46,8 @@ export const mapContainerStyle = {
   height: '100vh',
   backgroundColor: myTheme.colors!.brand![7]
 }
+
+export const ClustererOtions = {
+  imagePath:
+    'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+}
