@@ -4,8 +4,8 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useState } from 'react'
+import { inputStyles } from 'styles/inputStyles'
 import { PasswordFormTypes } from 'types/forms'
-import { inputStyles } from '../styles/inputStyles'
 import { InputPasswordVisibility } from './InputPasswordVisibility'
 
 interface PasswordGroupProps {

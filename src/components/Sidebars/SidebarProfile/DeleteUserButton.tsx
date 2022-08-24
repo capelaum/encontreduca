@@ -1,7 +1,6 @@
 import { Button, useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { openModalConfirm } from 'components/Modals'
-import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { useAuth } from 'contexts/authContext'
 import { useSidebar } from 'contexts/sidebarContext'
@@ -9,6 +8,7 @@ import { deleteCookie } from 'cookies-next'
 import { deleteUser } from 'lib/usersLib'
 import { BsExclamationCircle } from 'react-icons/bs'
 import { FaUserTimes } from 'react-icons/fa'
+import { useModalStyles } from 'styles/modalStyles'
 
 export function DeleteUserButton() {
   const { openConfirmModal, closeModal } = useModals()

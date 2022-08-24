@@ -8,10 +8,10 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
-import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { useAuth } from 'contexts/authContext'
 import { handleForgotFormErrors } from 'helpers/formErrorsHandlers'
 import { validateEmail } from 'helpers/validate'
+import { buttonStyles, inputStyles } from 'styles/inputStyles'
 import { ForgotPasswordFormValues, FormType } from 'types/forms'
 import { ActionText } from '../ActionText'
 

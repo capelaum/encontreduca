@@ -5,7 +5,7 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { UseFormReturnType } from '@mantine/form'
-import { inputStyles } from 'components/Shared/styles/inputStyles'
+import { inputStyles } from 'styles/inputStyles'
 import { ResourceFormValues } from 'types/resources'
 
 interface ResourceContactProps {

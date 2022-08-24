@@ -7,12 +7,12 @@ import {
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
-import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useAuth } from 'contexts/authContext'
 import { createSupportRequest } from 'lib/supportsLib'
 import { useState } from 'react'
 import { MdOutlineHelp } from 'react-icons/md'
+import { textareaStyles } from 'styles/inputStyles'
 
 interface ModalSupportProps {
   onClose: () => void

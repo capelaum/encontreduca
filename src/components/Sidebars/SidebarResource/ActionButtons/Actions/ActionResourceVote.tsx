@@ -1,12 +1,9 @@
 import { useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
-import {
-  modalStyles,
-  useModalStyles
-} from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { useResource } from 'contexts/resourceContext'
 import { FaRegThumbsUp, FaThumbsDown, FaThumbsUp } from 'react-icons/fa'
+import { modalStyles, useModalStyles } from 'styles/modalStyles'
 import { ActionButton } from './ActionButton'
 
 export function ActionResourceVote() {

@@ -10,11 +10,6 @@ import { useModals } from '@mantine/modals'
 import { ModalEmail } from 'components/Modals'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { PasswordGroup } from 'components/Shared/PasswordGroup'
-import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
-import {
-  modalStyles,
-  useModalStyles
-} from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { useAuth } from 'contexts/authContext'
 import { handleRegisterFormErrors } from 'helpers/formErrorsHandlers'
@@ -23,6 +18,8 @@ import {
   validateEmail,
   validatePassword
 } from 'helpers/validate'
+import { buttonStyles, inputStyles } from 'styles/inputStyles'
+import { modalStyles, useModalStyles } from 'styles/modalStyles'
 import { FormType, PasswordFormTypes, RegisterFormValues } from 'types/forms'
 
 interface RegisterFormProps {

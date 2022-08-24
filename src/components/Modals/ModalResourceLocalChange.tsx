@@ -12,12 +12,12 @@ import {
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
-import { buttonStyles } from 'components/Shared/styles/inputStyles'
 import { showToast } from 'components/Shared/ToastMessage'
 import { mapOptions, mapOptionsLight } from 'config/mapOptions'
 import { useResource } from 'contexts/resourceContext'
 import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation, MdPlace } from 'react-icons/md'
+import { buttonStyles } from 'styles/inputStyles'
 import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
 import { categorySwitch } from 'utils/categorySwitch'
 

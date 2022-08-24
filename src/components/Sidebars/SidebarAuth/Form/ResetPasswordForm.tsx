@@ -8,7 +8,6 @@ import {
 import { useForm } from '@mantine/form'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { PasswordGroup } from 'components/Shared/PasswordGroup'
-import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'
 import { useAuth } from 'contexts/authContext'
 import { handleResetPasswordFormErrors } from 'helpers/formErrorsHandlers'
 import {
@@ -18,6 +17,7 @@ import {
 } from 'helpers/validate'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { buttonStyles, inputStyles } from 'styles/inputStyles'
 import {
   FormType,
   PasswordFormTypes,

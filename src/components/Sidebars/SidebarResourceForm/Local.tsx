@@ -9,14 +9,11 @@ import { useModals } from '@mantine/modals'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import { ResourceMarker } from 'components/Map/ResourceMarker'
 import { ModalResourceLocalChange } from 'components/Modals'
-import {
-  modalStyles,
-  useModalStyles
-} from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { mapOptionsForm, mapOptionsFormLight } from 'config/mapOptions'
 import { useResource } from 'contexts/resourceContext'
 import { MdEditLocationAlt } from 'react-icons/md'
+import { modalStyles, useModalStyles } from 'styles/modalStyles'
 import { LatLngLiteral, libraries } from 'types/googleMaps'
 
 interface LocalProps {

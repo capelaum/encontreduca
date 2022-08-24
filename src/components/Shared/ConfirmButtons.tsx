@@ -4,7 +4,7 @@ import {
   useMantineColorScheme,
   useMantineTheme
 } from '@mantine/core'
-import { buttonStyles } from 'components/Shared/styles/inputStyles'
+import { buttonStyles } from 'styles/inputStyles'
 
 interface ButtonsProps {
   onConfirmType?: 'button' | 'submit' | 'reset' | undefined

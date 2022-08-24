@@ -7,15 +7,12 @@ import {
 import { useModals } from '@mantine/modals'
 import { ModalEmail } from 'components/Modals'
 import { SidebarHeader } from 'components/Shared/Sidebar'
-import {
-  modalStyles,
-  useModalStyles
-} from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { useAuth } from 'contexts/authContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { modalStyles, useModalStyles } from 'styles/modalStyles'
 import { FormType } from 'types/forms'
 import { ActionText } from './ActionText'
 import { ForgotForm } from './Form/ForgotForm'

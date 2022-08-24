@@ -7,13 +7,13 @@ import {
 import { useModals } from '@mantine/modals'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { openModalConfirm } from 'components/Modals'
-import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { showToastError } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'
 import { getResource } from 'lib/resourcesLib'
 import { deleteReview } from 'lib/reviewsLib'
 import { BsTrashFill } from 'react-icons/bs'
 import { toast } from 'react-toastify'
+import { useModalStyles } from 'styles/modalStyles'
 import { ActionItem } from './ActionItem'
 
 interface ReviewDeleteProps {

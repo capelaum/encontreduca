@@ -1,12 +1,9 @@
 import { useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
-import {
-  modalStyles,
-  useModalStyles
-} from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { useResource } from 'contexts/resourceContext'
 import { MdStarBorder } from 'react-icons/md'
+import { modalStyles, useModalStyles } from 'styles/modalStyles'
 import { ActionButton } from './ActionButton'
 
 export function ActionReviewCreate() {

@@ -6,9 +6,9 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { UseFormReturnType } from '@mantine/form'
-import { inputStyles } from 'components/Shared/styles/inputStyles'
 import { useResource } from 'contexts/resourceContext'
 import { TbChevronDown } from 'react-icons/tb'
+import { inputStyles } from 'styles/inputStyles'
 import { ResourceFormValues } from 'types/resources'
 import { getCategoriesSelectData } from 'utils/modalSelecDataFormatter'
 

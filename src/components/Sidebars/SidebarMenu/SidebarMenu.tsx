@@ -2,10 +2,6 @@ import { Space, Stack, useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { ModalSupport } from 'components/Modals'
 import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
-import {
-  modalStyles,
-  useModalStyles
-} from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
@@ -15,6 +11,7 @@ import { AiFillHome } from 'react-icons/ai'
 import { BsBookmarksFill, BsPlusCircleFill } from 'react-icons/bs'
 import { GiStarsStack } from 'react-icons/gi'
 import { MdHelp, MdLogin, MdLogout } from 'react-icons/md'
+import { modalStyles, useModalStyles } from 'styles/modalStyles'
 import { Copy } from './Copy'
 import { MenuButton } from './MenuButton'
 import { MenuProfile } from './MenuProfile'

@@ -1,9 +1,9 @@
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
-import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { useResource } from 'contexts/resourceContext'
 import { MdCancel } from 'react-icons/md'
+import { useModalStyles } from 'styles/modalStyles'
 import { getMotivesSelectData } from 'utils/modalSelecDataFormatter'
 import { ModalResourceChangeButton } from './ModalResourceChangeButton'
 
