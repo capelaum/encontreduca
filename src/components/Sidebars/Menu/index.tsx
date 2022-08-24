@@ -15,6 +15,7 @@ import { AiFillHome } from 'react-icons/ai'
 import { BsBookmarksFill, BsPlusCircleFill } from 'react-icons/bs'
 import { GiStarsStack } from 'react-icons/gi'
 import { MdHelp, MdLogin, MdLogout } from 'react-icons/md'
+import { Copy } from './Copy'
 import { MenuButton } from './MenuButton'
 import { MenuProfile } from './MenuProfile'
 
@@ -62,14 +63,6 @@ export function Menu() {
       <Space h="md" />
 
       <Stack spacing={0}>
-        <MenuButton
-          icon={<AiFillHome size={20} />}
-          text="Home"
-          onClick={() => {
-            router.push('/home')
-          }}
-        />
-
         {user && (
           <>
             <MenuButton
@@ -116,6 +109,14 @@ export function Menu() {
           </>
         )}
 
+        <MenuButton
+          icon={<AiFillHome size={20} />}
+          text="Home"
+          onClick={() => {
+            router.push('/home')
+          }}
+        />
+
         {!user && (
           <MenuButton
             icon={<MdLogin size={20} />}
@@ -126,6 +127,8 @@ export function Menu() {
           />
         )}
       </Stack>
+
+      <Copy />
     </>
   )
 }
