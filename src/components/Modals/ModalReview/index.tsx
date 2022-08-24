@@ -85,9 +85,9 @@ export function ModalReview({
     setIsLoading(true)
 
     try {
-      if (isEdit) {
+      if (isEdit && review) {
         await updateMutation.mutateAsync({
-          id: +review!.id,
+          id: +review.id,
           rating,
           comment
         })
@@ -97,8 +97,7 @@ export function ModalReview({
         await createMutation.mutateAsync({
           comment,
           rating,
-          resourceId: resource!.id,
-          userId: user!.id
+          resourceId: resource!.id
         })
       }
     } catch (error) {

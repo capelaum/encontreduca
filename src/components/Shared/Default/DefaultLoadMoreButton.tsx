@@ -39,7 +39,7 @@ export function DefaultLoadMoreButton({
           }
         }}
       >
-        Mais avalições ({data.length - end})
+        Carregar mais ({data.length - end})
       </Button>
     </Center>
   )

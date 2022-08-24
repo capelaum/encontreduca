@@ -180,7 +180,6 @@ export function ResourceForm({ isCreateResource }: ResourceFormProps) {
     try {
       if (!resource) {
         await createMutation.mutateAsync({
-          userId: user.id,
           name: values.name,
           address: values.address,
           phone: values.phone,

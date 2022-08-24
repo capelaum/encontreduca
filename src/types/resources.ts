@@ -24,24 +24,15 @@ export type ResourceType = {
 
 export type NewResource = Pick<
   ResourceType,
-  | 'userId'
-  | 'categoryId'
-  | 'name'
-  | 'address'
-  | 'position'
-  | 'phone'
-  | 'website'
-  | 'cover'
+  'categoryId' | 'name' | 'address' | 'position' | 'phone' | 'website' | 'cover'
 >
 
 export type NewResourceComplaint = {
-  userId: string | number
   resourceId: string | number
   motiveId: string | number
 }
 
 export type ResourceChange = {
-  userId: string | number
   resourceId: string | number
   field: string
   oldValue: string
@@ -58,7 +49,7 @@ export type ResourceVote = {
 
 export type NewResourceVote = Pick<
   ResourceVote,
-  'userId' | 'resourceId' | 'vote' | 'justification'
+  'resourceId' | 'vote' | 'justification'
 >
 
 export type UpdatedResourceVote = Pick<
