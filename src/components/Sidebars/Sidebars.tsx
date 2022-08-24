@@ -1,11 +1,11 @@
 import { Sidebar } from 'components/Shared/Sidebar'
 import { useSidebar } from 'contexts/sidebarContext'
-import { AuthSidebar } from './AuthSidebar'
-import { Menu } from './Menu'
-import { UpdateProfile } from './Profile'
-import { Resource } from './Resource'
-import { ResourceForm } from './ResourceForm'
-import { ResourceList } from './ResourceList'
+import { SidebarAuth } from './SidebarAuth'
+import { SidebarMenu } from './SidebarMenu'
+import { SidebarProfile } from './SidebarProfile'
+import { SidebarResource } from './SidebarResource'
+import { SidebarResourceForm } from './SidebarResourceForm'
+import { SidebarResourceList } from './SidebarResourceList'
 
 export function Sidebars() {
   const {
@@ -34,11 +34,11 @@ export function Sidebars() {
         setOpened={setResourceOpened}
         zIndex={savedResourcesOpened || votingPanelOpened ? 4 : 1}
       >
-        <Resource />
+        <SidebarResource />
       </Sidebar>
 
       <Sidebar opened={menuOpened} setOpened={setMenuOpened} zIndex={2}>
-        <Menu />
+        <SidebarMenu />
       </Sidebar>
 
       <Sidebar
@@ -46,7 +46,7 @@ export function Sidebars() {
         setOpened={setSavedResourcesOpened}
         zIndex={3}
       >
-        <ResourceList />
+        <SidebarResourceList />
       </Sidebar>
 
       <Sidebar
@@ -54,7 +54,7 @@ export function Sidebars() {
         setOpened={setVotingPanelOpened}
         zIndex={3}
       >
-        <ResourceList isVotingPainel />
+        <SidebarResourceList isVotingPainel />
       </Sidebar>
 
       <Sidebar
@@ -62,7 +62,7 @@ export function Sidebars() {
         setOpened={setChangeResourceOpened}
         zIndex={4}
       >
-        <ResourceForm />
+        <SidebarResourceForm />
       </Sidebar>
 
       <Sidebar
@@ -70,11 +70,11 @@ export function Sidebars() {
         setOpened={setCreateResourceOpened}
         zIndex={4}
       >
-        <ResourceForm isCreateResource />
+        <SidebarResourceForm isCreateResource />
       </Sidebar>
 
       <Sidebar opened={profileOpened} setOpened={setProfileOpened} zIndex={4}>
-        <UpdateProfile />
+        <SidebarProfile />
       </Sidebar>
 
       <Sidebar
@@ -82,7 +82,7 @@ export function Sidebars() {
         setOpened={setAuthSidebarOpened}
         zIndex={4}
       >
-        <AuthSidebar />
+        <SidebarAuth />
       </Sidebar>
     </>
   )

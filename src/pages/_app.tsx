@@ -6,9 +6,8 @@ import {
 import { useHotkeys, useLocalStorage } from '@mantine/hooks'
 import { ModalsProvider } from '@mantine/modals'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ModalReview } from 'components/Modals/ModalReview'
-import { ModalSelect } from 'components/Modals/ModalSelect'
-import { ModalVote } from 'components/Modals/ModalVote'
+import { ModalReview, ModalSelect, ModalVote } from 'components/Modals'
+
 import { MapProvider } from 'contexts/mapContext'
 import { ResourceProvider } from 'contexts/resourceContext'
 import { SidebarProvider } from 'contexts/sidebarContext'
