@@ -65,7 +65,9 @@ export async function deleteUser(userId: number) {
 }
 
 export async function createUserResource(resourceId: number) {
-  const response = await api.post(`users/resources/${resourceId}`)
+  const response = await api.post('resource/user', {
+    resourceId
+  })
 
   const { data } = response
 
@@ -77,9 +79,9 @@ export async function createUserResource(resourceId: number) {
 }
 
 export async function deleteUserResource(resourceId: number) {
-  const response = await api.delete(`users/resources/${resourceId}`)
+  const response = await api.delete(`resource/user/${resourceId}`)
 
-  if (response.status !== 200) {
+  if (response.status !== 204) {
     throw new Error('Something went wrong while deleting user resource')
   }
 

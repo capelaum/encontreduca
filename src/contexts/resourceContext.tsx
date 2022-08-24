@@ -103,9 +103,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     if (resource) {
       ;(async () => {
         setIsFetchingResourceData(true)
-
         await refetchResourceReviews()
-
         setIsFetchingResourceData(false)
       })()
     }
