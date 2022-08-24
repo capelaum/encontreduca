@@ -50,17 +50,11 @@ export function ResourceSave() {
 
     try {
       if (!isSaved) {
-        await createUserResource({
-          userId: +user.id,
-          resourceId: +resource.id
-        })
+        await createUserResource(+resource.id)
       }
 
       if (isSaved) {
-        await deleteUserResource({
-          userId: +user.id,
-          resourceId: +resource.id
-        })
+        await deleteUserResource(+resource.id)
       }
     } catch (error) {
       setIsLoading(false)
