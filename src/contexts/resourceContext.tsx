@@ -92,7 +92,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const { data: resourceVotesData, refetch: refetchResourceVotes } = useQuery(
     ['votes'],
     () => getResourceVotes(+resource!.id),
-    { enabled: !!resource }
+    { enabled: !!resource && !!user }
   )
 
   const handleFetchResourceData = async () => {
@@ -115,7 +115,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
       setResourceReviews(resourceReviewsData)
     }
 
-    if (resourceVotesData) {
+    if (resourceVotesData && user) {
       setResourceVotes(resourceVotesData)
     }
   }, [resourceReviewsData, resourceVotesData])
@@ -252,7 +252,6 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
 
       const resourceChange = await createResourceChange({
         resourceId: resource!.id,
-        userId: user!.id,
         field: key,
         oldValue:
           key === 'position'

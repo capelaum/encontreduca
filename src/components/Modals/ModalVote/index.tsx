@@ -13,7 +13,6 @@ import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { ActionButton } from 'components/Sidebars/Resource/ActionButtons/ActionButton'
-import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import {
   createResourceVote,
@@ -39,7 +38,6 @@ export function ModalVote({
   const { closeModal } = context
 
   const { resource, resourceUserVote, setResource } = useResource()
-  const { user } = useAuth()
 
   const [isLoading, setIsLoading] = useState(false)
   const [justification, setJustification] = useState(
@@ -110,7 +108,6 @@ export function ModalVote({
 
     if (!resourceUserVote) {
       await createMutation.mutateAsync({
-        userId: user!.id,
         resourceId: resource!.id,
         vote: vote === 'Aprovado',
         justification
