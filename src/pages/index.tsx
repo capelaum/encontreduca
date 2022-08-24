@@ -9,7 +9,7 @@ import { Sidebars } from 'components/Sidebars'
 import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { hasCookie } from 'cookies-next'
+import { deleteCookie, hasCookie } from 'cookies-next'
 import { useGetCurrentLocation } from 'hooks/useGetCurrentLocation'
 import { loadCategories } from 'lib/loadCategories'
 import { loadMotives } from 'lib/loadMotives'
@@ -133,6 +133,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const authUser = hasCookie('encontreduca_user_auth', { req, res })
     ? await getAuthUser()
     : null
+
+  if (!authUser && hasCookie('encontreduca_user_auth', { req, res })) {
+    deleteCookie('encontreduca_user_auth', { req, res })
+  }
 
   if (!categories || !motives) {
     return {
