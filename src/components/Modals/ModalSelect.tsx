@@ -10,7 +10,10 @@ import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
-import { createResourceComplaint, createReviewComplaint } from 'lib/complaints'
+import {
+  createResourceComplaint,
+  createReviewComplaint
+} from 'lib/complaintsLib'
 import { useState } from 'react'
 import { IoIosSend } from 'react-icons/io'
 import { TbChevronDown } from 'react-icons/tb'
