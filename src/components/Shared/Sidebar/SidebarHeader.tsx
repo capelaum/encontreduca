@@ -1,6 +1,6 @@
 import { Group } from '@mantine/core'
-import { Back } from './Back'
-import { Title } from './Title'
+import { Back } from '../Back'
+import { Title } from '../Title'
 
 interface SidebarHeaderProps {
   title: string

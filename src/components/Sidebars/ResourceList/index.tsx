@@ -6,8 +6,8 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { DefaultLoadMoreButton } from 'components/Shared/Default/DefaultLoadMoreButton'
-import { SearchResources } from 'components/Shared/Search/SearchResources'
-import { SidebarHeader } from 'components/Shared/SidebarHeader'
+import { SearchResources } from 'components/Shared/SearchResources'
+import { SidebarHeader } from 'components/Shared/Sidebar'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { useState } from 'react'

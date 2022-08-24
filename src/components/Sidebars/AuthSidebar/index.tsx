@@ -6,7 +6,7 @@ import {
 } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { ModalEmail } from 'components/Modals'
-import { SidebarHeader } from 'components/Shared/SidebarHeader'
+import { SidebarHeader } from 'components/Shared/Sidebar'
 import {
   modalStyles,
   useModalStyles

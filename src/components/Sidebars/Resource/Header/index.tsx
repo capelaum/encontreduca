@@ -1,6 +1,6 @@
 import { Stack } from '@mantine/core'
 import { Category } from 'components/Shared/Category'
-import { SidebarHeader } from 'components/Shared/SidebarHeader'
+import { SidebarHeader } from 'components/Shared/Sidebar'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 
