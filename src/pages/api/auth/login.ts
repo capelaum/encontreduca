@@ -18,7 +18,7 @@ export default async function handler(
     const { email, password } = req.body
     const response = await api.post('login', { email, password })
 
-    const { token } = response.data
+    const { token, message } = response.data
 
     setCookie('encontreduca_user_auth', token, {
       req,
@@ -31,7 +31,7 @@ export default async function handler(
     const authUser = await getAuthUser()
 
     res.status(200).json({
-      message: 'Login realizado com sucesso!',
+      message,
       authUser
     })
   } catch (error) {

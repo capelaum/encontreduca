@@ -28,7 +28,8 @@ interface LoginFormProps {
 export function LoginForm({ setFormType }: LoginFormProps) {
   const { login, isAuthLoading, user } = useAuth()
 
-  const { setAuthSidebarOpened } = useSidebar()
+  const { setMenuOpened, setAuthSidebarOpened, setResourceOpened } =
+    useSidebar()
 
   const theme = useMantineTheme()
 
@@ -39,12 +40,14 @@ export function LoginForm({ setFormType }: LoginFormProps) {
     if (user) {
       showToast({
         title: 'Login realizado com sucesso',
-        description: `Bem vindo(a) ${user!.name}`,
+        description: `Bem vindo(a) ${user.name}`,
         icon: <MdDone size={24} color={theme.colors.brand[7]} />,
         dark
       })
 
       setAuthSidebarOpened(false)
+      setMenuOpened(false)
+      setResourceOpened(false)
     }
   }, [user])
 
