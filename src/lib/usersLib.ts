@@ -1,5 +1,6 @@
 import { deleteCookie, hasCookie } from 'cookies-next'
 import { api } from 'services/api'
+import { ResourceVote } from 'types/resources'
 import { UpdatedUser, User } from 'types/users'
 
 export async function getAuthUser() {
@@ -93,4 +94,16 @@ export async function deleteUserAvatar({ userId }: { userId: number }) {
   }
 
   return response
+}
+
+export async function getUserVotes(): Promise<ResourceVote[] | null> {
+  const response = await api.get('users/votes')
+
+  if (response.status !== 200) {
+    throw new Error('Something went wrong while fetching user votes')
+  }
+
+  const { data } = response
+
+  return data
 }

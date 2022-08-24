@@ -6,7 +6,6 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { ContextModalProps } from '@mantine/modals'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
@@ -14,11 +13,8 @@ import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { ActionButton } from 'components/Sidebars/Resource/ActionButtons/ActionButton'
 import { useResource } from 'contexts/resourceContext'
-import {
-  createResourceVote,
-  getResource,
-  updateResourceVote
-} from 'lib/resourcesLib'
+import { createResourceVote, updateResourceVote } from 'lib/resourcesLib'
+import { getUserVotes } from 'lib/usersLib'
 import { useEffect, useState } from 'react'
 import {
   FaRegThumbsDown,
@@ -37,17 +33,17 @@ export function ModalVote({
   const { onConfirmText } = innerProps
   const { closeModal } = context
 
-  const { resource, resourceUserVote, setResource } = useResource()
+  const { resource, userResourceVote, setUserVotes } = useResource()
 
   const [isLoading, setIsLoading] = useState(false)
   const [justification, setJustification] = useState(
-    resourceUserVote ? resourceUserVote.justification : ''
+    userResourceVote ? userResourceVote.justification : ''
   )
   const [vote, setVote] = useState<Vote>(null)
 
   useEffect(() => {
-    if (resourceUserVote) {
-      setVote(resourceUserVote.vote ? 'Aprovado' : 'Reprovado')
+    if (userResourceVote) {
+      setVote(userResourceVote.vote ? 'Aprovado' : 'Reprovado')
     }
   }, [])
 
@@ -55,20 +51,6 @@ export function ModalVote({
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
-
-  const queryClient = useQueryClient()
-
-  const createMutation = useMutation(createResourceVote, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['votes'])
-    }
-  })
-
-  const updateMutation = useMutation(updateResourceVote, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['votes'])
-    }
-  })
 
   const setVoteIcon = (isThumbsUp: boolean) => {
     switch (vote) {
@@ -106,24 +88,24 @@ export function ModalVote({
 
     setIsLoading(true)
 
-    if (!resourceUserVote) {
-      await createMutation.mutateAsync({
+    if (!userResourceVote) {
+      await createResourceVote({
         resourceId: resource!.id,
         vote: vote === 'Aprovado',
         justification
       })
     }
 
-    if (resourceUserVote) {
-      await updateMutation.mutateAsync({
-        id: resourceUserVote.id,
+    if (userResourceVote) {
+      await updateResourceVote({
+        id: userResourceVote.id,
         vote: vote === 'Aprovado',
         justification
       })
     }
 
-    const updatedResource = await getResource(+resource!.id)
-    setResource(updatedResource)
+    const updatedUserVotes = await getUserVotes()
+    setUserVotes(updatedUserVotes ?? [])
 
     setIsLoading(false)
     closeModal(id)

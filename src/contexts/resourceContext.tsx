@@ -3,9 +3,9 @@ import { useQuery } from '@tanstack/react-query'
 import {
   createResourceChange,
   getResourceReviews,
-  getResourceVotes,
   loadResources
 } from 'lib/resourcesLib'
+import { getUserVotes } from 'lib/usersLib'
 import {
   createContext,
   ReactNode,
@@ -41,8 +41,8 @@ interface ResourceContextData {
   setActiveFilter: (activeResource: CategoryFilter | null) => void
   resourceReviews: Review[]
   setResourceReviews: (resourceReviews: Review[]) => void
-  resourceVotes: ResourceVote[]
-  setResourceVotes: (resourceVotes: ResourceVote[]) => void
+  userVotes: ResourceVote[]
+  setUserVotes: (resourceVotes: ResourceVote[]) => void
   filterResources: () => ResourceType[]
   getAverageRating: (reviews: Review[]) => number
   getUserResources: () => ResourceType[]
@@ -55,7 +55,7 @@ interface ResourceContextData {
   ) => Promise<ResourceChange[]>
   userResourceReview: Review | null
   reviewsWithoutUser: Review[]
-  resourceUserVote: ResourceVote | null
+  userResourceVote: ResourceVote | null
   isFetchingResourceData: boolean
   getUserResourceReview: (reviews: Review[]) => Review | null
   getReviewsWithoutUser: (reviews: Review[]) => Review[]
@@ -71,7 +71,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resource, setResource] = useState<ResourceType | null>(null)
   const [activeFilter, setActiveFilter] = useState<CategoryFilter | null>(null)
   const [resourceReviews, setResourceReviews] = useState<Review[]>([])
-  const [resourceVotes, setResourceVotes] = useState<ResourceVote[]>([])
+  const [userVotes, setUserVotes] = useState<ResourceVote[]>([])
 
   const [isFetchingResourceData, setIsFetchingResourceData] = useState(false)
 
@@ -89,24 +89,25 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
       enabled: !!resource
     })
 
-  const { data: resourceVotesData, refetch: refetchResourceVotes } = useQuery(
-    ['votes'],
-    () => getResourceVotes(+resource!.id),
-    { enabled: !!resource && !!user }
-  )
+  useEffect(() => {
+    if (user) {
+      ;(async () => {
+        const resourceVotesData = await getUserVotes()
 
-  const handleFetchResourceData = async () => {
-    setIsFetchingResourceData(true)
-
-    await refetchResourceReviews()
-    await refetchResourceVotes()
-
-    setIsFetchingResourceData(false)
-  }
+        setUserVotes(resourceVotesData ?? [])
+      })()
+    }
+  }, [user])
 
   useEffect(() => {
     if (resource) {
-      handleFetchResourceData()
+      ;(async () => {
+        setIsFetchingResourceData(true)
+
+        await refetchResourceReviews()
+
+        setIsFetchingResourceData(false)
+      })()
     }
   }, [resource])
 
@@ -114,11 +115,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     if (resourceReviewsData) {
       setResourceReviews(resourceReviewsData)
     }
-
-    if (resourceVotesData && user) {
-      setResourceVotes(resourceVotesData)
-    }
-  }, [resourceReviewsData, resourceVotesData])
+  }, [resourceReviewsData])
 
   const getUserResources = () => {
     if (!resources) return []
@@ -184,7 +181,10 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   }
 
   const getUseResourceVote = (votes: ResourceVote[]) => {
-    const userVote = votes.find(({ userId }) => userId === user?.id)
+    const userVote = votes.find(
+      ({ userId, resourceId }) =>
+        userId === user?.id && resourceId === resource?.id
+    )
 
     return userVote ?? null
   }
@@ -193,7 +193,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
 
   const reviewsWithoutUser = getReviewsWithoutUser(resourceReviews)
 
-  const resourceUserVote = getUseResourceVote(resourceVotes)
+  const userResourceVote = getUseResourceVote(userVotes)
 
   const formatPositionAsString = (position: LatLngLiteral) =>
     `${position.lat},${position.lng}`
@@ -280,8 +280,8 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     setActiveFilter,
     resourceReviews,
     setResourceReviews,
-    resourceVotes,
-    setResourceVotes,
+    userVotes,
+    setUserVotes,
     getAverageRating,
     filterResources,
     getUserResources,
@@ -290,7 +290,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     createResourceChanges,
     userResourceReview,
     reviewsWithoutUser,
-    resourceUserVote,
+    userResourceVote,
     isFetchingResourceData,
     getUserResourceReview,
     getReviewsWithoutUser

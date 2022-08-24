@@ -6,13 +6,13 @@ import {
 } from 'components/Shared/styles/modalStyles'
 import { Title } from 'components/Shared/Title'
 import { useResource } from 'contexts/resourceContext'
-import { FaRegThumbsUp, FaThumbsUp } from 'react-icons/fa'
+import { FaRegThumbsUp, FaThumbsDown, FaThumbsUp } from 'react-icons/fa'
 import { ActionButton } from '../ActionButton'
 
 export function ResourceVote() {
   const { openContextModal } = useModals()
 
-  const { resourceUserVote } = useResource()
+  const { userResourceVote } = useResource()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
@@ -23,27 +23,31 @@ export function ResourceVote() {
     openContextModal('vote', {
       title: (
         <Title
-          name={resourceUserVote ? 'Edite seu voto' : 'Faça seu voto'}
+          name={userResourceVote ? 'Edite seu voto' : 'Faça seu voto'}
           isModal
         />
       ),
       classNames: classes,
       ...modalStyles,
       innerProps: {
-        onConfirmText: resourceUserVote ? 'Editar Voto' : 'Votar'
+        onConfirmText: userResourceVote ? 'Editar Voto' : 'Votar'
       }
     })
 
+  const setVoteIcon = () => {
+    if (userResourceVote && userResourceVote.vote)
+      return <FaThumbsUp size={28} />
+
+    if (userResourceVote && !userResourceVote.vote)
+      return <FaThumbsDown size={28} />
+
+    return <FaRegThumbsUp size={28} />
+  }
+
   return (
     <ActionButton
-      text={resourceUserVote ? 'Votado' : 'Votar'}
-      icon={
-        resourceUserVote ? (
-          <FaThumbsUp size={28} />
-        ) : (
-          <FaRegThumbsUp size={28} />
-        )
-      }
+      text={userResourceVote ? 'Votado' : 'Votar'}
+      icon={setVoteIcon()}
       onClick={openModalResourceVote}
     />
   )
