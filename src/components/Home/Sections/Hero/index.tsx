@@ -14,7 +14,7 @@ export function Hero() {
         position={largeScreen ? 'apart' : 'center'}
         align="center"
         spacing={0}
-        pt={100}
+        pt={64}
       >
         <LeftSide />
 

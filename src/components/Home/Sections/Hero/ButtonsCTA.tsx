@@ -1,10 +1,11 @@
 import { Button, Group, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import Link from 'next/link'
+import { useState } from 'react'
 
 export function ButtonsCTA() {
+  const [isLoading, setIsLoading] = useState(false)
   const largeScreen = useMediaQuery('(min-width: 992px)', false)
-  const smallScreen = useMediaQuery('(max-width: 480px)', false)
 
   const theme = useMantineTheme()
 
@@ -14,13 +15,16 @@ export function ButtonsCTA() {
       position={largeScreen ? 'left' : 'center'}
       noWrap
     >
-      <Link href="/?register=true" passHref>
+      <Link href="/" passHref>
         <Button
-          title="Cadastre-se em Encontreduca"
+          title="Mapa Interativo - Encontreduca"
           component="a"
-          size={smallScreen ? 'sm' : 'md'}
+          size="md"
           radius="sm"
           variant="default"
+          loaderPosition="right"
+          loading={isLoading}
+          onClick={() => setIsLoading(true)}
           sx={{
             backgroundColor: theme.colors.cyan[3],
             color: theme.colors.brand[7],
@@ -30,22 +34,7 @@ export function ButtonsCTA() {
             }
           }}
         >
-          Cadastre-se
-        </Button>
-      </Link>
-      <Link href="/" passHref>
-        <Button
-          title="Ir para o Mapa Encontreduca"
-          component="a"
-          size={smallScreen ? 'sm' : 'md'}
-          radius="sm"
-          variant="outline"
-          sx={{
-            color: theme.colors.cyan[3],
-            border: `1px solid ${theme.colors.cyan[3]}`
-          }}
-        >
-          Mapa
+          Mapa Interativo
         </Button>
       </Link>
     </Group>
