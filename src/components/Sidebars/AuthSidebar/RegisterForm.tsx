@@ -7,7 +7,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useModals } from '@mantine/modals'
-import { ModalEmail } from 'components/Modals/ModalEmail'
+import { ModalEmail } from 'components/Modals'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { PasswordGroup } from 'components/Shared/PasswordGroup'
 import { buttonStyles, inputStyles } from 'components/Shared/styles/inputStyles'

@@ -8,7 +8,7 @@ import {
 import { useModals } from '@mantine/modals'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import { ResourceMarker } from 'components/Map/ResourceMarker'
-import { ModalResourceLocalChange } from 'components/Modals/ModalResourceLocalChange'
+import { ModalResourceLocalChange } from 'components/Modals'
 import {
   modalStyles,
   useModalStyles

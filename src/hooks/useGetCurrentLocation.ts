@@ -1,6 +1,6 @@
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
-import { openModalConfirm } from 'components/Modals/ModalConfirrm'
+import { openModalConfirm } from 'components/Modals'
 import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { useMap } from 'contexts/mapContext'
 

@@ -12,7 +12,7 @@ interface ResourceMarkerProps {
   resource: ResourceType
   localPosition?: LatLngLiteral
   clickable?: boolean
-  clusterer: MarkerClusterer | undefined
+  clusterer?: MarkerClusterer | undefined
 }
 
 export function ResourceMarker({
@@ -72,7 +72,7 @@ export function ResourceMarker({
       clickable={clickable}
       onClick={handleMarkerClick}
       position={localPosition ?? position}
-      clusterer={clusterer as any}
+      clusterer={(clusterer as any) ?? undefined}
       icon={{
         url: markerIcon()
         // scaledSize: new window.google.maps.Size(20, 28)

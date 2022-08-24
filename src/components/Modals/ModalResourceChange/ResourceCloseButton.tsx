@@ -5,13 +5,13 @@ import { Title } from 'components/Shared/Title'
 import { useResource } from 'contexts/resourceContext'
 import { MdCancel } from 'react-icons/md'
 import { getMotivesSelectData } from 'utils/modalSelecDataFormatter'
-import { ModalResourceChangeButton } from '../ModalResourceChangeButton'
+import { ModalResourceChangeButton } from './ModalResourceChangeButton'
 
 interface ResourceCloseProps {
   onClose: () => void
 }
 
-export function ResourceClose({ onClose }: ResourceCloseProps) {
+export function ResourceCloseButton({ onClose }: ResourceCloseProps) {
   const { openContextModal } = useModals()
   const { resource, motives } = useResource()
 

@@ -6,7 +6,7 @@ import {
 } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { openModalConfirm } from 'components/Modals/ModalConfirrm'
+import { openModalConfirm } from 'components/Modals'
 import { useModalStyles } from 'components/Shared/styles/modalStyles'
 import { showToastError } from 'components/Shared/ToastMessage'
 import { useResource } from 'contexts/resourceContext'

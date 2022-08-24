@@ -1,6 +1,6 @@
 import { useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
-import { ModalResourceChange } from 'components/Modals/ModalResourceChange'
+import { ModalResourceChange } from 'components/Modals'
 import {
   modalStyles,
   useModalStyles

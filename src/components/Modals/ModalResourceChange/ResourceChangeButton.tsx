@@ -1,13 +1,13 @@
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import { useSidebar } from 'contexts/sidebarContext'
 import { MdEdit } from 'react-icons/md'
-import { ModalResourceChangeButton } from '../ModalResourceChangeButton'
+import { ModalResourceChangeButton } from './ModalResourceChangeButton'
 
 interface ResourceChangeProps {
   onClose: () => void
 }
 
-export function ResourceChange({ onClose }: ResourceChangeProps) {
+export function ResourceChangeButton({ onClose }: ResourceChangeProps) {
   const { setChangeResourceOpened } = useSidebar()
 
   const theme = useMantineTheme()
