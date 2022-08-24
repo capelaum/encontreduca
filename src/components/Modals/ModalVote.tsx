@@ -11,7 +11,7 @@ import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { textareaStyles } from 'components/Shared/styles/inputStyles'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
-import { ActionButton } from 'components/Sidebars/Resource/ActionButtons/ActionButton'
+import { ActionButton } from 'components/Sidebars/SidebarResource/ActionButtons/Actions/ActionButton'
 import { useResource } from 'contexts/resourceContext'
 import { createResourceVote, updateResourceVote } from 'lib/resourcesLib'
 import { getUserVotes } from 'lib/usersLib'

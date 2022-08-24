@@ -8,7 +8,7 @@ import {
 import {
   mapSearchInputStyles,
   searchInputStyles
-} from 'components/Sidebars/ResourceList/searchInputStyles'
+} from 'components/Sidebars/SidebarResourceList/searchInputStyles'
 import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
