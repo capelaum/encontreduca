@@ -14,23 +14,23 @@ import { ConfirmButtons } from 'components/Shared/ConfirmButtons'
 import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
 import { showToast } from 'components/Shared/ToastMessage'
 import { mapOptions, mapOptionsLight } from 'config/mapOptions'
-import { useResource } from 'contexts/resourceContext'
 import { useCallback, useRef, useState } from 'react'
 import { MdMyLocation, MdPlace } from 'react-icons/md'
 import { buttonStyles } from 'styles/inputStyles'
 import { GoogleMapsMap, LatLngLiteral, libraries } from 'types/googleMaps'
-import { categorySwitch } from 'utils/categorySwitch'
 
 interface ModalResourceLocalChangeProps {
   onClose: () => void
   localPosition: LatLngLiteral
   setLocalPosition: (position: LatLngLiteral) => void
+  markerIcon: string
 }
 
 export function ModalResourceLocalChange({
   onClose,
   localPosition,
-  setLocalPosition
+  setLocalPosition,
+  markerIcon
 }: ModalResourceLocalChangeProps) {
   const [currentPosition, setCurrentPosition] = useState(localPosition)
 
@@ -38,8 +38,6 @@ export function ModalResourceLocalChange({
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
-
-  const { resource } = useResource()
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!,
@@ -94,7 +92,7 @@ export function ModalResourceLocalChange({
             onLoad={onMapLoad}
             onIdle={onIdle}
             clickableIcons={false}
-            zoom={14}
+            zoom={16}
             center={localPosition}
             mapContainerStyle={mapContainerStyle}
             options={dark ? mapOptions : mapOptionsLight}
@@ -102,14 +100,10 @@ export function ModalResourceLocalChange({
         )}
 
         <Image
-          src={
-            resource
-              ? categorySwitch[resource.categoryName].markerIcon
-              : '/markers/marker.svg'
-          }
+          src={markerIcon}
           alt="Marcador"
-          withPlaceholder
-          placeholder={<Image src="/markers/marker.svg" />}
+          // withPlaceholder
+          // placeholder={<Image src={markerIcon} />}
           sx={{
             position: 'absolute',
             left: '50%',

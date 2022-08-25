@@ -247,6 +247,7 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
         <Local
           localPosition={localPosition}
           setLocalPosition={setLocalPosition}
+          categoryId={form.values.categoryId}
         />
 
         <ResourceContact form={form} />

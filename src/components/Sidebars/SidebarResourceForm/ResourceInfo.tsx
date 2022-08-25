@@ -9,7 +9,7 @@ import { UseFormReturnType } from '@mantine/form'
 import { useResource } from 'contexts/resourceContext'
 import { TbChevronDown } from 'react-icons/tb'
 import { inputStyles } from 'styles/inputStyles'
-import { ResourceFormValues } from 'types/resources'
+import { ResourceFormValues } from 'types/forms'
 import { getCategoriesSelectData } from 'utils/modalSelecDataFormatter'
 
 interface ResourceInfoProps {

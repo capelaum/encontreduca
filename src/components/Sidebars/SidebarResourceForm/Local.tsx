@@ -7,7 +7,6 @@ import {
 } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
-import { ResourceMarker } from 'components/Map/ResourceMarker'
 import { ModalResourceLocalChange } from 'components/Modals'
 import { Title } from 'components/Shared/Title'
 import { mapOptionsForm, mapOptionsFormLight } from 'config/mapOptions'
@@ -15,14 +14,20 @@ import { useResource } from 'contexts/resourceContext'
 import { MdEditLocationAlt } from 'react-icons/md'
 import { modalStyles, useModalStyles } from 'styles/modalStyles'
 import { LatLngLiteral, libraries } from 'types/googleMaps'
+import { categorySwitch } from 'utils/categorySwitch'
+import { getCategoriesSelectData } from 'utils/modalSelecDataFormatter'
 
 interface LocalProps {
   localPosition: LatLngLiteral
   setLocalPosition: (position: LatLngLiteral) => void
+  categoryId: string
 }
 
-export function Local({ localPosition, setLocalPosition }: LocalProps) {
-  const { resource } = useResource()
+export function Local({
+  localPosition,
+  setLocalPosition,
+  categoryId
+}: LocalProps) {
   const { openModal, closeModal } = useModals()
 
   const { isLoaded } = useJsApiLoader({
@@ -43,6 +48,21 @@ export function Local({ localPosition, setLocalPosition }: LocalProps) {
 
   const { classes } = useModalStyles(dark)
 
+  const { categories } = useResource()
+  const resourceCategories = getCategoriesSelectData(categories)
+
+  const resourceFormCategoryName = resourceCategories.find(
+    (category) => category.value === categoryId
+  )?.label
+
+  const markerIcon = () => {
+    if (resourceFormCategoryName) {
+      return categorySwitch[resourceFormCategoryName].markerIcon
+    }
+
+    return '/markers/marker_unapproved.png'
+  }
+
   const openModalResourceLocalChange = () => {
     const id = openModal({
       classNames: classes,
@@ -54,6 +74,7 @@ export function Local({ localPosition, setLocalPosition }: LocalProps) {
           onClose={() => closeModal(id)}
           setLocalPosition={setLocalPosition}
           localPosition={localPosition}
+          markerIcon={markerIcon()}
         />
       )
     })
@@ -67,20 +88,19 @@ export function Local({ localPosition, setLocalPosition }: LocalProps) {
     return (
       <GoogleMap
         clickableIcons={false}
-        zoom={12}
+        zoom={16}
         center={localPosition}
         mapContainerStyle={mapContainerStyle}
         options={dark ? mapOptionsForm : mapOptionsFormLight}
       >
-        {resource ? (
-          <ResourceMarker
-            resource={resource}
-            clickable={false}
-            localPosition={localPosition}
-          />
-        ) : (
-          <Marker position={localPosition} clickable={false} />
-        )}
+        <Marker
+          clickable={false}
+          position={localPosition}
+          icon={{
+            url: markerIcon()
+            // scaledSize: new window.google.maps.Size(20, 28)
+          }}
+        />
       </GoogleMap>
     )
   }
