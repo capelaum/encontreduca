@@ -1,6 +1,5 @@
 import { api } from 'services/api'
 import {
-  NewResource,
   NewResourceVote,
   ResourceChange,
   ResourceType,
@@ -38,11 +37,24 @@ export async function getResource(id: number): Promise<ResourceType> {
 }
 
 export async function createResource(
-  newResource: NewResource
+  newResource: FormData
 ): Promise<ResourceType> {
-  const response = await api.post('/resources', newResource)
+  const response = await api.post('/resources', newResource, {
+    headers: {
+      withCredentials: true,
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  })
 
-  return response.data
+  if (response.status !== 201) {
+    throw new Error('An error occurred while creating the resource')
+  }
+
+  const { data } = response
+
+  return data
 }
 
 export async function getResourceVotes(id: number): Promise<ResourceVote[]> {
@@ -66,11 +78,24 @@ export async function getResourceReviews(id: number): Promise<Review[]> {
 }
 
 export async function createResourceChange(
-  updatedResource: ResourceChange
+  resourceChange: FormData
 ): Promise<ResourceChange> {
-  const response = await api.post('resources/changes', updatedResource)
+  const response = await api.post('resources/changes', resourceChange, {
+    headers: {
+      withCredentials: true,
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  })
 
-  return response.data
+  if (response.status !== 201) {
+    throw new Error('An error occurred while creating the resource changes')
+  }
+
+  const { data } = response
+
+  return data
 }
 
 export async function createResourceVote(

@@ -1,14 +1,22 @@
 import { UseFormReturnType } from '@mantine/form'
-import { NewResource } from './resources'
+import { LatLngLiteral } from './googleMaps'
 
-export type ResourceFormValues = Omit<NewResource, 'userId'>
+export type ResourceFormValues = {
+  name: string
+  address: string
+  website: string
+  phone: string
+  categoryId: string
+  position: LatLngLiteral
+  cover: string | null
+}
 
 export interface ProfileFormValues {
   name: string
   email: string
   password: string
   confirmPassword: string
-  avatarUrl: string | null
+  avatar: File | null
 }
 
 export type LoginFormValues = Pick<ProfileFormValues, 'email' | 'password'>

@@ -16,11 +16,10 @@ import { useMap } from 'contexts/mapContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { handleResourceFormErrors } from 'helpers/formErrorsHandlers'
-import { uploadImage } from 'helpers/imageHelpers'
 import {
   validadePosition,
   validateCategoryId,
-  validateImageBase64,
+  validateImageFile,
   validatePhone,
   validateWebsite
 } from 'helpers/validate'
@@ -65,10 +64,8 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
     resource?.position ?? currentLocation
   )
 
-  const [hasPreview, setHasPreview] = useState(false)
-  const [imageBase64, setImageBase64] = useState<string | ArrayBuffer | null>(
-    null
-  )
+  // const [hasPreview, setHasPreview] = useState(false)
+  const [cover, setCover] = useState<File | null>(null)
 
   const resourceCategories = getCategoriesSelectData(categories)
 
@@ -94,7 +91,7 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
       address: resource ? resource.address : '',
       phone: resource ? resource.phone ?? '' : '',
       website: resource ? resource.website ?? '' : '',
-      cover: resource ? resource.cover : '',
+      cover: null,
       categoryId: resource ? resource.categoryId.toString() : '',
       position: resource ? resource.position : currentLocation
     },
@@ -115,8 +112,7 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
       website: (value: string) => validateWebsite(value),
       categoryId: (value: string) =>
         validateCategoryId(value, resourceCategories),
-      cover: () =>
-        hasPreview ? validateImageBase64(imageBase64, hasPreview) : null,
+      cover: () => (isCreateResource ? validateImageFile(cover) : null),
       position: (value) => validadePosition(value)
     }
   })
@@ -132,7 +128,7 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
         address: resource.address,
         phone: resource.phone ?? '',
         website: resource.website ?? '',
-        cover: resource.cover,
+        cover: null,
         categoryId: resource.categoryId.toString(),
         position: resource.position
       })
@@ -155,54 +151,28 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
       return
     }
 
-    if (hasPreview && imageBase64) {
-      try {
-        const secure_url = await uploadImage({
-          imageBase64,
-          folder: 'encontreduca/covers'
-        })
-
-        form.values.cover = secure_url
-      } catch (error) {
-        setIsLoading(false)
-
-        showToastError({
-          title: 'Erro ao criar/editar recurso',
-          description: 'Não foi possível fazer upload desta imagem de capa 😕'
-        })
-
-        return
-      }
-    }
-
     form.values.position = localPosition
+
+    const formData = new FormData()
+
+    formData.append('name', values.name)
+    formData.append('address', values.address)
+    formData.append('categoryId', values.categoryId.toString())
+    formData.append('name', values.name)
+    formData.append('latitude', localPosition.lat.toString())
+    formData.append('longitude', localPosition.lng.toString())
+
+    if (values.phone) formData.append('phone', values.phone)
+    if (values.website) formData.append('website', values.website)
+    if (cover) formData.append('cover', cover)
 
     try {
       if (!resource) {
-        await createMutation.mutateAsync({
-          name: values.name,
-          address: values.address,
-          phone: values.phone,
-          website: values.website,
-          categoryId: values.categoryId,
-          cover: values.cover,
-          position: values.position
-        })
+        await createMutation.mutateAsync(formData)
       }
-    } catch (error) {
-      setIsLoading(false)
 
-      showToastError({
-        title: 'Erro ao criar recurso',
-        description: 'Por favor, tente novamente mais tarde 😕'
-      })
-
-      return
-    }
-
-    try {
       if (resource && !isCreateResource) {
-        const resourceDiff = getResourceDiff(form)
+        const resourceDiff = getResourceDiff(form, cover)
 
         if (Object.keys(resourceDiff).length === 0) {
           showToast({
@@ -217,14 +187,16 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
         }
 
         if (Object.keys(resourceDiff).length > 0) {
-          await createResourceChanges(resourceDiff)
+          await createResourceChanges(resourceDiff, cover)
         }
       }
     } catch (error) {
       setIsLoading(false)
 
       showToastError({
-        title: 'Erro ao editar recurso',
+        title: isCreateResource
+          ? 'Erro ao criar recurso'
+          : 'Erro ao editar recurso',
         description: (error as Error).message
       })
 
@@ -294,8 +266,8 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
           <CoverDropzone
             resourceCover={resource ? resource.cover : null}
             form={form}
-            setHasPreview={setHasPreview}
-            setImageBase64={setImageBase64}
+            // setHasPreview={setHasPreview}
+            setCover={setCover}
           />
         </Box>
 

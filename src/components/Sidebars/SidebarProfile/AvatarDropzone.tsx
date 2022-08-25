@@ -11,7 +11,6 @@ import { DefaultDropzone } from 'components/Shared/Default/DefaultDropzone'
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useAuth } from 'contexts/authContext'
-import { destroyImage } from 'helpers/imageHelpers'
 import { deleteUserAvatar, getUser } from 'lib/usersLib'
 import { useEffect, useState } from 'react'
 import { FaUserEdit } from 'react-icons/fa'
@@ -21,13 +20,15 @@ import { ProfileFormValues, ResourceFormValues } from 'types/forms'
 interface AvatarDropzoneProps {
   form: UseFormReturnType<ProfileFormValues>
   setHasPreview: (hasPreview: boolean) => void
-  setImageBase64: (image: string | ArrayBuffer | null) => void
+  // setImageBase64: (image: string | ArrayBuffer | null) => void
+  setAvatar: (avatar: File | null) => void
 }
 
 export function AvatarDropzone({
   form,
   setHasPreview,
-  setImageBase64
+  // setImageBase64,
+  setAvatar
 }: AvatarDropzoneProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [preview, setPreview] = useState<string | null>(null)
@@ -48,10 +49,10 @@ export function AvatarDropzone({
   const handleDeleteUserAvatar = async () => {
     setIsLoading(true)
 
-    if (user!.avatarUrl) {
+    if (user?.avatarUrl) {
       try {
-        await destroyImage({ imageUrl: user!.avatarUrl })
-        await deleteUserAvatar({ userId: +user!.id })
+        // await destroyImage({ imageUrl: user!.avatarUrl })
+        await deleteUserAvatar(+user.id)
       } catch (error) {
         setIsLoading(false)
 
@@ -92,7 +93,8 @@ export function AvatarDropzone({
         radius={999}
         form={form as UseFormReturnType<ResourceFormValues | ProfileFormValues>}
         setPreview={setPreview}
-        setImageBase64={setImageBase64}
+        // setImageBase64={setImageBase64}
+        setImageFile={setAvatar}
         containerStyles={containerStyles}
       >
         <DefaultOverlay visible={isLoading} />
