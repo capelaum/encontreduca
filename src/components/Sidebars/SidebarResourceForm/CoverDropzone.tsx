@@ -8,23 +8,23 @@ import {
 } from '@mantine/core'
 import { UseFormReturnType } from '@mantine/form'
 import { DefaultDropzone } from 'components/Shared/Default/DefaultDropzone'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { TbPhoto } from 'react-icons/tb'
 import { ProfileFormValues, ResourceFormValues } from 'types/forms'
 
 interface CoverDropzoneProps {
   form: UseFormReturnType<ResourceFormValues>
   resourceCover: string | null
-  setHasPreview: (hasPreview: boolean) => void
-  setImageBase64: (image: string | ArrayBuffer | null) => void
+  // setHasPreview: (hasPreview: boolean) => void
+  setCover: (avatar: File | null) => void
 }
 
 export function CoverDropzone({
   form,
   resourceCover,
-  setImageBase64,
-  setHasPreview
-}: CoverDropzoneProps) {
+  setCover
+}: // setHasPreview
+CoverDropzoneProps) {
   const [preview, setPreview] = useState<string | null>(null)
 
   const theme = useMantineTheme()
@@ -32,11 +32,11 @@ export function CoverDropzone({
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  useEffect(() => {
-    if (preview) {
-      setHasPreview(true)
-    }
-  }, [preview])
+  // useEffect(() => {
+  //   if (preview) {
+  //     setHasPreview(true)
+  //   }
+  // }, [preview])
 
   const containerStyles = (): CSSObject => ({
     height: 200,
@@ -49,7 +49,7 @@ export function CoverDropzone({
       radius="md"
       form={form as UseFormReturnType<ResourceFormValues | ProfileFormValues>}
       setPreview={setPreview}
-      setImageBase64={setImageBase64}
+      setImageFile={setCover}
       containerStyles={containerStyles}
     >
       {preview || resourceCover ? (

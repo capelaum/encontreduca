@@ -13,5 +13,5 @@ export type UpdatedUser = {
   email: string
   password: string | null
   confirmPassword: string | null
-  avatarUrl: string | null
+  avatarUrl: File | null
 }

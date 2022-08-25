@@ -48,10 +48,12 @@ interface ResourceContextData {
   getUserResources: () => ResourceType[]
   getNotApprovedResources: () => ResourceType[]
   getResourceDiff: (
-    form: UseFormReturnType<ResourceFormValues>
+    form: UseFormReturnType<ResourceFormValues>,
+    cover: File | null
   ) => Partial<ResourceFormValues>
   createResourceChanges: (
-    resourceDiff: Partial<ResourceFormValues>
+    resourceDiff: Partial<ResourceFormValues>,
+    coverFile: File | null
   ) => Promise<ResourceChange[]>
   userResourceReview: Review | null
   reviewsWithoutUser: Review[]
@@ -202,12 +204,19 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     return value.toString()
   }
 
-  const getResourceDiff = (form: UseFormReturnType<ResourceFormValues>) => {
+  const getResourceDiff = (
+    form: UseFormReturnType<ResourceFormValues>,
+    coverFile: File | null
+  ) => {
     const { values } = form
 
     const resourceDiff = Object.keys(values).reduce((acc, key) => {
-      const resourceFormKey = key as keyof ResourceFormValues
-      const resourceTypeKey = key as keyof ResourceType
+      if (key === 'cover') {
+        if (coverFile) {
+          acc.cover = 'newCover'
+        }
+        return acc
+      }
 
       if (key === 'position') {
         const resourcePositionAsString = formatPositionAsString(
@@ -225,6 +234,9 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
         return acc
       }
 
+      const resourceFormKey = key as keyof ResourceFormValues
+      const resourceTypeKey = key as keyof ResourceType
+
       const resourceValue = getResourceValue(resource![resourceTypeKey])
       const resourceFormValue = getResourceValue(values[resourceFormKey])
 
@@ -238,25 +250,31 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     return resourceDiff
   }
 
-  const createResourceChanges = async (
-    resourceDiff: Partial<ResourceFormValues>
+  const createResourceChanges = (
+    resourceDiff: Partial<ResourceFormValues>,
+    coverFile: File | null
   ) => {
     const resourceChanges = Object.keys(resourceDiff).map(async (key) => {
+      const formData = new FormData()
       const resourceFormKey = key as keyof ResourceFormValues
       const resourceTypeKey = key as keyof ResourceType
 
       const oldValue = getResourceValue(resource![resourceTypeKey]) ?? 'nulo'
       const newValue = getResourceValue(resourceDiff[resourceFormKey]) ?? 'nulo'
 
-      const resourceChange = await createResourceChange({
-        resourceId: resource!.id,
-        field: key,
-        oldValue:
-          key === 'position'
-            ? formatPositionAsString(resource!.position)
-            : oldValue,
-        newValue
-      })
+      if (key === 'cover') formData.append('cover', coverFile!)
+
+      formData.append('resourceId', resource!.id.toString())
+      formData.append('field', key)
+      formData.append(
+        'oldValue',
+        key === 'position'
+          ? formatPositionAsString(resource!.position)
+          : oldValue
+      )
+      formData.append('newValue', newValue)
+
+      const resourceChange = await createResourceChange(formData)
 
       return resourceChange
     })

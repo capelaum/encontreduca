@@ -22,11 +22,6 @@ export type ResourceType = {
   updatedAt: string
 }
 
-export type NewResource = Pick<
-  ResourceType,
-  'categoryId' | 'name' | 'address' | 'position' | 'phone' | 'website' | 'cover'
->
-
 export type NewResourceComplaint = {
   resourceId: string | number
   motiveId: string | number

@@ -14,11 +14,10 @@ import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { useAuth } from 'contexts/authContext'
 import { useSidebar } from 'contexts/sidebarContext'
 import { handleProfileFormErrors } from 'helpers/formErrorsHandlers'
-import { updateImage, uploadImage } from 'helpers/imageHelpers'
 import {
   validateConfirmPassword,
   validateEmail,
-  validateImageBase64,
+  validateImageFile,
   validatePassword
 } from 'helpers/validate'
 import { getUser, updateUser } from 'lib/usersLib'
@@ -33,9 +32,7 @@ import { DeleteUserButton } from './DeleteUserButton'
 export function SidebarProfile() {
   const [isLoading, setIsLoading] = useState(false)
   const [hasPreview, setHasPreview] = useState(false)
-  const [imageBase64, setImageBase64] = useState<string | ArrayBuffer | null>(
-    null
-  )
+  const [avatar, setAvatar] = useState<File | null>(null)
 
   const { setProfileOpened } = useSidebar()
   const { user, setUser } = useAuth()
@@ -65,7 +62,7 @@ export function SidebarProfile() {
     initialValues: {
       name: user?.name ?? '',
       email: user?.email ?? '',
-      avatarUrl: user?.avatarUrl ?? null,
+      avatar: null,
       password: '',
       confirmPassword: ''
     },
@@ -75,8 +72,8 @@ export function SidebarProfile() {
     validate: {
       name: (value) => (value.trim().length < 3 ? 'Nome muito curto' : null),
       email: (value) => validateEmail(value),
-      avatarUrl: () =>
-        !hasPreview ? null : validateImageBase64(imageBase64, hasPreview),
+      // validate if avatar is a valid image file
+      avatar: () => (!avatar ? null : validateImageFile(avatar)),
       password: (value) => validatePassword(value),
       confirmPassword: (value, values) =>
         validateConfirmPassword(value, values.password)
@@ -92,27 +89,27 @@ export function SidebarProfile() {
     values.password === '' &&
     values.confirmPassword === ''
 
-  const createdOrUpdateUserAvatar = async (imgBase64: string | ArrayBuffer) => {
-    let secure_url = null
-    const folder = 'encontreduca/avatars'
+  // const createdOrUpdateUserAvatar = async (imgBase64: string | ArrayBuffer) => {
+  //   let secure_url = null
+  //   const folder = 'encontreduca/avatars'
 
-    if (!user!.avatarUrl) {
-      secure_url = await uploadImage({
-        imageBase64: imgBase64,
-        folder
-      })
-    }
+  //   if (!user!.avatarUrl) {
+  //     secure_url = await uploadImage({
+  //       imageBase64: imgBase64,
+  //       folder
+  //     })
+  //   }
 
-    if (user!.avatarUrl) {
-      secure_url = await updateImage({
-        imageUrl: user!.avatarUrl,
-        imageBase64: imgBase64,
-        folder
-      })
-    }
+  //   if (user!.avatarUrl) {
+  //     secure_url = await updateImage({
+  //       imageUrl: user!.avatarUrl,
+  //       imageBase64: imgBase64,
+  //       folder
+  //     })
+  //   }
 
-    form.values.avatarUrl = secure_url
-  }
+  //   form.values.avatarUrl = secure_url
+  // }
 
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
@@ -128,32 +125,35 @@ export function SidebarProfile() {
       return
     }
 
-    if (hasPreview && imageBase64) {
-      try {
-        await createdOrUpdateUserAvatar(imageBase64)
-      } catch (error) {
-        setIsLoading(false)
+    // if (hasPreview && imageBase64) {
+    //   try {
+    //     await createdOrUpdateUserAvatar(imageBase64)
+    //   } catch (error) {
+    //     setIsLoading(false)
 
-        showToastError({
-          title: 'Erro ao atualizar foto de perfil',
-          description: 'Não foi possível fazer upload desta imagem 😕'
-        })
+    //     showToastError({
+    //       title: 'Erro ao atualizar foto de perfil',
+    //       description: 'Não foi possível fazer upload desta imagem 😕'
+    //     })
 
-        return
-      }
-    }
+    //     return
+    //   }
+    // }
 
-    if (user && !sameUserData(values)) {
+    if (!sameUserData(values)) {
+      form.values.avatar = avatar
+
+      const formData = new FormData()
+
+      formData.append('name', values.name)
+      formData.append('email', values.email)
+      formData.append('password', values.password)
+      formData.append('confirmPassword', values.confirmPassword)
+      if (values.avatar) formData.append('avatar', values.avatar)
+
       await updateMutation.mutateAsync({
         userId: +user.id,
-        updatedUser: {
-          name: values.name,
-          email: values.email,
-          avatarUrl: values.avatarUrl,
-          password: values.password === '' ? null : values.password,
-          confirmPassword:
-            values.confirmPassword === '' ? null : values.confirmPassword
-        }
+        updatedUser: formData
       })
     }
 
@@ -162,7 +162,6 @@ export function SidebarProfile() {
 
     form.values.name = updatedUser!.name
     form.values.email = updatedUser!.email
-    form.values.avatarUrl = updatedUser!.avatarUrl
 
     setIsLoading(false)
 
@@ -189,6 +188,7 @@ export function SidebarProfile() {
     <form
       onSubmit={form.onSubmit(handleSubmit, handleProfileFormErrors)}
       autoComplete="off"
+      encType="multipart/form-data"
     >
       <DefaultOverlay visible={isLoading} />
 
@@ -201,7 +201,8 @@ export function SidebarProfile() {
         <AvatarDropzone
           form={form}
           setHasPreview={setHasPreview}
-          setImageBase64={setImageBase64}
+          // setImageBase64={setImageBase64}
+          setAvatar={setAvatar}
         />
 
         <TextInput

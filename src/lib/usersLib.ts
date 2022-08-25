@@ -1,7 +1,7 @@
 import { deleteCookie, hasCookie } from 'cookies-next'
 import { api } from 'services/api'
 import { ResourceVote } from 'types/resources'
-import { UpdatedUser, User } from 'types/users'
+import { User } from 'types/users'
 
 export async function getAuthUser() {
   try {
@@ -39,9 +39,16 @@ export async function updateUser({
   updatedUser
 }: {
   userId: number
-  updatedUser: UpdatedUser
+  updatedUser: FormData
 }) {
-  const response = await api.put(`users/${userId}`, updatedUser)
+  const response = await api.post(`users/${userId}?_method=PUT`, updatedUser, {
+    headers: {
+      withCredentials: true,
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  })
 
   if (response.status !== 200) {
     throw new Error('An error occurred while updating the user')
@@ -88,10 +95,10 @@ export async function deleteUserResource(resourceId: number) {
   return response
 }
 
-export async function deleteUserAvatar({ userId }: { userId: number }) {
+export async function deleteUserAvatar(userId: number) {
   const response = await api.delete(`users/${userId}/avatar`)
 
-  if (response.status !== 200) {
+  if (response.status !== 204) {
     throw new Error('Something went wrong while deleting user avatar')
   }
 

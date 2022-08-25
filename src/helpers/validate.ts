@@ -49,6 +49,14 @@ export const validateImageBase64 = (
     : 'Imagem possui formato incorreto!'
 }
 
+export const validateImageFile = (imageFile: File | null) => {
+  if (!imageFile) return 'Imagem de capa é obrigatória'
+
+  const regex = /^image\/(png|jpg|jpeg|webp)$/
+
+  return regex.test(imageFile.type) ? null : 'Imagem possui formato incorreto!'
+}
+
 export const validateCloudinaryImage = (secureUrl: string) => {
   if (secureUrl.length === 0) return 'Imagem de capa é obrigatória'
 
