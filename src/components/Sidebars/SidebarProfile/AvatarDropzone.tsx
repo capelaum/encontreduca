@@ -20,7 +20,6 @@ import { ProfileFormValues, ResourceFormValues } from 'types/forms'
 interface AvatarDropzoneProps {
   form: UseFormReturnType<ProfileFormValues>
   setHasPreview: (hasPreview: boolean) => void
-  // setImageBase64: (image: string | ArrayBuffer | null) => void
   setAvatar: (avatar: File | null) => void
 }
 
@@ -51,7 +50,6 @@ export function AvatarDropzone({
 
     if (user?.avatarUrl) {
       try {
-        // await destroyImage({ imageUrl: user!.avatarUrl })
         await deleteUserAvatar(+user.id)
       } catch (error) {
         setIsLoading(false)

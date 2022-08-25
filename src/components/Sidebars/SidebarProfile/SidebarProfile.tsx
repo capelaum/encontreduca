@@ -89,28 +89,6 @@ export function SidebarProfile() {
     values.password === '' &&
     values.confirmPassword === ''
 
-  // const createdOrUpdateUserAvatar = async (imgBase64: string | ArrayBuffer) => {
-  //   let secure_url = null
-  //   const folder = 'encontreduca/avatars'
-
-  //   if (!user!.avatarUrl) {
-  //     secure_url = await uploadImage({
-  //       imageBase64: imgBase64,
-  //       folder
-  //     })
-  //   }
-
-  //   if (user!.avatarUrl) {
-  //     secure_url = await updateImage({
-  //       imageUrl: user!.avatarUrl,
-  //       imageBase64: imgBase64,
-  //       folder
-  //     })
-  //   }
-
-  //   form.values.avatarUrl = secure_url
-  // }
-
   const handleSubmit = async (values: typeof form.values) => {
     setIsLoading(true)
 
@@ -124,21 +102,6 @@ export function SidebarProfile() {
 
       return
     }
-
-    // if (hasPreview && imageBase64) {
-    //   try {
-    //     await createdOrUpdateUserAvatar(imageBase64)
-    //   } catch (error) {
-    //     setIsLoading(false)
-
-    //     showToastError({
-    //       title: 'Erro ao atualizar foto de perfil',
-    //       description: 'Não foi possível fazer upload desta imagem 😕'
-    //     })
-
-    //     return
-    //   }
-    // }
 
     if (!sameUserData(values)) {
       form.values.avatar = avatar
@@ -201,7 +164,6 @@ export function SidebarProfile() {
         <AvatarDropzone
           form={form}
           setHasPreview={setHasPreview}
-          // setImageBase64={setImageBase64}
           setAvatar={setAvatar}
         />
 

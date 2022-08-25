@@ -64,7 +64,6 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
     resource?.position ?? currentLocation
   )
 
-  // const [hasPreview, setHasPreview] = useState(false)
   const [cover, setCover] = useState<File | null>(null)
 
   const resourceCategories = getCategoriesSelectData(categories)
@@ -266,7 +265,6 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
           <CoverDropzone
             resourceCover={resource ? resource.cover : null}
             form={form}
-            // setHasPreview={setHasPreview}
             setCover={setCover}
           />
         </Box>

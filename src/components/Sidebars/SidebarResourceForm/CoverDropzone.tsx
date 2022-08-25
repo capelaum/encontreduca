@@ -15,7 +15,6 @@ import { ProfileFormValues, ResourceFormValues } from 'types/forms'
 interface CoverDropzoneProps {
   form: UseFormReturnType<ResourceFormValues>
   resourceCover: string | null
-  // setHasPreview: (hasPreview: boolean) => void
   setCover: (avatar: File | null) => void
 }
 
@@ -23,20 +22,13 @@ export function CoverDropzone({
   form,
   resourceCover,
   setCover
-}: // setHasPreview
-CoverDropzoneProps) {
+}: CoverDropzoneProps) {
   const [preview, setPreview] = useState<string | null>(null)
 
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
-
-  // useEffect(() => {
-  //   if (preview) {
-  //     setHasPreview(true)
-  //   }
-  // }, [preview])
 
   const containerStyles = (): CSSObject => ({
     height: 200,

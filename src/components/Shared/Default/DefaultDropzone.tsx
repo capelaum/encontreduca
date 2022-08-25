@@ -21,7 +21,6 @@ interface DefaultDropzoneProps {
   containerStyles: Sx | (Sx | undefined)[] | undefined
   form: UseFormReturnType<ResourceFormValues | ProfileFormValues>
   setPreview: (image: string | null) => void
-  // setImageBase64: (image: string | ArrayBuffer | null) => void
   setImageFile: (file: File | null) => void
 }
 
@@ -32,7 +31,6 @@ export function DefaultDropzone({
   form,
   containerStyles,
   setPreview,
-  // setImageBase64,
   setImageFile
 }: DefaultDropzoneProps) {
   const theme = useMantineTheme()
@@ -46,19 +44,10 @@ export function DefaultDropzone({
     setIsLoading(true)
 
     const file = files[0]
-
     setImageFile(file)
 
     const previewImage = URL.createObjectURL(file)
     setPreview(previewImage)
-
-    // const reader = new FileReader()
-
-    // reader.onload = (event) => {
-    //   setImageBase64(event.target!.result)
-    // }
-
-    // reader.readAsDataURL(file)
 
     setIsLoading(false)
   }
