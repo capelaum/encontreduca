@@ -57,15 +57,6 @@ export const validateImageFile = (imageFile: File | null) => {
   return regex.test(imageFile.type) ? null : 'Imagem possui formato incorreto!'
 }
 
-export const validateCloudinaryImage = (secureUrl: string) => {
-  if (secureUrl.length === 0) return 'Imagem de capa é obrigatória'
-
-  const regex =
-    /^https:\/\/res.cloudinary.com\/capelaum\/image\/upload\/v\d+\/encontreduca\/covers\/*.(jpg|png|webp|jpeg|gif)$/
-
-  return regex.test(secureUrl) ? null : 'Imagem de capa inválida'
-}
-
 export const validadePosition = (position: LatLngLiteral) => {
   const { lat, lng } = position
 
