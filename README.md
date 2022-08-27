@@ -1,6 +1,6 @@
 # Encontreduca
 
-Aplicação web para encontrar os recursos educacionais mais próximos, através de um mapa interativo, contendo avaliações de recursos educacionais, painel de votação e diversas outras funcionalidades.
+Aplicação web para encontrar os recursos educacionais mais próximos através de um mapa interativo, contendo avaliações de recursos educacionais, painel de votação e diversas outras funcionalidades.
 
 <img src="public/images/Capa.png" alt="Imagem de Capa do Encontreduca" />
 

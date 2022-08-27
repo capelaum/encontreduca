@@ -25,7 +25,7 @@ export function Seo({ title, description, url }: SeoProps) {
       <meta name="twitter:creator" content="@capellett" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content="images/Capa.pngimages/Capa.png" />
+      <meta name="twitter:image" content="images/Capa.png" />
     </>
   )
 }
