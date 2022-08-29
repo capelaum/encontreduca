@@ -1,3 +1,5 @@
+import { ResourceVote } from './resources'
+
 export type User = {
   id: string | number
   name: string
@@ -6,6 +8,7 @@ export type User = {
   password: string
   reviewCount: number
   resourcesIds: number[]
+  votes: ResourceVote[]
 }
 
 export type UpdatedUser = {

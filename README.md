@@ -6,27 +6,25 @@ Aplicação web para encontrar os recursos educacionais mais próximos através 
 
 ## Tech
 
+- [Typescript][typescript]
 - [Next.js][next]
 - [Mantine][mantine]
-- [Cloudinary][cloudinary]
-- [Typescript][typescript]
-- [react-icons][react_icons]
-- [react-toastify][react_toastify]
-- [cookies-next][cookies_next]
-- [react-query][tanstack_react_query]
-- [@types/google.maps][types_google_maps]
 - [@react-google-maps/api][react_google_maps]
+- [@types/google.maps][types_google_maps]
+- [react-query][tanstack_react_query]
+- [react-toastify][react_toastify]
+- [react-icons][react_icons]
+- [cookies-next][cookies_next]
 - [Axios][axios]
 - [Sass][sass]
 
-[next]: https://nextjs.org
 [typescript]: https://www.typescriptlang.org
+[next]: https://nextjs.org
 [mantine]: https://mantine.dev
 [react_icons]: https://react-icons.github.io/react-icons
 [react_google_maps]: https://www.npmjs.com/package/@react-google-maps/api
 [types_google_maps]: https://www.npmjs.com/package/@types/google.maps
 [cookies_next]: https://www.npmjs.com/package/cookies-next
-[cloudinary]: https://cloudinary.com
 [axios]: https://axios-http.com/ptbr/docs/intro
 [tanstack_react_query]: https://tanstack.com/query/v4/docs/overview
 [react_toastify]: https://fkhadra.github.io/react-toastify/introduction

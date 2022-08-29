@@ -11,9 +11,10 @@ import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton
 import { DefaultOverlay } from 'components/Shared/Default/DefaultOverlay'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { ActionButton } from 'components/Sidebars/SidebarResource/ActionButtons/Actions/ActionButton'
+import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { createResourceVote, updateResourceVote } from 'lib/resourcesLib'
-import { getUserVotes } from 'lib/usersLib'
+import { getAuthUser } from 'lib/usersLib'
 import { useEffect, useState } from 'react'
 import {
   FaRegThumbsDown,
@@ -33,7 +34,8 @@ export function ModalVote({
   const { onConfirmText } = innerProps
   const { closeModal } = context
 
-  const { resource, userResourceVote, setUserVotes } = useResource()
+  const { resource, userResourceVote } = useResource()
+  const { setUser } = useAuth()
 
   const [isLoading, setIsLoading] = useState(false)
   const [justification, setJustification] = useState(
@@ -104,8 +106,8 @@ export function ModalVote({
       })
     }
 
-    const updatedUserVotes = await getUserVotes()
-    setUserVotes(updatedUserVotes ?? [])
+    const updatedUser = await getAuthUser()
+    setUser(updatedUser)
 
     setIsLoading(false)
     closeModal(id)

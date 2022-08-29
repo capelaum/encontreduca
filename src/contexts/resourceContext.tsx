@@ -5,7 +5,6 @@ import {
   getResourceReviews,
   loadResources
 } from 'lib/resourcesLib'
-import { getUserVotes } from 'lib/usersLib'
 import {
   createContext,
   ReactNode,
@@ -41,8 +40,6 @@ interface ResourceContextData {
   setActiveFilter: (activeResource: CategoryFilter | null) => void
   resourceReviews: Review[]
   setResourceReviews: (resourceReviews: Review[]) => void
-  userVotes: ResourceVote[]
-  setUserVotes: (resourceVotes: ResourceVote[]) => void
   filterResources: () => ResourceType[]
   getAverageRating: (reviews: Review[]) => number
   getUserResources: () => ResourceType[]
@@ -73,7 +70,6 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
   const [resource, setResource] = useState<ResourceType | null>(null)
   const [activeFilter, setActiveFilter] = useState<CategoryFilter | null>(null)
   const [resourceReviews, setResourceReviews] = useState<Review[]>([])
-  const [userVotes, setUserVotes] = useState<ResourceVote[]>([])
 
   const [isFetchingResourceData, setIsFetchingResourceData] = useState(false)
 
@@ -90,16 +86,6 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     useQuery(['reviews'], () => getResourceReviews(+resource!.id), {
       enabled: !!resource
     })
-
-  useEffect(() => {
-    if (user) {
-      ;(async () => {
-        const resourceVotesData = await getUserVotes()
-
-        setUserVotes(resourceVotesData ?? [])
-      })()
-    }
-  }, [user])
 
   useEffect(() => {
     if (resource) {
@@ -193,7 +179,7 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
 
   const reviewsWithoutUser = getReviewsWithoutUser(resourceReviews)
 
-  const userResourceVote = getUseResourceVote(userVotes)
+  const userResourceVote = getUseResourceVote(user?.votes ?? [])
 
   const formatPositionAsString = (position: LatLngLiteral) =>
     `${position.lat},${position.lng}`
@@ -296,8 +282,6 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     setActiveFilter,
     resourceReviews,
     setResourceReviews,
-    userVotes,
-    setUserVotes,
     getAverageRating,
     filterResources,
     getUserResources,
