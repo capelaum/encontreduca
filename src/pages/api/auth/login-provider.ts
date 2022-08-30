@@ -1,5 +1,6 @@
 import { setCookie } from 'cookies-next'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { getToken } from 'next-auth/jwt'
 import { api } from 'services/api'
 
 export default async function handler(
@@ -14,12 +15,22 @@ export default async function handler(
   }
 
   try {
-    const { email, password } = req.body
-    const response = await api.post('login', { email, password })
+    const token = await getToken({ req })
 
-    const { token, message } = response.data
+    if (!token) {
+      res.status(401).json({
+        message: 'Unauthorized'
+      })
+      return
+    }
 
-    setCookie('encontreduca_user_auth', token, {
+    const { accessToken, provider } = token
+
+    const response = await api.post(`login/${provider}`, { accessToken })
+
+    const { token: userToken, message } = response.data
+
+    setCookie('encontreduca_user_auth', userToken, {
       req,
       res,
       maxAge: 30 * 24 * 60 * 60

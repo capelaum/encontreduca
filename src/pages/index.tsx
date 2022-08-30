@@ -52,7 +52,12 @@ export default function Map({ categories, motives, authUser }: MapProps) {
     resourcesError
   } = useResource()
 
-  const { setAuthSidebarOpened, setProfileOpened } = useSidebar()
+  const {
+    setAuthSidebarOpened,
+    setProfileOpened,
+    setMenuOpened,
+    setResourceOpened
+  } = useSidebar()
 
   useEffect(() => {
     setUser(authUser)
@@ -60,6 +65,12 @@ export default function Map({ categories, motives, authUser }: MapProps) {
     setMotives(motives)
 
     handleGetCurrentLocation()
+
+    if (user) {
+      setAuthSidebarOpened(false)
+      setMenuOpened(false)
+      setResourceOpened(false)
+    }
 
     if (newEmailVerified === 'true') {
       showToast({
@@ -126,21 +137,27 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const categories: CategoryType[] = await loadCategories()
   const motives: Motive[] = await loadMotives()
 
-  if (hasCookie('encontreduca_user_auth', { req, res })) {
-    api.defaults.headers.common.Authorization = `Bearer ${req.cookies.encontreduca_user_auth}`
-  }
-
-  const authUser = hasCookie('encontreduca_user_auth', { req, res })
-    ? await getAuthUser()
-    : null
-
-  if (!authUser && hasCookie('encontreduca_user_auth', { req, res })) {
-    deleteCookie('encontreduca_user_auth', { req, res })
-  }
-
   if (!categories || !motives) {
     return {
       notFound: true
+    }
+  }
+
+  if (hasCookie('encontreduca_user_auth', { req, res })) {
+    api.defaults.headers.common.Authorization = `Bearer ${req.cookies.encontreduca_user_auth}`
+
+    const authUser: User | null = await getAuthUser()
+
+    if (!authUser) {
+      deleteCookie('encontreduca_user_auth', { res })
+    }
+
+    return {
+      props: {
+        categories,
+        motives,
+        authUser
+      }
     }
   }
 
@@ -148,7 +165,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     props: {
       categories,
       motives,
-      authUser
+      authUser: null
     }
   }
 }
