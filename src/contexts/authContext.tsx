@@ -2,6 +2,8 @@ import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import axios from 'axios'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { deleteCookie, hasCookie } from 'cookies-next'
+import { getAuthUser } from 'lib/usersLib'
+import { signIn } from 'next-auth/react'
 import {
   createContext,
   ReactNode,
@@ -29,6 +31,7 @@ interface AuthContextData {
   setUser: (user: User | null) => void
   register: (form: RegisterFormValues) => Promise<User | null>
   login: (form: LoginFormValues) => Promise<boolean>
+  loginWithProvider: (provider: string) => Promise<boolean>
   logout: () => Promise<boolean>
   sendResetPasswordLink: (email: string) => Promise<boolean>
   resetPassword: (form: ResetPasswordFormValues) => Promise<boolean>
@@ -163,12 +166,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     try {
       const {
-        data: { authUser }
+        data: { message }
       } = await axios.post('/api/auth/login', loginFormValues)
 
+      const authUser = await getAuthUser()
       setUser(authUser)
 
       setIsAuthLoading(false)
+
+      showToast({
+        title: 'Login realizado com sucesso',
+        description: message,
+        icon: <MdDone size={24} color={theme.colors.brand[7]} />,
+        dark
+      })
 
       return true
     } catch (error) {
@@ -187,6 +198,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
           deleteCookie(authUserCookieName)
         }
       }
+
+      return false
+    }
+  }
+
+  const loginWithProvider = async (provider: string) => {
+    setIsAuthLoading(true)
+
+    try {
+      await signIn(provider)
+
+      return true
+    } catch (error) {
+      setIsAuthLoading(false)
+
+      setAuthErrors(error, `fazer login com o provedor do ${provider}`)
 
       return false
     }
@@ -282,6 +309,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setUser,
     register,
     login,
+    loginWithProvider,
     logout,
     isAuthLoading,
     authUserCookieName,

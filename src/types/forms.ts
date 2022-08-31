@@ -40,3 +40,8 @@ export type PasswordFormTypes = UseFormReturnType<
   | ProfileFormValues
   | ResetPasswordFormValues
 >
+
+export type LoginProvider = {
+  accessToken: string
+  provider: string
+}

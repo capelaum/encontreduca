@@ -1,5 +1,6 @@
 import { deleteCookie, hasCookie } from 'cookies-next'
 import { api } from 'services/api'
+import { LoginProvider } from 'types/forms'
 import { ResourceVote } from 'types/resources'
 import { User } from 'types/users'
 
@@ -19,6 +20,22 @@ export async function getAuthUser() {
       deleteCookie('encontreduca_user_auth')
     }
     return null
+  }
+}
+
+export async function loginWithProvider({
+  accessToken,
+  provider
+}: LoginProvider) {
+  try {
+    const response = await api.post(`login/${provider}`, { accessToken })
+
+    const { token, message } = response.data
+
+    return { token, message }
+  } catch (error) {
+    console.error((error as any).message)
+    return { token: null, message: (error as any).response.data.message }
   }
 }
 
