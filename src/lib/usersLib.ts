@@ -34,7 +34,8 @@ export async function loginWithProvider({
 
     return { token, message }
   } catch (error) {
-    throw new Error((error as any).response.data.message)
+    console.error((error as any).message)
+    return { token: null, message: (error as any).response.data.message }
   }
 }
 

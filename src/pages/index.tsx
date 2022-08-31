@@ -68,8 +68,6 @@ export default function Map({ categories, motives, authUser }: MapProps) {
 
     handleGetCurrentLocation()
 
-    console.log('🚀 ~ authUser', authUser)
-
     if (authUser) {
       setAuthSidebarOpened(false)
       setMenuOpened(false)
@@ -157,9 +155,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   let authUser = null
 
   const token = await getToken({ req })
-  console.log('🚀 ~ token', token)
 
-  if (token) {
+  if (token && !hasCookie('encontreduca_user_auth', { req, res })) {
     const { accessToken, provider } = token
 
     if (accessToken && provider) {
@@ -168,13 +165,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
         accessToken
       } as LoginProvider)
 
-      console.log('🚀 ~ userToken', userToken)
-
-      setCookie('encontreduca_user_auth', userToken, {
-        req,
-        res,
-        maxAge: 30 * 24 * 60 * 60
-      })
+      if (userToken) {
+        setCookie('encontreduca_user_auth', userToken, {
+          req,
+          res,
+          maxAge: 30 * 24 * 60 * 60
+        })
+      }
     }
   }
 
@@ -182,7 +179,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     api.defaults.headers.common.Authorization = `Bearer ${req.cookies.encontreduca_user_auth}`
 
     authUser = await getAuthUser()
-    console.log('🚀 ~ authUser', authUser)
   }
 
   return {

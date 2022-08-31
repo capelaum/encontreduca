@@ -6,12 +6,10 @@ import {
   useMantineTheme
 } from '@mantine/core'
 import { useAuth } from 'contexts/authContext'
-import { useState } from 'react'
 import { BsGithub } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 
 export function SocialButtons() {
-  const [isLoading, setIsLoading] = useState(false)
   const { loginWithProvider } = useAuth()
 
   const theme = useMantineTheme()
@@ -20,10 +18,7 @@ export function SocialButtons() {
   const dark = colorScheme === 'dark'
 
   const handleSignInWithGoogle = async () => {
-    setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
+    await loginWithProvider('google')
   }
 
   const handleSignInWithGithub = async () => {
@@ -33,7 +28,6 @@ export function SocialButtons() {
   return (
     <Stack spacing="md">
       <Button
-        loading={isLoading}
         variant="white"
         radius="md"
         color={theme.colors.brand[7]}
@@ -51,7 +45,6 @@ export function SocialButtons() {
       </Button>
 
       <Button
-        loading={isLoading}
         variant="white"
         radius="md"
         color={theme.colors.brand[7]}
