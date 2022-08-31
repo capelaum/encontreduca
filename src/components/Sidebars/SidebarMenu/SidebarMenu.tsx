@@ -6,6 +6,7 @@ import { Title } from 'components/Shared/Title'
 import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
+import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { AiFillHome } from 'react-icons/ai'
 import { BsBookmarksFill, BsPlusCircleFill } from 'react-icons/bs'
@@ -99,8 +100,9 @@ export function SidebarMenu() {
             <MenuButton
               icon={<MdLogout size={20} />}
               text="Sair"
-              onClick={() => {
-                logout()
+              onClick={async () => {
+                await logout()
+                await signOut({ redirect: false })
               }}
             />
           </>

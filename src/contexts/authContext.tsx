@@ -3,6 +3,7 @@ import axios from 'axios'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
 import { deleteCookie, hasCookie } from 'cookies-next'
 import { getAuthUser } from 'lib/usersLib'
+import { signIn } from 'next-auth/react'
 import {
   createContext,
   ReactNode,
@@ -206,21 +207,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setIsAuthLoading(true)
 
     try {
-      const {
-        data: { message }
-      } = await axios.post('/api/auth/login-provider')
-
-      const authUser = await getAuthUser()
-
-      setUser(authUser)
-      setIsAuthLoading(false)
-
-      showToast({
-        title: 'Login realizado com sucesso',
-        description: message,
-        icon: <MdDone size={24} color={theme.colors.brand[7]} />,
-        dark
-      })
+      await signIn(provider)
 
       return true
     } catch (error) {

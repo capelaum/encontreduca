@@ -9,18 +9,20 @@ import { Sidebars } from 'components/Sidebars'
 import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { deleteCookie, hasCookie } from 'cookies-next'
+import { hasCookie, setCookie } from 'cookies-next'
 import { useGetCurrentLocation } from 'hooks/useGetCurrentLocation'
 import { loadCategories } from 'lib/categoriesLib'
 import { loadMotives } from 'lib/motivesLib'
-import { getAuthUser } from 'lib/usersLib'
+import { getAuthUser, loginWithProvider } from 'lib/usersLib'
 import { GetServerSideProps } from 'next'
+import { getToken } from 'next-auth/jwt'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { MdOutlineMarkEmailRead } from 'react-icons/md'
+import { MdDone, MdOutlineMarkEmailRead } from 'react-icons/md'
 import { api } from 'services/api'
 import { CategoryType } from 'types/categories'
+import { LoginProvider } from 'types/forms'
 import { libraries } from 'types/googleMaps'
 import { Motive } from 'types/motives'
 import { User } from 'types/users'
@@ -66,10 +68,19 @@ export default function Map({ categories, motives, authUser }: MapProps) {
 
     handleGetCurrentLocation()
 
-    if (user) {
+    console.log('🚀 ~ authUser', authUser)
+
+    if (authUser) {
       setAuthSidebarOpened(false)
       setMenuOpened(false)
       setResourceOpened(false)
+
+      showToast({
+        title: 'Login realizado com sucesso',
+        description: `Bem vindo(a) de volta ${authUser.name}.`,
+        icon: <MdDone size={24} color={theme.colors.brand[7]} />,
+        dark
+      })
     }
 
     if (newEmailVerified === 'true') {
@@ -143,29 +154,42 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     }
   }
 
+  let authUser = null
+
+  const token = await getToken({ req })
+  console.log('🚀 ~ token', token)
+
+  if (token) {
+    const { accessToken, provider } = token
+
+    if (accessToken && provider) {
+      const { token: userToken } = await loginWithProvider({
+        provider,
+        accessToken
+      } as LoginProvider)
+
+      console.log('🚀 ~ userToken', userToken)
+
+      setCookie('encontreduca_user_auth', userToken, {
+        req,
+        res,
+        maxAge: 30 * 24 * 60 * 60
+      })
+    }
+  }
+
   if (hasCookie('encontreduca_user_auth', { req, res })) {
     api.defaults.headers.common.Authorization = `Bearer ${req.cookies.encontreduca_user_auth}`
 
-    const authUser: User | null = await getAuthUser()
-
-    if (!authUser) {
-      deleteCookie('encontreduca_user_auth', { res })
-    }
-
-    return {
-      props: {
-        categories,
-        motives,
-        authUser
-      }
-    }
+    authUser = await getAuthUser()
+    console.log('🚀 ~ authUser', authUser)
   }
 
   return {
     props: {
       categories,
       motives,
-      authUser: null
+      authUser
     }
   }
 }
