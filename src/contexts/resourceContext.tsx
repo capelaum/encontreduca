@@ -38,12 +38,15 @@ interface ResourceContextData {
   setResource: (resource: ResourceType | null) => void
   activeFilter: CategoryFilter | null
   setActiveFilter: (activeResource: CategoryFilter | null) => void
-  resourceReviews: Review[]
   setResourceReviews: (resourceReviews: Review[]) => void
-  filterResources: () => ResourceType[]
-  getAverageRating: (reviews: Review[]) => number
-  getUserResources: () => ResourceType[]
-  getNotApprovedResources: () => ResourceType[]
+  filteredResources: ResourceType[]
+  resourceReviewsAverageRating: number
+  resourceReviewsQuantity: number
+  notApprovedResources: ResourceType[]
+  userResourceReview: Review | null
+  reviewsWithoutUser: Review[]
+  userResourceVote: ResourceVote | null
+  isFetchingResourceData: boolean
   getResourceDiff: (
     form: UseFormReturnType<ResourceFormValues>,
     cover: File | null
@@ -52,12 +55,6 @@ interface ResourceContextData {
     resourceDiff: Partial<ResourceFormValues>,
     coverFile: File | null
   ) => Promise<ResourceChange[]>
-  userResourceReview: Review | null
-  reviewsWithoutUser: Review[]
-  userResourceVote: ResourceVote | null
-  isFetchingResourceData: boolean
-  getUserResourceReview: (reviews: Review[]) => Review | null
-  getReviewsWithoutUser: (reviews: Review[]) => Review[]
 }
 
 const ResourceContext = createContext<ResourceContextData>(
@@ -103,21 +100,12 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     }
   }, [resourceReviewsData])
 
-  const getUserResources = () => {
-    if (!resources) return []
-
-    return resources.filter(
-      ({ id, approved }) => approved && user && user.resourcesIds.includes(+id)
-    )
-  }
-
-  const getNotApprovedResources = () => {
-    if (!resources) return []
-
-    return resources
-      .filter(({ approved }) => !approved)
-      .sort((a, b) => +b.id - +a.id)
-  }
+  const orderByDateDesc = (data: ResourceType[] | Review[]) =>
+    data.sort((a, b) => {
+      const newA = a.updatedAt.split('/').reverse().join('-')
+      const newB = b.updatedAt.split('/').reverse().join('-')
+      return +new Date(newB) - +new Date(newA)
+    })
 
   const filterResources = (): ResourceType[] => {
     if (!resources) return []
@@ -126,15 +114,19 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
       ({ approved, categoryName, id }) => {
         if (!activeFilter) {
           if (votingPanelOpened) return !approved
+
           if (savedResourcesOpened)
             return approved && user?.resourcesIds.includes(+id)
+
           if (approved) return true
         }
 
         if (activeFilter && activeFilter.categoryNames.includes(categoryName)) {
           if (votingPanelOpened) return !approved
+
           if (savedResourcesOpened)
             return approved && user?.resourcesIds.includes(+id)
+
           if (approved) return true
         }
 
@@ -175,9 +167,21 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     return userVote ?? null
   }
 
+  const filteredResources = filterResources()
+
+  const notApprovedResources = orderByDateDesc(
+    filteredResources
+  ) as ResourceType[]
+
   const userResourceReview = getUserResourceReview(resourceReviews)
 
-  const reviewsWithoutUser = getReviewsWithoutUser(resourceReviews)
+  const reviewsWithoutUser = orderByDateDesc(
+    getReviewsWithoutUser(resourceReviews)
+  ) as Review[]
+
+  const resourceReviewsAverageRating = getAverageRating(resourceReviews)
+
+  const resourceReviewsQuantity = resourceReviews.length
 
   const userResourceVote = getUseResourceVote(user?.votes ?? [])
 
@@ -280,20 +284,17 @@ export function ResourceProvider({ children }: ResourceProviderProps) {
     setResource,
     activeFilter,
     setActiveFilter,
-    resourceReviews,
     setResourceReviews,
-    getAverageRating,
-    filterResources,
-    getUserResources,
-    getNotApprovedResources,
-    getResourceDiff,
-    createResourceChanges,
+    resourceReviewsAverageRating,
+    resourceReviewsQuantity,
+    filteredResources,
+    notApprovedResources,
     userResourceReview,
     reviewsWithoutUser,
     userResourceVote,
     isFetchingResourceData,
-    getUserResourceReview,
-    getReviewsWithoutUser
+    getResourceDiff,
+    createResourceChanges
   }
 
   const ResourceContextProviderValue = useMemo<ResourceContextData>(

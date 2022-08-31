@@ -52,11 +52,11 @@ export function MapProvider({ children }: MapProviderProps) {
 
   const mapRef = useRef<GoogleMapsMap>()
 
-  const { resources, filterResources, activeFilter } = useResource()
+  const { resources, filteredResources, activeFilter } = useResource()
   const { votingPanelOpened, savedResourcesOpened } = useSidebar()
 
   const onTilesLoaded = () => {
-    const visibleMarkers = filterResources().filter((resource) =>
+    const visibleMarkers = filteredResources.filter((resource) =>
       mapRef.current?.getBounds()?.contains(resource.position)
     )
 

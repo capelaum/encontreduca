@@ -8,16 +8,7 @@ import { UserReview } from './UserReview'
 export function Reviews() {
   const [end, setEnd] = useState(3)
 
-  const {
-    resource,
-    resourceReviews,
-    getUserResourceReview,
-    getReviewsWithoutUser
-  } = useResource()
-
-  const userResourceReview = getUserResourceReview(resourceReviews)
-
-  const reviewsWithoutUser = getReviewsWithoutUser(resourceReviews)
+  const { resource, userResourceReview, reviewsWithoutUser } = useResource()
 
   useEffect(() => {
     setEnd(3)

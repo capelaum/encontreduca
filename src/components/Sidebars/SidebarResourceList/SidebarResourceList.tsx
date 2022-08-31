@@ -21,15 +21,7 @@ export function SidebarResourceList({ isVotingPainel }: ResourceListProps) {
   const [end, setEnd] = useState(30)
 
   const { setSavedResourcesOpened, setVotingPanelOpened } = useSidebar()
-  const { filterResources } = useResource()
-
-  const userResources = filterResources()
-
-  const notApprovedResources = filterResources().sort((a, b) => {
-    const newA = a.createdAt.split('/').reverse().join('-')
-    const newB = b.createdAt.split('/').reverse().join('-')
-    return +new Date(newB) - +new Date(newA)
-  })
+  const { filteredResources, notApprovedResources } = useResource()
 
   const theme = useMantineTheme()
 
@@ -45,7 +37,7 @@ export function SidebarResourceList({ isVotingPainel }: ResourceListProps) {
         ))
     }
 
-    return userResources
+    return filteredResources
       .slice(0, end)
       .map((resource) => (
         <ResourceItem key={`resource-${resource.id}`} resource={resource} />
@@ -81,7 +73,7 @@ export function SidebarResourceList({ isVotingPainel }: ResourceListProps) {
       )}
 
       <Stack spacing={0} pt={8}>
-        {(!isVotingPainel && userResources.length <= 0) ||
+        {(!isVotingPainel && filteredResources.length <= 0) ||
         (isVotingPainel && notApprovedResources.length <= 0) ? (
           <Text
             px="md"

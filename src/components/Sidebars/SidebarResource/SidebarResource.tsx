@@ -8,7 +8,8 @@ import { SidebarResourceHeader } from './SidebarResourceHeader'
 import { SidebarResourceSkeleton } from './SidebarResourceSkeleton'
 
 export function SidebarResource() {
-  const { resource, resourceReviews, isFetchingResourceData } = useResource()
+  const { resource, resourceReviewsQuantity, isFetchingResourceData } =
+    useResource()
 
   if (!resource) {
     return <Text px="md">Ooops, por favor selecione um recurso...</Text>
@@ -30,7 +31,7 @@ export function SidebarResource() {
 
       <Info />
 
-      {resourceReviews?.length > 0 && <Reviews />}
+      {resourceReviewsQuantity > 0 && <Reviews />}
     </Box>
   )
 }

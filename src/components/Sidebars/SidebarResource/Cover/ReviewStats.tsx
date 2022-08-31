@@ -3,33 +3,31 @@ import { Stars } from 'components/Shared/Stars'
 import { useResource } from 'contexts/resourceContext'
 
 export function ReviewStats() {
-  const { getAverageRating, resourceReviews } = useResource()
-  const averageRating = getAverageRating(resourceReviews)
+  const { resourceReviewsAverageRating, resourceReviewsQuantity } =
+    useResource()
 
   const { colorScheme } = useMantineColorScheme()
   const dark = colorScheme === 'dark'
 
-  const reviewsQuantity = resourceReviews?.length
-
-  if (reviewsQuantity === 0) {
+  if (resourceReviewsQuantity === 0) {
     return <Text size="sm">Sem avaliações</Text>
   }
 
   const renderReviewsQuantity = () => {
-    if (reviewsQuantity === 1) {
+    if (resourceReviewsQuantity === 1) {
       return <Text size="sm">1 avaliação</Text>
     }
 
-    return <Text size="sm">{reviewsQuantity} avaliações</Text>
+    return <Text size="sm">{resourceReviewsQuantity} avaliações</Text>
   }
 
   return (
     <Group align="center" spacing="sm">
       <Text size="sm" mt="xs">
-        {averageRating.toFixed(1)}
+        {resourceReviewsAverageRating.toFixed(1)}
       </Text>
 
-      <Stars rating={averageRating} />
+      <Stars rating={resourceReviewsAverageRating} />
 
       <Text
         size="sm"
