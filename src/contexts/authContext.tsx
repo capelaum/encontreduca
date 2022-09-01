@@ -1,8 +1,7 @@
 import { useMantineColorScheme, useMantineTheme } from '@mantine/core'
 import axios from 'axios'
 import { showToast, showToastError } from 'components/Shared/ToastMessage'
-import { deleteCookie, hasCookie } from 'cookies-next'
-import { getAuthUser } from 'lib/usersLib'
+import { deleteCookie } from 'cookies-next'
 import { signIn } from 'next-auth/react'
 import {
   createContext,
@@ -166,10 +165,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     try {
       const {
-        data: { message }
+        data: { authUser, message }
       } = await axios.post('/api/auth/login', loginFormValues)
 
-      const authUser = await getAuthUser()
       setUser(authUser)
 
       setIsAuthLoading(false)
@@ -192,12 +190,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         (error as any).response?.data?.message ===
           'Your email address is not verified.'
       ) {
-        const response = await resendEmailVerification()
-
-        if (!response && hasCookie(authUserCookieName)) {
-          deleteCookie(authUserCookieName)
-        }
+        await resendEmailVerification()
       }
+
+      deleteCookie(authUserCookieName)
 
       return false
     }

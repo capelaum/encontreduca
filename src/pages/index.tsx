@@ -9,7 +9,7 @@ import { Sidebars } from 'components/Sidebars'
 import { useAuth } from 'contexts/authContext'
 import { useResource } from 'contexts/resourceContext'
 import { useSidebar } from 'contexts/sidebarContext'
-import { hasCookie, setCookie } from 'cookies-next'
+import { deleteCookie, hasCookie, setCookie } from 'cookies-next'
 import { useGetCurrentLocation } from 'hooks/useGetCurrentLocation'
 import { loadCategories } from 'lib/categoriesLib'
 import { loadMotives } from 'lib/motivesLib'
@@ -75,7 +75,7 @@ export default function Map({ categories, motives, authUser }: MapProps) {
 
       showToast({
         title: 'Login realizado com sucesso',
-        description: `Bem vindo(a) de volta ${authUser.name}.`,
+        description: `Bem vindo(a) ${authUser.name}.`,
         icon: <MdDone size={24} color={theme.colors.brand[7]} />,
         dark
       })
@@ -178,7 +178,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   if (hasCookie('encontreduca_user_auth', { req, res })) {
     api.defaults.headers.common.Authorization = `Bearer ${req.cookies.encontreduca_user_auth}`
 
-    authUser = await getAuthUser()
+    try {
+      authUser = await getAuthUser()
+    } catch (error) {
+      deleteCookie('encontreduca_user_auth', { req, res })
+    }
   }
 
   return {

@@ -1,26 +1,18 @@
-import { deleteCookie, hasCookie } from 'cookies-next'
 import { api } from 'services/api'
 import { LoginProvider } from 'types/forms'
 import { ResourceVote } from 'types/resources'
 import { User } from 'types/users'
 
 export async function getAuthUser() {
-  try {
-    const response = await api.get('user')
+  const response = await api.get('user')
 
-    if (response.status !== 200) {
-      throw new Error('User not found')
-    }
-
-    const { data }: { data: User } = response
-
-    return data
-  } catch (error) {
-    if (hasCookie('encontreduca_user_auth')) {
-      deleteCookie('encontreduca_user_auth')
-    }
-    return null
+  if (response.status !== 200) {
+    throw new Error('User not found')
   }
+
+  const { data }: { data: User } = response
+
+  return data
 }
 
 export async function loginWithProvider({
@@ -34,7 +26,6 @@ export async function loginWithProvider({
 
     return { token, message }
   } catch (error) {
-    console.error((error as any).message)
     return { token: null, message: (error as any).response.data.message }
   }
 }
