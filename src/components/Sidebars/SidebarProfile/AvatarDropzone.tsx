@@ -26,7 +26,6 @@ interface AvatarDropzoneProps {
 export function AvatarDropzone({
   form,
   setHasPreview,
-  // setImageBase64,
   setAvatar
 }: AvatarDropzoneProps) {
   const [isLoading, setIsLoading] = useState(false)
@@ -91,7 +90,6 @@ export function AvatarDropzone({
         radius={999}
         form={form as UseFormReturnType<ResourceFormValues | ProfileFormValues>}
         setPreview={setPreview}
-        // setImageBase64={setImageBase64}
         setImageFile={setAvatar}
         containerStyles={containerStyles}
       >

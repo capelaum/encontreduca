@@ -157,12 +157,10 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
     formData.append('name', values.name)
     formData.append('address', values.address)
     formData.append('categoryId', values.categoryId.toString())
-    formData.append('name', values.name)
     formData.append('latitude', localPosition.lat.toString())
     formData.append('longitude', localPosition.lng.toString())
-
-    if (values.phone) formData.append('phone', values.phone)
-    if (values.website) formData.append('website', values.website)
+    formData.append('phone', values.phone)
+    formData.append('website', values.website)
     if (cover) formData.append('cover', cover)
 
     try {

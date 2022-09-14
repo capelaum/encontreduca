@@ -72,7 +72,6 @@ export function SidebarProfile() {
     validate: {
       name: (value) => (value.trim().length < 3 ? 'Nome muito curto' : null),
       email: (value) => validateEmail(value),
-      // validate if avatar is a valid image file
       avatar: () => (!avatar ? null : validateImageFile(avatar)),
       password: (value) => validatePassword(value),
       confirmPassword: (value, values) =>

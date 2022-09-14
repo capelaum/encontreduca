@@ -54,7 +54,8 @@ export async function updateUser({
       withCredentials: true,
       Accept: 'application/json',
       'Content-Type': 'multipart/form-data',
-      'X-Requested-With': 'XMLHttpRequest'
+      'X-Requested-With': 'XMLHttpRequest',
+      'Access-Control-Allow-Origin': '*'
     }
   })
 
@@ -70,7 +71,7 @@ export async function updateUser({
 export async function deleteUser(userId: number) {
   const response = await api.delete(`users/${userId}`)
 
-  if (response.status !== 200) {
+  if (response.status !== 204) {
     throw new Error('An error occurred while deleting the user')
   }
 
