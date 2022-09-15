@@ -15,7 +15,7 @@ export function Reviews() {
   }, [resource])
 
   return (
-    <Box>
+    <Box pb={48}>
       {!!userResourceReview && (
         <>
           <SectionTitle title="Sua avaliação" />

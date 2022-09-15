@@ -21,7 +21,7 @@ export function SidebarResource() {
 
   return (
     <Box>
-      <Stack mt={88} px="md" pb={48} spacing="md">
+      <Stack mt={88} px="md" spacing="md">
         <SidebarResourceHeader />
 
         <Cover />
