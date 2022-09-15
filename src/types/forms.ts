@@ -23,7 +23,7 @@ export type LoginFormValues = Pick<ProfileFormValues, 'email' | 'password'>
 
 export type ForgotPasswordFormValues = Pick<ProfileFormValues, 'email'>
 
-export type RegisterFormValues = Omit<ProfileFormValues, 'avatarUrl'>
+export type RegisterFormValues = Omit<ProfileFormValues, 'avatar'>
 
 export interface ResetPasswordFormValues {
   token: string
