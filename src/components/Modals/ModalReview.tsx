@@ -136,25 +136,21 @@ export function ModalReview({
       <Profile isModal author={user!.name} authorAvatar={user!.avatarUrl} />
 
       <Group spacing={2} align="center">
-        {[1, 2, 3, 4, 5].map((_, index) => {
-          const starIndex = index + 1
-
-          return (
-            <UnstyledButton
-              type="button"
-              key={starIndex}
-              onClick={() => setRating(starIndex)}
-              onMouseEnter={() => setHover(starIndex)}
-              onMouseLeave={() => setHover(rating)}
-            >
-              {starIndex <= (hover || rating) ? (
-                <MdStar size={24} color={theme.colors.yellow[6]} />
-              ) : (
-                <MdStarBorder size={24} color={theme.colors.gray[6]} />
-              )}
-            </UnstyledButton>
-          )
-        })}
+        {[1, 2, 3, 4, 5].map((starIndex) => (
+          <UnstyledButton
+            type="button"
+            key={starIndex}
+            onClick={() => setRating(starIndex)}
+            onMouseEnter={() => setHover(starIndex)}
+            onMouseLeave={() => setHover(rating)}
+          >
+            {starIndex <= (hover || rating) ? (
+              <MdStar size={24} color={theme.colors.yellow[6]} />
+            ) : (
+              <MdStarBorder size={24} color={theme.colors.gray[6]} />
+            )}
+          </UnstyledButton>
+        ))}
       </Group>
 
       <Textarea

@@ -24,7 +24,7 @@ export function Filters() {
 
   const filterGroupStyles = (): CSSObject => ({
     zIndex: 1,
-    width: largeScreen ? 'calc(100vw - 420px)' : '100%',
+    width: largeScreen ? 'calc(100vw - 460px)' : '100%',
     overflow: 'hidden',
     overflowX: 'scroll',
     overflowY: 'hidden',
@@ -88,6 +88,7 @@ export function Filters() {
       noWrap
       align="center"
       position="left"
+      py={4}
       sx={filterGroupStyles}
       spacing="xs"
     >
