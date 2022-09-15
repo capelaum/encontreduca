@@ -45,7 +45,7 @@ export function SidebarResourceList({ isVotingPainel }: ResourceListProps) {
   }
 
   return (
-    <Stack my="md" spacing="md">
+    <Stack my="md" pb={48} spacing="md">
       <Box px="md">
         <SidebarHeader
           title={isVotingPainel ? 'Painel de votação' : 'Recursos salvos'}

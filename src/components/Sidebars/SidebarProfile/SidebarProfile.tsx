@@ -154,7 +154,7 @@ export function SidebarProfile() {
     >
       <DefaultOverlay visible={isLoading} />
 
-      <Stack spacing="md" p="md">
+      <Stack spacing="md" p="md" pb={48}>
         <SidebarHeader
           title="Perfil"
           closeSidebar={() => setProfileOpened(false)}

@@ -115,7 +115,7 @@ export function SidebarAuth() {
   ])
 
   return (
-    <Stack spacing="md" p="md">
+    <Stack spacing="md" p="md" pb={48}>
       <SidebarHeader
         title={setHeaderTitle()}
         closeSidebar={() => setAuthSidebarOpened(false)}

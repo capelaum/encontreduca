@@ -226,7 +226,7 @@ export function SidebarResourceForm({ isCreateResource }: ResourceFormProps) {
     <form onSubmit={form.onSubmit(handleSubmit, handleResourceFormErrors)}>
       <DefaultOverlay visible={isLoading} />
 
-      <Stack my="md" px="md" spacing="md">
+      <Stack my="md" px="md" pb={48} spacing="md">
         <SidebarHeader
           title={
             isCreateResource
