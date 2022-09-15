@@ -182,6 +182,4 @@ export function ModalReview({
       />
     </Stack>
   )
-  console.log('🚀 ~ index', index)
-  console.log('🚀 ~ index', index)
 }
