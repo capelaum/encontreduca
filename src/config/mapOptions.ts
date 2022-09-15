@@ -9,14 +9,16 @@ export const mapOptions = {
   mapId: process.env.NEXT_PUBLIC_MAP_ID,
   disableDefaultUI: true,
   zoomControl: false,
-  clickableIcons: false
+  clickableIcons: false,
+  gestureHandling: 'greedy'
 }
 
 export const mapOptionsLight = {
   mapId: process.env.NEXT_PUBLIC_MAP_ID_LIGHT,
   disableDefaultUI: true,
   zoomControl: false,
-  clickableIcons: false
+  clickableIcons: false,
+  gestureHandling: 'greedy'
 }
 
 export const mapOptionsForm = {
