@@ -127,8 +127,6 @@ export function ModalReview({
     })
   }
 
-  const arrayOf5 = new Array(5).fill(0)
-
   return (
     <Stack spacing="md">
       <DefaultCloseButton onClick={() => closeModal(id)} title="Fechar Modal" />
@@ -138,7 +136,7 @@ export function ModalReview({
       <Profile isModal author={user!.name} authorAvatar={user!.avatarUrl} />
 
       <Group spacing={2} align="center">
-        {arrayOf5.map((_, index) => {
+        {[1, 2, 3, 4, 5].map((_, index) => {
           const starIndex = index + 1
 
           return (

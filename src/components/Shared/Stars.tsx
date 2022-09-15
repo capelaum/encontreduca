@@ -9,7 +9,7 @@ export function Stars({ rating }: StarsProps) {
   const theme = useMantineTheme()
 
   const renderStars = () => {
-    const starComponents = [...Array(5)].map((_, index) => {
+    const starComponents = [1, 2, 3, 4, 5].map((_, index) => {
       const starIndex: number = index + 1
 
       return starIndex <= Math.round(rating) ? (
