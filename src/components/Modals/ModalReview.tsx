@@ -138,6 +138,8 @@ export function ModalReview({
       <Group spacing={2} align="center">
         {[...Array(5)].map((_, index) => {
           const starIndex = index + 1
+          console.log('🚀 ~ index', index)
+          console.log('🚀 ~ starIndex', starIndex)
 
           return (
             <UnstyledButton
@@ -180,4 +182,6 @@ export function ModalReview({
       />
     </Stack>
   )
+  console.log('🚀 ~ index', index)
+  console.log('🚀 ~ index', index)
 }
