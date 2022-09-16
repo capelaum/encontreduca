@@ -81,7 +81,9 @@ export function SidebarResourceList({ isVotingPainel }: ResourceListProps) {
             weight={500}
             color={dark ? theme.colors.cyan[3] : theme.colors.brand[7]}
           >
-            Hey, não tem nenhum recursso por aqui 😕.
+            {isVotingPainel
+              ? 'Não há recursos para votação 😅'
+              : 'Hey, você ainda não possui recursos salvos 💤'}
           </Text>
         ) : (
           <Box px="md">
