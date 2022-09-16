@@ -102,8 +102,6 @@ export function ModalResourceLocalChange({
         <Image
           src={markerIcon}
           alt="Marcador"
-          // withPlaceholder
-          // placeholder={<Image src={markerIcon} />}
           sx={{
             position: 'absolute',
             left: '50%',

@@ -30,7 +30,6 @@ export const mapSearchInputStyles = (
   flex: 1,
   input: {
     color: dark ? theme.white : theme.colors.brand[7],
-    // border: '1px solid red',
     backgroundColor: dark ? theme.colors.brand[7] : theme.colors.gray[0],
     border: 'none',
     '&:focus': {

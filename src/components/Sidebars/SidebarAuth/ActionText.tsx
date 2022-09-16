@@ -19,7 +19,6 @@ export function ActionText({ text, onClick, size }: ActionTextProps) {
       weight={500}
       sx={{
         cursor: 'pointer',
-        // border: '1px solid red',
         display: 'inline-block',
         transition: 'all 0.2s',
         color: dark ? theme.colors.cyan[3] : theme.colors.brand[7],

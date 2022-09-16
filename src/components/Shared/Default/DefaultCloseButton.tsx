@@ -10,8 +10,6 @@ interface CloseButtonProps {
 }
 
 export function DefaultCloseButton({ onClick, title }: CloseButtonProps) {
-  // const largeScreen = useMediaQuery('(min-width: 768px)', false)
-
   const theme = useMantineTheme()
 
   const { colorScheme } = useMantineColorScheme()
