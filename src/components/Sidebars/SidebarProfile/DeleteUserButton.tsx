@@ -10,7 +10,11 @@ import { BsExclamationCircle } from 'react-icons/bs'
 import { FaUserTimes } from 'react-icons/fa'
 import { useModalStyles } from 'styles/modalStyles'
 
-export function DeleteUserButton() {
+interface DeleteUserButtonProps {
+  setIsLoading: (isLoading: boolean) => void
+}
+
+export function DeleteUserButton({ setIsLoading }: DeleteUserButtonProps) {
   const { openConfirmModal, closeModal } = useModals()
   const { user, setUser, authUserCookieName } = useAuth()
 
@@ -24,9 +28,11 @@ export function DeleteUserButton() {
   const { classes } = useModalStyles(dark)
 
   const handleOnConfirm = async () => {
+    setIsLoading(true)
     await deleteUser(+user!.id)
 
     setProfileOpened(false)
+    setIsLoading(false)
 
     deleteCookie(authUserCookieName)
 

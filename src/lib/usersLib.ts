@@ -1,6 +1,5 @@
 import { api } from 'services/api'
 import { LoginProvider } from 'types/forms'
-import { ResourceVote } from 'types/resources'
 import { User } from 'types/users'
 
 export async function getAuthUser() {
@@ -112,16 +111,4 @@ export async function deleteUserAvatar(userId: number) {
   }
 
   return response
-}
-
-export async function getUserVotes(): Promise<ResourceVote[] | null> {
-  const response = await api.get('users/votes')
-
-  if (response.status !== 200) {
-    throw new Error('Something went wrong while fetching user votes')
-  }
-
-  const { data } = response
-
-  return data
 }

@@ -197,7 +197,7 @@ export function SidebarProfile() {
             Atualizar
           </Button>
 
-          <DeleteUserButton />
+          <DeleteUserButton setIsLoading={setIsLoading} />
         </Stack>
       </Stack>
     </form>
