@@ -29,7 +29,9 @@ export function SidebarResource() {
         <ActionButtons />
       </Stack>
 
-      <Info />
+      <Box pb={resourceReviewsQuantity <= 0 ? 48 : 0}>
+        <Info />
+      </Box>
 
       {resourceReviewsQuantity > 0 && <Reviews />}
     </Box>

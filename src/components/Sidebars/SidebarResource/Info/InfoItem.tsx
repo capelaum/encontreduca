@@ -78,7 +78,8 @@ export function InfoItem({ icon, text, type }: InfoItemProps) {
             spacing={16}
             align="center"
             noWrap
-            px="md"
+            pl="md"
+            pr="xl"
             py={16}
             onClick={copy}
             onMouseOver={() => setIsHovered(true)}
