@@ -7,22 +7,22 @@ import { useHotkeys, useLocalStorage } from '@mantine/hooks'
 import { ModalsProvider } from '@mantine/modals'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ModalReview, ModalSelect, ModalVote } from 'components/Modals'
-
+import { AuthProvider } from 'contexts/authContext'
 import { MapProvider } from 'contexts/mapContext'
 import { ResourceProvider } from 'contexts/resourceContext'
 import { SidebarProvider } from 'contexts/sidebarContext'
+import { Session } from 'next-auth'
+import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
-import { ToastContainer } from 'react-toastify'
 import { GlobalStyles } from 'styles/global'
 import { myTheme } from 'styles/theme'
 
-import { AuthProvider } from 'contexts/authContext'
-import { SessionProvider } from 'next-auth/react'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
 
 const queryClient = new QueryClient()
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps<{ session: Session }>) {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
     key: 'mantine-color-scheme',
     defaultValue: 'light',
@@ -41,7 +41,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     >
       <MantineProvider theme={myTheme} withGlobalStyles withNormalizeCSS>
         <QueryClientProvider client={queryClient}>
-          <SessionProvider session={session}>
+          <SessionProvider session={pageProps.session}>
             <AuthProvider>
               <SidebarProvider>
                 <ResourceProvider>
