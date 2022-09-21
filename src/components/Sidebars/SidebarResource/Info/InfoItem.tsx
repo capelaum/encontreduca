@@ -87,6 +87,7 @@ export function InfoItem({ icon, text, type }: InfoItemProps) {
             sx={{
               position: 'relative',
               transition: 'all 0.2s ease-in-out',
+              border: '1px solid red',
               '&:hover': {
                 cursor: 'pointer',
                 backgroundColor: dark
@@ -95,7 +96,15 @@ export function InfoItem({ icon, text, type }: InfoItemProps) {
               }
             }}
           >
-            <Box>{icon}</Box>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              {icon}
+            </Box>
             <Text
               size="sm"
               sx={{
