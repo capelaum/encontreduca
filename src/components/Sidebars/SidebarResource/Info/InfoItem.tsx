@@ -87,7 +87,6 @@ export function InfoItem({ icon, text, type }: InfoItemProps) {
             sx={{
               position: 'relative',
               transition: 'all 0.2s ease-in-out',
-              border: '1px solid red',
               '&:hover': {
                 cursor: 'pointer',
                 backgroundColor: dark
