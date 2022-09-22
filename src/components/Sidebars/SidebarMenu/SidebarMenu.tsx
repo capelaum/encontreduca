@@ -66,7 +66,7 @@ export function SidebarMenu() {
 
       <Space h="md" />
 
-      <Stack spacing="md" sx={{ flex: 1 }} justify="space-between">
+      <Stack spacing={0} sx={{ flex: 1 }} justify="space-between">
         <Stack spacing={0}>
           {user && (
             <>
