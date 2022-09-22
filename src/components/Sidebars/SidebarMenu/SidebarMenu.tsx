@@ -1,4 +1,4 @@
-import { Space, Stack, useMantineColorScheme } from '@mantine/core'
+import { Box, Space, Stack, useMantineColorScheme } from '@mantine/core'
 import { useModals } from '@mantine/modals'
 import { ModalSupport } from 'components/Modals'
 import { DefaultCloseButton } from 'components/Shared/Default/DefaultCloseButton'
@@ -50,7 +50,13 @@ export function SidebarMenu() {
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
       <DefaultCloseButton
         onClick={() => setMenuOpened(false)}
         title="Fechar modal"
@@ -60,74 +66,76 @@ export function SidebarMenu() {
 
       <Space h="md" />
 
-      <Stack spacing={0}>
-        {user && (
-          <>
-            <MenuButton
-              icon={<BsBookmarksFill size={20} />}
-              text="Recursos salvos"
-              onClick={() => {
-                setSavedResourcesOpened(true)
-                setResourceOpened(false)
-              }}
-            />
+      <Stack spacing="md" sx={{ flex: 1 }} justify="space-between">
+        <Stack spacing={0}>
+          {user && (
+            <>
+              <MenuButton
+                icon={<BsBookmarksFill size={20} />}
+                text="Recursos salvos"
+                onClick={() => {
+                  setSavedResourcesOpened(true)
+                  setResourceOpened(false)
+                }}
+              />
 
-            <MenuButton
-              icon={<BsPlusCircleFill size={20} />}
-              text="Cadastrar recurso"
-              onClick={() => {
-                setResource(null)
-                setResourceOpened(false)
-                setCreateResourceOpened(true)
-              }}
-            />
+              <MenuButton
+                icon={<BsPlusCircleFill size={20} />}
+                text="Cadastrar recurso"
+                onClick={() => {
+                  setResource(null)
+                  setResourceOpened(false)
+                  setCreateResourceOpened(true)
+                }}
+              />
 
-            <MenuButton
-              icon={<GiStarsStack size={20} />}
-              text="Painel de votação"
-              onClick={() => {
-                setVotingPanelOpened(true)
-                setResourceOpened(false)
-              }}
-            />
+              <MenuButton
+                icon={<GiStarsStack size={20} />}
+                text="Painel de votação"
+                onClick={() => {
+                  setVotingPanelOpened(true)
+                  setResourceOpened(false)
+                }}
+              />
 
-            <MenuButton
-              icon={<MdHelp size={20} />}
-              text="Suporte"
-              onClick={openModalSupport}
-            />
+              <MenuButton
+                icon={<MdHelp size={20} />}
+                text="Suporte"
+                onClick={openModalSupport}
+              />
 
-            <MenuButton
-              icon={<MdLogout size={20} />}
-              text="Sair"
-              onClick={async () => {
-                await logout()
-                await signOut({ redirect: false })
-              }}
-            />
-          </>
-        )}
+              <MenuButton
+                icon={<MdLogout size={20} />}
+                text="Sair"
+                onClick={async () => {
+                  await logout()
+                  await signOut({ redirect: false })
+                }}
+              />
+            </>
+          )}
 
-        <MenuButton
-          icon={<AiFillHome size={20} />}
-          text="Home"
-          onClick={() => {
-            router.push('/home')
-          }}
-        />
-
-        {!user && (
           <MenuButton
-            icon={<MdLogin size={20} />}
-            text="Fazer login"
+            icon={<AiFillHome size={20} />}
+            text="Home"
             onClick={() => {
-              setAuthSidebarOpened(true)
+              router.push('/home')
             }}
           />
-        )}
-      </Stack>
 
-      <Copy />
-    </>
+          {!user && (
+            <MenuButton
+              icon={<MdLogin size={20} />}
+              text="Fazer login"
+              onClick={() => {
+                setAuthSidebarOpened(true)
+              }}
+            />
+          )}
+        </Stack>
+
+        <Copy />
+      </Stack>
+    </Box>
   )
 }
