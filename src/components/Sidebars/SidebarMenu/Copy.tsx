@@ -7,7 +7,7 @@ export function Copy() {
   const theme = useMantineTheme()
 
   return (
-    <Box pt={48} pl={12} pb={8}>
+    <Box pt={48} pl={12} pb={48}>
       <Group spacing={8} pb={12}>
         <MdMail size={16} />
         <Anchor
