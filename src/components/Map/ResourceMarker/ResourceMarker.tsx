@@ -64,7 +64,7 @@ export function ResourceMarker({
       return categorySwitch[categoryName].markerIcon
     }
 
-    return '/markers/marker_unapproved.png'
+    return '/markers/marker_unapproved.svg'
   }
 
   return (
