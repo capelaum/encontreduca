@@ -1,4 +1,11 @@
-import { Accordion, Box, Center, useMantineTheme } from '@mantine/core'
+import {
+  Accordion,
+  Anchor,
+  Box,
+  Center,
+  Text,
+  useMantineTheme
+} from '@mantine/core'
 import { useState } from 'react'
 import { TbPlus } from 'react-icons/tb'
 import { SectionContainer } from '../Shared/SectionContainer'
@@ -127,6 +134,29 @@ export function FAQ() {
               </Accordion.Item>
             ))}
           </Accordion>
+
+          <Text
+            pt={48}
+            sx={{
+              color: theme.colors.brand[7],
+              fontSize: '18px'
+            }}
+          >
+            Mais informações, sugestões e/ou reclamações, por favor entre em
+            contato através do e-mail{' '}
+            <Anchor
+              href="mailto:contato@encontreduca.com.br"
+              sx={{
+                color: theme.colors.cyan[7],
+                transition: '0.3s ease-out',
+                '&:hover': {
+                  color: theme.colors.cyan[5]
+                }
+              }}
+            >
+              contato@encontreduca.com.br
+            </Anchor>
+          </Text>
         </SectionContainer>
       </Box>
     </Center>

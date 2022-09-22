@@ -77,7 +77,7 @@ export default function Home() {
 
               <Text>
                 Mais informações, sugestões e/ou reclamações, por favor entre em
-                contato com a gente pelo o número através do e-mail{' '}
+                contato através do e-mail{' '}
                 <Anchor
                   href="mailto:contato@encontreduca.com.br"
                   sx={{
