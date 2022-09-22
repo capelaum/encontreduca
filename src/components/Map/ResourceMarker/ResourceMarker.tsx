@@ -75,7 +75,7 @@ export function ResourceMarker({
       clusterer={(clusterer as any) ?? undefined}
       icon={{
         url: markerIcon(),
-        scaledSize: new window.google.maps.Size(20, 28)
+        scaledSize: new window.google.maps.Size(24, 32)
       }}
       title={name}
       // label={markerLabel() ?? undefined}
