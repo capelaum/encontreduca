@@ -1,4 +1,12 @@
-import { Center, Group, Stack, Text, useMantineTheme } from '@mantine/core'
+import {
+  Anchor,
+  Center,
+  Group,
+  Stack,
+  Text,
+  useMantineTheme
+} from '@mantine/core'
+import Link from 'next/link'
 import { FaGithub, FaLaptopCode } from 'react-icons/fa'
 import { NavLink } from '../Header/NavLink'
 
@@ -41,6 +49,44 @@ export function Footer() {
             <Text>Repositório do projeto no Github</Text>
           </Group>
         </NavLink>
+
+        <Stack spacing={12} align="center" pt={32}>
+          <Link href="/termos" passHref>
+            <Anchor
+              component="a"
+              variant="text"
+              size="sm"
+              sx={{
+                color: theme.colors.cyan[3],
+                transition: '0.3s ease-out',
+                '&:hover': {
+                  color: theme.colors.cyan[5]
+                }
+              }}
+              rel="noreferrer"
+            >
+              Termos de Uso
+            </Anchor>
+          </Link>
+
+          <Link href="/privacidade" passHref>
+            <Anchor
+              component="a"
+              variant="text"
+              size="sm"
+              sx={{
+                color: theme.colors.cyan[3],
+                transition: '0.3s ease-out',
+                '&:hover': {
+                  color: theme.colors.cyan[5]
+                }
+              }}
+              rel="noreferrer"
+            >
+              Política de Privacidade
+            </Anchor>
+          </Link>
+        </Stack>
 
         <Text
           align="center"

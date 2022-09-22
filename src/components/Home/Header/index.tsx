@@ -1,11 +1,17 @@
 import { Box, Container, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
+import { useRouter } from 'next/router'
 import { Logo } from './Logo'
 import { NavLink } from './NavLink'
 
 export function Header() {
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
   const theme = useMantineTheme()
+
+  const router = useRouter()
+
+  // get current pathname
+  const linkPath = router.pathname === '/home' ? '' : '/home'
 
   return (
     <Box
@@ -52,9 +58,9 @@ export function Header() {
           }}
         >
           <NavLink link="/">Mapa</NavLink>
-          <NavLink link="#about">Sobre</NavLink>
-          <NavLink link="#platform">Plataforma</NavLink>
-          <NavLink link="#faq">FAQ</NavLink>
+          <NavLink link={`${linkPath}#about`}>Sobre</NavLink>
+          <NavLink link={`${linkPath}#platform`}>Plataforma</NavLink>
+          <NavLink link={`${linkPath}#faq`}>FAQ</NavLink>
         </Box>
       </Container>
     </Box>

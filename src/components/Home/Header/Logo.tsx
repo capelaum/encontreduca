@@ -6,11 +6,10 @@ import Link from 'next/link'
 
 export function Logo() {
   const largeScreen = useMediaQuery('(min-width: 768px)', false)
-
   const theme = useMantineTheme()
 
   return (
-    <Link href="#hero" passHref>
+    <Link href="/home" passHref>
       <Anchor component="a" variant="text">
         <Group align="center" spacing={12} noWrap>
           <Image

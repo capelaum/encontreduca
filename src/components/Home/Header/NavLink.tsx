@@ -27,18 +27,33 @@ export function NavLink({
     }
   })
 
+  if (target) {
+    return (
+      <Link href={link} passHref>
+        <Anchor
+          component="a"
+          variant="text"
+          target={target}
+          size={largeScreen ? 'md' : 'sm'}
+          sx={anchorStyles}
+          rel="noreferrer"
+        >
+          {children}
+        </Anchor>
+      </Link>
+    )
+  }
+
   return (
-    <Link href={link} passHref>
-      <Anchor
-        component="a"
-        variant="text"
-        target={target}
-        size={largeScreen ? 'md' : 'sm'}
-        sx={anchorStyles}
-        rel="noreferrer"
-      >
-        {children}
-      </Anchor>
-    </Link>
+    <Anchor
+      component="a"
+      href={link}
+      variant="text"
+      size={largeScreen ? 'md' : 'sm'}
+      sx={anchorStyles}
+      rel="noreferrer"
+    >
+      {children}
+    </Anchor>
   )
 }
