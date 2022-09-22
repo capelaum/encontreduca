@@ -7,9 +7,9 @@ import { SectionTitle } from '../Shared/SectionTitle'
 const faq = [
   {
     id: 1,
-    title: 'O que é Encontreduca?',
+    title: 'O que é a plataforma Encontreduca?',
     content:
-      'Encontreduca é um projeto que tem como objetivo ajudar a encontrar os recursos educacionais mais próximos.'
+      'Encontreduca é um projeto que tem como objetivo facilitar a indentificar e localizar os recursos educacionais mais próximos.'
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const faq = [
     title:
       'Preciso informar algum cartão de crédito ou meio de pagamento ao me cadastrar?',
     content:
-      'Não! Esse projeto tem caráter educacional e todos os recursos da plataforma são gratuitos.'
+      'Não! Esse projeto tem caráter acadêmico informativo e todos os recursos da plataforma são gratuitos atualmente.'
   },
   {
     id: 4,
@@ -34,7 +34,7 @@ const faq = [
     id: 5,
     title: 'Como funciona o processo de votação?',
     content:
-      'Pelo nosso painel de votação, o usuário poderá escolher algum dos recursos educacionais ainda não aprovados, podendo votar a favor ou contra a inserção do recurso no mapa. Resalta-se que recursos educacionais com muitos votos positivos aumentam a probabilidade, mas não garantem a sua inserção na plataforma.'
+      'Pelo nosso painel de votação, o usuário poderá escolher algum dos recursos educacionais ainda não aprovados, podendo votar a favor ou contra a inserção do recurso no mapa. Ressalta-se que recursos educacionais com muitos votos positivos aumentam a probabilidade, mas não garantem a sua inserção na plataforma.'
   },
   {
     id: 6,

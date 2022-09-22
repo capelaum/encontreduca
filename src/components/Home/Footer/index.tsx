@@ -50,7 +50,7 @@ export function Footer() {
           </Group>
         </NavLink>
 
-        <Stack spacing={12} align="center" pt={32}>
+        <Stack spacing={12} align="center" pt={16}>
           <Link href="/termos" passHref>
             <Anchor
               component="a"
@@ -91,7 +91,7 @@ export function Footer() {
         <Text
           align="center"
           size="sm"
-          pt={24}
+          pt={8}
           sx={{ color: theme.colors.gray[4] }}
         >
           Desenvolvido com 💟 por{' '}
