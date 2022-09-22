@@ -1,8 +1,15 @@
-# Encontreduca
+<div align="center">
 
-Aplicação web para encontrar os recursos educacionais mais próximos através de um mapa interativo, contendo avaliações de recursos educacionais, painel de votação e diversas outras funcionalidades.
+<h1>
+  <a href="https://www.encontreduca.com.br" target="_blank">Plataforma Encontreduca</a>
+</h1>
 
 <img src="public/images/Capa.png" alt="Imagem de Capa do Encontreduca" />
+</div>
+
+## Descrição
+
+Aplicação web que localiza os recursos educacionais mais próximos do usuário através de um mapa interativo, contendo filtros de categorias, campo de busca, avaliações, painel de votação e diversas outras funcionalidades.
 
 ## Tech
 
@@ -11,10 +18,10 @@ Aplicação web para encontrar os recursos educacionais mais próximos através 
 - [Mantine][mantine]
 - [@react-google-maps/api][react_google_maps]
 - [@types/google.maps][types_google_maps]
-- [react-query][tanstack_react_query]
-- [react-toastify][react_toastify]
-- [react-icons][react_icons]
-- [cookies-next][cookies_next]
+- [React Query][tanstack_react_query]
+- [React Toastify][react_toastify]
+- [React Icons][react_icons]
+- [Cookies Next][cookies_next]
 - [Axios][axios]
 - [Sass][sass]
 
