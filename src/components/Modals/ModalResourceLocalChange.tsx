@@ -102,7 +102,7 @@ export function ModalResourceLocalChange({
         <Image
           src={markerIcon}
           alt="Marcador"
-          height={40}
+          height={32}
           sx={{
             position: 'absolute',
             left: '50%',

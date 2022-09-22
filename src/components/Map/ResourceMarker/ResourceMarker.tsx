@@ -64,7 +64,7 @@ export function ResourceMarker({
       return categorySwitch[categoryName].markerIcon
     }
 
-    return '/markers/marker_unapproved.svg'
+    return '/markers/marker_unapproved.png'
   }
 
   return (
@@ -74,8 +74,8 @@ export function ResourceMarker({
       position={localPosition ?? position}
       clusterer={(clusterer as any) ?? undefined}
       icon={{
-        url: markerIcon(),
-        scaledSize: new window.google.maps.Size(20, 28)
+        url: markerIcon()
+        // scaledSize: new window.google.maps.Size(20, 28)
       }}
       title={name}
       // label={markerLabel() ?? undefined}
