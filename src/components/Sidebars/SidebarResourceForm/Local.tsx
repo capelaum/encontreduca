@@ -60,7 +60,7 @@ export function Local({
       return categorySwitch[resourceFormCategoryName].markerIcon
     }
 
-    return '/markers/marker_unapproved.png'
+    return '/markers/marker_unapproved.svg'
   }
 
   const openModalResourceLocalChange = () => {
@@ -97,8 +97,8 @@ export function Local({
           clickable={false}
           position={localPosition}
           icon={{
-            url: markerIcon()
-            // scaledSize: new window.google.maps.Size(32, 36)
+            url: markerIcon(),
+            scaledSize: new window.google.maps.Size(32, 36)
           }}
         />
       </GoogleMap>

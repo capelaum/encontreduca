@@ -8,7 +8,7 @@ import { CategorySwitch } from 'types/categories'
 export const categorySwitch: CategorySwitch = {
   'Universidade privada': {
     filter: 'Ensino Superior',
-    markerIcon: '/markers/marker_university.png',
+    markerIcon: '/markers/marker_university.svg',
     iconCyan: <MdSchool size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <MdSchool size={16} color={myTheme.white} />,
     iconBlue: <MdSchool size={16} color={myTheme.colors!.brand![7]} />,
@@ -16,7 +16,7 @@ export const categorySwitch: CategorySwitch = {
   },
   'Universidade pública': {
     filter: 'Ensino Superior',
-    markerIcon: '/markers/marker_university.png',
+    markerIcon: '/markers/marker_university.svg',
     iconCyan: <MdSchool size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <MdSchool size={16} color={myTheme.white} />,
     iconBlue: <MdSchool size={16} color={myTheme.colors!.brand![7]} />,
@@ -24,7 +24,7 @@ export const categorySwitch: CategorySwitch = {
   },
   'Escola privada': {
     filter: 'Ensino Básico',
-    markerIcon: '/markers/marker_school.png',
+    markerIcon: '/markers/marker_school.svg',
     iconCyan: <FaSchool size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <FaSchool size={16} color={myTheme.white} />,
     iconBlue: <FaSchool size={16} color={myTheme.colors!.brand![7]} />,
@@ -32,7 +32,7 @@ export const categorySwitch: CategorySwitch = {
   },
   'Escola pública': {
     filter: 'Ensino Básico',
-    markerIcon: '/markers/marker_school.png',
+    markerIcon: '/markers/marker_school.svg',
     iconCyan: <FaSchool size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <FaSchool size={16} color={myTheme.white} />,
     iconBlue: <FaSchool size={16} color={myTheme.colors!.brand![7]} />,
@@ -40,7 +40,7 @@ export const categorySwitch: CategorySwitch = {
   },
   Biblioteca: {
     filter: 'Biblioteca',
-    markerIcon: '/markers/marker_library.png',
+    markerIcon: '/markers/marker_library.svg',
     iconCyan: <IoLibrarySharp size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <IoLibrarySharp size={16} color={myTheme.white} />,
     iconBlue: <IoLibrarySharp size={16} color={myTheme.colors!.brand![7]} />,
@@ -48,7 +48,7 @@ export const categorySwitch: CategorySwitch = {
   },
   Curso: {
     filter: 'Curso',
-    markerIcon: '/markers/marker_course.png',
+    markerIcon: '/markers/marker_course.svg',
     iconCyan: <FaPencilRuler size={14} color={myTheme.colors!.brand![0]} />,
     iconWhite: <FaPencilRuler size={14} color={myTheme.white} />,
     iconBlue: <FaPencilRuler size={14} color={myTheme.colors!.brand![7]} />,
@@ -56,7 +56,7 @@ export const categorySwitch: CategorySwitch = {
   },
   Coworking: {
     filter: 'Coworking',
-    markerIcon: '/markers/marker_coworking.png',
+    markerIcon: '/markers/marker_coworking.svg',
     iconCyan: <BsBriefcaseFill size={16} color={myTheme.colors!.brand![0]} />,
     iconWhite: <BsBriefcaseFill size={16} color={myTheme.white} />,
     iconBlue: <BsBriefcaseFill size={16} color={myTheme.colors!.brand![7]} />,
