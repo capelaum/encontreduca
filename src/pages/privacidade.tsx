@@ -79,6 +79,7 @@ export default function Home() {
                 Mais informações, sugestões e/ou reclamações, por favor entre em
                 contato com a gente pelo o número através do e-mail{' '}
                 <Anchor
+                  href="mailto:contato@encontreduca.com.br"
                   sx={{
                     color: theme.colors.cyan[7],
                     transition: '0.3s ease-out',
