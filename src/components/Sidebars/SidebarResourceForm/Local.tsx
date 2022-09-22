@@ -97,8 +97,8 @@ export function Local({
           clickable={false}
           position={localPosition}
           icon={{
-            url: markerIcon()
-            // scaledSize: new window.google.maps.Size(20, 28)
+            url: markerIcon(),
+            scaledSize: new window.google.maps.Size(32, 36)
           }}
         />
       </GoogleMap>
