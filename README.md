@@ -1,7 +1,7 @@
 <div align="center">
 
 <h1>
-  <a href="https://www.encontreduca.com.br" target="_blank">Plataforma Encontreduca</a>
+  <a href="https://www.encontreduca.com.br" target="_blank">Plataforma Encontreduca 🗺️📖💜</a>
 </h1>
 
 <img src="public/images/Capa.png" alt="Imagem de Capa do Encontreduca" />
@@ -10,6 +10,10 @@
 ## Descrição
 
 Aplicação web que localiza os recursos educacionais mais próximos do usuário através de um mapa interativo, contendo filtros de categorias, campo de busca, avaliações, painel de votação e diversas outras funcionalidades.
+
+## Layout
+
+Pode-se conferir o Design UI do projeto através desse [link do Figma][figma]
 
 ## Tech
 
@@ -36,3 +40,4 @@ Aplicação web que localiza os recursos educacionais mais próximos do usuário
 [tanstack_react_query]: https://tanstack.com/query/v4/docs/overview
 [react_toastify]: https://fkhadra.github.io/react-toastify/introduction
 [sass]: https://sass-lang.com
+[figma]: https://www.figma.com/file/AsJQivw2vUqNlDhIUWkTxT/TCC---Encontreduca?node-id=101%3A4
